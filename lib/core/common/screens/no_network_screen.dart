@@ -11,7 +11,7 @@ class NoNetworkScreen extends StatelessWidget {
         title: const Text('No Network'),
       ),
       body: Center(
-        child: Image.asset(Appimages.noNetwork),
+        child: Image.asset(AppImages.noNetwork),
       ),
     );
   }

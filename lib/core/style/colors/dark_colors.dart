@@ -1,6 +1,6 @@
 import 'dart:ui';
 
 class DarkColors {
-  static const Color primaryColor = Color(0xFF121212);
-  static const Color secondaryColor = Color.fromARGB(255, 41, 105, 75);
+  static const Color primaryColor = Color(0xFFFFFFFF);
+  static const Color secondaryColor = Color(0xFF4F4F4F);
 }

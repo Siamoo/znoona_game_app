@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-class Navigate {
+class ZnoonaNavigate {
   static Future<T?> pushTo<T>(BuildContext context, Widget page) {
     return Navigator.push<T>(
       context,

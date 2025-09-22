@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:znoona_game_app/core/helpers/znoona_colors.dart';
 import 'package:znoona_game_app/core/helpers/znoona_images.dart';
+import 'package:znoona_game_app/core/helpers/znoona_texts.dart';
 
 class TestScreenOne extends StatelessWidget {
   const TestScreenOne({super.key});
@@ -15,7 +16,7 @@ class TestScreenOne extends StatelessWidget {
         child: Column(
           children: [
             Text(
-              'This is Test Screen one',
+              ZnoonaTexts.tr(context, 'app_name'),
               style: TextStyle(
                 fontSize: 30,
                 color: ZnoonaColors.primary(context),

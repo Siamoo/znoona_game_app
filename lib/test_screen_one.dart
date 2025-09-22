@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:znoona_game_app/core/helpers/navigate.dart';
-import 'package:znoona_game_app/core/routes/app_routes.dart';
+import 'package:znoona_game_app/core/helpers/app_colors.dart';
 
 class TestScreenOne extends StatelessWidget {
   const TestScreenOne({super.key});
@@ -11,13 +10,24 @@ class TestScreenOne extends StatelessWidget {
       appBar: AppBar(
         title: const Text('Test Screen one'),
       ),
-      body:  Center(
+      body: Center(
         child: Column(
           children: [
-            Text('This is Test Screen one'),
-            ElevatedButton(onPressed: () async {
-              await Navigate.pushNamed(context, AppRoutes.testTwo);
-            } , child: Text('Go to Test Screen Two'))
+            Text(
+              'This is Test Screen one',
+              style: TextStyle(fontSize: 30, color: AppColors.primary(context)),
+            ),
+            Text(
+              'This is Test Screen one',
+              style: TextStyle(
+                fontSize: 30,
+                color: AppColors.secondary(context),
+              ),
+            ),
+            Text(
+              'This is Test Screen one',
+              style: TextStyle(fontSize: 30, color: AppColors.primary(context)),
+            ),
           ],
         ),
       ),

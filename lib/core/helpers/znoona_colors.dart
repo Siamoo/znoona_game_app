@@ -1,17 +1,17 @@
 import 'package:flutter/material.dart';
-import 'package:znoona_game_app/core/style/theme/color_extension.dart';
+import 'package:znoona_game_app/core/style/theme/my_colors_extension.dart';
 
 class ZnoonaColors {
   static MyColors of(BuildContext context) {
     return Theme.of(context).extension<MyColors>()!;
   }
 
-  static Color primary(BuildContext context) {
-    return of(context).premaryColor;
+  static Color main(BuildContext context) {
+    return of(context).mainColor!;
   }
 
-  static Color secondary(BuildContext context) {
-    return of(context).secondaryColor;
+  static Color textcolor(BuildContext context) {
+    return of(context).textColor!;
   }
 
 }

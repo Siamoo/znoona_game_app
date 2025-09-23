@@ -19,21 +19,21 @@ class TestScreenOne extends StatelessWidget {
               ZnoonaTexts.tr(context, 'app_name'),
               style: TextStyle(
                 fontSize: 30,
-                color: ZnoonaColors.primary(context),
+                color: ZnoonaColors.main(context),
               ),
             ),
             Text(
               'This is Test Screen one',
               style: TextStyle(
                 fontSize: 30,
-                color: ZnoonaColors.secondary(context),
+                color: ZnoonaColors.main(context),
               ),
             ),
             Text(
               'This is Test Screen one',
               style: TextStyle(
                 fontSize: 30,
-                color: ZnoonaColors.primary(context),
+                color: ZnoonaColors.main(context),
               ),
             ),
             Image.asset(ZnoonaImages.underBuild(context))

@@ -1,16 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:znoona_game_app/core/style/colors/dark_colors.dart';
-import 'package:znoona_game_app/core/style/colors/light_colors.dart';
-import 'package:znoona_game_app/core/style/theme/color_extension.dart';
-import 'package:znoona_game_app/core/style/theme/image_extension.dart';
+import 'package:znoona_game_app/core/style/colors/colors_dark.dart';
+import 'package:znoona_game_app/core/style/colors/colors_light.dart';
+import 'package:znoona_game_app/core/style/theme/my_assets_extension.dart';
+import 'package:znoona_game_app/core/style/theme/my_colors_extension.dart';
 
 ThemeData darkTheme() {
   return ThemeData(
-    scaffoldBackgroundColor: DarkColors.secondaryColor,
-    extensions: <ThemeExtension<dynamic>>{
+    scaffoldBackgroundColor: ColorsDark.mainColor,
+    extensions: const <ThemeExtension<dynamic>>{
       MyColors.dark,
-      MyImages.dark,
+      MyAssets.dark,
     },
     textTheme: GoogleFonts.beirutiTextTheme(),
   );
@@ -18,10 +18,10 @@ ThemeData darkTheme() {
 
 ThemeData lightTheme() {
   return ThemeData(
-    scaffoldBackgroundColor: LightColors.secondaryColor,
-    extensions: <ThemeExtension<dynamic>>{
+    scaffoldBackgroundColor: ColorsLight.mainColor,
+    extensions: const <ThemeExtension<dynamic>>{
       MyColors.light,
-      MyImages.light,
+      MyAssets.light,
     },
     textTheme: GoogleFonts.beirutiTextTheme(),
   );

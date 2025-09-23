@@ -19,7 +19,7 @@ class MyApp extends StatelessWidget {
             debugShowCheckedModeBanner: false,
             title: 'Znoona Game App',
             theme: darkTheme(),
-            locale: const Locale('ar'),
+            locale: const Locale('en'),
             supportedLocales: AppLocalizationsSetup.supportedLocales,
             localeResolutionCallback:
                 AppLocalizationsSetup.localeResolutionCallback,
@@ -39,7 +39,7 @@ class MyApp extends StatelessWidget {
               );
             },
             onGenerateRoute: AppRoutes.generateRoute,
-            initialRoute: value ? AppRoutes.testOne : AppRoutes.noNetwork,
+            initialRoute: value ? AppRoutes.login : AppRoutes.noNetwork,
           ),
         );
       },

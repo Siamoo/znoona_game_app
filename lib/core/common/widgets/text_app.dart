@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 class TextApp extends StatelessWidget {
   const TextApp({
     required this.text,
-    required this.theme,
+     this.textStyle,
     this.maxLines,
     this.softWrap,
     this.textOverflow,
@@ -11,7 +11,7 @@ class TextApp extends StatelessWidget {
     super.key,
   });
   final String text;
-  final TextStyle theme;
+  final TextStyle? textStyle;
   final int? maxLines;
   final bool? softWrap;
   final TextOverflow? textOverflow;
@@ -22,7 +22,7 @@ class TextApp extends StatelessWidget {
     return Text(
       text,
       softWrap: softWrap,
-      style: theme,
+      style: textStyle,
       overflow: textOverflow,
       textAlign: textAlign,
       maxLines: maxLines,

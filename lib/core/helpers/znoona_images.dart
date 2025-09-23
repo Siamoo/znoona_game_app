@@ -6,8 +6,9 @@ class ZnoonaImages {
     return Theme.of(context).extension<MyAssets>()!;
   }
 
-  static String underBuild(BuildContext context) {
-    return of(context).homeBg!;
-  }
+  static String bigNavBar(BuildContext context) =>
+      of(context).bigNavBar!;
 
+  static String homeBg(BuildContext context) =>
+      of(context).homeBg!;
 }

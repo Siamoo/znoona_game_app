@@ -12,7 +12,10 @@ ThemeData darkTheme() {
       MyColors.dark,
       MyAssets.dark,
     },
-    textTheme: GoogleFonts.beirutiTextTheme(),
+    useMaterial3: true,
+    textTheme: GoogleFonts.beirutiTextTheme(
+
+    ),
   );
 }
 
@@ -23,6 +26,7 @@ ThemeData lightTheme() {
       MyColors.light,
       MyAssets.light,
     },
+    useMaterial3: true,
     textTheme: GoogleFonts.beirutiTextTheme(),
   );
 }

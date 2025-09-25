@@ -26,6 +26,7 @@ class AuthTitleInfo extends StatelessWidget {
             textStyle: GoogleFonts.beiruti(
               fontSize: 30.sp,
               fontWeight: FontWeight.bold,
+              color: ZnoonaColors.text(context),
             ),
           ),
           TextApp(

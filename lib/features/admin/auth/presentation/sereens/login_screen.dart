@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:znoona_game_app/core/common/animations/animate_do.dart';
 import 'package:znoona_game_app/core/helpers/znoona.colors.dart';
 import 'package:znoona_game_app/features/admin/auth/presentation/refactors/auth_custom_painter.dart';
@@ -13,7 +14,7 @@ class LoginScreen extends StatelessWidget {
       bottomNavigationBar: CustomFadeInUp(
         duration: 800,
         child: CustomPaint(
-          size: Size(MediaQuery.of(context).size.width, 150),
+          size: Size(MediaQuery.of(context).size.width, 140.h),
           painter: AuthCustomPainter(
             gradient: LinearGradient(
               colors: [
@@ -22,8 +23,6 @@ class LoginScreen extends StatelessWidget {
                 ZnoonaColors.bluePinkLight(context),
                 ZnoonaColors.bluePinkDark(context),
               ],
-              begin: const Alignment(0.46, -0.89),
-              end: const Alignment(-0.46, 0.89),
             ),
           ),
         ),

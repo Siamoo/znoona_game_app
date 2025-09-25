@@ -33,6 +33,14 @@ ThemeData lightTheme() {
       MyAssets.light,
     },
     useMaterial3: true,
-    textTheme: GoogleFonts.beirutiTextTheme(),
+    textTheme:
+        GoogleFonts.beirutiTextTheme(
+          const TextTheme(
+            bodyMedium: TextStyle(fontSize: 20),
+          ),
+        ).apply(
+          bodyColor: Colors.white,
+          displayColor: Colors.white,
+        ),
   );
 }

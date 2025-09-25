@@ -4,12 +4,16 @@ class AuthCustomPainter extends CustomPainter {
   AuthCustomPainter({required this.gradient, super.repaint});
 
   final LinearGradient gradient;
+
   @override
   void paint(Canvas canvas, Size size) {
+    canvas.clipRect(Rect.fromLTWH(0, 0, size.width, size.height));
+
     final paint = Paint()
       ..shader = gradient.createShader(
-        Rect.fromPoints(Offset.zero, Offset(0, size.height)),
+        Rect.fromLTWH(0, 0, size.width, size.height),
       );
+
     final path = Path();
     _pathChoeses(path, size);
 
@@ -25,7 +29,7 @@ class AuthCustomPainter extends CustomPainter {
   }
 
   @override
-  bool shouldRepaint(covariant CustomPainter oldDelegate) {
-    return false;
+  bool shouldRepaint(covariant AuthCustomPainter oldDelegate) {
+    return oldDelegate.gradient != gradient;
   }
 }

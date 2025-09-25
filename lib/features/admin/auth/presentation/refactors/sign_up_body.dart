@@ -9,12 +9,13 @@ import 'package:znoona_game_app/core/helpers/znoona_texts.dart';
 import 'package:znoona_game_app/core/language/lang_keys.dart';
 import 'package:znoona_game_app/core/routes/app_routes.dart';
 import 'package:znoona_game_app/features/admin/auth/presentation/widgets/dark_and_lang_buttons.dart';
-import 'package:znoona_game_app/features/admin/auth/presentation/widgets/login/login_button.dart';
-import 'package:znoona_game_app/features/admin/auth/presentation/widgets/login/login_text_form.dart';
 import 'package:znoona_game_app/features/admin/auth/presentation/widgets/sign_up/auth_title_info.dart';
+import 'package:znoona_game_app/features/admin/auth/presentation/widgets/sign_up/sign_up_button.dart';
+import 'package:znoona_game_app/features/admin/auth/presentation/widgets/sign_up/sign_up_text_form.dart';
+import 'package:znoona_game_app/features/admin/auth/presentation/widgets/sign_up/user_avatar_image.dart';
 
-class LoginBody extends StatelessWidget {
-  const LoginBody({super.key});
+class SignUpBody extends StatelessWidget {
+  const SignUpBody({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -25,31 +26,38 @@ class LoginBody extends StatelessWidget {
           children: [
             const DarkAndLangButtons(),
             SizedBox(
-              height: 50.h,
+              height: 30.h,
             ),
             AuthTitleInfo(
-              title: ZnoonaTexts.tr(context, LangKeys.login),
-              description: ZnoonaTexts.tr(context, LangKeys.welcome),
+              title: ZnoonaTexts.tr(context, LangKeys.signUp),
+              description: ZnoonaTexts.tr(context, LangKeys.signUpWelcome),
             ),
             SizedBox(
-              height: 30.h,
+              height: 10.h,
             ),
-            const LoginTextForm(),
+            const UserAvatarImage(),
             SizedBox(
-              height: 30.h,
+              height: 20.h,
             ),
-            const LoginButton(),
+            const SignUpTextForm(),
             SizedBox(
-              height: 30.h,
+              height: 20.h,
+            ),
+            const SignUpButton(),
+            SizedBox(
+              height: 20.h,
             ),
             CustomFadeInDown(
               duration: 400,
               child: TextButton(
                 onPressed: () async {
-                  await ZnoonaNavigate.pushNamed(context, AppRoutes.signUp);
+                  await ZnoonaNavigate.pushReplacementNamed(
+                    context,
+                    AppRoutes.login,
+                  );
                 },
                 child: TextApp(
-                  text: ZnoonaTexts.tr(context, LangKeys.createAccount),
+                  text: ZnoonaTexts.tr(context, LangKeys.youHaveAccount),
                   textStyle: GoogleFonts.beiruti(
                     fontSize: 20.sp,
                     color: ZnoonaColors.bluePinkLight(context),

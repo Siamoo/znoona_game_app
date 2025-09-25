@@ -13,7 +13,7 @@ class LoginButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return CustomFadeInRight(
-      duration: 600,
+      duration: 500,
       child: CustomLinearButton(
         height: 50.h,
         width: double.infinity,

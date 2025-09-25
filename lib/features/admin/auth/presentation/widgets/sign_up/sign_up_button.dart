@@ -13,13 +13,13 @@ class SignUpButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return CustomFadeInRight(
-      duration: 600,
+      duration: 500,
       child: CustomLinearButton(
         height: 50.h,
         width: double.infinity,
         onPressed: () {},
         child: TextApp(
-          text: ZnoonaTexts.tr(context, LangKeys.login),
+          text: ZnoonaTexts.tr(context, LangKeys.signUp),
           textStyle: GoogleFonts.beiruti(
             fontSize: 22.sp,
             fontWeight: FontWeight.w600,

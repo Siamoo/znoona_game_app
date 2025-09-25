@@ -39,7 +39,13 @@ class DarkAndLangButtons extends StatelessWidget {
             CustomFadeInLeft(
               duration: 400,
               child: CustomLinearButton(
-                onPressed: () {},
+                onPressed: () {
+                  if (cubit.currentLangcode == 'en') {
+                    cubit.toArabic();
+                  } else {
+                    cubit.toEnglish();
+                  }
+                },
                 width: 100.w,
                 height: 44.h,
                 child: TextApp(

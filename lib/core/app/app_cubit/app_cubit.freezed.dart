@@ -21,32 +21,38 @@ mixin _$AppState {
   TResult when<TResult extends Object?>({
     required TResult Function() initial,
     required TResult Function(bool isDarkMode) themeChangMode,
+    required TResult Function(Locale locale) languageChang,
   }) => throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? initial,
     TResult? Function(bool isDarkMode)? themeChangMode,
+    TResult? Function(Locale locale)? languageChang,
   }) => throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? initial,
     TResult Function(bool isDarkMode)? themeChangMode,
+    TResult Function(Locale locale)? languageChang,
     required TResult orElse(),
   }) => throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
     required TResult Function(_Initial value) initial,
     required TResult Function(ThemeChangModeState value) themeChangMode,
+    required TResult Function(LanguageChangState value) languageChang,
   }) => throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
     TResult? Function(_Initial value)? initial,
     TResult? Function(ThemeChangModeState value)? themeChangMode,
+    TResult? Function(LanguageChangState value)? languageChang,
   }) => throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
     TResult Function(_Initial value)? initial,
     TResult Function(ThemeChangModeState value)? themeChangMode,
+    TResult Function(LanguageChangState value)? languageChang,
     required TResult orElse(),
   }) => throw _privateConstructorUsedError;
 }
@@ -122,6 +128,7 @@ class _$InitialImpl with DiagnosticableTreeMixin implements _Initial {
   TResult when<TResult extends Object?>({
     required TResult Function() initial,
     required TResult Function(bool isDarkMode) themeChangMode,
+    required TResult Function(Locale locale) languageChang,
   }) {
     return initial();
   }
@@ -131,6 +138,7 @@ class _$InitialImpl with DiagnosticableTreeMixin implements _Initial {
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? initial,
     TResult? Function(bool isDarkMode)? themeChangMode,
+    TResult? Function(Locale locale)? languageChang,
   }) {
     return initial?.call();
   }
@@ -140,6 +148,7 @@ class _$InitialImpl with DiagnosticableTreeMixin implements _Initial {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? initial,
     TResult Function(bool isDarkMode)? themeChangMode,
+    TResult Function(Locale locale)? languageChang,
     required TResult orElse(),
   }) {
     if (initial != null) {
@@ -153,6 +162,7 @@ class _$InitialImpl with DiagnosticableTreeMixin implements _Initial {
   TResult map<TResult extends Object?>({
     required TResult Function(_Initial value) initial,
     required TResult Function(ThemeChangModeState value) themeChangMode,
+    required TResult Function(LanguageChangState value) languageChang,
   }) {
     return initial(this);
   }
@@ -162,6 +172,7 @@ class _$InitialImpl with DiagnosticableTreeMixin implements _Initial {
   TResult? mapOrNull<TResult extends Object?>({
     TResult? Function(_Initial value)? initial,
     TResult? Function(ThemeChangModeState value)? themeChangMode,
+    TResult? Function(LanguageChangState value)? languageChang,
   }) {
     return initial?.call(this);
   }
@@ -171,6 +182,7 @@ class _$InitialImpl with DiagnosticableTreeMixin implements _Initial {
   TResult maybeMap<TResult extends Object?>({
     TResult Function(_Initial value)? initial,
     TResult Function(ThemeChangModeState value)? themeChangMode,
+    TResult Function(LanguageChangState value)? languageChang,
     required TResult orElse(),
   }) {
     if (initial != null) {
@@ -270,6 +282,7 @@ class _$ThemeChangModeStateImpl
   TResult when<TResult extends Object?>({
     required TResult Function() initial,
     required TResult Function(bool isDarkMode) themeChangMode,
+    required TResult Function(Locale locale) languageChang,
   }) {
     return themeChangMode(isDarkMode);
   }
@@ -279,6 +292,7 @@ class _$ThemeChangModeStateImpl
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? initial,
     TResult? Function(bool isDarkMode)? themeChangMode,
+    TResult? Function(Locale locale)? languageChang,
   }) {
     return themeChangMode?.call(isDarkMode);
   }
@@ -288,6 +302,7 @@ class _$ThemeChangModeStateImpl
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? initial,
     TResult Function(bool isDarkMode)? themeChangMode,
+    TResult Function(Locale locale)? languageChang,
     required TResult orElse(),
   }) {
     if (themeChangMode != null) {
@@ -301,6 +316,7 @@ class _$ThemeChangModeStateImpl
   TResult map<TResult extends Object?>({
     required TResult Function(_Initial value) initial,
     required TResult Function(ThemeChangModeState value) themeChangMode,
+    required TResult Function(LanguageChangState value) languageChang,
   }) {
     return themeChangMode(this);
   }
@@ -310,6 +326,7 @@ class _$ThemeChangModeStateImpl
   TResult? mapOrNull<TResult extends Object?>({
     TResult? Function(_Initial value)? initial,
     TResult? Function(ThemeChangModeState value)? themeChangMode,
+    TResult? Function(LanguageChangState value)? languageChang,
   }) {
     return themeChangMode?.call(this);
   }
@@ -319,6 +336,7 @@ class _$ThemeChangModeStateImpl
   TResult maybeMap<TResult extends Object?>({
     TResult Function(_Initial value)? initial,
     TResult Function(ThemeChangModeState value)? themeChangMode,
+    TResult Function(LanguageChangState value)? languageChang,
     required TResult orElse(),
   }) {
     if (themeChangMode != null) {
@@ -338,5 +356,167 @@ abstract class ThemeChangModeState implements AppState {
   /// with the given fields replaced by the non-null parameter values.
   @JsonKey(includeFromJson: false, includeToJson: false)
   _$$ThemeChangModeStateImplCopyWith<_$ThemeChangModeStateImpl> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+abstract class _$$LanguageChangStateImplCopyWith<$Res> {
+  factory _$$LanguageChangStateImplCopyWith(
+    _$LanguageChangStateImpl value,
+    $Res Function(_$LanguageChangStateImpl) then,
+  ) = __$$LanguageChangStateImplCopyWithImpl<$Res>;
+  @useResult
+  $Res call({Locale locale});
+}
+
+/// @nodoc
+class __$$LanguageChangStateImplCopyWithImpl<$Res>
+    extends _$AppStateCopyWithImpl<$Res, _$LanguageChangStateImpl>
+    implements _$$LanguageChangStateImplCopyWith<$Res> {
+  __$$LanguageChangStateImplCopyWithImpl(
+    _$LanguageChangStateImpl _value,
+    $Res Function(_$LanguageChangStateImpl) _then,
+  ) : super(_value, _then);
+
+  /// Create a copy of AppState
+  /// with the given fields replaced by the non-null parameter values.
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({Object? locale = null}) {
+    return _then(
+      _$LanguageChangStateImpl(
+        locale: null == locale
+            ? _value.locale
+            : locale // ignore: cast_nullable_to_non_nullable
+                  as Locale,
+      ),
+    );
+  }
+}
+
+/// @nodoc
+
+class _$LanguageChangStateImpl
+    with DiagnosticableTreeMixin
+    implements LanguageChangState {
+  const _$LanguageChangStateImpl({required this.locale});
+
+  @override
+  final Locale locale;
+
+  @override
+  String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
+    return 'AppState.languageChang(locale: $locale)';
+  }
+
+  @override
+  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
+    super.debugFillProperties(properties);
+    properties
+      ..add(DiagnosticsProperty('type', 'AppState.languageChang'))
+      ..add(DiagnosticsProperty('locale', locale));
+  }
+
+  @override
+  bool operator ==(Object other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$LanguageChangStateImpl &&
+            (identical(other.locale, locale) || other.locale == locale));
+  }
+
+  @override
+  int get hashCode => Object.hash(runtimeType, locale);
+
+  /// Create a copy of AppState
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$LanguageChangStateImplCopyWith<_$LanguageChangStateImpl> get copyWith =>
+      __$$LanguageChangStateImplCopyWithImpl<_$LanguageChangStateImpl>(
+        this,
+        _$identity,
+      );
+
+  @override
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>({
+    required TResult Function() initial,
+    required TResult Function(bool isDarkMode) themeChangMode,
+    required TResult Function(Locale locale) languageChang,
+  }) {
+    return languageChang(locale);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult? Function()? initial,
+    TResult? Function(bool isDarkMode)? themeChangMode,
+    TResult? Function(Locale locale)? languageChang,
+  }) {
+    return languageChang?.call(locale);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function()? initial,
+    TResult Function(bool isDarkMode)? themeChangMode,
+    TResult Function(Locale locale)? languageChang,
+    required TResult orElse(),
+  }) {
+    if (languageChang != null) {
+      return languageChang(locale);
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>({
+    required TResult Function(_Initial value) initial,
+    required TResult Function(ThemeChangModeState value) themeChangMode,
+    required TResult Function(LanguageChangState value) languageChang,
+  }) {
+    return languageChang(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult? Function(_Initial value)? initial,
+    TResult? Function(ThemeChangModeState value)? themeChangMode,
+    TResult? Function(LanguageChangState value)? languageChang,
+  }) {
+    return languageChang?.call(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(_Initial value)? initial,
+    TResult Function(ThemeChangModeState value)? themeChangMode,
+    TResult Function(LanguageChangState value)? languageChang,
+    required TResult orElse(),
+  }) {
+    if (languageChang != null) {
+      return languageChang(this);
+    }
+    return orElse();
+  }
+}
+
+abstract class LanguageChangState implements AppState {
+  const factory LanguageChangState({required final Locale locale}) =
+      _$LanguageChangStateImpl;
+
+  Locale get locale;
+
+  /// Create a copy of AppState
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  _$$LanguageChangStateImplCopyWith<_$LanguageChangStateImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }

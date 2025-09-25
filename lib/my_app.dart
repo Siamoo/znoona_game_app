@@ -22,7 +22,7 @@ class MyApp extends StatelessWidget {
           create: (context) => sl<AppCubit>()
             ..changeAppThemeMode(
               sheredMode: SharedPref().getBoolean(PrefKeys.themeMode),
-            ),
+            )..getSavedLanguage(),
           child: ScreenUtilInit(
             designSize: const Size(384, 805),
             child: BlocBuilder<AppCubit, AppState>(
@@ -35,7 +35,7 @@ class MyApp extends StatelessWidget {
                   debugShowCheckedModeBanner: false,
                   title: 'Znoona Game App',
                   theme: cubit.isDarkMode ? lightTheme(): darkTheme(),
-                  locale: const Locale('en'),
+                  locale: Locale(cubit.currentLangcode),
                   supportedLocales: AppLocalizationsSetup.supportedLocales,
                   localeResolutionCallback:
                       AppLocalizationsSetup.localeResolutionCallback,

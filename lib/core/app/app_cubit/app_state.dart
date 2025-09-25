@@ -5,4 +5,6 @@ class AppState with _$AppState {
   const factory AppState.initial() = _Initial;
   const factory AppState.themeChangMode({required bool isDarkMode}) =
       ThemeChangModeState;
+  const factory AppState.languageChange({required Locale locale}) =
+      LanguageChangState;
 }

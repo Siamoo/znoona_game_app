@@ -10,8 +10,8 @@ import 'package:znoona_game_app/core/service/shared_pref/pref_keys.dart';
 import 'package:znoona_game_app/core/service/shared_pref/shared_pref.dart';
 import 'package:znoona_game_app/core/style/theme/app_theme.dart';
 
-class MyApp extends StatelessWidget {
-  const MyApp({super.key});
+class ZnoonaGameApp extends StatelessWidget {
+  const ZnoonaGameApp({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -22,7 +22,8 @@ class MyApp extends StatelessWidget {
           create: (context) => sl<AppCubit>()
             ..changeAppThemeMode(
               sheredMode: SharedPref().getBoolean(PrefKeys.themeMode),
-            )..getSavedLanguage(),
+            )
+            ..getSavedLanguage(),
           child: ScreenUtilInit(
             designSize: const Size(384, 805),
             child: BlocBuilder<AppCubit, AppState>(
@@ -34,7 +35,7 @@ class MyApp extends StatelessWidget {
                 return MaterialApp(
                   debugShowCheckedModeBanner: false,
                   title: 'Znoona Game App',
-                  theme: cubit.isDarkMode ? lightTheme(): darkTheme(),
+                  theme: cubit.isDarkMode ? lightTheme() : darkTheme(),
                   locale: Locale(cubit.currentLangcode),
                   supportedLocales: AppLocalizationsSetup.supportedLocales,
                   localeResolutionCallback:

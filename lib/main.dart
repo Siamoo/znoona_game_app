@@ -6,13 +6,13 @@ import 'package:znoona_game_app/core/app/bloc_observer.dart';
 import 'package:znoona_game_app/core/app/env.variables.dart';
 import 'package:znoona_game_app/core/di/injcetion_container.dart';
 import 'package:znoona_game_app/core/service/shared_pref/shared_pref.dart';
-import 'package:znoona_game_app/my_app.dart';
+import 'package:znoona_game_app/znoona_game_app.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
   // Load environment variables
-    await EnvVariables.instance.init(envType: EnvTypeEnum.dev);
+  await EnvVariables.instance.init(envType: EnvTypeEnum.dev);
 
   // Initialize Supabase
   await Supabase.initialize(
@@ -28,6 +28,6 @@ Future<void> main() async {
     DeviceOrientation.portraitUp,
     DeviceOrientation.portraitDown,
   ]).then((_) {
-    runApp(const MyApp());
+    runApp(const ZnoonaGameApp());
   });
 }

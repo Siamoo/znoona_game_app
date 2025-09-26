@@ -19,5 +19,7 @@ class EnvVariables {
   }
 
   bool get debugMode => _envType == 'dev';
+
+  String get supabaseUrl => dotenv.env['SUPABASE_URL'] ?? '';
+  String get supabaseAnonKey => dotenv.env['SUPABASE_ANON_KEY'] ?? '';
 }
- 

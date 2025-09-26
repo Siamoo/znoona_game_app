@@ -23,9 +23,9 @@ dependencies:
   get_it: ^8.2.0
   google_fonts: ^6.3.1
   shared_preferences: ^2.5.3
+  supabase_flutter: ^2.9.1
 
 dev_dependencies:
-  # dart run build_runner build --delete-conflicting-outputs
   build_runner: ^2.4.11
   flutter_launcher_icons: ^0.14.4
   flutter_lints: ^6.0.0

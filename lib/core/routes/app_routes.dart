@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:znoona_game_app/core/common/screens/no_network_screen.dart';
 import 'package:znoona_game_app/core/common/screens/page_under_build_screen.dart';
 import 'package:znoona_game_app/core/routes/base_routes.dart';
-import 'package:znoona_game_app/features/admin/auth/presentation/sereens/login_screen.dart';
-import 'package:znoona_game_app/features/admin/auth/presentation/sereens/sign_up_screen.dart';
+import 'package:znoona_game_app/features/user/auth/presentation/sereens/login_screen.dart';
+import 'package:znoona_game_app/features/user/auth/presentation/sereens/sign_up_screen.dart';
 
 class AppRoutes {
   static const String login = 'login';

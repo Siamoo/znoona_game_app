@@ -9,7 +9,7 @@ import 'package:znoona_game_app/core/routes/app_routes.dart';
 import 'package:znoona_game_app/core/service/shared_pref/pref_keys.dart';
 import 'package:znoona_game_app/core/service/shared_pref/shared_pref.dart';
 import 'package:znoona_game_app/core/style/theme/app_theme.dart';
-import 'package:znoona_game_app/features/customer/auth/presentation/cubit/auth_cubit.dart';
+import 'package:znoona_game_app/features/user/auth/presentation/cubit/auth_cubit.dart';
 
 class ZnoonaGameApp extends StatelessWidget {
   const ZnoonaGameApp({super.key});

@@ -5,12 +5,12 @@ import 'package:supabase_flutter/supabase_flutter.dart';
 import 'package:znoona_game_app/core/app/app_cubit/app_cubit.dart';
 
 // Auth Feature
-import 'package:znoona_game_app/features/customer/auth/data/datasources/auth_remote_data_source.dart';
-import 'package:znoona_game_app/features/customer/auth/data/repositories/auth_repository_impl.dart';
-import 'package:znoona_game_app/features/customer/auth/domain/repositories/auth_repository.dart';
-import 'package:znoona_game_app/features/customer/auth/domain/usecases/login_usecase.dart';
-import 'package:znoona_game_app/features/customer/auth/domain/usecases/sign_up_usecase.dart';
-import 'package:znoona_game_app/features/customer/auth/presentation/cubit/auth_cubit.dart';
+import 'package:znoona_game_app/features/user/auth/data/datasources/auth_remote_data_source.dart';
+import 'package:znoona_game_app/features/user/auth/data/repositories/auth_repository_impl.dart';
+import 'package:znoona_game_app/features/user/auth/domain/repositories/auth_repository.dart';
+import 'package:znoona_game_app/features/user/auth/domain/usecases/login_usecase.dart';
+import 'package:znoona_game_app/features/user/auth/domain/usecases/sign_up_usecase.dart';
+import 'package:znoona_game_app/features/user/auth/presentation/cubit/auth_cubit.dart';
 
 final GetIt sl = GetIt.instance;
 

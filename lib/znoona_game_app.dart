@@ -9,6 +9,7 @@ import 'package:znoona_game_app/core/routes/app_routes.dart';
 import 'package:znoona_game_app/core/service/shared_pref/pref_keys.dart';
 import 'package:znoona_game_app/core/service/shared_pref/shared_pref.dart';
 import 'package:znoona_game_app/core/style/theme/app_theme.dart';
+import 'package:znoona_game_app/features/customer/auth/presentation/cubit/auth_cubit.dart';
 
 class ZnoonaGameApp extends StatelessWidget {
   const ZnoonaGameApp({super.key});
@@ -18,12 +19,17 @@ class ZnoonaGameApp extends StatelessWidget {
     return ValueListenableBuilder(
       valueListenable: ConnectivityController.instance.isConnected,
       builder: (_, value, _) {
-        return BlocProvider(
-          create: (context) => sl<AppCubit>()
-            ..changeAppThemeMode(
-              sheredMode: SharedPref().getBoolean(PrefKeys.themeMode),
-            )
-            ..getSavedLanguage(),
+        return MultiBlocProvider(
+          providers: [
+            BlocProvider(
+              create: (context) => sl<AppCubit>()
+                ..changeAppThemeMode(
+                  sheredMode: SharedPref().getBoolean(PrefKeys.themeMode),
+                )
+                ..getSavedLanguage(),
+            ),
+            BlocProvider(create: (_) => sl<AuthCubit>()),
+          ],
           child: ScreenUtilInit(
             designSize: const Size(384, 805),
             child: BlocBuilder<AppCubit, AppState>(
@@ -35,7 +41,7 @@ class ZnoonaGameApp extends StatelessWidget {
                 return MaterialApp(
                   debugShowCheckedModeBanner: false,
                   title: 'Znoona Game App',
-                  theme: cubit.isDarkMode ? lightTheme() : darkTheme(),
+                  theme: cubit.isDarkMode ? darkTheme() : lightTheme(),
                   locale: Locale(cubit.currentLangcode),
                   supportedLocales: AppLocalizationsSetup.supportedLocales,
                   localeResolutionCallback:

@@ -21,38 +21,38 @@ mixin _$AppState {
   TResult when<TResult extends Object?>({
     required TResult Function() initial,
     required TResult Function(bool isDarkMode) themeChangMode,
-    required TResult Function(Locale locale) languageChang,
+    required TResult Function(Locale locale) languageChange,
   }) => throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? initial,
     TResult? Function(bool isDarkMode)? themeChangMode,
-    TResult? Function(Locale locale)? languageChang,
+    TResult? Function(Locale locale)? languageChange,
   }) => throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? initial,
     TResult Function(bool isDarkMode)? themeChangMode,
-    TResult Function(Locale locale)? languageChang,
+    TResult Function(Locale locale)? languageChange,
     required TResult orElse(),
   }) => throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
     required TResult Function(_Initial value) initial,
     required TResult Function(ThemeChangModeState value) themeChangMode,
-    required TResult Function(LanguageChangState value) languageChang,
+    required TResult Function(LanguageChangState value) languageChange,
   }) => throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
     TResult? Function(_Initial value)? initial,
     TResult? Function(ThemeChangModeState value)? themeChangMode,
-    TResult? Function(LanguageChangState value)? languageChang,
+    TResult? Function(LanguageChangState value)? languageChange,
   }) => throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
     TResult Function(_Initial value)? initial,
     TResult Function(ThemeChangModeState value)? themeChangMode,
-    TResult Function(LanguageChangState value)? languageChang,
+    TResult Function(LanguageChangState value)? languageChange,
     required TResult orElse(),
   }) => throw _privateConstructorUsedError;
 }
@@ -128,7 +128,7 @@ class _$InitialImpl with DiagnosticableTreeMixin implements _Initial {
   TResult when<TResult extends Object?>({
     required TResult Function() initial,
     required TResult Function(bool isDarkMode) themeChangMode,
-    required TResult Function(Locale locale) languageChang,
+    required TResult Function(Locale locale) languageChange,
   }) {
     return initial();
   }
@@ -138,7 +138,7 @@ class _$InitialImpl with DiagnosticableTreeMixin implements _Initial {
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? initial,
     TResult? Function(bool isDarkMode)? themeChangMode,
-    TResult? Function(Locale locale)? languageChang,
+    TResult? Function(Locale locale)? languageChange,
   }) {
     return initial?.call();
   }
@@ -148,7 +148,7 @@ class _$InitialImpl with DiagnosticableTreeMixin implements _Initial {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? initial,
     TResult Function(bool isDarkMode)? themeChangMode,
-    TResult Function(Locale locale)? languageChang,
+    TResult Function(Locale locale)? languageChange,
     required TResult orElse(),
   }) {
     if (initial != null) {
@@ -162,7 +162,7 @@ class _$InitialImpl with DiagnosticableTreeMixin implements _Initial {
   TResult map<TResult extends Object?>({
     required TResult Function(_Initial value) initial,
     required TResult Function(ThemeChangModeState value) themeChangMode,
-    required TResult Function(LanguageChangState value) languageChang,
+    required TResult Function(LanguageChangState value) languageChange,
   }) {
     return initial(this);
   }
@@ -172,7 +172,7 @@ class _$InitialImpl with DiagnosticableTreeMixin implements _Initial {
   TResult? mapOrNull<TResult extends Object?>({
     TResult? Function(_Initial value)? initial,
     TResult? Function(ThemeChangModeState value)? themeChangMode,
-    TResult? Function(LanguageChangState value)? languageChang,
+    TResult? Function(LanguageChangState value)? languageChange,
   }) {
     return initial?.call(this);
   }
@@ -182,7 +182,7 @@ class _$InitialImpl with DiagnosticableTreeMixin implements _Initial {
   TResult maybeMap<TResult extends Object?>({
     TResult Function(_Initial value)? initial,
     TResult Function(ThemeChangModeState value)? themeChangMode,
-    TResult Function(LanguageChangState value)? languageChang,
+    TResult Function(LanguageChangState value)? languageChange,
     required TResult orElse(),
   }) {
     if (initial != null) {
@@ -282,7 +282,7 @@ class _$ThemeChangModeStateImpl
   TResult when<TResult extends Object?>({
     required TResult Function() initial,
     required TResult Function(bool isDarkMode) themeChangMode,
-    required TResult Function(Locale locale) languageChang,
+    required TResult Function(Locale locale) languageChange,
   }) {
     return themeChangMode(isDarkMode);
   }
@@ -292,7 +292,7 @@ class _$ThemeChangModeStateImpl
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? initial,
     TResult? Function(bool isDarkMode)? themeChangMode,
-    TResult? Function(Locale locale)? languageChang,
+    TResult? Function(Locale locale)? languageChange,
   }) {
     return themeChangMode?.call(isDarkMode);
   }
@@ -302,7 +302,7 @@ class _$ThemeChangModeStateImpl
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? initial,
     TResult Function(bool isDarkMode)? themeChangMode,
-    TResult Function(Locale locale)? languageChang,
+    TResult Function(Locale locale)? languageChange,
     required TResult orElse(),
   }) {
     if (themeChangMode != null) {
@@ -316,7 +316,7 @@ class _$ThemeChangModeStateImpl
   TResult map<TResult extends Object?>({
     required TResult Function(_Initial value) initial,
     required TResult Function(ThemeChangModeState value) themeChangMode,
-    required TResult Function(LanguageChangState value) languageChang,
+    required TResult Function(LanguageChangState value) languageChange,
   }) {
     return themeChangMode(this);
   }
@@ -326,7 +326,7 @@ class _$ThemeChangModeStateImpl
   TResult? mapOrNull<TResult extends Object?>({
     TResult? Function(_Initial value)? initial,
     TResult? Function(ThemeChangModeState value)? themeChangMode,
-    TResult? Function(LanguageChangState value)? languageChang,
+    TResult? Function(LanguageChangState value)? languageChange,
   }) {
     return themeChangMode?.call(this);
   }
@@ -336,7 +336,7 @@ class _$ThemeChangModeStateImpl
   TResult maybeMap<TResult extends Object?>({
     TResult Function(_Initial value)? initial,
     TResult Function(ThemeChangModeState value)? themeChangMode,
-    TResult Function(LanguageChangState value)? languageChang,
+    TResult Function(LanguageChangState value)? languageChange,
     required TResult orElse(),
   }) {
     if (themeChangMode != null) {
@@ -406,14 +406,14 @@ class _$LanguageChangStateImpl
 
   @override
   String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
-    return 'AppState.languageChang(locale: $locale)';
+    return 'AppState.languageChange(locale: $locale)';
   }
 
   @override
   void debugFillProperties(DiagnosticPropertiesBuilder properties) {
     super.debugFillProperties(properties);
     properties
-      ..add(DiagnosticsProperty('type', 'AppState.languageChang'))
+      ..add(DiagnosticsProperty('type', 'AppState.languageChange'))
       ..add(DiagnosticsProperty('locale', locale));
   }
 
@@ -444,9 +444,9 @@ class _$LanguageChangStateImpl
   TResult when<TResult extends Object?>({
     required TResult Function() initial,
     required TResult Function(bool isDarkMode) themeChangMode,
-    required TResult Function(Locale locale) languageChang,
+    required TResult Function(Locale locale) languageChange,
   }) {
-    return languageChang(locale);
+    return languageChange(locale);
   }
 
   @override
@@ -454,9 +454,9 @@ class _$LanguageChangStateImpl
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? initial,
     TResult? Function(bool isDarkMode)? themeChangMode,
-    TResult? Function(Locale locale)? languageChang,
+    TResult? Function(Locale locale)? languageChange,
   }) {
-    return languageChang?.call(locale);
+    return languageChange?.call(locale);
   }
 
   @override
@@ -464,11 +464,11 @@ class _$LanguageChangStateImpl
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? initial,
     TResult Function(bool isDarkMode)? themeChangMode,
-    TResult Function(Locale locale)? languageChang,
+    TResult Function(Locale locale)? languageChange,
     required TResult orElse(),
   }) {
-    if (languageChang != null) {
-      return languageChang(locale);
+    if (languageChange != null) {
+      return languageChange(locale);
     }
     return orElse();
   }
@@ -478,9 +478,9 @@ class _$LanguageChangStateImpl
   TResult map<TResult extends Object?>({
     required TResult Function(_Initial value) initial,
     required TResult Function(ThemeChangModeState value) themeChangMode,
-    required TResult Function(LanguageChangState value) languageChang,
+    required TResult Function(LanguageChangState value) languageChange,
   }) {
-    return languageChang(this);
+    return languageChange(this);
   }
 
   @override
@@ -488,9 +488,9 @@ class _$LanguageChangStateImpl
   TResult? mapOrNull<TResult extends Object?>({
     TResult? Function(_Initial value)? initial,
     TResult? Function(ThemeChangModeState value)? themeChangMode,
-    TResult? Function(LanguageChangState value)? languageChang,
+    TResult? Function(LanguageChangState value)? languageChange,
   }) {
-    return languageChang?.call(this);
+    return languageChange?.call(this);
   }
 
   @override
@@ -498,11 +498,11 @@ class _$LanguageChangStateImpl
   TResult maybeMap<TResult extends Object?>({
     TResult Function(_Initial value)? initial,
     TResult Function(ThemeChangModeState value)? themeChangMode,
-    TResult Function(LanguageChangState value)? languageChang,
+    TResult Function(LanguageChangState value)? languageChange,
     required TResult orElse(),
   }) {
-    if (languageChang != null) {
-      return languageChang(this);
+    if (languageChange != null) {
+      return languageChange(this);
     }
     return orElse();
   }

@@ -1,10 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:google_fonts/google_fonts.dart';
-import 'package:znoona_game_app/core/common/animations/animate_do.dart';
-import 'package:znoona_game_app/core/common/widgets/text_app.dart';
-import 'package:znoona_game_app/core/helpers/znoona.colors.dart';
 import 'package:znoona_game_app/core/helpers/znoona_navigate.dart';
 import 'package:znoona_game_app/core/helpers/znoona_texts.dart';
 import 'package:znoona_game_app/core/language/lang_keys.dart';
@@ -12,8 +8,10 @@ import 'package:znoona_game_app/core/routes/app_routes.dart';
 import 'package:znoona_game_app/features/user/auth/presentation/cubit/auth_cubit.dart';
 import 'package:znoona_game_app/features/user/auth/presentation/widgets/auth_title_info.dart';
 import 'package:znoona_game_app/features/user/auth/presentation/widgets/dark_and_lang_buttons.dart';
+import 'package:znoona_game_app/features/user/auth/presentation/widgets/have_account_or_not.dart';
 import 'package:znoona_game_app/features/user/auth/presentation/widgets/login/login_button.dart';
 import 'package:znoona_game_app/features/user/auth/presentation/widgets/login/login_text_form.dart';
+import 'package:znoona_game_app/features/user/auth/presentation/widgets/login_or_sign_up_with_google.dart';
 
 class LoginBody extends StatelessWidget {
   LoginBody({super.key});
@@ -40,6 +38,10 @@ class LoginBody extends StatelessWidget {
       builder: (context, state) {
         final isLoading = state.maybeWhen(
           loading: () => true,
+          orElse: () => false,
+        );
+        final isGoogleLoading = state.maybeWhen(
+          googleloading: () => true,
           orElse: () => false,
         );
 
@@ -69,22 +71,16 @@ class LoginBody extends StatelessWidget {
                     emailController: emailController,
                     passwordController: passwordController,
                   ),
-                SizedBox(height: 30.h),
-                CustomFadeInDown(
-                  duration: 400,
-                  child: TextButton(
-                    onPressed: () async {
-                      await ZnoonaNavigate.pushNamed(context, AppRoutes.signUp);
-                    },
-                    child: TextApp(
-                      text: ZnoonaTexts.tr(context, LangKeys.createAccount),
-                      textStyle: GoogleFonts.beiruti(
-                        fontSize: 20.sp,
-                        color: ZnoonaColors.bluePinkLight(context),
-                        fontWeight: FontWeight.w500,
-                      ),
-                    ),
+                SizedBox(height: 10.h),
+                if (isGoogleLoading)
+                  const CircularProgressIndicator()
+                else
+                  LoginOrSignUpWithGoogle(
+                    text: ZnoonaTexts.tr(context, LangKeys.login),
                   ),
+                SizedBox(height: 30.h),
+                HaveAccountOrNot(
+                  text: ZnoonaTexts.tr(context, LangKeys.createAccount),
                 ),
               ],
             ),

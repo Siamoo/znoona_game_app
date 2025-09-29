@@ -36,7 +36,7 @@ class _SignUpTextFormState extends State<SignUpTextForm> {
         children: [
           // Full Name
           CustomFadeInRight(
-            duration: 200,
+            duration: 300,
             child: CustomTextField(
               controller: widget.nameController,
               hintText: ZnoonaTexts.tr(context, LangKeys.fullName),
@@ -53,7 +53,7 @@ class _SignUpTextFormState extends State<SignUpTextForm> {
 
           // Email
           CustomFadeInRight(
-            duration: 200,
+            duration: 400,
             child: CustomTextField(
               controller: widget.emailController,
               hintText: ZnoonaTexts.tr(context, LangKeys.email),
@@ -70,7 +70,7 @@ class _SignUpTextFormState extends State<SignUpTextForm> {
 
           // Password
           CustomFadeInRight(
-            duration: 200,
+            duration: 450,
             child: CustomTextField(
               controller: widget.passwordController,
               hintText: ZnoonaTexts.tr(context, LangKeys.password),

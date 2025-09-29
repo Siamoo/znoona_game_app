@@ -33,7 +33,7 @@ class _LoginTextFormState extends State<LoginTextForm> {
       child: Column(
         children: [
           CustomFadeInRight(
-            duration: 200,
+            duration: 300,
             child: CustomTextField(
               controller: widget.emailController,
               hintText: ZnoonaTexts.tr(context, LangKeys.email),
@@ -50,7 +50,7 @@ class _LoginTextFormState extends State<LoginTextForm> {
           ),
           SizedBox(height: 20.h),
           CustomFadeInRight(
-            duration: 200,
+            duration: 400,
             child: CustomTextField(
               controller: widget.passwordController,
               hintText: ZnoonaTexts.tr(context, LangKeys.password),

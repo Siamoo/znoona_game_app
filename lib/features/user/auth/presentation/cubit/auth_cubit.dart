@@ -50,7 +50,7 @@ class AuthCubit extends Cubit<AuthState> {
   }
 
   Future<void> loginWithGoogle() async {
-    emit(const AuthState.loading());
+    emit(const AuthState.googleloading());
     final result = await loginWithGoogleUseCase();
     result.fold(
       (error) {

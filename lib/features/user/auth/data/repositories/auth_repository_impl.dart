@@ -41,4 +41,21 @@ class AuthRepositoryImpl implements AuthRepository {
       return Left(e.toString());
     }
   }
+
+  @override
+  Future<Either<String, Profile>> loginWithGoogle() async {
+    try {
+      final result = await remote.loginWithGoogle();
+      return Right(result.toEntity());
+    } catch (e) {
+      return Left(e.toString());
+    }
+  }
+  
+  @override
+  Future<void> logout() {
+    return remote.logout();
+  }
+
+
 }

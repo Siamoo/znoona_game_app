@@ -12,4 +12,8 @@ abstract class AuthRepository {
     required String email,
     required String password,
   });
+
+  Future<Either<String, Profile>> loginWithGoogle();
+
+  Future<void> logout();
 }

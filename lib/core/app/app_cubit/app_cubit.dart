@@ -12,7 +12,7 @@ part 'app_cubit.freezed.dart';
 class AppCubit extends Cubit<AppState> {
   AppCubit() : super(const AppState.initial());
 
-  bool isDarkMode = true;
+  bool isDarkMode = false;
   String currentLangcode = 'en';
 
   Future<void> changeAppThemeMode({bool? sheredMode}) async {

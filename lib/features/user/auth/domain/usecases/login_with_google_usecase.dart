@@ -6,7 +6,7 @@ class LoginWithGoogleUseCase {
   LoginWithGoogleUseCase(this.repository);
   final AuthRepository repository;
 
-  Future<Either<String, Profile>> call() async {
-    return await repository.loginWithGoogle();
+  Future<Either<String, Profile>> call()  {
+    return repository.loginWithGoogle();
   }
 }

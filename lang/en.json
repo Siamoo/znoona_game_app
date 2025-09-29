@@ -33,5 +33,6 @@
     "dark_mode": "Dark Mode",
     "lang_code": "English",
     "under_build": "Under Build",
-    "error": "Error"  
+    "error": "Error",
+    "googel" : "Login With Google"
 }

@@ -11,10 +11,10 @@ import 'package:znoona_game_app/features/user/auth/presentation/cubit/auth_cubit
 
 class LoginButton extends StatelessWidget {
   const LoginButton({
-    super.key,
     required this.formKey,
     required this.emailController,
     required this.passwordController,
+    super.key,
   });
 
   final GlobalKey<FormState> formKey;
@@ -31,9 +31,9 @@ class LoginButton extends StatelessWidget {
         onPressed: () async {
           if (formKey.currentState?.validate() ?? false) {
             await context.read<AuthCubit>().login(
-                  emailController.text.trim(),
-                  passwordController.text.trim(),
-                );
+              emailController.text.trim(),
+              passwordController.text.trim(),
+            );
           }
         },
         child: TextApp(

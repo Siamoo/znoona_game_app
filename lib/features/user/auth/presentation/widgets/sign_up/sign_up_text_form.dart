@@ -9,11 +9,11 @@ import 'package:znoona_game_app/core/utils/app_regex.dart';
 
 class SignUpTextForm extends StatefulWidget {
   const SignUpTextForm({
-    super.key,
     required this.formKey,
     required this.nameController,
     required this.emailController,
     required this.passwordController,
+    super.key,
   });
 
   final GlobalKey<FormState> formKey;

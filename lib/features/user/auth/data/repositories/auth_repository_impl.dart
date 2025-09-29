@@ -21,7 +21,7 @@ class AuthRepositoryImpl implements AuthRepository {
         fullName: fullName,
       );
       return Right(result.toEntity());
-    } catch (e) {
+    }on Exception catch (e) {
       return Left(e.toString());
     }
   }
@@ -37,7 +37,7 @@ class AuthRepositoryImpl implements AuthRepository {
         password: password,
       );
       return Right(result.toEntity());
-    } catch (e) {
+    }on Exception catch (e) {
       return Left(e.toString());
     }
   }
@@ -47,7 +47,7 @@ class AuthRepositoryImpl implements AuthRepository {
     try {
       final result = await remote.loginWithGoogle();
       return Right(result.toEntity());
-    } catch (e) {
+    }on Exception catch (e) {
       return Left(e.toString());
     }
   }

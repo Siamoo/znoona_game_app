@@ -9,10 +9,10 @@ import 'package:znoona_game_app/core/utils/app_regex.dart';
 
 class LoginTextForm extends StatefulWidget {
   const LoginTextForm({
-    super.key,
     required this.formKey,
     required this.emailController,
     required this.passwordController,
+    super.key,
   });
 
   final GlobalKey<FormState> formKey;
@@ -39,7 +39,9 @@ class _LoginTextFormState extends State<LoginTextForm> {
               hintText: ZnoonaTexts.tr(context, LangKeys.email),
               keyboardType: TextInputType.emailAddress,
               validator: (value) {
-                if (value == null || value.isEmpty || !AppRegex.isEmailValid(value)) {
+                if (value == null ||
+                    value.isEmpty ||
+                    !AppRegex.isEmailValid(value)) {
                   return ZnoonaTexts.tr(context, LangKeys.validEmail);
                 }
                 return null;

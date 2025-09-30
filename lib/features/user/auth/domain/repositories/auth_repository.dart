@@ -15,5 +15,9 @@ abstract class AuthRepository {
 
   Future<Either<String, Profile>> loginWithGoogle();
 
+
   Future<void> logout();
+
+    Future<Either<String, Profile>> getCurrentUser();
+
 }

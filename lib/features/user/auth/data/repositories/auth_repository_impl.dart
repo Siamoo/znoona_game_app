@@ -21,7 +21,7 @@ class AuthRepositoryImpl implements AuthRepository {
         fullName: fullName,
       );
       return Right(result.toEntity());
-    }on Exception catch (e) {
+    } on Exception catch (e) {
       return Left(e.toString());
     }
   }
@@ -37,7 +37,7 @@ class AuthRepositoryImpl implements AuthRepository {
         password: password,
       );
       return Right(result.toEntity());
-    }on Exception catch (e) {
+    } on Exception catch (e) {
       return Left(e.toString());
     }
   }
@@ -47,15 +47,24 @@ class AuthRepositoryImpl implements AuthRepository {
     try {
       final result = await remote.loginWithGoogle();
       return Right(result.toEntity());
-    }on Exception catch (e) {
+    } on Exception catch (e) {
       return Left(e.toString());
     }
   }
-  
+
   @override
   Future<void> logout() {
     return remote.logout();
   }
 
-
+  @override
+  Future<Either<String, Profile>> getCurrentUser() async {
+    try {
+      final result = await remote.getCurrentUser();
+      if (result == null) return const Left('User not found');
+      return Right(result.toEntity());
+    } on Exception catch (e) {
+      return Left(e.toString());
+    }
+  }
 }

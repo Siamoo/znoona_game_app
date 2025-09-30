@@ -1,65 +1,44 @@
 import 'package:flutter/material.dart';
+import 'package:znoona_game_app/core/routes/base_routes.dart';
 
 class ZnoonaNavigate {
+  // Push a widget with animation
   static Future<T?> pushTo<T>(BuildContext context, Widget page) {
     return Navigator.push<T>(
       context,
-      MaterialPageRoute(builder: (_) => page),
+      BaseRoute<T>(page: page),
     );
   }
 
+  // PushReplacement a widget with animation
   static Future<T?> pushReplacementTo<T>(BuildContext context, Widget page) {
     return Navigator.pushReplacement<T, T>(
       context,
-      MaterialPageRoute(builder: (_) => page),
+      BaseRoute<T>(page: page),
     );
   }
 
+  // Pop current screen
   static void pop<T>(BuildContext context, [T? result]) {
     Navigator.pop(context, result);
   }
 
+  // PushReplacement without back
   static Future<T?> navigateWithoutBack<T>(BuildContext context, Widget page) {
     return Navigator.pushReplacement<T, T>(
       context,
-      MaterialPageRoute(builder: (_) => page),
+      BaseRoute<T>(page: page),
     );
   }
 
-  static Future<T?> pushNamed<T extends Object?>(
+  static Future<T?> pushReplacementAndRemoveUntil<T>(
     BuildContext context,
-    String routeName, {
-    Object? arguments,
-  }) {
-    return Navigator.pushNamed<T>(
+    Widget page,
+  ) {
+    return Navigator.pushAndRemoveUntil<T>(
       context,
-      routeName,
-      arguments: arguments,
-    );
-  }
-
-  static Future<T?> pushReplacementNamed<T extends Object?, TO extends Object?>(
-    BuildContext context,
-    String routeName, {
-    Object? arguments,
-  }) {
-    return Navigator.pushReplacementNamed<T, TO>(
-      context,
-      routeName,
-      arguments: arguments,
-    );
-  }
-
-  static Future<T?> pushNamedAndRemoveUntil<T extends Object?>(
-    BuildContext context,
-    String routeName, {
-    Object? arguments,
-  }) {
-    return Navigator.pushNamedAndRemoveUntil<T>(
-      context,
-      routeName,
-      (Route<dynamic> route) => false,
-      arguments: arguments,
+      BaseRoute<T>(page: page),
+      (Route<dynamic> route) => false, // Remove all previous routes
     );
   }
 }

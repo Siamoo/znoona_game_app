@@ -30,7 +30,7 @@ class CustomLinearButton extends StatelessWidget {
           gradient: LinearGradient(
             colors: [
               ZnoonaColors.bluePinkLight(context),
-              ZnoonaColors.bluePinkDark(  context),
+              ZnoonaColors.bluePinkDark(context),
             ],
             begin: const Alignment(0.46, -0.89),
             end: const Alignment(-0.46, 0.89),

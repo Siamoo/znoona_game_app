@@ -56,7 +56,7 @@ class AuthCubit extends Cubit<AuthState> {
       (error) {
         emit(AuthState.error(error));
       },
-      (profile) => emit(AuthState.authenticated(profile)),
+      (profile) => emit(AuthState.googleauthenticated(profile)),
     );
   }
 

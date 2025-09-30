@@ -1,15 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:supabase_flutter/supabase_flutter.dart';
 import 'package:znoona_game_app/core/app/app_cubit/app_cubit.dart';
 import 'package:znoona_game_app/core/app/connectivity_controller.dart';
+import 'package:znoona_game_app/core/common/screens/no_network_screen.dart';
 import 'package:znoona_game_app/core/di/injcetion_container.dart';
 import 'package:znoona_game_app/core/language/app_localizations_setup.dart';
-import 'package:znoona_game_app/core/routes/app_routes.dart';
 import 'package:znoona_game_app/core/service/shared_pref/pref_keys.dart';
 import 'package:znoona_game_app/core/service/shared_pref/shared_pref.dart';
 import 'package:znoona_game_app/core/style/theme/app_theme.dart';
 import 'package:znoona_game_app/features/user/auth/presentation/cubit/auth_cubit.dart';
+import 'package:znoona_game_app/features/user/auth/presentation/screens/login_screen.dart';
+import 'package:znoona_game_app/features/user/home/screens/home_screen.dart';
 
 class ZnoonaGameApp extends StatelessWidget {
   const ZnoonaGameApp({super.key});
@@ -62,8 +65,17 @@ class ZnoonaGameApp extends StatelessWidget {
                       ),
                     );
                   },
-                  onGenerateRoute: AppRoutes.generateRoute,
-                  initialRoute: value ? AppRoutes.login : AppRoutes.noNetwork,
+                  home: value
+                      ? Builder(
+                          builder: (context) {
+                            final session =
+                                Supabase.instance.client.auth.currentSession;
+                            return session != null
+                                ? const HomeScreen()
+                                : const LoginScreen();
+                          },
+                        )
+                      : const NoNetworkScreen(),
                 );
               },
             ),

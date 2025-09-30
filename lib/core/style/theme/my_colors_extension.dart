@@ -104,7 +104,7 @@ class MyColors extends ThemeExtension<MyColors> {
     navBarSelectedTab: ColorsLight.pinkDark,
     containerShadow1: ColorsLight.white,
     containerShadow2: ColorsLight.white,
-    containerLinear1: ColorsLight.pinkDark,
-    containerLinear2: ColorsLight.pinkLight,
+    containerLinear1: ColorsLight.black1,
+    containerLinear2: ColorsLight.black2,
   );
 }

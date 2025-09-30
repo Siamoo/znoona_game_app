@@ -6,4 +6,6 @@ class ColorsLight {
   static const Color pinkDark = Color(0xFF99162B);
   static const Color black = Color(0xff170605);
   static const Color white = Color(0xffFFFFFF);
+  static const Color black1 = Color(0xff353F54);
+  static const Color black2 = Color(0xff222834);
 }

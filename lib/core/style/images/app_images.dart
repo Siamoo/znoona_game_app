@@ -4,14 +4,13 @@ class AppImages {
   static const pageUnderBuild = 'assets/images/core/page_under_build.jpg';
   static const emptyScreen = 'assets/images/core/empty_screen.png';
 
-  // Customer
-  static const userAvatar = 'assets/images/customer/user.png';
-  static const bigIconNavBarDark =
-      'assets/images/customer/big_nav_bar_dark.png';
-  static const bigIconNavBarLight =
-      'assets/images/customer/big_nav_bar_light.png';
-  static const homeBgDark = 'assets/images/customer/home_bg_dark.png';
-  static const homeBgLight = 'assets/images/customer/home_bg_light.png';
+  // user
+  static const userAvatar = 'assets/images/user/user.png';
+  static const bigIconNavBarDark = 'assets/images/user/big_nav_bar_dark.png';
+  static const bigIconNavBarLight = 'assets/images/user/big_nav_bar_light.png';
+  static const homeBgDark = 'assets/images/user/home_bg_dark.png';
+  static const homeBgLight = 'assets/images/user/home_bg_light.png';
+  static const level = 'assets/images/user/level.png';
 
   // Admin
   static const drawerImage = 'assets/images/admin/drawer_image.png';

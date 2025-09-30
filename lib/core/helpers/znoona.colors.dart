@@ -6,23 +6,19 @@ class ZnoonaColors {
     return Theme.of(context).extension<MyColors>()!;
   }
 
-  static Color main(BuildContext context) =>
-      of(context).mainColor!;
+  static Color main(BuildContext context) => of(context).mainColor!;
 
-  static Color bluePinkDark(BuildContext context) =>
-      of(context).bluePinkDark!;
+  static Color bluePinkDark(BuildContext context) => of(context).bluePinkDark!;
 
   static Color bluePinkLight(BuildContext context) =>
       of(context).bluePinkLight!;
 
-  static Color text(BuildContext context) =>
-      of(context).textColor!;
+  static Color text(BuildContext context) => of(context).textColor!;
 
   static Color textFormBorder(BuildContext context) =>
       of(context).textFormBorder!;
 
-  static Color navBarbg(BuildContext context) =>
-      of(context).navBarbg!;
+  static Color navBarbg(BuildContext context) => of(context).navBarbg!;
 
   static Color navBarSelectedTab(BuildContext context) =>
       of(context).navBarSelectedTab!;
@@ -38,4 +34,7 @@ class ZnoonaColors {
 
   static Color containerLinear2(BuildContext context) =>
       of(context).containerLinear2!;
+
+  static Color containerLinear3(BuildContext context) =>
+      of(context).containerLinear3!;
 }

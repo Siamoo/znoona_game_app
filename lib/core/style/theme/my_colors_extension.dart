@@ -15,6 +15,7 @@ class MyColors extends ThemeExtension<MyColors> {
     required this.containerShadow2,
     required this.containerLinear1,
     required this.containerLinear2,
+    required this.containerLinear3,
   });
 
   final Color? mainColor;
@@ -28,6 +29,7 @@ class MyColors extends ThemeExtension<MyColors> {
   final Color? containerShadow2;
   final Color? containerLinear1;
   final Color? containerLinear2;
+  final Color? containerLinear3;
 
   @override
   ThemeExtension<MyColors> copyWith({
@@ -54,6 +56,7 @@ class MyColors extends ThemeExtension<MyColors> {
       containerShadow2: containerShadow2,
       containerLinear1: containerLinear1,
       containerLinear2: containerLinear2,
+      containerLinear3: containerLinear3,
     );
   }
 
@@ -77,6 +80,7 @@ class MyColors extends ThemeExtension<MyColors> {
       containerShadow2: containerShadow2,
       containerLinear1: containerLinear1,
       containerLinear2: containerLinear2,
+      containerLinear3: containerLinear3,
     );
   }
 
@@ -92,6 +96,7 @@ class MyColors extends ThemeExtension<MyColors> {
     containerShadow2: ColorsDark.black2,
     containerLinear1: ColorsDark.black1,
     containerLinear2: ColorsDark.black2,
+    containerLinear3: ColorsDark.blueLight,
   );
 
   static const MyColors light = MyColors(
@@ -106,5 +111,6 @@ class MyColors extends ThemeExtension<MyColors> {
     containerShadow2: ColorsLight.white,
     containerLinear1: ColorsLight.black1,
     containerLinear2: ColorsLight.black2,
+    containerLinear3: ColorsLight.black1,
   );
 }

@@ -9,11 +9,15 @@ class CustomLinearButton extends StatelessWidget {
     this.height,
     this.width,
     super.key,
+    this.colors,
+    this.borderRadiusNum,
   });
   final VoidCallback onPressed;
   final Widget child;
   final double? height;
   final double? width;
+  final List<Color>? colors;
+  final double? borderRadiusNum;
 
   @override
   Widget build(BuildContext context) {
@@ -25,13 +29,15 @@ class CustomLinearButton extends StatelessWidget {
         width: width ?? 44.w,
         decoration: ShapeDecoration(
           shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(10),
+            borderRadius: BorderRadius.circular(borderRadiusNum ?? 10),
           ),
           gradient: LinearGradient(
-            colors: [
-              ZnoonaColors.bluePinkLight(context),
-              ZnoonaColors.bluePinkDark(context),
-            ],
+            colors:
+                colors ??
+                [
+                  ZnoonaColors.bluePinkLight(context),
+                  ZnoonaColors.bluePinkDark(context),
+                ],
             begin: const Alignment(0.46, -0.89),
             end: const Alignment(-0.46, 0.89),
           ),

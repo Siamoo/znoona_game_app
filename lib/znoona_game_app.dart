@@ -19,6 +19,7 @@ class ZnoonaGameApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final session = Supabase.instance.client.auth.currentSession;
     return ValueListenableBuilder(
       valueListenable: ConnectivityController.instance.isConnected,
       builder: (_, value, _) {
@@ -31,7 +32,7 @@ class ZnoonaGameApp extends StatelessWidget {
                 )
                 ..getSavedLanguage(),
             ),
-            BlocProvider(create: (_) => sl<AuthCubit>()),
+            BlocProvider(create: (_) => sl<AuthCubit>()..getCurrentUser()),
           ],
           child: ScreenUtilInit(
             designSize: const Size(384, 805),
@@ -65,17 +66,12 @@ class ZnoonaGameApp extends StatelessWidget {
                       ),
                     );
                   },
-                  home: value
-                      ? Builder(
-                          builder: (context) {
-                            final session =
-                                Supabase.instance.client.auth.currentSession;
-                            return session != null
-                                ? const HomeScreen()
-                                : const LoginScreen();
-                          },
-                        )
-                      : const NoNetworkScreen(),
+
+                  home: !value
+                      ? const NoNetworkScreen()
+                      : session != null
+                      ? const HomeScreen()
+                      : const LoginScreen(),
                 );
               },
             ),

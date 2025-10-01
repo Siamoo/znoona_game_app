@@ -13,6 +13,7 @@ class AppImages {
   static const level = 'assets/images/user/level.png';
   static const quizGame = 'assets/images/user/quiz_game.png';
   static const puzzle = 'assets/images/user/Puzzle.png';
+  static const discover = 'assets/images/user/discover.png';
 
   // Admin
   static const drawerImage = 'assets/images/admin/drawer_image.png';

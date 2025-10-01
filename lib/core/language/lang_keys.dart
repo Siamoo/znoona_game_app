@@ -39,4 +39,6 @@ class LangKeys {
   static const String playAgain = 'play_again';
   static const String score = 'score';
   static const String quizGame = 'quiz_game';
+  static const String letsDiscover = 'lets_discover';
+  static const String developSkills = 'develop_skills';
 }

@@ -2,14 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 import 'package:znoona_game_app/core/helpers/znoona_navigate.dart';
-import 'package:znoona_game_app/core/helpers/znoona_texts.dart';
 import 'package:znoona_game_app/core/language/lang_keys.dart';
 import 'package:znoona_game_app/core/style/images/app_images.dart';
 import 'package:znoona_game_app/features/user/auth/domain/entities/profile.dart';
 import 'package:znoona_game_app/features/user/auth/presentation/screens/login_screen.dart';
 import 'package:znoona_game_app/features/user/home/widgets/custom_appbar.dart';
-import 'package:znoona_game_app/features/user/home/widgets/game_button.dart';
-import 'package:znoona_game_app/features/user/home/widgets/lets_play_text.dart';
+import 'package:znoona_game_app/features/user/home/widgets/custom_section_title.dart';
+import 'package:znoona_game_app/features/user/home/widgets/custom_game_button.dart';
+import 'package:znoona_game_app/features/user/home/widgets/discover_button.dart';
 
 class HomeBody extends StatelessWidget {
   const HomeBody({
@@ -21,49 +21,52 @@ class HomeBody extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       body: SafeArea(
-        child: Padding(
-          padding: const EdgeInsets.symmetric(
-            horizontal: 10,
-            vertical: 10,
-          ),
-          child: SingleChildScrollView(
+        child: SingleChildScrollView(
+          child: Padding(
+            padding: EdgeInsets.symmetric(
+              horizontal: 10.w,
+              vertical: 10.h,
+            ),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 CustomAppBar(profile: profile),
                 Padding(
-                  padding: const EdgeInsets.symmetric(
-                    horizontal: 10,
+                  padding: EdgeInsets.symmetric(
+                    horizontal: 10.w,
                   ),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      SizedBox(height: 20.h),
-                      const LetsPlayText(),
-                      Row(
+                      SizedBox(height: 30.h),
+                      const CustomSectionTitle(
+                        langkey: LangKeys.letsPlay,
+                      ),
+                      SizedBox(height: 10.h),
+                      const Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
                           GameButton(
-                            title: ZnoonaTexts.tr(
-                              context,
-                              LangKeys.quizGame,
-                            ),
                             image: AppImages.quizGame,
+                            langkey: LangKeys.quizGame,
                           ),
                           GameButton(
-                            title: ZnoonaTexts.tr(
-                              context,
-                              LangKeys.appName,
-                            ),
                             image: AppImages.puzzle,
+                            langkey: LangKeys.appName,
                           ),
                         ],
                       ),
+                      SizedBox(height: 30.h),
+                      const CustomSectionTitle(
+                        langkey: LangKeys.letsDiscover,
+                      ),
+                      SizedBox(height: 10.h),
+                      const DiscoverButton(),
                     ],
                   ),
                 ),
-                SizedBox(height: 20.h),
 
+                SizedBox(height: 20.h),
                 ElevatedButton(
                   onPressed: () async {
                     await Supabase.instance.client.auth.signOut();

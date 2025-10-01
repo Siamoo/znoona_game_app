@@ -11,8 +11,8 @@ import 'package:znoona_game_app/features/user/auth/domain/entities/profile.dart'
 
 class CustomAppBar extends StatelessWidget {
   const CustomAppBar({
-    super.key,
     required this.profile,
+    super.key,
   });
 
   final Profile profile;

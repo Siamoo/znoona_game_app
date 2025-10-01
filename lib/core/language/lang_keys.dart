@@ -34,4 +34,9 @@ class LangKeys {
   static const String langCode = 'lang_code';
   static const String google = 'googel';
   static const String hello = 'hello';
+  static const String letsPlay = 'lets_play';
+  static const String play = 'play';
+  static const String playAgain = 'play_again';
+  static const String score = 'score';
+  static const String quizGame = 'quiz_game';
 }

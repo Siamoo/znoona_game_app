@@ -11,6 +11,8 @@ class AppImages {
   static const homeBgDark = 'assets/images/user/home_bg_dark.png';
   static const homeBgLight = 'assets/images/user/home_bg_light.png';
   static const level = 'assets/images/user/level.png';
+  static const quizGame = 'assets/images/user/quiz_game.png';
+  static const puzzle = 'assets/images/user/Puzzle.png';
 
   // Admin
   static const drawerImage = 'assets/images/admin/drawer_image.png';

@@ -35,5 +35,10 @@
     "under_build": "Under Build",
     "error": "Error",
     "googel" : "With Google",
-    "hello": "Hello,"
+    "hello": "Hello",
+    "lets_play": "Let's Play",
+    "play": "Play",
+    "play_again": "Play Again",
+    "score": "Score",
+    "quiz_game": "Quiz Game"
 }

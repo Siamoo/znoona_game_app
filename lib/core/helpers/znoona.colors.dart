@@ -35,8 +35,5 @@ class ZnoonaColors {
   static Color containerLinear2(BuildContext context) =>
       of(context).containerLinear2!;
 
-  static Color containerLinear3(BuildContext context) =>
-      of(context).containerLinear3!;
-  static Color containerLinear5(BuildContext context) =>
-      of(context).containerLinear5!;
+
 }

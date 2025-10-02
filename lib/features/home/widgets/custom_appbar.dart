@@ -21,9 +21,9 @@ class CustomAppBar extends StatelessWidget {
   Widget build(BuildContext context) {
     return CustomLinearButton(
       colors: [
-        ZnoonaColors.containerShadow2(context),
-        ZnoonaColors.containerShadow1(context),
-        ZnoonaColors.containerShadow2(context),
+        ZnoonaColors.containerLinear2(context),
+        ZnoonaColors.containerLinear1(context),
+        ZnoonaColors.containerLinear2(context),
       ],
       borderRadiusNum: 20,
       height: 80.h,
@@ -67,28 +67,29 @@ class CustomAppBar extends StatelessWidget {
             CustomLinearButton(
               borderRadiusNum: 40,
               colors: [
-                ZnoonaColors.containerLinear1(context),
-                ZnoonaColors.containerLinear3(context),
-                ZnoonaColors.containerLinear1(context),
+                ZnoonaColors.containerShadow1(context),
+
+                ZnoonaColors.containerShadow1(context),
               ],
-              height: 30.h,
-              width: 70.w,
+              height: 33.h,
+              width: 75.w,
               onPressed: () {},
               child: Row(
+                crossAxisAlignment: CrossAxisAlignment.end,
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
+                  TextApp(
+                    text: '1',
+                    textStyle: GoogleFonts.beiruti(
+                      fontSize: 17.sp,
+                      fontWeight: FontWeight.w800,
+                      color: ZnoonaColors.main(context),
+                    ),
+                  ),
                   Image.asset(
                     AppImages.level,
                     height: 25.h,
                     width: 25.w,
-                  ),
-                  TextApp(
-                    text: '12',
-                    textStyle: GoogleFonts.beiruti(
-                      fontSize: 20.sp,
-                      fontWeight: FontWeight.w800,
-                      color: Colors.white,
-                    ),
                   ),
                 ],
               ),

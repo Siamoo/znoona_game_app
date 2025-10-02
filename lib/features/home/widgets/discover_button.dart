@@ -18,7 +18,7 @@ class DiscoverButton extends StatelessWidget {
     return CustomLinearButton(
       borderRadiusNum: 20,
       colors: [
-        ZnoonaColors.containerLinear5(context),
+        ZnoonaColors.main(context),
 
         ZnoonaColors.containerLinear2(context),
       ],
@@ -37,7 +37,7 @@ class DiscoverButton extends StatelessWidget {
                 textStyle: GoogleFonts.beiruti(
                   fontSize: 17.sp,
                   fontWeight: FontWeight.w800,
-                  color: Colors.white,
+                  color: ZnoonaColors.text(context),
                 ),
               ),
             ),

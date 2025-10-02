@@ -15,8 +15,6 @@ class MyColors extends ThemeExtension<MyColors> {
     required this.containerShadow2,
     required this.containerLinear1,
     required this.containerLinear2,
-    required this.containerLinear3,
-    required this.containerLinear5,
   });
 
   final Color? mainColor;
@@ -30,8 +28,6 @@ class MyColors extends ThemeExtension<MyColors> {
   final Color? containerShadow2;
   final Color? containerLinear1;
   final Color? containerLinear2;
-  final Color? containerLinear3;
-  final Color? containerLinear5;
 
   @override
   ThemeExtension<MyColors> copyWith({
@@ -58,8 +54,6 @@ class MyColors extends ThemeExtension<MyColors> {
       containerShadow2: containerShadow2,
       containerLinear1: containerLinear1,
       containerLinear2: containerLinear2,
-      containerLinear3: containerLinear3,
-      containerLinear5: containerLinear5,
     );
   }
 
@@ -83,40 +77,34 @@ class MyColors extends ThemeExtension<MyColors> {
       containerShadow2: containerShadow2,
       containerLinear1: containerLinear1,
       containerLinear2: containerLinear2,
-      containerLinear3: containerLinear3,
-      containerLinear5: containerLinear5,
     );
   }
 
   static const MyColors dark = MyColors(
     mainColor: ColorsDark.mainColor,
-    bluePinkDark: ColorsDark.blueDark,
     bluePinkLight: ColorsDark.blueLight,
+    bluePinkDark: ColorsDark.blueDark,
     textColor: ColorsDark.white,
     textFormBorder: ColorsDark.blueLight,
     navBarbg: ColorsDark.navBarDark,
     navBarSelectedTab: ColorsDark.white,
-    containerShadow1: ColorsDark.black1,
+    containerShadow1: ColorsDark.blueLight,
     containerShadow2: ColorsDark.black2,
     containerLinear1: ColorsDark.black1,
     containerLinear2: ColorsDark.black2,
-    containerLinear3: ColorsDark.blueLight,
-    containerLinear5: ColorsDark.mainColor,
   );
 
   static const MyColors light = MyColors(
     mainColor: ColorsLight.mainColor,
-    bluePinkDark: ColorsLight.pinkDark,
-    bluePinkLight: ColorsLight.pinkLight,
+    bluePinkDark: ColorsLight.redDark,
+    bluePinkLight: ColorsLight.redLight,
     textColor: ColorsLight.black,
-    textFormBorder: ColorsLight.pinkLight,
+    textFormBorder: ColorsLight.redLight,
     navBarbg: ColorsLight.mainColor,
-    navBarSelectedTab: ColorsLight.pinkDark,
-    containerShadow1: ColorsLight.white,
-    containerShadow2: ColorsLight.white,
-    containerLinear1: ColorsLight.black1,
-    containerLinear2: ColorsLight.black2,
-    containerLinear3: ColorsLight.black1,
-    containerLinear5: ColorsLight.black2,
+    navBarSelectedTab: ColorsLight.black,
+    containerShadow1: ColorsLight.redDark,
+    containerShadow2: ColorsLight.white2,
+    containerLinear1: ColorsLight.white1,
+    containerLinear2: ColorsLight.white2,
   );
 }

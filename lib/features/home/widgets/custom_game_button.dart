@@ -10,7 +10,8 @@ class GameButton extends StatelessWidget {
   const GameButton({
     required this.langkey,
     required this.image,
-    required this.onPressed, super.key,
+    required this.onPressed,
+    super.key,
   });
 
   final String langkey;
@@ -22,34 +23,31 @@ class GameButton extends StatelessWidget {
     return CustomLinearButton(
       borderRadiusNum: 20,
       colors: [
-        ZnoonaColors.containerLinear5(context),
-        ZnoonaColors.containerLinear5(context),
+        ZnoonaColors.main(context),
+        ZnoonaColors.main(context),
         ZnoonaColors.containerLinear2(context),
         ZnoonaColors.containerLinear2(context),
       ],
       height: 230.h,
       width: 160.w,
       onPressed: onPressed,
-      child: Padding(
-        padding: const EdgeInsets.only(top: 8, bottom: 20),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            Image.asset(
-              image,
-              height: 140.h,
-              width: 140.w,
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+        children: [
+          Image.asset(
+            image,
+            height: 140.h,
+            width: 140.w,
+          ),
+          TextApp(
+            text: ZnoonaTexts.tr(context, langkey),
+            textStyle: GoogleFonts.beiruti(
+              fontSize: 26.sp,
+              fontWeight: FontWeight.w800,
+              color: ZnoonaColors.text(context),
             ),
-            TextApp(
-              text: ZnoonaTexts.tr(context, langkey),
-              textStyle: GoogleFonts.beiruti(
-                fontSize: 26.sp,
-                fontWeight: FontWeight.w800,
-                color: Colors.white,
-              ),
-            ),
-          ],
-        ),
+          ),
+        ],
       ),
     );
   }

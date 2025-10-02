@@ -4,6 +4,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:znoona_game_app/core/helpers/znoona_navigate.dart';
 import 'package:znoona_game_app/core/helpers/znoona_texts.dart';
 import 'package:znoona_game_app/core/language/lang_keys.dart';
+import 'package:znoona_game_app/features/home/screens/home_screen.dart';
 import 'package:znoona_game_app/features/user/auth/presentation/cubit/auth_cubit.dart';
 import 'package:znoona_game_app/features/user/auth/presentation/screens/login_screen.dart';
 import 'package:znoona_game_app/features/user/auth/presentation/widgets/auth_title_info.dart';
@@ -13,7 +14,6 @@ import 'package:znoona_game_app/features/user/auth/presentation/widgets/login_or
 import 'package:znoona_game_app/features/user/auth/presentation/widgets/sign_up/sign_up_button.dart';
 import 'package:znoona_game_app/features/user/auth/presentation/widgets/sign_up/sign_up_text_form.dart';
 import 'package:znoona_game_app/features/user/auth/presentation/widgets/sign_up/user_avatar_image.dart';
-import 'package:znoona_game_app/features/user/home/screens/home_screen.dart';
 
 class SignUpBody extends StatelessWidget {
   SignUpBody({super.key});

@@ -10,9 +10,9 @@ import 'package:znoona_game_app/core/language/app_localizations_setup.dart';
 import 'package:znoona_game_app/core/service/shared_pref/pref_keys.dart';
 import 'package:znoona_game_app/core/service/shared_pref/shared_pref.dart';
 import 'package:znoona_game_app/core/style/theme/app_theme.dart';
+import 'package:znoona_game_app/features/home/screens/home_screen.dart';
 import 'package:znoona_game_app/features/user/auth/presentation/cubit/auth_cubit.dart';
 import 'package:znoona_game_app/features/user/auth/presentation/screens/login_screen.dart';
-import 'package:znoona_game_app/features/user/home/screens/home_screen.dart';
 
 class ZnoonaGameApp extends StatelessWidget {
   const ZnoonaGameApp({super.key});

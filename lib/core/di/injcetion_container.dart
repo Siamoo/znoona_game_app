@@ -15,14 +15,25 @@ import 'package:znoona_game_app/features/user/auth/domain/usecases/logout_usecas
 import 'package:znoona_game_app/features/user/auth/domain/usecases/sign_up_usecase.dart';
 import 'package:znoona_game_app/features/user/auth/presentation/cubit/auth_cubit.dart';
 
+// Categories Feature
+// ignore: directives_ordering
+import 'package:znoona_game_app/features/quiz/categories/data/datasources/categories_remote_data_source.dart';
+import 'package:znoona_game_app/features/quiz/categories/data/repositories/categories_repository_impl.dart';
+import 'package:znoona_game_app/features/quiz/categories/domain/repositories/categories_repository.dart';
+import 'package:znoona_game_app/features/quiz/categories/domain/usecases/get_categories_usecase.dart';
+import 'package:znoona_game_app/features/quiz/categories/presentation/cubit/categories_cubit.dart';
+
 final GetIt sl = GetIt.instance;
 
 Future<void> setupInjector() async {
   /// Core
   sl
     ..registerFactory(AppCubit.new)
+
     /// External
     ..registerLazySingleton(() => Supabase.instance.client)
+
+    // ---------------- AUTH ----------------
     /// Datasources
     ..registerLazySingleton<AuthRemoteDataSource>(
       () => AuthRemoteDataSourceImpl(sl()),
@@ -36,5 +47,19 @@ Future<void> setupInjector() async {
     ..registerLazySingleton(() => LoginWithGoogleUseCase(sl()))
     ..registerLazySingleton(() => GetCurrentUserUseCase(sl()))
     /// Cubits
-    ..registerFactory(() => AuthCubit(sl(), sl(), sl(), sl(), sl()));
+    ..registerFactory(() => AuthCubit(sl(), sl(), sl(), sl(), sl()))
+
+    // ---------------- CATEGORIES ----------------
+    /// Datasources
+    ..registerLazySingleton<CategoriesRemoteDataSource>(
+      () => CategoriesRemoteDataSourceImpl(sl()),
+    )
+    /// Repository
+    ..registerLazySingleton<CategoriesRepository>(
+      () => CategoriesRepositoryImpl(sl()),
+    )
+    /// Usecases
+    ..registerLazySingleton(() => GetCategoriesUseCase(sl()))
+    /// Cubits
+    ..registerFactory(() => CategoriesCubit(sl()));
 }

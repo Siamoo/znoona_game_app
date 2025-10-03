@@ -51,5 +51,13 @@
     "movies": "افلام",
     "technology": "تكنولوجيا",
     "random": "عشوائي",
-    "categories": "الاقسام"
+    "categories": "الاقسام",
+    "science_discription": "عن الفيزياء والكيمياء والأحياء",
+    "football_discription": "عن اللاعبين والفرق والمسابقات",
+    "food_discription": "عن الاكلات والوصفات الشعبية",
+    "history_discription": "عن الأحداث التاريخية الهامة",
+    "geography_discription": "عن البلدان والمدن والمعالم",
+    "movies_discription": "عن الأفلام والممثلين والمخرجين",
+    "technology_discription": "عن الأجهزة والابتكارات",
+    "random_discription": "كل ما سبق من الاقسام"
 }

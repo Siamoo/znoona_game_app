@@ -50,4 +50,12 @@ class LangKeys {
   static const String technology = 'technology';
   static const String random = 'random';
   static const String categories = 'categories';
+  static const String scienceDiscription = 'science_discription';
+  static const String footballDiscription = 'football_discription';
+  static const String foodDiscription = 'food_discription';
+  static const String historyDiscription = 'history_discription';
+  static const String geographyDiscription = 'geography_discription';
+  static const String moviesDiscription = 'movies_discription';
+  static const String technologyDiscription = 'technology_discription';
+  static const String randomDiscription = 'random_discription';
 }

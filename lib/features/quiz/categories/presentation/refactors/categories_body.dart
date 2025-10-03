@@ -67,6 +67,9 @@ class CategoriesBody extends StatelessWidget {
                               return CustomCategoriesButton(
                                 title: getCategoryLangKeys(category.name),
                                 imageUrl: getCategoryImages(category.name),
+                                discription: getCategoryDiscription(
+                                  category.name,
+                                ),
                               );
                             },
                           ),

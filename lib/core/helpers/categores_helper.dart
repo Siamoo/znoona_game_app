@@ -45,22 +45,21 @@ String getCategoryLangKeys(String name) {
 
 String getCategoryDiscription(String name) {
   switch (name.toLowerCase()) {
-    //todo: handel language arabic & english
     case 'science':
-      return 'about physics, chemistry, and biology';
+      return LangKeys.scienceDiscription;
     case 'football':
-      return 'about players, teams, and tournaments';
+      return LangKeys.footballDiscription;
     case 'food':
-      return 'about meals, recipes, and world cuisines';
+      return LangKeys.foodDiscription;
     case 'history':
-      return 'about important historical events';
+      return LangKeys.historyDiscription;
     case 'geography':
-      return 'about countries, cities, and landmarks';
+      return LangKeys.geographyDiscription;
     case 'movies':
-      return 'about films, actors, and directors';
+      return LangKeys.moviesDiscription;
     case 'technology':
-      return 'about devices, gadgets, and innovations';
+      return LangKeys.technologyDiscription;
     default:
-      return 'about computers, software, and innovations';
+      return LangKeys.randomDiscription;
   }
 }

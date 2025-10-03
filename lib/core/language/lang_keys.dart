@@ -49,4 +49,5 @@ class LangKeys {
   static const String movies = 'movies';
   static const String technology = 'technology';
   static const String random = 'random';
+  static const String categories = 'categories';
 }

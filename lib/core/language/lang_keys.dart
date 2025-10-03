@@ -41,4 +41,12 @@ class LangKeys {
   static const String quizGame = 'quiz_game';
   static const String letsDiscover = 'lets_discover';
   static const String developSkills = 'develop_skills';
+  static const String science = 'science';
+  static const String football = 'football';
+  static const String food = 'food';
+  static const String history = 'history';
+  static const String geography = 'geography';
+  static const String movies = 'movies';
+  static const String technology = 'technology';
+  static const String random = 'random';
 }

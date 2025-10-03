@@ -14,6 +14,14 @@ class AppImages {
   static const quizGame = 'assets/images/user/quiz_game.png';
   static const puzzle = 'assets/images/user/Puzzle.png';
   static const discover = 'assets/images/user/discover.png';
+  static const food = 'assets/images/user/food.png';
+  static const football = 'assets/images/user/football.png';
+  static const geography = 'assets/images/user/geography.png';
+  static const history = 'assets/images/user/history.png';
+  static const movies = 'assets/images/user/movies.png';
+  static const random = 'assets/images/user/rondem.png';
+  static const science = 'assets/images/user/science.png';
+  static const technology = 'assets/images/user/technology.png';
 
   // Admin
   static const drawerImage = 'assets/images/admin/drawer_image.png';

@@ -42,5 +42,14 @@
     "score": "Score",
     "quiz_game": "Quiz Game",
     "lets_discover":"let's Discover",
-    "develop_skills": "Develop Skills And Increase Knowledge"
+    "develop_skills": "Develop Skills And Increase Knowledge",
+    "science": "Science",
+    "football": "Football",
+    "food": "Food",
+    "history": "History",
+    "geography": "Geography",
+    "movies": "Movies",
+    "technology": "Technology",
+    "random": "Random",
+    "categories": "Categories"
 }

@@ -31,7 +31,7 @@ class CategoriesBody extends StatelessWidget {
                         padding: EdgeInsets.symmetric(horizontal: 20.w),
                         child: ListView.separated(
                           itemCount: categories.length,
-                          separatorBuilder: (_, __) => SizedBox(height: 12.h),
+                          separatorBuilder: (_, _) => SizedBox(height: 12.h),
                           itemBuilder: (context, index) {
                             final category = categories[index];
                             return CustomCategoriesButton(

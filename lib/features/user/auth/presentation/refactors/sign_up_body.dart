@@ -34,7 +34,10 @@ class SignUpBody extends StatelessWidget {
             );
           },
           googleauthenticated: (profile) async {
-            await ZnoonaNavigate.pushReplacementTo(context, const HomeScreen());
+            await ZnoonaNavigate.pushReplacementTo(
+              context,
+              const HomeScreen(),
+            );
           },
 
           error: (message) {
@@ -93,8 +96,8 @@ class SignUpBody extends StatelessWidget {
                 SizedBox(height: 20.h),
                 HaveAccountOrNot(
                   text: ZnoonaTexts.tr(context, LangKeys.youHaveAccount),
-                  onPressed: () {
-                    ZnoonaNavigate.pushReplacementTo(
+                  onPressed: () async {
+                    await ZnoonaNavigate.pushReplacementTo(
                       context,
                       const LoginScreen(),
                     );

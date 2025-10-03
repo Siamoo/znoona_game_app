@@ -189,7 +189,6 @@ abstract class _Category implements Category {
   const factory _Category({
     required final String id,
     required final String name,
-    final String? iconUrl,
     final DateTime? createdAt,
   }) = _$CategoryImpl;
 

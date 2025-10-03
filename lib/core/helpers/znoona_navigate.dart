@@ -3,41 +3,42 @@ import 'package:znoona_game_app/core/routes/base_routes.dart';
 
 class ZnoonaNavigate {
   // Push a widget with animation
-  static Future<T?> pushTo<T>(BuildContext context, Widget page) {
-    return Navigator.push<T>(
+  static Future<void> pushTo(BuildContext context, Widget page) {
+    return Navigator.push(
       context,
-      BaseRoute<T>(page: page),
+      BaseRoute(page: page),
     );
   }
 
   // PushReplacement a widget with animation
-  static Future<T?> pushReplacementTo<T>(BuildContext context, Widget page) {
-    return Navigator.pushReplacement<T, T>(
+  static Future<void> pushReplacementTo(BuildContext context, Widget page) {
+    return Navigator.pushReplacement(
       context,
-      BaseRoute<T>(page: page),
+      BaseRoute(page: page),
     );
   }
 
   // Pop current screen
-  static void pop<T>(BuildContext context, [T? result]) {
-    Navigator.pop(context, result);
+  static void pop(BuildContext context) {
+    Navigator.pop(context);
   }
 
   // PushReplacement without back
-  static Future<T?> navigateWithoutBack<T>(BuildContext context, Widget page) {
-    return Navigator.pushReplacement<T, T>(
+  static Future<void> navigateWithoutBack(BuildContext context, Widget page) {
+    return Navigator.pushReplacement(
       context,
-      BaseRoute<T>(page: page),
+      BaseRoute(page: page),
     );
   }
 
-  static Future<T?> pushReplacementAndRemoveUntil<T>(
+  // PushReplacement and remove all previous routes
+  static Future<void> pushReplacementAndRemoveUntil(
     BuildContext context,
     Widget page,
   ) {
-    return Navigator.pushAndRemoveUntil<T>(
+    return Navigator.pushAndRemoveUntil(
       context,
-      BaseRoute<T>(page: page),
+      BaseRoute(page: page),
       (Route<dynamic> route) => false, // Remove all previous routes
     );
   }

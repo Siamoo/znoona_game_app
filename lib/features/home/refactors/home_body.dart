@@ -76,7 +76,7 @@ class HomeBody extends StatelessWidget {
                 ElevatedButton(
                   onPressed: () async {
                     await Supabase.instance.client.auth.signOut();
-                    ZnoonaNavigate.pushReplacementTo(
+                   await ZnoonaNavigate.pushReplacementTo(
                       context,
                       const LoginScreen(),
                     );

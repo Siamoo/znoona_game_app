@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -10,38 +9,52 @@ class CustomAppBar extends StatelessWidget {
   const CustomAppBar({
     required this.title,
     super.key,
+    this.otherText,  this.icon,
   });
 
   final String title;
+  final String? otherText;
+  final IconData? icon;
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: EdgeInsets.symmetric(horizontal: 10.w),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [
-          IconButton(
-            icon: Icon(
-              Icons.arrow_back_ios_new,
-              color: ZnoonaColors.text(context),
-              size: 24.sp,
-            ),
-            onPressed: () => Navigator.pop(context),
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      children: [
+        IconButton(
+          icon: Icon(
+           icon ?? Icons.arrow_back_ios_new,
+            color: ZnoonaColors.text(context),
+            size: 24.sp,
           ),
+          onPressed: () => Navigator.pop(context),
+        ),
+        if (otherText == null)
+          const SizedBox()
+        else
           TextApp(
             text: ZnoonaTexts.tr(
               context,
-              title,
+              otherText!,
             ),
             textStyle: GoogleFonts.beiruti(
-              fontSize: 24.sp,
+              fontSize: 18.sp,
               fontWeight: FontWeight.w800,
               color: ZnoonaColors.text(context),
             ),
           ),
-        ],
-      ),
+        TextApp(
+          text: ZnoonaTexts.tr(
+            context,
+            title,
+          ),
+          textStyle: GoogleFonts.beiruti(
+            fontSize: 24.sp,
+            fontWeight: FontWeight.w800,
+            color: ZnoonaColors.text(context),
+          ),
+        ),
+      ],
     );
   }
 }

@@ -2,14 +2,9 @@ class AppImages {
   //Images
   static const noNetwork = 'assets/images/core/no_network.jpg';
   static const pageUnderBuild = 'assets/images/core/page_under_build.jpg';
-  static const emptyScreen = 'assets/images/core/empty_screen.png';
 
   // user
   static const userAvatar = 'assets/images/user/user.png';
-  static const bigIconNavBarDark = 'assets/images/user/big_nav_bar_dark.png';
-  static const bigIconNavBarLight = 'assets/images/user/big_nav_bar_light.png';
-  static const homeBgDark = 'assets/images/user/home_bg_dark.png';
-  static const homeBgLight = 'assets/images/user/home_bg_light.png';
   static const level = 'assets/images/user/level.png';
   static const quizGame = 'assets/images/user/quiz_game.png';
   static const puzzle = 'assets/images/user/Puzzle.png';
@@ -22,12 +17,8 @@ class AppImages {
   static const random = 'assets/images/user/rondem.png';
   static const science = 'assets/images/user/science.png';
   static const technology = 'assets/images/user/technology.png';
-
-  // Admin
-  static const drawerImage = 'assets/images/admin/drawer_image.png';
-  static const categoriesDrawer = 'assets/images/admin/categories_drawer.png';
-  static const productsDrawer = 'assets/images/admin/products_drawer.png';
-  static const usersDrawer = 'assets/images/admin/users_drawer.png';
+  static const wonCup = 'assets/images/user/won_cup.png';
+  static const goodResult = 'assets/images/user/good_result.png';
 
   //Svg
   static const search = 'assets/svg/search.svg';

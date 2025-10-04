@@ -61,5 +61,14 @@
     "technology_discription": "devices innovations",
     "random_discription": "about all of the above",
     "questions": "Questions",
-    "from": "From"
+    "from": "From",
+    "result": "Result",
+    "won": "You Won The Cup",
+    "good": "Good Result",
+    "lost": "You Lost",
+    "correct": "Correct",
+    "you_score": "Scored",
+    "congratulations": "🎉Congratulations🎉",
+    "back": "Back",
+    "train": "Train To Win A Cup"
 }

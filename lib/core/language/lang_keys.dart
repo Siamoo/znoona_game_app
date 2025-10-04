@@ -60,4 +60,14 @@ class LangKeys {
   static const String randomDiscription = 'random_discription';
   static const String question = 'questions';
   static const String from = 'from';
+  static const String result = 'result';
+  static const String won = 'won';
+  static const String good = 'good';
+  static const String lost = 'lost';
+  static const String correct = 'correct';
+  static const String youScore = 'you_score';
+  static const String congratulations = 'congratulations';
+  static const String back = 'back';
+  static const String train = 'train';
+
 }

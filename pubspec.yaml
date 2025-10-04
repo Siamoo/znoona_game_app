@@ -49,7 +49,6 @@ flutter:
     - lang/ar.json
     - lang/en.json
     - assets/images/core/
-    - assets/images/admin/
     - assets/images/user/
     - assets/svg/
   # An image asset can refer to one or more resolution-specific "variants", see

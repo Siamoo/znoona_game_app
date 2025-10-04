@@ -9,8 +9,8 @@ import 'package:znoona_game_app/core/language/lang_keys.dart';
 import 'package:znoona_game_app/core/style/images/app_images.dart';
 import 'package:znoona_game_app/features/user/auth/domain/entities/profile.dart';
 
-class CustomAppBar extends StatelessWidget {
-  const CustomAppBar({
+class CustomHomeAppBar extends StatelessWidget {
+  const CustomHomeAppBar({
     required this.profile,
     super.key,
   });
@@ -67,9 +67,9 @@ class CustomAppBar extends StatelessWidget {
             CustomLinearButton(
               borderRadiusNum: 40,
               colors: [
-                ZnoonaColors.containerShadow1(context),
+                ZnoonaColors.bluePinkDark(context),
 
-                ZnoonaColors.containerShadow1(context),
+                ZnoonaColors.bluePinkDark(context),
               ],
               height: 33.h,
               width: 75.w,
@@ -83,7 +83,7 @@ class CustomAppBar extends StatelessWidget {
                     textStyle: GoogleFonts.beiruti(
                       fontSize: 17.sp,
                       fontWeight: FontWeight.w800,
-                      color: ZnoonaColors.main(context),
+                      color: Colors.white,
                     ),
                   ),
                   Image.asset(

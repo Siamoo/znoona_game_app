@@ -4,11 +4,12 @@ import 'package:supabase_flutter/supabase_flutter.dart';
 import 'package:znoona_game_app/core/helpers/znoona_navigate.dart';
 import 'package:znoona_game_app/core/language/lang_keys.dart';
 import 'package:znoona_game_app/core/style/images/app_images.dart';
-import 'package:znoona_game_app/features/home/widgets/custom_appbar.dart';
 import 'package:znoona_game_app/features/home/widgets/custom_game_button.dart';
+import 'package:znoona_game_app/features/home/widgets/custom_home_appbar.dart';
 import 'package:znoona_game_app/features/home/widgets/custom_section_title.dart';
 import 'package:znoona_game_app/features/home/widgets/discover_button.dart';
 import 'package:znoona_game_app/features/quiz/categories/presentation/screens/categories_screen.dart';
+import 'package:znoona_game_app/features/quiz/single/presentation/screen/results_screen.dart';
 import 'package:znoona_game_app/features/user/auth/domain/entities/profile.dart';
 import 'package:znoona_game_app/features/user/auth/presentation/screens/login_screen.dart';
 
@@ -31,7 +32,7 @@ class HomeBody extends StatelessWidget {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                CustomAppBar(profile: profile),
+                CustomHomeAppBar(profile: profile),
                 Padding(
                   padding: EdgeInsets.symmetric(
                     horizontal: 10.w,
@@ -58,7 +59,13 @@ class HomeBody extends StatelessWidget {
                           GameButton(
                             image: AppImages.puzzle,
                             langkey: LangKeys.appName,
-                            onPressed: () {},
+                            onPressed: () => ZnoonaNavigate.pushTo(
+                              context,
+                              const ResultsScreen(
+                                totalQuestions: 15,
+                                correctAnswers: 14,
+                              ),
+                            ),
                           ),
                         ],
                       ),
@@ -76,7 +83,7 @@ class HomeBody extends StatelessWidget {
                 ElevatedButton(
                   onPressed: () async {
                     await Supabase.instance.client.auth.signOut();
-                   await ZnoonaNavigate.pushReplacementTo(
+                    await ZnoonaNavigate.pushReplacementTo(
                       context,
                       const LoginScreen(),
                     );

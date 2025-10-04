@@ -19,8 +19,6 @@ final _privateConstructorUsedError = UnsupportedError(
 mixin _$Category {
   String get id => throw _privateConstructorUsedError;
   String get name => throw _privateConstructorUsedError;
-  String? get iconUrl =>
-      throw _privateConstructorUsedError; // أيقونة للتصنيف (اختياري)
   DateTime? get createdAt => throw _privateConstructorUsedError;
 
   /// Create a copy of Category
@@ -35,7 +33,7 @@ abstract class $CategoryCopyWith<$Res> {
   factory $CategoryCopyWith(Category value, $Res Function(Category) then) =
       _$CategoryCopyWithImpl<$Res, Category>;
   @useResult
-  $Res call({String id, String name, String? iconUrl, DateTime? createdAt});
+  $Res call({String id, String name, DateTime? createdAt});
 }
 
 /// @nodoc
@@ -55,7 +53,6 @@ class _$CategoryCopyWithImpl<$Res, $Val extends Category>
   $Res call({
     Object? id = null,
     Object? name = null,
-    Object? iconUrl = freezed,
     Object? createdAt = freezed,
   }) {
     return _then(
@@ -68,10 +65,6 @@ class _$CategoryCopyWithImpl<$Res, $Val extends Category>
                 ? _value.name
                 : name // ignore: cast_nullable_to_non_nullable
                       as String,
-            iconUrl: freezed == iconUrl
-                ? _value.iconUrl
-                : iconUrl // ignore: cast_nullable_to_non_nullable
-                      as String?,
             createdAt: freezed == createdAt
                 ? _value.createdAt
                 : createdAt // ignore: cast_nullable_to_non_nullable
@@ -91,7 +84,7 @@ abstract class _$$CategoryImplCopyWith<$Res>
   ) = __$$CategoryImplCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({String id, String name, String? iconUrl, DateTime? createdAt});
+  $Res call({String id, String name, DateTime? createdAt});
 }
 
 /// @nodoc
@@ -110,7 +103,6 @@ class __$$CategoryImplCopyWithImpl<$Res>
   $Res call({
     Object? id = null,
     Object? name = null,
-    Object? iconUrl = freezed,
     Object? createdAt = freezed,
   }) {
     return _then(
@@ -123,10 +115,6 @@ class __$$CategoryImplCopyWithImpl<$Res>
             ? _value.name
             : name // ignore: cast_nullable_to_non_nullable
                   as String,
-        iconUrl: freezed == iconUrl
-            ? _value.iconUrl
-            : iconUrl // ignore: cast_nullable_to_non_nullable
-                  as String?,
         createdAt: freezed == createdAt
             ? _value.createdAt
             : createdAt // ignore: cast_nullable_to_non_nullable
@@ -139,26 +127,18 @@ class __$$CategoryImplCopyWithImpl<$Res>
 /// @nodoc
 
 class _$CategoryImpl implements _Category {
-  const _$CategoryImpl({
-    required this.id,
-    required this.name,
-    this.iconUrl,
-    this.createdAt,
-  });
+  const _$CategoryImpl({required this.id, required this.name, this.createdAt});
 
   @override
   final String id;
   @override
   final String name;
   @override
-  final String? iconUrl;
-  // أيقونة للتصنيف (اختياري)
-  @override
   final DateTime? createdAt;
 
   @override
   String toString() {
-    return 'Category(id: $id, name: $name, iconUrl: $iconUrl, createdAt: $createdAt)';
+    return 'Category(id: $id, name: $name, createdAt: $createdAt)';
   }
 
   @override
@@ -168,13 +148,12 @@ class _$CategoryImpl implements _Category {
             other is _$CategoryImpl &&
             (identical(other.id, id) || other.id == id) &&
             (identical(other.name, name) || other.name == name) &&
-            (identical(other.iconUrl, iconUrl) || other.iconUrl == iconUrl) &&
             (identical(other.createdAt, createdAt) ||
                 other.createdAt == createdAt));
   }
 
   @override
-  int get hashCode => Object.hash(runtimeType, id, name, iconUrl, createdAt);
+  int get hashCode => Object.hash(runtimeType, id, name, createdAt);
 
   /// Create a copy of Category
   /// with the given fields replaced by the non-null parameter values.
@@ -196,8 +175,6 @@ abstract class _Category implements Category {
   String get id;
   @override
   String get name;
-  @override
-  String? get iconUrl; // أيقونة للتصنيف (اختياري)
   @override
   DateTime? get createdAt;
 

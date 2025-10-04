@@ -11,11 +11,13 @@ class CustomCategoriesButton extends StatelessWidget {
     required this.title,
     required this.imageUrl,
     required this.discription,
+    required this.onPressed,
     super.key,
   });
   final String title;
   final String imageUrl;
   final String discription;
+  final void Function() onPressed;
   @override
   Widget build(BuildContext context) {
     return CustomLinearButton(
@@ -27,7 +29,7 @@ class CustomCategoriesButton extends StatelessWidget {
       ],
       height: 120.h,
       width: double.infinity,
-      onPressed: () {},
+      onPressed: onPressed,
       child: Padding(
         padding: EdgeInsets.only(left: 20.w, right: 10.w),
         child: Row(

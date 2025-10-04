@@ -52,12 +52,14 @@
     "technology": "Technology",
     "random": "Random",
     "categories": "Categories",
-    "science_discription": "physics, chemistry, and biology",
-    "football_discription": "players, teams, and tournaments",
-    "food_discription": "popular foods and recipes",
+    "science_discription": "physics, chemistry, biology",
+    "football_discription": "players, teams, tournaments",
+    "food_discription": "popular foods recipes",
     "history_discription": "important historical events",
-    "geography_discription": "countries, cities, and landmarks",
-    "movies_discription": "films, actors, and directors",
-    "technology_discription": "devices and innovations",
-    "random_discription": "about all of the above"
+    "geography_discription": "countries, cities, landmarks",
+    "movies_discription": "films, actors, directors",
+    "technology_discription": "devices innovations",
+    "random_discription": "about all of the above",
+    "questions": "Questions",
+    "from": "From"
 }

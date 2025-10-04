@@ -9,7 +9,8 @@ class CustomAppBar extends StatelessWidget {
   const CustomAppBar({
     required this.title,
     super.key,
-    this.otherText,  this.icon,
+    this.otherText,
+    this.icon,
   });
 
   final String title;
@@ -23,7 +24,7 @@ class CustomAppBar extends StatelessWidget {
       children: [
         IconButton(
           icon: Icon(
-           icon ?? Icons.arrow_back_ios_new,
+            icon ?? Icons.arrow_back_ios_new,
             color: ZnoonaColors.text(context),
             size: 24.sp,
           ),
@@ -49,7 +50,7 @@ class CustomAppBar extends StatelessWidget {
             title,
           ),
           textStyle: GoogleFonts.beiruti(
-            fontSize: 24.sp,
+            fontSize: 26.sp,
             fontWeight: FontWeight.w800,
             color: ZnoonaColors.text(context),
           ),

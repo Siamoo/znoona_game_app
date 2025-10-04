@@ -72,5 +72,10 @@
     "back": "رجوع",
     "train" : "تدريب لكسب كأس",
     "bad_reslut" : "لقد خسرت",
-    "try_again" : "حاول مرة اخرى"
+    "try_again" : "حاول مرة اخرى",
+    "profile" : "الملف الشخصي",
+    "change_language" : "تغيير اللغة",
+    "change_theme" : "تغيير الثيم",
+    "university_students": "طلاب الجامعة"
+
 }

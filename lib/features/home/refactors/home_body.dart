@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:supabase_flutter/supabase_flutter.dart';
 import 'package:znoona_game_app/core/helpers/znoona_navigate.dart';
 import 'package:znoona_game_app/core/language/lang_keys.dart';
 import 'package:znoona_game_app/core/style/images/app_images.dart';
@@ -10,7 +9,6 @@ import 'package:znoona_game_app/features/home/widgets/custom_section_title.dart'
 import 'package:znoona_game_app/features/home/widgets/discover_button.dart';
 import 'package:znoona_game_app/features/quiz/categories/presentation/screens/categories_screen.dart';
 import 'package:znoona_game_app/features/user/auth/domain/entities/profile.dart';
-import 'package:znoona_game_app/features/user/auth/presentation/screens/login_screen.dart';
 
 class HomeBody extends StatelessWidget {
   const HomeBody({
@@ -68,24 +66,17 @@ class HomeBody extends StatelessWidget {
                       ),
                       SizedBox(height: 10.h),
                       const DiscoverButton(),
+                      SizedBox(height: 30.h),
+                      const CustomSectionTitle(
+                        langkey: LangKeys.universityStudents,
+                      ),
+                      SizedBox(height: 10.h),
+                      const DiscoverButton(),
                     ],
                   ),
                 ),
 
                 SizedBox(height: 20.h),
-                ElevatedButton(
-                  onPressed: () async {
-                    await Supabase.instance.client.auth.signOut();
-                    await ZnoonaNavigate.pushReplacementTo(
-                      context,
-                      const LoginScreen(),
-                    );
-                  },
-                  style: ElevatedButton.styleFrom(
-                    minimumSize: const Size(double.infinity, 60),
-                  ),
-                  child: const Text('Logout'),
-                ),
               ],
             ),
           ),

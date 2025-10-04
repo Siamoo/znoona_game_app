@@ -4,9 +4,11 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:znoona_game_app/core/common/widgets/custom_linear_button.dart';
 import 'package:znoona_game_app/core/common/widgets/text_app.dart';
 import 'package:znoona_game_app/core/helpers/znoona.colors.dart';
+import 'package:znoona_game_app/core/helpers/znoona_navigate.dart';
 import 'package:znoona_game_app/core/helpers/znoona_texts.dart';
 import 'package:znoona_game_app/core/language/lang_keys.dart';
 import 'package:znoona_game_app/core/style/images/app_images.dart';
+import 'package:znoona_game_app/features/home/screens/profile_screen.dart';
 import 'package:znoona_game_app/features/user/auth/domain/entities/profile.dart';
 
 class CustomHomeAppBar extends StatelessWidget {
@@ -28,7 +30,8 @@ class CustomHomeAppBar extends StatelessWidget {
       borderRadiusNum: 20,
       height: 80.h,
       width: double.infinity,
-      onPressed: () {},
+      onPressed: () =>
+          ZnoonaNavigate.pushTo(context, ProfileScreen(profile: profile)),
       child: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 10),
         child: Row(

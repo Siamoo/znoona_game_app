@@ -5,6 +5,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:znoona_game_app/core/common/widgets/custom_app_bar.dart';
 import 'package:znoona_game_app/core/helpers/znoona.colors.dart';
+import 'package:znoona_game_app/core/helpers/znoona_navigate.dart';
 import 'package:znoona_game_app/core/helpers/znoona_texts.dart';
 import 'package:znoona_game_app/core/language/lang_keys.dart';
 import 'package:znoona_game_app/features/quiz/single/domain/entities/question.dart';
@@ -77,13 +78,11 @@ class _QuizBodyState extends State<QuizBody> {
       });
       startTimer();
     } else {
-      Navigator.pushReplacement(
+      ZnoonaNavigate.pushReplacementTo(
         context,
-        MaterialPageRoute(
-          builder: (_) => ResultsScreen(
-            totalQuestions: questions.length,
-            correctAnswers: correctCount,
-          ),
+        ResultsScreen(
+          totalQuestions: questions.length,
+          correctAnswers: correctCount,
         ),
       );
     }

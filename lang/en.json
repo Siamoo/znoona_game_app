@@ -72,5 +72,10 @@
     "back": "Back",
     "train": "Train To Win A Cup",
     "bad_reslut": "You Lost",
-    "try_again": "Try Again"
+    "try_again": "Try Again",
+    "profile": "Profile",
+    "change_language": "Change Language",
+    "change_theme": "Change Theme",
+    "university_students": "University students"
+
 }

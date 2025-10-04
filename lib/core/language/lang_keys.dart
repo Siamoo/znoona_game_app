@@ -71,5 +71,8 @@ class LangKeys {
   static const String train = 'train';
   static const String badReslut = 'bad_reslut';
   static const String tryAgain = 'try_again';
-
+  static const String profile = 'profile';
+  static const String changeLanguage = 'change_language';
+  static const String changeTheme = 'change_theme';
+  static const String universityStudents = 'university_students';
 }

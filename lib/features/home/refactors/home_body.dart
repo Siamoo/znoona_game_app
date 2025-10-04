@@ -9,7 +9,6 @@ import 'package:znoona_game_app/features/home/widgets/custom_home_appbar.dart';
 import 'package:znoona_game_app/features/home/widgets/custom_section_title.dart';
 import 'package:znoona_game_app/features/home/widgets/discover_button.dart';
 import 'package:znoona_game_app/features/quiz/categories/presentation/screens/categories_screen.dart';
-import 'package:znoona_game_app/features/quiz/single/presentation/screen/results_screen.dart';
 import 'package:znoona_game_app/features/user/auth/domain/entities/profile.dart';
 import 'package:znoona_game_app/features/user/auth/presentation/screens/login_screen.dart';
 
@@ -59,13 +58,7 @@ class HomeBody extends StatelessWidget {
                           GameButton(
                             image: AppImages.puzzle,
                             langkey: LangKeys.appName,
-                            onPressed: () => ZnoonaNavigate.pushTo(
-                              context,
-                              const ResultsScreen(
-                                totalQuestions: 15,
-                                correctAnswers: 14,
-                              ),
-                            ),
+                            onPressed: () {},
                           ),
                         ],
                       ),

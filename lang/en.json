@@ -70,5 +70,7 @@
     "you_score": "Scored",
     "congratulations": "🎉Congratulations🎉",
     "back": "Back",
-    "train": "Train To Win A Cup"
+    "train": "Train To Win A Cup",
+    "bad_reslut": "You Lost",
+    "try_again": "Try Again"
 }

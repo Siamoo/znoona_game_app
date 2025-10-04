@@ -19,6 +19,7 @@ class AppImages {
   static const technology = 'assets/images/user/technology.png';
   static const wonCup = 'assets/images/user/won_cup.png';
   static const goodResult = 'assets/images/user/good_result.png';
+  static const notGood = 'assets/images/user/not_good.png';
 
   //Svg
   static const search = 'assets/svg/search.svg';

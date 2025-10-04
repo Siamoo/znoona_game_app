@@ -69,5 +69,7 @@ class LangKeys {
   static const String congratulations = 'congratulations';
   static const String back = 'back';
   static const String train = 'train';
+  static const String badReslut = 'bad_reslut';
+  static const String tryAgain = 'try_again';
 
 }

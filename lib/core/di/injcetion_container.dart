@@ -3,8 +3,13 @@ import 'package:supabase_flutter/supabase_flutter.dart';
 
 // App Core
 import 'package:znoona_game_app/core/app/app_cubit/app_cubit.dart';
+import 'package:znoona_game_app/features/quiz/single/data/datasources/questions_remote_data_source.dart';
+import 'package:znoona_game_app/features/quiz/single/data/repositories/questions_repository_impl.dart';
+import 'package:znoona_game_app/features/quiz/single/domain/repositories/questions_repository.dart';
+import 'package:znoona_game_app/features/quiz/single/domain/usecases/get_questions_by_category_usecase.dart';
+import 'package:znoona_game_app/features/quiz/single/presentation/cubit/questions_cubit.dart';
 
-// Auth Feature
+// ---------------- AUTH ----------------
 import 'package:znoona_game_app/features/user/auth/data/datasources/auth_remote_data_source.dart';
 import 'package:znoona_game_app/features/user/auth/data/repositories/auth_repository_impl.dart';
 import 'package:znoona_game_app/features/user/auth/domain/repositories/auth_repository.dart';
@@ -15,13 +20,16 @@ import 'package:znoona_game_app/features/user/auth/domain/usecases/logout_usecas
 import 'package:znoona_game_app/features/user/auth/domain/usecases/sign_up_usecase.dart';
 import 'package:znoona_game_app/features/user/auth/presentation/cubit/auth_cubit.dart';
 
-// Categories Feature
+// ---------------- CATEGORIES ----------------
 // ignore: directives_ordering
 import 'package:znoona_game_app/features/quiz/categories/data/datasources/categories_remote_data_source.dart';
 import 'package:znoona_game_app/features/quiz/categories/data/repositories/categories_repository_impl.dart';
 import 'package:znoona_game_app/features/quiz/categories/domain/repositories/categories_repository.dart';
 import 'package:znoona_game_app/features/quiz/categories/domain/usecases/get_categories_usecase.dart';
 import 'package:znoona_game_app/features/quiz/categories/presentation/cubit/categories_cubit.dart';
+
+// ---------------- QUESTIONS ----------------
+
 
 final GetIt sl = GetIt.instance;
 
@@ -61,5 +69,19 @@ Future<void> setupInjector() async {
     /// Usecases
     ..registerLazySingleton(() => GetCategoriesUseCase(sl()))
     /// Cubits
-    ..registerFactory(() => CategoriesCubit(sl()));
+    ..registerFactory(() => CategoriesCubit(sl()))
+
+    // ---------------- QUESTIONS ----------------
+    /// Datasources
+    ..registerLazySingleton<QuestionsRemoteDataSource>(
+      () => QuestionsRemoteDataSourceImpl(sl()),
+    )
+    /// Repository
+    ..registerLazySingleton<QuestionsRepository>(
+      () => QuestionsRepositoryImpl(sl()),
+    )
+    /// Usecases
+    ..registerLazySingleton(() => GetQuestionsByCategoryUseCase(sl()))
+    /// Cubits
+    ..registerFactory(() => QuestionsCubit(sl()));
 }

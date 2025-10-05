@@ -75,4 +75,16 @@ class LangKeys {
   static const String changeLanguage = 'change_language';
   static const String changeTheme = 'change_theme';
   static const String universityStudents = 'university_students';
+  static const String chooseMode = 'choose_mode';
+  static const String playSolo = 'play_solo';
+  static const String playWithFriends = 'play_with_friends';
+  static const String multiPlayerMode = 'multi_player_mode';
+  static const String createRoom = 'create_room';
+  static const String joinRoom = 'join_room';
+  static const String roomName = 'room_name';
+  static const String hostName = 'host_name';
+  static const String category = 'category';
+  static const String players = 'players';
+  static const String start = 'start';
+  static const String join = 'join';
 }

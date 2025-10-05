@@ -76,6 +76,17 @@
     "profile" : "الملف الشخصي",
     "change_language" : "تغيير اللغة",
     "change_theme" : "تغيير الثيم",
-    "university_students": "طلاب الجامعة"
-
+    "university_students": "طلاب الجامعة",
+    "choose_mode": "اختر وضع",
+    "play_solo": "لعب فردي",
+    "play_with_friends": "مع الاصدقاء",
+    "multi_player_mode": "وضع الملاعب",
+    "create_room": "انشاء غرفة",
+    "join_room": "الانضمام لغرفة",
+    "room_name": "اسم الغرفة",
+    "host_name": "اسم المستخدم",
+    "category": "القسم",
+    "players": "اللاعبين",
+    "start": "بدء",
+    "join": "انضمام"
 }

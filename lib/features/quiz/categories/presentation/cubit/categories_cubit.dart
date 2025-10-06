@@ -19,7 +19,10 @@ class CategoriesCubit extends Cubit<CategoriesState> {
 
     result.fold(
       (error) => emit(CategoriesState.error(error)),
-      (categories) => emit(CategoriesState.loaded(categories)),
+      (categories) {
+        emit(CategoriesState.loaded(categories));
+        print(categories.first.id);
+      },
     );
   }
 }

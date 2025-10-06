@@ -15,15 +15,26 @@ final _privateConstructorUsedError = UnsupportedError(
   'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#adding-getters-and-methods-to-our-models',
 );
 
+Room _$RoomFromJson(Map<String, dynamic> json) {
+  return _Room.fromJson(json);
+}
+
 /// @nodoc
 mixin _$Room {
   String get id => throw _privateConstructorUsedError;
-  String get code =>
-      throw _privateConstructorUsedError; // كود الغرفة اللي ينضم بيه اللاعب
-  String get hostId => throw _privateConstructorUsedError; // مالك الغرفة
-  List<RoomPlayer> get players => throw _privateConstructorUsedError;
-  RoomStatus get status => throw _privateConstructorUsedError;
-  DateTime get createdAt => throw _privateConstructorUsedError;
+  String get code => throw _privateConstructorUsedError;
+  String get hostId => throw _privateConstructorUsedError;
+  String? get categoryId => throw _privateConstructorUsedError;
+  String get status =>
+      throw _privateConstructorUsedError; // waiting | playing | finished
+  Map<String, dynamic>? get state => throw _privateConstructorUsedError;
+  String? get title => throw _privateConstructorUsedError;
+  DateTime? get createdAt => throw _privateConstructorUsedError;
+  List<RoomPlayer>? get players => throw _privateConstructorUsedError;
+  List<RoomQuestion>? get questions => throw _privateConstructorUsedError;
+
+  /// Serializes this Room to a JSON map.
+  Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
 
   /// Create a copy of Room
   /// with the given fields replaced by the non-null parameter values.
@@ -40,9 +51,13 @@ abstract class $RoomCopyWith<$Res> {
     String id,
     String code,
     String hostId,
-    List<RoomPlayer> players,
-    RoomStatus status,
-    DateTime createdAt,
+    String? categoryId,
+    String status,
+    Map<String, dynamic>? state,
+    String? title,
+    DateTime? createdAt,
+    List<RoomPlayer>? players,
+    List<RoomQuestion>? questions,
   });
 }
 
@@ -64,9 +79,13 @@ class _$RoomCopyWithImpl<$Res, $Val extends Room>
     Object? id = null,
     Object? code = null,
     Object? hostId = null,
-    Object? players = null,
+    Object? categoryId = freezed,
     Object? status = null,
-    Object? createdAt = null,
+    Object? state = freezed,
+    Object? title = freezed,
+    Object? createdAt = freezed,
+    Object? players = freezed,
+    Object? questions = freezed,
   }) {
     return _then(
       _value.copyWith(
@@ -82,18 +101,34 @@ class _$RoomCopyWithImpl<$Res, $Val extends Room>
                 ? _value.hostId
                 : hostId // ignore: cast_nullable_to_non_nullable
                       as String,
-            players: null == players
-                ? _value.players
-                : players // ignore: cast_nullable_to_non_nullable
-                      as List<RoomPlayer>,
+            categoryId: freezed == categoryId
+                ? _value.categoryId
+                : categoryId // ignore: cast_nullable_to_non_nullable
+                      as String?,
             status: null == status
                 ? _value.status
                 : status // ignore: cast_nullable_to_non_nullable
-                      as RoomStatus,
-            createdAt: null == createdAt
+                      as String,
+            state: freezed == state
+                ? _value.state
+                : state // ignore: cast_nullable_to_non_nullable
+                      as Map<String, dynamic>?,
+            title: freezed == title
+                ? _value.title
+                : title // ignore: cast_nullable_to_non_nullable
+                      as String?,
+            createdAt: freezed == createdAt
                 ? _value.createdAt
                 : createdAt // ignore: cast_nullable_to_non_nullable
-                      as DateTime,
+                      as DateTime?,
+            players: freezed == players
+                ? _value.players
+                : players // ignore: cast_nullable_to_non_nullable
+                      as List<RoomPlayer>?,
+            questions: freezed == questions
+                ? _value.questions
+                : questions // ignore: cast_nullable_to_non_nullable
+                      as List<RoomQuestion>?,
           )
           as $Val,
     );
@@ -112,9 +147,13 @@ abstract class _$$RoomImplCopyWith<$Res> implements $RoomCopyWith<$Res> {
     String id,
     String code,
     String hostId,
-    List<RoomPlayer> players,
-    RoomStatus status,
-    DateTime createdAt,
+    String? categoryId,
+    String status,
+    Map<String, dynamic>? state,
+    String? title,
+    DateTime? createdAt,
+    List<RoomPlayer>? players,
+    List<RoomQuestion>? questions,
   });
 }
 
@@ -133,9 +172,13 @@ class __$$RoomImplCopyWithImpl<$Res>
     Object? id = null,
     Object? code = null,
     Object? hostId = null,
-    Object? players = null,
+    Object? categoryId = freezed,
     Object? status = null,
-    Object? createdAt = null,
+    Object? state = freezed,
+    Object? title = freezed,
+    Object? createdAt = freezed,
+    Object? players = freezed,
+    Object? questions = freezed,
   }) {
     return _then(
       _$RoomImpl(
@@ -151,60 +194,109 @@ class __$$RoomImplCopyWithImpl<$Res>
             ? _value.hostId
             : hostId // ignore: cast_nullable_to_non_nullable
                   as String,
-        players: null == players
-            ? _value._players
-            : players // ignore: cast_nullable_to_non_nullable
-                  as List<RoomPlayer>,
+        categoryId: freezed == categoryId
+            ? _value.categoryId
+            : categoryId // ignore: cast_nullable_to_non_nullable
+                  as String?,
         status: null == status
             ? _value.status
             : status // ignore: cast_nullable_to_non_nullable
-                  as RoomStatus,
-        createdAt: null == createdAt
+                  as String,
+        state: freezed == state
+            ? _value._state
+            : state // ignore: cast_nullable_to_non_nullable
+                  as Map<String, dynamic>?,
+        title: freezed == title
+            ? _value.title
+            : title // ignore: cast_nullable_to_non_nullable
+                  as String?,
+        createdAt: freezed == createdAt
             ? _value.createdAt
             : createdAt // ignore: cast_nullable_to_non_nullable
-                  as DateTime,
+                  as DateTime?,
+        players: freezed == players
+            ? _value._players
+            : players // ignore: cast_nullable_to_non_nullable
+                  as List<RoomPlayer>?,
+        questions: freezed == questions
+            ? _value._questions
+            : questions // ignore: cast_nullable_to_non_nullable
+                  as List<RoomQuestion>?,
       ),
     );
   }
 }
 
 /// @nodoc
-
+@JsonSerializable()
 class _$RoomImpl implements _Room {
   const _$RoomImpl({
     required this.id,
     required this.code,
     required this.hostId,
-    required final List<RoomPlayer> players,
+    this.categoryId,
     required this.status,
-    required this.createdAt,
-  }) : _players = players;
+    final Map<String, dynamic>? state,
+    this.title,
+    this.createdAt,
+    final List<RoomPlayer>? players,
+    final List<RoomQuestion>? questions,
+  }) : _state = state,
+       _players = players,
+       _questions = questions;
+
+  factory _$RoomImpl.fromJson(Map<String, dynamic> json) =>
+      _$$RoomImplFromJson(json);
 
   @override
   final String id;
   @override
   final String code;
-  // كود الغرفة اللي ينضم بيه اللاعب
   @override
   final String hostId;
-  // مالك الغرفة
-  final List<RoomPlayer> _players;
-  // مالك الغرفة
   @override
-  List<RoomPlayer> get players {
-    if (_players is EqualUnmodifiableListView) return _players;
+  final String? categoryId;
+  @override
+  final String status;
+  // waiting | playing | finished
+  final Map<String, dynamic>? _state;
+  // waiting | playing | finished
+  @override
+  Map<String, dynamic>? get state {
+    final value = _state;
+    if (value == null) return null;
+    if (_state is EqualUnmodifiableMapView) return _state;
     // ignore: implicit_dynamic_type
-    return EqualUnmodifiableListView(_players);
+    return EqualUnmodifiableMapView(value);
   }
 
   @override
-  final RoomStatus status;
+  final String? title;
   @override
-  final DateTime createdAt;
+  final DateTime? createdAt;
+  final List<RoomPlayer>? _players;
+  @override
+  List<RoomPlayer>? get players {
+    final value = _players;
+    if (value == null) return null;
+    if (_players is EqualUnmodifiableListView) return _players;
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableListView(value);
+  }
+
+  final List<RoomQuestion>? _questions;
+  @override
+  List<RoomQuestion>? get questions {
+    final value = _questions;
+    if (value == null) return null;
+    if (_questions is EqualUnmodifiableListView) return _questions;
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableListView(value);
+  }
 
   @override
   String toString() {
-    return 'Room(id: $id, code: $code, hostId: $hostId, players: $players, status: $status, createdAt: $createdAt)';
+    return 'Room(id: $id, code: $code, hostId: $hostId, categoryId: $categoryId, status: $status, state: $state, title: $title, createdAt: $createdAt, players: $players, questions: $questions)';
   }
 
   @override
@@ -215,21 +307,34 @@ class _$RoomImpl implements _Room {
             (identical(other.id, id) || other.id == id) &&
             (identical(other.code, code) || other.code == code) &&
             (identical(other.hostId, hostId) || other.hostId == hostId) &&
-            const DeepCollectionEquality().equals(other._players, _players) &&
+            (identical(other.categoryId, categoryId) ||
+                other.categoryId == categoryId) &&
             (identical(other.status, status) || other.status == status) &&
+            const DeepCollectionEquality().equals(other._state, _state) &&
+            (identical(other.title, title) || other.title == title) &&
             (identical(other.createdAt, createdAt) ||
-                other.createdAt == createdAt));
+                other.createdAt == createdAt) &&
+            const DeepCollectionEquality().equals(other._players, _players) &&
+            const DeepCollectionEquality().equals(
+              other._questions,
+              _questions,
+            ));
   }
 
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   int get hashCode => Object.hash(
     runtimeType,
     id,
     code,
     hostId,
-    const DeepCollectionEquality().hash(_players),
+    categoryId,
     status,
+    const DeepCollectionEquality().hash(_state),
+    title,
     createdAt,
+    const DeepCollectionEquality().hash(_players),
+    const DeepCollectionEquality().hash(_questions),
   );
 
   /// Create a copy of Room
@@ -239,6 +344,11 @@ class _$RoomImpl implements _Room {
   @pragma('vm:prefer-inline')
   _$$RoomImplCopyWith<_$RoomImpl> get copyWith =>
       __$$RoomImplCopyWithImpl<_$RoomImpl>(this, _$identity);
+
+  @override
+  Map<String, dynamic> toJson() {
+    return _$$RoomImplToJson(this);
+  }
 }
 
 abstract class _Room implements Room {
@@ -246,23 +356,37 @@ abstract class _Room implements Room {
     required final String id,
     required final String code,
     required final String hostId,
-    required final List<RoomPlayer> players,
-    required final RoomStatus status,
-    required final DateTime createdAt,
+    final String? categoryId,
+    required final String status,
+    final Map<String, dynamic>? state,
+    final String? title,
+    final DateTime? createdAt,
+    final List<RoomPlayer>? players,
+    final List<RoomQuestion>? questions,
   }) = _$RoomImpl;
+
+  factory _Room.fromJson(Map<String, dynamic> json) = _$RoomImpl.fromJson;
 
   @override
   String get id;
   @override
-  String get code; // كود الغرفة اللي ينضم بيه اللاعب
+  String get code;
   @override
-  String get hostId; // مالك الغرفة
+  String get hostId;
   @override
-  List<RoomPlayer> get players;
+  String? get categoryId;
   @override
-  RoomStatus get status;
+  String get status; // waiting | playing | finished
   @override
-  DateTime get createdAt;
+  Map<String, dynamic>? get state;
+  @override
+  String? get title;
+  @override
+  DateTime? get createdAt;
+  @override
+  List<RoomPlayer>? get players;
+  @override
+  List<RoomQuestion>? get questions;
 
   /// Create a copy of Room
   /// with the given fields replaced by the non-null parameter values.

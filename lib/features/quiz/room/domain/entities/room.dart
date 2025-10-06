@@ -1,23 +1,24 @@
-
 import 'package:freezed_annotation/freezed_annotation.dart';
-import 'package:znoona_game_app/features/quiz/room/domain/entities/room_player.dart';
+import 'room_player.dart';
+import 'room_question.dart';
 
 part 'room.freezed.dart';
+part 'room.g.dart';
 
 @freezed
 class Room with _$Room {
   const factory Room({
     required String id,
-    required String code, 
-    required String hostId, 
-    required List<RoomPlayer> players,
-    required RoomStatus status,
-    required DateTime createdAt,
+    required String code,
+    required String hostId,
+    String? categoryId,
+    required String status, // waiting | playing | finished
+    Map<String, dynamic>? state,
+    String? title,
+    DateTime? createdAt,
+    List<RoomPlayer>? players,
+    List<RoomQuestion>? questions,
   }) = _Room;
-}
 
-enum RoomStatus {
-  waiting,   
-  playing,   
-  finished,  
+  factory Room.fromJson(Map<String, dynamic> json) => _$RoomFromJson(json);
 }

@@ -1,8 +1,7 @@
-// lib/features/quiz/room/data/models/room_model.dart
-
 import 'package:freezed_annotation/freezed_annotation.dart';
-import 'package:znoona_game_app/features/quiz/room/data/models/room_player_model.dart';
-import 'package:znoona_game_app/features/quiz/room/domain/entities/room.dart';
+import '../../domain/entities/room.dart';
+import '../../domain/entities/room_player.dart';
+import '../../domain/entities/room_question.dart';
 
 part 'room_model.freezed.dart';
 part 'room_model.g.dart';
@@ -13,23 +12,49 @@ class RoomModel with _$RoomModel {
     required String id,
     required String code,
     required String hostId,
-    required List<RoomPlayerModel> players,
-    required RoomStatus status,
-    required DateTime createdAt,
+    required String status,
+    String? categoryId,
+    String? title,
+    Map<String, dynamic>? state,
+    DateTime? createdAt,
+    List<RoomPlayer>? players,
+    List<RoomQuestion>? questions,
   }) = _RoomModel;
 
-  factory RoomModel.fromJson(Map<String, dynamic> json) =>
-      _$RoomModelFromJson(json);
+  factory RoomModel.fromJson(Map<String, dynamic> json) {
+    return RoomModel(
+      id: json['id']?.toString() ?? '', // 🔒 حماية من null
+      code: json['code']?.toString() ?? '',
+      hostId: json['host_id']?.toString() ?? '',
+      categoryId: json['category_id']?.toString(),
+      status: json['status']?.toString() ?? 'waiting',
+      title: json['title']?.toString() ?? '',
+      state: json['state'] as Map<String, dynamic>? ?? {},
+      createdAt: json['created_at'] != null
+          ? DateTime.tryParse(json['created_at'].toString())
+          : null,
+      players: (json['players'] as List<dynamic>?)
+              ?.map((e) => RoomPlayer.fromJson(e as Map<String, dynamic>))
+              .toList() ??
+          [],
+      questions: (json['questions'] as List<dynamic>?)
+              ?.map((e) => RoomQuestion.fromJson(e as Map<String, dynamic>))
+              .toList() ??
+          [],
+    );
+  }
 
-  factory RoomModel.fromEntity(Room entity) => RoomModel(
-        id: entity.id,
-        code: entity.code,
-        hostId: entity.hostId,
-        players: entity.players
-            .map((player) => RoomPlayerModel.fromEntity(player))
-            .toList(),
-        status: entity.status,
-        createdAt: entity.createdAt,
+  factory RoomModel.fromEntity(Room room) => RoomModel(
+        id: room.id,
+        code: room.code,
+        hostId: room.hostId,
+        categoryId: room.categoryId,
+        status: room.status,
+        state: room.state,
+        title: room.title,
+        createdAt: room.createdAt,
+        players: room.players,
+        questions: room.questions,
       );
 }
 
@@ -38,8 +63,12 @@ extension RoomModelX on RoomModel {
         id: id,
         code: code,
         hostId: hostId,
-        players: players.map((p) => p.toEntity()).toList(),
+        categoryId: categoryId,
         status: status,
+        state: state,
+        title: title,
         createdAt: createdAt,
+        players: players,
+        questions: questions,
       );
 }

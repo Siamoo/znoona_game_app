@@ -11,11 +11,19 @@ _$RoomModelImpl _$$RoomModelImplFromJson(Map<String, dynamic> json) =>
       id: json['id'] as String,
       code: json['code'] as String,
       hostId: json['hostId'] as String,
-      players: (json['players'] as List<dynamic>)
-          .map((e) => RoomPlayerModel.fromJson(e as Map<String, dynamic>))
+      status: json['status'] as String,
+      categoryId: json['categoryId'] as String?,
+      title: json['title'] as String?,
+      state: json['state'] as Map<String, dynamic>?,
+      createdAt: json['createdAt'] == null
+          ? null
+          : DateTime.parse(json['createdAt'] as String),
+      players: (json['players'] as List<dynamic>?)
+          ?.map((e) => RoomPlayer.fromJson(e as Map<String, dynamic>))
           .toList(),
-      status: $enumDecode(_$RoomStatusEnumMap, json['status']),
-      createdAt: DateTime.parse(json['createdAt'] as String),
+      questions: (json['questions'] as List<dynamic>?)
+          ?.map((e) => RoomQuestion.fromJson(e as Map<String, dynamic>))
+          .toList(),
     );
 
 Map<String, dynamic> _$$RoomModelImplToJson(_$RoomModelImpl instance) =>
@@ -23,13 +31,11 @@ Map<String, dynamic> _$$RoomModelImplToJson(_$RoomModelImpl instance) =>
       'id': instance.id,
       'code': instance.code,
       'hostId': instance.hostId,
+      'status': instance.status,
+      'categoryId': instance.categoryId,
+      'title': instance.title,
+      'state': instance.state,
+      'createdAt': instance.createdAt?.toIso8601String(),
       'players': instance.players,
-      'status': _$RoomStatusEnumMap[instance.status]!,
-      'createdAt': instance.createdAt.toIso8601String(),
+      'questions': instance.questions,
     };
-
-const _$RoomStatusEnumMap = {
-  RoomStatus.waiting: 'waiting',
-  RoomStatus.playing: 'playing',
-  RoomStatus.finished: 'finished',
-};

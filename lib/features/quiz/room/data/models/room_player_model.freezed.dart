@@ -22,9 +22,13 @@ RoomPlayerModel _$RoomPlayerModelFromJson(Map<String, dynamic> json) {
 /// @nodoc
 mixin _$RoomPlayerModel {
   String get id => throw _privateConstructorUsedError;
-  String get name => throw _privateConstructorUsedError;
-  int get score => throw _privateConstructorUsedError;
+  String get roomId => throw _privateConstructorUsedError;
+  String get userId => throw _privateConstructorUsedError;
+  String get username => throw _privateConstructorUsedError; // 🔹 تمت إضافتها
   bool get isHost => throw _privateConstructorUsedError;
+  bool get isConnected => throw _privateConstructorUsedError; // 🔹 تمت إضافتها
+  int get score => throw _privateConstructorUsedError;
+  DateTime? get joinedAt => throw _privateConstructorUsedError;
 
   /// Serializes this RoomPlayerModel to a JSON map.
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
@@ -43,7 +47,16 @@ abstract class $RoomPlayerModelCopyWith<$Res> {
     $Res Function(RoomPlayerModel) then,
   ) = _$RoomPlayerModelCopyWithImpl<$Res, RoomPlayerModel>;
   @useResult
-  $Res call({String id, String name, int score, bool isHost});
+  $Res call({
+    String id,
+    String roomId,
+    String userId,
+    String username,
+    bool isHost,
+    bool isConnected,
+    int score,
+    DateTime? joinedAt,
+  });
 }
 
 /// @nodoc
@@ -62,9 +75,13 @@ class _$RoomPlayerModelCopyWithImpl<$Res, $Val extends RoomPlayerModel>
   @override
   $Res call({
     Object? id = null,
-    Object? name = null,
-    Object? score = null,
+    Object? roomId = null,
+    Object? userId = null,
+    Object? username = null,
     Object? isHost = null,
+    Object? isConnected = null,
+    Object? score = null,
+    Object? joinedAt = freezed,
   }) {
     return _then(
       _value.copyWith(
@@ -72,18 +89,34 @@ class _$RoomPlayerModelCopyWithImpl<$Res, $Val extends RoomPlayerModel>
                 ? _value.id
                 : id // ignore: cast_nullable_to_non_nullable
                       as String,
-            name: null == name
-                ? _value.name
-                : name // ignore: cast_nullable_to_non_nullable
+            roomId: null == roomId
+                ? _value.roomId
+                : roomId // ignore: cast_nullable_to_non_nullable
                       as String,
-            score: null == score
-                ? _value.score
-                : score // ignore: cast_nullable_to_non_nullable
-                      as int,
+            userId: null == userId
+                ? _value.userId
+                : userId // ignore: cast_nullable_to_non_nullable
+                      as String,
+            username: null == username
+                ? _value.username
+                : username // ignore: cast_nullable_to_non_nullable
+                      as String,
             isHost: null == isHost
                 ? _value.isHost
                 : isHost // ignore: cast_nullable_to_non_nullable
                       as bool,
+            isConnected: null == isConnected
+                ? _value.isConnected
+                : isConnected // ignore: cast_nullable_to_non_nullable
+                      as bool,
+            score: null == score
+                ? _value.score
+                : score // ignore: cast_nullable_to_non_nullable
+                      as int,
+            joinedAt: freezed == joinedAt
+                ? _value.joinedAt
+                : joinedAt // ignore: cast_nullable_to_non_nullable
+                      as DateTime?,
           )
           as $Val,
     );
@@ -99,7 +132,16 @@ abstract class _$$RoomPlayerModelImplCopyWith<$Res>
   ) = __$$RoomPlayerModelImplCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({String id, String name, int score, bool isHost});
+  $Res call({
+    String id,
+    String roomId,
+    String userId,
+    String username,
+    bool isHost,
+    bool isConnected,
+    int score,
+    DateTime? joinedAt,
+  });
 }
 
 /// @nodoc
@@ -117,9 +159,13 @@ class __$$RoomPlayerModelImplCopyWithImpl<$Res>
   @override
   $Res call({
     Object? id = null,
-    Object? name = null,
-    Object? score = null,
+    Object? roomId = null,
+    Object? userId = null,
+    Object? username = null,
     Object? isHost = null,
+    Object? isConnected = null,
+    Object? score = null,
+    Object? joinedAt = freezed,
   }) {
     return _then(
       _$RoomPlayerModelImpl(
@@ -127,18 +173,34 @@ class __$$RoomPlayerModelImplCopyWithImpl<$Res>
             ? _value.id
             : id // ignore: cast_nullable_to_non_nullable
                   as String,
-        name: null == name
-            ? _value.name
-            : name // ignore: cast_nullable_to_non_nullable
+        roomId: null == roomId
+            ? _value.roomId
+            : roomId // ignore: cast_nullable_to_non_nullable
                   as String,
-        score: null == score
-            ? _value.score
-            : score // ignore: cast_nullable_to_non_nullable
-                  as int,
+        userId: null == userId
+            ? _value.userId
+            : userId // ignore: cast_nullable_to_non_nullable
+                  as String,
+        username: null == username
+            ? _value.username
+            : username // ignore: cast_nullable_to_non_nullable
+                  as String,
         isHost: null == isHost
             ? _value.isHost
             : isHost // ignore: cast_nullable_to_non_nullable
                   as bool,
+        isConnected: null == isConnected
+            ? _value.isConnected
+            : isConnected // ignore: cast_nullable_to_non_nullable
+                  as bool,
+        score: null == score
+            ? _value.score
+            : score // ignore: cast_nullable_to_non_nullable
+                  as int,
+        joinedAt: freezed == joinedAt
+            ? _value.joinedAt
+            : joinedAt // ignore: cast_nullable_to_non_nullable
+                  as DateTime?,
       ),
     );
   }
@@ -149,9 +211,13 @@ class __$$RoomPlayerModelImplCopyWithImpl<$Res>
 class _$RoomPlayerModelImpl implements _RoomPlayerModel {
   const _$RoomPlayerModelImpl({
     required this.id,
-    required this.name,
-    required this.score,
+    required this.roomId,
+    required this.userId,
+    required this.username,
     required this.isHost,
+    required this.isConnected,
+    required this.score,
+    this.joinedAt,
   });
 
   factory _$RoomPlayerModelImpl.fromJson(Map<String, dynamic> json) =>
@@ -160,15 +226,25 @@ class _$RoomPlayerModelImpl implements _RoomPlayerModel {
   @override
   final String id;
   @override
-  final String name;
+  final String roomId;
+  @override
+  final String userId;
+  @override
+  final String username;
+  // 🔹 تمت إضافتها
+  @override
+  final bool isHost;
+  @override
+  final bool isConnected;
+  // 🔹 تمت إضافتها
   @override
   final int score;
   @override
-  final bool isHost;
+  final DateTime? joinedAt;
 
   @override
   String toString() {
-    return 'RoomPlayerModel(id: $id, name: $name, score: $score, isHost: $isHost)';
+    return 'RoomPlayerModel(id: $id, roomId: $roomId, userId: $userId, username: $username, isHost: $isHost, isConnected: $isConnected, score: $score, joinedAt: $joinedAt)';
   }
 
   @override
@@ -177,14 +253,31 @@ class _$RoomPlayerModelImpl implements _RoomPlayerModel {
         (other.runtimeType == runtimeType &&
             other is _$RoomPlayerModelImpl &&
             (identical(other.id, id) || other.id == id) &&
-            (identical(other.name, name) || other.name == name) &&
+            (identical(other.roomId, roomId) || other.roomId == roomId) &&
+            (identical(other.userId, userId) || other.userId == userId) &&
+            (identical(other.username, username) ||
+                other.username == username) &&
+            (identical(other.isHost, isHost) || other.isHost == isHost) &&
+            (identical(other.isConnected, isConnected) ||
+                other.isConnected == isConnected) &&
             (identical(other.score, score) || other.score == score) &&
-            (identical(other.isHost, isHost) || other.isHost == isHost));
+            (identical(other.joinedAt, joinedAt) ||
+                other.joinedAt == joinedAt));
   }
 
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override
-  int get hashCode => Object.hash(runtimeType, id, name, score, isHost);
+  int get hashCode => Object.hash(
+    runtimeType,
+    id,
+    roomId,
+    userId,
+    username,
+    isHost,
+    isConnected,
+    score,
+    joinedAt,
+  );
 
   /// Create a copy of RoomPlayerModel
   /// with the given fields replaced by the non-null parameter values.
@@ -206,9 +299,13 @@ class _$RoomPlayerModelImpl implements _RoomPlayerModel {
 abstract class _RoomPlayerModel implements RoomPlayerModel {
   const factory _RoomPlayerModel({
     required final String id,
-    required final String name,
-    required final int score,
+    required final String roomId,
+    required final String userId,
+    required final String username,
     required final bool isHost,
+    required final bool isConnected,
+    required final int score,
+    final DateTime? joinedAt,
   }) = _$RoomPlayerModelImpl;
 
   factory _RoomPlayerModel.fromJson(Map<String, dynamic> json) =
@@ -217,11 +314,19 @@ abstract class _RoomPlayerModel implements RoomPlayerModel {
   @override
   String get id;
   @override
-  String get name;
+  String get roomId;
+  @override
+  String get userId;
+  @override
+  String get username; // 🔹 تمت إضافتها
+  @override
+  bool get isHost;
+  @override
+  bool get isConnected; // 🔹 تمت إضافتها
   @override
   int get score;
   @override
-  bool get isHost;
+  DateTime? get joinedAt;
 
   /// Create a copy of RoomPlayerModel
   /// with the given fields replaced by the non-null parameter values.

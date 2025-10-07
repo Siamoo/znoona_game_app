@@ -15,19 +15,12 @@ final _privateConstructorUsedError = UnsupportedError(
   'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#adding-getters-and-methods-to-our-models',
 );
 
-RoomQuestionModel _$RoomQuestionModelFromJson(Map<String, dynamic> json) {
-  return _RoomQuestionModel.fromJson(json);
-}
-
 /// @nodoc
 mixin _$RoomQuestionModel {
   String get id => throw _privateConstructorUsedError;
   String get roomId => throw _privateConstructorUsedError;
   String get questionId => throw _privateConstructorUsedError;
   int get orderIndex => throw _privateConstructorUsedError;
-
-  /// Serializes this RoomQuestionModel to a JSON map.
-  Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
 
   /// Create a copy of RoomQuestionModel
   /// with the given fields replaced by the non-null parameter values.
@@ -145,7 +138,7 @@ class __$$RoomQuestionModelImplCopyWithImpl<$Res>
 }
 
 /// @nodoc
-@JsonSerializable()
+
 class _$RoomQuestionModelImpl implements _RoomQuestionModel {
   const _$RoomQuestionModelImpl({
     required this.id,
@@ -153,9 +146,6 @@ class _$RoomQuestionModelImpl implements _RoomQuestionModel {
     required this.questionId,
     required this.orderIndex,
   });
-
-  factory _$RoomQuestionModelImpl.fromJson(Map<String, dynamic> json) =>
-      _$$RoomQuestionModelImplFromJson(json);
 
   @override
   final String id;
@@ -184,7 +174,6 @@ class _$RoomQuestionModelImpl implements _RoomQuestionModel {
                 other.orderIndex == orderIndex));
   }
 
-  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   int get hashCode =>
       Object.hash(runtimeType, id, roomId, questionId, orderIndex);
@@ -199,11 +188,6 @@ class _$RoomQuestionModelImpl implements _RoomQuestionModel {
         this,
         _$identity,
       );
-
-  @override
-  Map<String, dynamic> toJson() {
-    return _$$RoomQuestionModelImplToJson(this);
-  }
 }
 
 abstract class _RoomQuestionModel implements RoomQuestionModel {
@@ -213,9 +197,6 @@ abstract class _RoomQuestionModel implements RoomQuestionModel {
     required final String questionId,
     required final int orderIndex,
   }) = _$RoomQuestionModelImpl;
-
-  factory _RoomQuestionModel.fromJson(Map<String, dynamic> json) =
-      _$RoomQuestionModelImpl.fromJson;
 
   @override
   String get id;

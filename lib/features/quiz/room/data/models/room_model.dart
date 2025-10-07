@@ -1,10 +1,10 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
-import '../../domain/entities/room.dart';
-import '../../domain/entities/room_player.dart';
-import '../../domain/entities/room_question.dart';
+import 'package:znoona_game_app/features/quiz/room/domain/entities/room.dart';
+import 'package:znoona_game_app/features/quiz/room/domain/entities/room_player.dart';
+import 'package:znoona_game_app/features/quiz/room/domain/entities/room_question.dart';
+
 
 part 'room_model.freezed.dart';
-part 'room_model.g.dart';
 
 @freezed
 class RoomModel with _$RoomModel {
@@ -23,7 +23,7 @@ class RoomModel with _$RoomModel {
 
   factory RoomModel.fromJson(Map<String, dynamic> json) {
     return RoomModel(
-      id: json['id']?.toString() ?? '', // 🔒 حماية من null
+      id: json['id']?.toString() ?? '',
       code: json['code']?.toString() ?? '',
       hostId: json['host_id']?.toString() ?? '',
       categoryId: json['category_id']?.toString(),

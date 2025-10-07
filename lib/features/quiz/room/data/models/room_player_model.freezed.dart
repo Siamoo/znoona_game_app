@@ -15,23 +15,16 @@ final _privateConstructorUsedError = UnsupportedError(
   'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#adding-getters-and-methods-to-our-models',
 );
 
-RoomPlayerModel _$RoomPlayerModelFromJson(Map<String, dynamic> json) {
-  return _RoomPlayerModel.fromJson(json);
-}
-
 /// @nodoc
 mixin _$RoomPlayerModel {
   String get id => throw _privateConstructorUsedError;
   String get roomId => throw _privateConstructorUsedError;
   String get userId => throw _privateConstructorUsedError;
-  String get username => throw _privateConstructorUsedError; // 🔹 تمت إضافتها
+  String get username => throw _privateConstructorUsedError;
   bool get isHost => throw _privateConstructorUsedError;
-  bool get isConnected => throw _privateConstructorUsedError; // 🔹 تمت إضافتها
+  bool get isConnected => throw _privateConstructorUsedError;
   int get score => throw _privateConstructorUsedError;
   DateTime? get joinedAt => throw _privateConstructorUsedError;
-
-  /// Serializes this RoomPlayerModel to a JSON map.
-  Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
 
   /// Create a copy of RoomPlayerModel
   /// with the given fields replaced by the non-null parameter values.
@@ -207,7 +200,7 @@ class __$$RoomPlayerModelImplCopyWithImpl<$Res>
 }
 
 /// @nodoc
-@JsonSerializable()
+
 class _$RoomPlayerModelImpl implements _RoomPlayerModel {
   const _$RoomPlayerModelImpl({
     required this.id,
@@ -220,9 +213,6 @@ class _$RoomPlayerModelImpl implements _RoomPlayerModel {
     this.joinedAt,
   });
 
-  factory _$RoomPlayerModelImpl.fromJson(Map<String, dynamic> json) =>
-      _$$RoomPlayerModelImplFromJson(json);
-
   @override
   final String id;
   @override
@@ -231,12 +221,10 @@ class _$RoomPlayerModelImpl implements _RoomPlayerModel {
   final String userId;
   @override
   final String username;
-  // 🔹 تمت إضافتها
   @override
   final bool isHost;
   @override
   final bool isConnected;
-  // 🔹 تمت إضافتها
   @override
   final int score;
   @override
@@ -265,7 +253,6 @@ class _$RoomPlayerModelImpl implements _RoomPlayerModel {
                 other.joinedAt == joinedAt));
   }
 
-  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   int get hashCode => Object.hash(
     runtimeType,
@@ -289,11 +276,6 @@ class _$RoomPlayerModelImpl implements _RoomPlayerModel {
         this,
         _$identity,
       );
-
-  @override
-  Map<String, dynamic> toJson() {
-    return _$$RoomPlayerModelImplToJson(this);
-  }
 }
 
 abstract class _RoomPlayerModel implements RoomPlayerModel {
@@ -308,9 +290,6 @@ abstract class _RoomPlayerModel implements RoomPlayerModel {
     final DateTime? joinedAt,
   }) = _$RoomPlayerModelImpl;
 
-  factory _RoomPlayerModel.fromJson(Map<String, dynamic> json) =
-      _$RoomPlayerModelImpl.fromJson;
-
   @override
   String get id;
   @override
@@ -318,11 +297,11 @@ abstract class _RoomPlayerModel implements RoomPlayerModel {
   @override
   String get userId;
   @override
-  String get username; // 🔹 تمت إضافتها
+  String get username;
   @override
   bool get isHost;
   @override
-  bool get isConnected; // 🔹 تمت إضافتها
+  bool get isConnected;
   @override
   int get score;
   @override

@@ -1,8 +1,7 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
-import '../../domain/entities/room_question.dart';
+import 'package:znoona_game_app/features/quiz/room/domain/entities/room_question.dart';
 
 part 'room_question_model.freezed.dart';
-part 'room_question_model.g.dart';
 
 @freezed
 class RoomQuestionModel with _$RoomQuestionModel {
@@ -13,24 +12,31 @@ class RoomQuestionModel with _$RoomQuestionModel {
     required int orderIndex,
   }) = _RoomQuestionModel;
 
-  factory RoomQuestionModel.fromJson(Map<String, dynamic> json) =>
-      _$RoomQuestionModelFromJson(json);
+  factory RoomQuestionModel.fromJson(Map<String, dynamic> json) {
+    return RoomQuestionModel(
+      id: json['id']?.toString() ?? '',
+      roomId: json['room_id']?.toString() ?? '',
+      questionId: json['question_id']?.toString() ?? '',
+      orderIndex: (json['order_index'] is int)
+          ? json['order_index'] as int
+          : int.tryParse(json['order_index']?.toString() ?? '0') ?? 0,
+    );
+  }
+
+  factory RoomQuestionModel.fromEntity(RoomQuestion question) =>
+      RoomQuestionModel(
+        id: question.id,
+        roomId: question.roomId,
+        questionId: question.questionId,
+        orderIndex: question.orderIndex,
+      );
 }
 
-// ✅ تحويلات Model ↔ Entity
 extension RoomQuestionModelX on RoomQuestionModel {
   RoomQuestion toEntity() => RoomQuestion(
         id: id,
         roomId: roomId,
         questionId: questionId,
         orderIndex: orderIndex,
-      );
-
-  static RoomQuestionModel fromEntity(RoomQuestion question) =>
-      RoomQuestionModel(
-        id: question.id,
-        roomId: question.roomId,
-        questionId: question.questionId,
-        orderIndex: question.orderIndex,
       );
 }

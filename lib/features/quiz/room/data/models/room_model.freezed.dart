@@ -15,10 +15,6 @@ final _privateConstructorUsedError = UnsupportedError(
   'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#adding-getters-and-methods-to-our-models',
 );
 
-RoomModel _$RoomModelFromJson(Map<String, dynamic> json) {
-  return _RoomModel.fromJson(json);
-}
-
 /// @nodoc
 mixin _$RoomModel {
   String get id => throw _privateConstructorUsedError;
@@ -31,9 +27,6 @@ mixin _$RoomModel {
   DateTime? get createdAt => throw _privateConstructorUsedError;
   List<RoomPlayer>? get players => throw _privateConstructorUsedError;
   List<RoomQuestion>? get questions => throw _privateConstructorUsedError;
-
-  /// Serializes this RoomModel to a JSON map.
-  Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
 
   /// Create a copy of RoomModel
   /// with the given fields replaced by the non-null parameter values.
@@ -231,7 +224,7 @@ class __$$RoomModelImplCopyWithImpl<$Res>
 }
 
 /// @nodoc
-@JsonSerializable()
+
 class _$RoomModelImpl implements _RoomModel {
   const _$RoomModelImpl({
     required this.id,
@@ -247,9 +240,6 @@ class _$RoomModelImpl implements _RoomModel {
   }) : _state = state,
        _players = players,
        _questions = questions;
-
-  factory _$RoomModelImpl.fromJson(Map<String, dynamic> json) =>
-      _$$RoomModelImplFromJson(json);
 
   @override
   final String id;
@@ -322,7 +312,6 @@ class _$RoomModelImpl implements _RoomModel {
             ));
   }
 
-  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   int get hashCode => Object.hash(
     runtimeType,
@@ -345,11 +334,6 @@ class _$RoomModelImpl implements _RoomModel {
   @pragma('vm:prefer-inline')
   _$$RoomModelImplCopyWith<_$RoomModelImpl> get copyWith =>
       __$$RoomModelImplCopyWithImpl<_$RoomModelImpl>(this, _$identity);
-
-  @override
-  Map<String, dynamic> toJson() {
-    return _$$RoomModelImplToJson(this);
-  }
 }
 
 abstract class _RoomModel implements RoomModel {
@@ -365,9 +349,6 @@ abstract class _RoomModel implements RoomModel {
     final List<RoomPlayer>? players,
     final List<RoomQuestion>? questions,
   }) = _$RoomModelImpl;
-
-  factory _RoomModel.fromJson(Map<String, dynamic> json) =
-      _$RoomModelImpl.fromJson;
 
   @override
   String get id;

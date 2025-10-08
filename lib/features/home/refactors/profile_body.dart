@@ -59,7 +59,7 @@ class ProfileBody extends StatelessWidget {
                   //todo add cups in supabase & add it here
                   TextApp(
                     text:
-                        'all time : 5 cup 🏆 | this month : 1 cup 🏆 | rank : 12',
+                        'all time : ${profile.level} cup 🏆 | this month : 1 cup 🏆 | rank : 12',
                     textStyle: GoogleFonts.beiruti(
                       fontSize: 16.sp,
                       fontWeight: FontWeight.bold,

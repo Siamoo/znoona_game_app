@@ -7,7 +7,8 @@ class Profile with _$Profile {
   const factory Profile({
     required String id,
     required String fullName,
-    String? avatarUrl,
+    required String level,
     required DateTime createdAt,
+    String? avatarUrl,
   }) = _Profile;
 }

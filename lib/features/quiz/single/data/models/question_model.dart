@@ -18,7 +18,7 @@ class QuestionModel {
             .toList() ??
         [];
 
-    // Shuffle options so the correct answer isn’t always first
+    // randomize
     opts.shuffle(Random());
 
     return QuestionModel(

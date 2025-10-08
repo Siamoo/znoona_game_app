@@ -44,6 +44,7 @@ class AuthRemoteDataSourceImpl implements AuthRemoteDataSource {
         .insert({
           'id': userId,
           'full_name': fullName,
+          'level': 0,
         })
         .select()
         .single();
@@ -99,6 +100,7 @@ class AuthRemoteDataSourceImpl implements AuthRemoteDataSource {
             'id': user.id,
             'full_name': user.userMetadata?['full_name'] ?? user.email,
             'avatar_url': user.userMetadata?['avatar_url'],
+            'level': 0,
           })
           .select()
           .single();

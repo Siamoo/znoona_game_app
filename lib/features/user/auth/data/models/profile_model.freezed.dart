@@ -23,6 +23,7 @@ ProfileModel _$ProfileModelFromJson(Map<String, dynamic> json) {
 mixin _$ProfileModel {
   String get id => throw _privateConstructorUsedError;
   String get full_name => throw _privateConstructorUsedError;
+  String get level => throw _privateConstructorUsedError;
   String? get avatar_url => throw _privateConstructorUsedError;
   DateTime get created_at => throw _privateConstructorUsedError;
 
@@ -46,6 +47,7 @@ abstract class $ProfileModelCopyWith<$Res> {
   $Res call({
     String id,
     String full_name,
+    String level,
     String? avatar_url,
     DateTime created_at,
   });
@@ -68,6 +70,7 @@ class _$ProfileModelCopyWithImpl<$Res, $Val extends ProfileModel>
   $Res call({
     Object? id = null,
     Object? full_name = null,
+    Object? level = null,
     Object? avatar_url = freezed,
     Object? created_at = null,
   }) {
@@ -80,6 +83,10 @@ class _$ProfileModelCopyWithImpl<$Res, $Val extends ProfileModel>
             full_name: null == full_name
                 ? _value.full_name
                 : full_name // ignore: cast_nullable_to_non_nullable
+                      as String,
+            level: null == level
+                ? _value.level
+                : level // ignore: cast_nullable_to_non_nullable
                       as String,
             avatar_url: freezed == avatar_url
                 ? _value.avatar_url
@@ -107,6 +114,7 @@ abstract class _$$ProfileModelImplCopyWith<$Res>
   $Res call({
     String id,
     String full_name,
+    String level,
     String? avatar_url,
     DateTime created_at,
   });
@@ -128,6 +136,7 @@ class __$$ProfileModelImplCopyWithImpl<$Res>
   $Res call({
     Object? id = null,
     Object? full_name = null,
+    Object? level = null,
     Object? avatar_url = freezed,
     Object? created_at = null,
   }) {
@@ -140,6 +149,10 @@ class __$$ProfileModelImplCopyWithImpl<$Res>
         full_name: null == full_name
             ? _value.full_name
             : full_name // ignore: cast_nullable_to_non_nullable
+                  as String,
+        level: null == level
+            ? _value.level
+            : level // ignore: cast_nullable_to_non_nullable
                   as String,
         avatar_url: freezed == avatar_url
             ? _value.avatar_url
@@ -160,6 +173,7 @@ class _$ProfileModelImpl implements _ProfileModel {
   const _$ProfileModelImpl({
     required this.id,
     required this.full_name,
+    required this.level,
     this.avatar_url,
     required this.created_at,
   });
@@ -172,13 +186,15 @@ class _$ProfileModelImpl implements _ProfileModel {
   @override
   final String full_name;
   @override
+  final String level;
+  @override
   final String? avatar_url;
   @override
   final DateTime created_at;
 
   @override
   String toString() {
-    return 'ProfileModel(id: $id, full_name: $full_name, avatar_url: $avatar_url, created_at: $created_at)';
+    return 'ProfileModel(id: $id, full_name: $full_name, level: $level, avatar_url: $avatar_url, created_at: $created_at)';
   }
 
   @override
@@ -189,6 +205,7 @@ class _$ProfileModelImpl implements _ProfileModel {
             (identical(other.id, id) || other.id == id) &&
             (identical(other.full_name, full_name) ||
                 other.full_name == full_name) &&
+            (identical(other.level, level) || other.level == level) &&
             (identical(other.avatar_url, avatar_url) ||
                 other.avatar_url == avatar_url) &&
             (identical(other.created_at, created_at) ||
@@ -198,7 +215,7 @@ class _$ProfileModelImpl implements _ProfileModel {
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   int get hashCode =>
-      Object.hash(runtimeType, id, full_name, avatar_url, created_at);
+      Object.hash(runtimeType, id, full_name, level, avatar_url, created_at);
 
   /// Create a copy of ProfileModel
   /// with the given fields replaced by the non-null parameter values.
@@ -218,6 +235,7 @@ abstract class _ProfileModel implements ProfileModel {
   const factory _ProfileModel({
     required final String id,
     required final String full_name,
+    required final String level,
     final String? avatar_url,
     required final DateTime created_at,
   }) = _$ProfileModelImpl;
@@ -229,6 +247,8 @@ abstract class _ProfileModel implements ProfileModel {
   String get id;
   @override
   String get full_name;
+  @override
+  String get level;
   @override
   String? get avatar_url;
   @override

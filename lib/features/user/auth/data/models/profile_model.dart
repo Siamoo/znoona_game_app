@@ -9,6 +9,7 @@ class ProfileModel with _$ProfileModel {
   const factory ProfileModel({
     required String id,
     required String full_name,
+    required String level,
     String? avatar_url,
     required DateTime created_at,
   }) = _ProfileModel;
@@ -23,6 +24,7 @@ extension ProfileModelX on ProfileModel {
       id: id,
       fullName: full_name,
       avatarUrl: avatar_url,
+      level: level,
       createdAt: created_at,
     );
   }

@@ -19,8 +19,9 @@ final _privateConstructorUsedError = UnsupportedError(
 mixin _$Profile {
   String get id => throw _privateConstructorUsedError;
   String get fullName => throw _privateConstructorUsedError;
-  String? get avatarUrl => throw _privateConstructorUsedError;
+  String get level => throw _privateConstructorUsedError;
   DateTime get createdAt => throw _privateConstructorUsedError;
+  String? get avatarUrl => throw _privateConstructorUsedError;
 
   /// Create a copy of Profile
   /// with the given fields replaced by the non-null parameter values.
@@ -36,8 +37,9 @@ abstract class $ProfileCopyWith<$Res> {
   $Res call({
     String id,
     String fullName,
-    String? avatarUrl,
+    String level,
     DateTime createdAt,
+    String? avatarUrl,
   });
 }
 
@@ -58,8 +60,9 @@ class _$ProfileCopyWithImpl<$Res, $Val extends Profile>
   $Res call({
     Object? id = null,
     Object? fullName = null,
-    Object? avatarUrl = freezed,
+    Object? level = null,
     Object? createdAt = null,
+    Object? avatarUrl = freezed,
   }) {
     return _then(
       _value.copyWith(
@@ -71,14 +74,18 @@ class _$ProfileCopyWithImpl<$Res, $Val extends Profile>
                 ? _value.fullName
                 : fullName // ignore: cast_nullable_to_non_nullable
                       as String,
-            avatarUrl: freezed == avatarUrl
-                ? _value.avatarUrl
-                : avatarUrl // ignore: cast_nullable_to_non_nullable
-                      as String?,
+            level: null == level
+                ? _value.level
+                : level // ignore: cast_nullable_to_non_nullable
+                      as String,
             createdAt: null == createdAt
                 ? _value.createdAt
                 : createdAt // ignore: cast_nullable_to_non_nullable
                       as DateTime,
+            avatarUrl: freezed == avatarUrl
+                ? _value.avatarUrl
+                : avatarUrl // ignore: cast_nullable_to_non_nullable
+                      as String?,
           )
           as $Val,
     );
@@ -96,8 +103,9 @@ abstract class _$$ProfileImplCopyWith<$Res> implements $ProfileCopyWith<$Res> {
   $Res call({
     String id,
     String fullName,
-    String? avatarUrl,
+    String level,
     DateTime createdAt,
+    String? avatarUrl,
   });
 }
 
@@ -117,8 +125,9 @@ class __$$ProfileImplCopyWithImpl<$Res>
   $Res call({
     Object? id = null,
     Object? fullName = null,
-    Object? avatarUrl = freezed,
+    Object? level = null,
     Object? createdAt = null,
+    Object? avatarUrl = freezed,
   }) {
     return _then(
       _$ProfileImpl(
@@ -130,14 +139,18 @@ class __$$ProfileImplCopyWithImpl<$Res>
             ? _value.fullName
             : fullName // ignore: cast_nullable_to_non_nullable
                   as String,
-        avatarUrl: freezed == avatarUrl
-            ? _value.avatarUrl
-            : avatarUrl // ignore: cast_nullable_to_non_nullable
-                  as String?,
+        level: null == level
+            ? _value.level
+            : level // ignore: cast_nullable_to_non_nullable
+                  as String,
         createdAt: null == createdAt
             ? _value.createdAt
             : createdAt // ignore: cast_nullable_to_non_nullable
                   as DateTime,
+        avatarUrl: freezed == avatarUrl
+            ? _value.avatarUrl
+            : avatarUrl // ignore: cast_nullable_to_non_nullable
+                  as String?,
       ),
     );
   }
@@ -149,8 +162,9 @@ class _$ProfileImpl implements _Profile {
   const _$ProfileImpl({
     required this.id,
     required this.fullName,
-    this.avatarUrl,
+    required this.level,
     required this.createdAt,
+    this.avatarUrl,
   });
 
   @override
@@ -158,13 +172,15 @@ class _$ProfileImpl implements _Profile {
   @override
   final String fullName;
   @override
-  final String? avatarUrl;
+  final String level;
   @override
   final DateTime createdAt;
+  @override
+  final String? avatarUrl;
 
   @override
   String toString() {
-    return 'Profile(id: $id, fullName: $fullName, avatarUrl: $avatarUrl, createdAt: $createdAt)';
+    return 'Profile(id: $id, fullName: $fullName, level: $level, createdAt: $createdAt, avatarUrl: $avatarUrl)';
   }
 
   @override
@@ -175,15 +191,16 @@ class _$ProfileImpl implements _Profile {
             (identical(other.id, id) || other.id == id) &&
             (identical(other.fullName, fullName) ||
                 other.fullName == fullName) &&
-            (identical(other.avatarUrl, avatarUrl) ||
-                other.avatarUrl == avatarUrl) &&
+            (identical(other.level, level) || other.level == level) &&
             (identical(other.createdAt, createdAt) ||
-                other.createdAt == createdAt));
+                other.createdAt == createdAt) &&
+            (identical(other.avatarUrl, avatarUrl) ||
+                other.avatarUrl == avatarUrl));
   }
 
   @override
   int get hashCode =>
-      Object.hash(runtimeType, id, fullName, avatarUrl, createdAt);
+      Object.hash(runtimeType, id, fullName, level, createdAt, avatarUrl);
 
   /// Create a copy of Profile
   /// with the given fields replaced by the non-null parameter values.
@@ -198,8 +215,9 @@ abstract class _Profile implements Profile {
   const factory _Profile({
     required final String id,
     required final String fullName,
-    final String? avatarUrl,
+    required final String level,
     required final DateTime createdAt,
+    final String? avatarUrl,
   }) = _$ProfileImpl;
 
   @override
@@ -207,9 +225,11 @@ abstract class _Profile implements Profile {
   @override
   String get fullName;
   @override
-  String? get avatarUrl;
+  String get level;
   @override
   DateTime get createdAt;
+  @override
+  String? get avatarUrl;
 
   /// Create a copy of Profile
   /// with the given fields replaced by the non-null parameter values.

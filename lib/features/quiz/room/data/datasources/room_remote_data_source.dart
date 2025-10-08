@@ -2,6 +2,8 @@ import 'package:supabase_flutter/supabase_flutter.dart';
 import 'package:znoona_game_app/features/quiz/room/data/models/room_model.dart';
 import 'package:znoona_game_app/features/quiz/room/data/models/room_player_model.dart';
 import 'package:znoona_game_app/features/quiz/room/data/models/room_question_model.dart';
+import 'package:znoona_game_app/features/quiz/single/data/models/question_model.dart';
+import 'package:znoona_game_app/features/quiz/single/domain/entities/question.dart';
 
 class RoomRemoteDataSource {
   RoomRemoteDataSource(this.supabase);
@@ -65,7 +67,7 @@ class RoomRemoteDataSource {
     if (user == null) throw Exception('User not logged in');
 
     final metadata = user.userMetadata ?? {};
-    final userNameMeta = metadata['username'] ?? 'username';
+    final userNameMeta = metadata['full_name'] ?? 'user';
 
     final roomData = await supabase
         .from('rooms')
@@ -169,6 +171,100 @@ class RoomRemoteDataSource {
         .stream(primaryKey: ['id'])
         .eq('id', roomId) // Use 'id' instead of 'code'
         .map((rows) => rows.isNotEmpty ? RoomModel.fromJson(rows.first) : null);
+  }
+
+   /// ❓ Get question by ID
+  Future<Question> getQuestion(String questionId) async {
+    final data = await supabase
+        .from('questions')
+        .select()
+        .eq('id', questionId)
+        .single();
+
+    print('📦 getQuestion data: $data');
+
+    
+
+    // Use your existing QuestionModel from single feature
+    final questionModel = QuestionModel.fromJson(data as Map<String, dynamic>);
+    return questionModel.toEntity();
+  }
+
+  /// ❓ Get multiple questions by IDs
+  Future<List<Question>> getQuestions(List<String> questionIds) async {
+    if (questionIds.isEmpty) return [];
+
+    final data = await supabase
+        .from('questions')
+        .select()
+        .inFilter('id', questionIds); // Use inFilter instead of in
+
+    print('📦 getQuestions data: $data');
+
+    // Use your existing QuestionModel from single feature
+    return (data as List)
+        .map((e) => QuestionModel.fromJson(e as Map<String, dynamic>))
+        .map((model) => model.toEntity())
+        .toList();
+  }
+
+  /// ✅ Store player answer and update score in room_players table
+  Future<void> submitAnswer({
+    required String roomId,
+    required String userId,
+    required String selectedAnswer,
+    required bool isCorrect,
+  }) async {
+    // Get current player data
+    final playerData = await supabase
+        .from('room_players')
+        .select('score')
+        .eq('room_id', roomId)
+        .eq('user_id', userId)
+        .single();
+
+    final currentScore = playerData['score'] as int? ?? 0;
+    final newScore = isCorrect ? currentScore + 10 : currentScore;
+
+    // Update player's answer and score
+    await supabase
+        .from('room_players')
+        .update({
+          'selected_answer': selectedAnswer,
+          'is_correct': isCorrect,
+          'score': newScore,
+          'answered_at': DateTime.now().toIso8601String(),
+        })
+        .eq('room_id', roomId)
+        .eq('user_id', userId);
+  }
+
+  /// ✅ Get all player answers for current room
+  Future<Map<String, String>> getPlayerAnswers(String roomId) async {
+    final data = await supabase
+        .from('room_players')
+        .select('user_id, selected_answer, is_correct')
+        .eq('room_id', roomId)
+        .not('selected_answer', 'is', null); // FIXED: Correct NOT NULL check
+
+    final Map<String, String> answers = {};
+    for (final item in data) {
+      answers[item['user_id'] as String] = item['selected_answer'] as String;
+    }
+    
+    return answers;
+  }
+
+  /// ✅ Reset answers for new question
+  Future<void> resetAnswersForNewQuestion(String roomId) async {
+    await supabase
+        .from('room_players')
+        .update({
+          'selected_answer': null,
+          'is_correct': null,
+          'answered_at': null,
+        })
+        .eq('room_id', roomId);
   }
 
   

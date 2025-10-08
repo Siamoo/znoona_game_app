@@ -2,7 +2,7 @@ import 'package:dartz/dartz.dart';
 import 'package:znoona_game_app/features/quiz/room/domain/entities/room.dart';
 import 'package:znoona_game_app/features/quiz/room/domain/entities/room_player.dart';
 import 'package:znoona_game_app/features/quiz/room/domain/entities/room_question.dart';
-
+import 'package:znoona_game_app/features/quiz/single/domain/entities/question.dart';
 
 abstract class RoomRepository {
   Future<Either<String, Room>> createRoom({
@@ -11,7 +11,6 @@ abstract class RoomRepository {
 
   Future<Either<String, RoomPlayer>> joinRoom({
     required String code,
-
   });
 
   Future<Either<String, void>> leaveRoom({
@@ -22,10 +21,27 @@ abstract class RoomRepository {
 
   Stream<Either<String, List<RoomPlayer>>> getRoomPlayersStream(String roomId);
 
-  Future<Either<String, List<RoomQuestion>>> getRoomQuestions(String roomId);
+Future<Either<String, List<RoomQuestion>>> getRoomQuestions(String roomId);
 
   Future<Either<String, void>> startGame(String roomId);
 
   Stream<Either<String, Room?>> watchRoom(String roomId);
-  
+
+  Future<Either<String, Question>> getQuestion(String questionId);
+
+  Future<Either<String, List<Question>>> getQuestions(List<String> questionIds);
+
+  // ... your existing methods ...
+
+  Future<Either<String, void>> submitAnswer({
+    required String roomId,
+    required String userId,
+    required String selectedAnswer,
+    required bool isCorrect,
+  });
+
+  Future<Either<String, Map<String, String>>> getPlayerAnswers(String roomId);
+
+  Future<Either<String, void>> resetAnswersForNewQuestion(String roomId);
 }
+

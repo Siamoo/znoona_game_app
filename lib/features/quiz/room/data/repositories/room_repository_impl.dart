@@ -7,7 +7,7 @@ import 'package:znoona_game_app/features/quiz/room/domain/entities/room.dart';
 import 'package:znoona_game_app/features/quiz/room/domain/entities/room_player.dart';
 import 'package:znoona_game_app/features/quiz/room/domain/entities/room_question.dart';
 import 'package:znoona_game_app/features/quiz/room/domain/repositories/room_repository.dart';
-
+import 'package:znoona_game_app/features/quiz/single/domain/entities/question.dart';
 
 class RoomRepositoryImpl implements RoomRepository {
   RoomRepositoryImpl(this.remote);
@@ -23,7 +23,7 @@ class RoomRepositoryImpl implements RoomRepository {
         categoryId: categoryId,
       );
       return Right(roomModel.toEntity());
-    }on Exception catch (e) {
+    } on Exception catch (e) {
       return Left(e.toString());
     }
   }
@@ -38,7 +38,7 @@ class RoomRepositoryImpl implements RoomRepository {
         code: code,
       );
       return Right(playerModel.toEntity());
-    }on Exception catch (e) {
+    } on Exception catch (e) {
       return Left(e.toString());
     }
   }
@@ -53,7 +53,7 @@ class RoomRepositoryImpl implements RoomRepository {
         roomId: roomId,
       );
       return const Right(null);
-    }on Exception catch (e) {
+    } on Exception catch (e) {
       return Left(e.toString());
     }
   }
@@ -67,7 +67,7 @@ class RoomRepositoryImpl implements RoomRepository {
           rooms.map((m) => m.toEntity()).toList(),
         );
       }
-    }on Exception catch (e) {
+    } on Exception catch (e) {
       yield Left(e.toString());
     }
   }
@@ -83,7 +83,7 @@ class RoomRepositoryImpl implements RoomRepository {
           players.map((p) => p.toEntity()).toList(),
         );
       }
-    }on Exception catch (e) {
+    } on Exception catch (e) {
       yield Left(e.toString());
     }
   }
@@ -98,7 +98,7 @@ class RoomRepositoryImpl implements RoomRepository {
       return Right(
         questions.map((q) => q.toEntity()).toList(),
       );
-    }on Exception catch (e) {
+    } on Exception catch (e) {
       return Left(e.toString());
     }
   }
@@ -109,7 +109,7 @@ class RoomRepositoryImpl implements RoomRepository {
     try {
       await remote.startGame(roomId);
       return const Right(null);
-    }on Exception catch (e) {
+    } on Exception catch (e) {
       return Left(e.toString());
     }
   }
@@ -125,10 +125,73 @@ class RoomRepositoryImpl implements RoomRepository {
           yield Right(room.toEntity());
         }
       }
-    }on Exception catch (e) {
+    } on Exception catch (e) {
       yield Left(e.toString());
     }
   }
 
+  /// ❓ Get single question by ID
+  @override
+  Future<Either<String, Question>> getQuestion(String questionId) async {
+    try {
+      final question = await remote.getQuestion(questionId);
+      return Right(question);
+    } on Exception catch (e) {
+      return Left(e.toString());
+    }
+  }
+
+  /// ❓ Get multiple questions by IDs
+  @override
+  Future<Either<String, List<Question>>> getQuestions(
+    List<String> questionIds,
+  ) async {
+    try {
+      final questions = await remote.getQuestions(questionIds);
+      return Right(questions);
+    } on Exception catch (e) {
+      return Left(e.toString());
+    }
+  }
+
   
+  @override
+  Future<Either<String, void>> submitAnswer({
+    required String roomId,
+    required String userId,
+    required String selectedAnswer,
+    required bool isCorrect,
+  }) async {
+    try {
+      await remote.submitAnswer(
+        roomId: roomId,
+        userId: userId,
+        selectedAnswer: selectedAnswer,
+        isCorrect: isCorrect,
+      );
+      return const Right(null);
+    } on Exception catch (e) {
+      return Left(e.toString());
+    }
+  }
+
+  @override
+  Future<Either<String, Map<String, String>>> getPlayerAnswers(String roomId) async {
+    try {
+      final answers = await remote.getPlayerAnswers(roomId);
+      return Right(answers);
+    } on Exception catch (e) {
+      return Left(e.toString());
+    }
+  }
+
+  @override
+  Future<Either<String, void>> resetAnswersForNewQuestion(String roomId) async {
+    try {
+      await remote.resetAnswersForNewQuestion(roomId);
+      return const Right(null);
+    } on Exception catch (e) {
+      return Left(e.toString());
+    }
+  }
 }

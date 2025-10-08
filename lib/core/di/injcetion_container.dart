@@ -7,12 +7,17 @@ import 'package:znoona_game_app/features/quiz/room/data/datasources/room_remote_
 import 'package:znoona_game_app/features/quiz/room/data/repositories/room_repository_impl.dart';
 import 'package:znoona_game_app/features/quiz/room/domain/repositories/room_repository.dart';
 import 'package:znoona_game_app/features/quiz/room/domain/usecases/create_room_usecase.dart';
+import 'package:znoona_game_app/features/quiz/room/domain/usecases/get_player_answers_usecase.dart';
+import 'package:znoona_game_app/features/quiz/room/domain/usecases/get_question_usecase.dart';
+import 'package:znoona_game_app/features/quiz/room/domain/usecases/get_questions_usecase.dart';
 import 'package:znoona_game_app/features/quiz/room/domain/usecases/get_room_players_stream_usecase.dart';
 import 'package:znoona_game_app/features/quiz/room/domain/usecases/get_room_questions_usecase.dart';
 import 'package:znoona_game_app/features/quiz/room/domain/usecases/get_rooms_stream_usecase.dart';
 import 'package:znoona_game_app/features/quiz/room/domain/usecases/join_room_usecase.dart';
 import 'package:znoona_game_app/features/quiz/room/domain/usecases/leave_room_usecase.dart';
+import 'package:znoona_game_app/features/quiz/room/domain/usecases/reset_answers_usecase.dart';
 import 'package:znoona_game_app/features/quiz/room/domain/usecases/start_game_usecase.dart';
+import 'package:znoona_game_app/features/quiz/room/domain/usecases/submit_answer_usecase.dart';
 import 'package:znoona_game_app/features/quiz/room/domain/usecases/watch_room_usecase.dart';
 import 'package:znoona_game_app/features/quiz/room/presentation/cubit/room_cubit.dart';
 
@@ -43,17 +48,14 @@ import 'package:znoona_game_app/features/quiz/categories/presentation/cubit/cate
 
 // ---------------- MULTIPLAYER ROOM ----------------
 
-
 final GetIt sl = GetIt.instance;
 
 Future<void> setupInjector() async {
   /// Core
   sl
     ..registerFactory(AppCubit.new)
-
     /// External
     ..registerLazySingleton(() => Supabase.instance.client)
-
     // ---------------- AUTH ----------------
     /// Datasources
     ..registerLazySingleton<AuthRemoteDataSource>(
@@ -69,7 +71,6 @@ Future<void> setupInjector() async {
     ..registerLazySingleton(() => GetCurrentUserUseCase(sl()))
     /// Cubits
     ..registerFactory(() => AuthCubit(sl(), sl(), sl(), sl(), sl()))
-
     // ---------------- CATEGORIES ----------------
     /// Datasources
     ..registerLazySingleton<CategoriesRemoteDataSource>(
@@ -83,7 +84,6 @@ Future<void> setupInjector() async {
     ..registerLazySingleton(() => GetCategoriesUseCase(sl()))
     /// Cubits
     ..registerFactory(() => CategoriesCubit(sl()))
-
     // ---------------- QUESTIONS (Single Player) ----------------
     /// Datasources
     ..registerLazySingleton<QuestionsRemoteDataSource>(
@@ -97,7 +97,6 @@ Future<void> setupInjector() async {
     ..registerLazySingleton(() => GetQuestionsByCategoryUseCase(sl()))
     /// Cubits
     ..registerFactory(() => QuestionsCubit(sl()))
-
     // ---------------- MULTIPLAYER ROOM ----------------
     /// Datasources
     ..registerLazySingleton<RoomRemoteDataSource>(
@@ -116,6 +115,11 @@ Future<void> setupInjector() async {
     ..registerLazySingleton(() => GetRoomQuestionsUseCase(sl()))
     ..registerLazySingleton(() => StartGameUseCase(sl()))
     ..registerLazySingleton(() => WatchRoomUseCase(sl()))
+    ..registerLazySingleton(() => GetQuestionUseCase(sl()))
+    ..registerLazySingleton(() => GetQuestionsUseCase(sl()))
+    ..registerLazySingleton(() => SubmitAnswerUseCase(sl()))
+    ..registerLazySingleton(() => GetPlayerAnswersUseCase(sl()))
+    ..registerLazySingleton(() => ResetAnswersUseCase(sl()))
     /// Cubits
     ..registerFactory(
       () => RoomCubit(
@@ -127,6 +131,11 @@ Future<void> setupInjector() async {
         getRoomQuestionsUseCase: sl(),
         startGameUseCase: sl(),
         watchRoomUseCase: sl(),
+        getQuestionUseCase: sl(),
+        getQuestionsUseCase: sl(),
+        submitAnswerUseCase: sl(),
+        getPlayerAnswersUseCase: sl(),
+        resetAnswersUseCase: sl(),
       ),
     );
 }

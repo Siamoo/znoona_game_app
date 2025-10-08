@@ -1,5 +1,4 @@
 part of 'room_cubit.dart';
-
 @freezed
 class RoomState with _$RoomState {
   const factory RoomState.initial() = _Initial;
@@ -18,18 +17,33 @@ class RoomState with _$RoomState {
   const factory RoomState.left() = _Left;
   const factory RoomState.gameStarted() = _GameStarted;
 
+  const factory RoomState.questionLoaded(Question question) = _QuestionLoaded;
+  const factory RoomState.questionsListLoaded(List<Question> questions) =
+      _QuestionsListLoaded;
+
+  // NEW QUIZ STATES - UPDATED to include players
+  const factory RoomState.quizStarted({
+    required List<Question> questions,
+    required int currentQuestionIndex,
+    required int remainingTime,
+    required Map<String, String?> playerAnswers, // playerId -> selectedAnswer
+    required String? selectedAnswer, // current user's selected answer
+    required int correctCount,
+    required bool isWaitingForPlayers,
+    required List<RoomPlayer> players, // ADD THIS LINE
+  }) = _QuizStarted;
+
+  const factory RoomState.questionTimeUp({
+    required List<RoomPlayer> players, // ADD THIS LINE
+  }) = _QuestionTimeUp;
   
-}
-extension RoomStateExtensions on RoomState {
-  bool get isLoading => this is _Loading;
+  const factory RoomState.allPlayersAnswered({
+    required List<RoomPlayer> players, // ADD THIS LINE
+  }) = _AllPlayersAnswered;
   
-  bool get isError => maybeMap(
-        error: (_) => true,
-        orElse: () => false,
-      );
-  
-  String? get errorMessage => maybeMap(
-        error: (errorState) => errorState.message,
-        orElse: () => null,
-      );
+  const factory RoomState.quizFinished({
+    required int totalQuestions,
+    required int correctAnswers,
+    required List<RoomPlayer> players, // ADD THIS LINE
+  }) = _QuizFinished;
 }

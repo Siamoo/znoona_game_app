@@ -30,6 +30,27 @@ mixin _$RoomState {
     required TResult Function(Room room) joined,
     required TResult Function() left,
     required TResult Function() gameStarted,
+    required TResult Function(Question question) questionLoaded,
+    required TResult Function(List<Question> questions) questionsListLoaded,
+    required TResult Function(
+      List<Question> questions,
+      int currentQuestionIndex,
+      int remainingTime,
+      Map<String, String?> playerAnswers,
+      String? selectedAnswer,
+      int correctCount,
+      bool isWaitingForPlayers,
+      List<RoomPlayer> players,
+    )
+    quizStarted,
+    required TResult Function(List<RoomPlayer> players) questionTimeUp,
+    required TResult Function(List<RoomPlayer> players) allPlayersAnswered,
+    required TResult Function(
+      int totalQuestions,
+      int correctAnswers,
+      List<RoomPlayer> players,
+    )
+    quizFinished,
   }) => throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
@@ -44,6 +65,27 @@ mixin _$RoomState {
     TResult? Function(Room room)? joined,
     TResult? Function()? left,
     TResult? Function()? gameStarted,
+    TResult? Function(Question question)? questionLoaded,
+    TResult? Function(List<Question> questions)? questionsListLoaded,
+    TResult? Function(
+      List<Question> questions,
+      int currentQuestionIndex,
+      int remainingTime,
+      Map<String, String?> playerAnswers,
+      String? selectedAnswer,
+      int correctCount,
+      bool isWaitingForPlayers,
+      List<RoomPlayer> players,
+    )?
+    quizStarted,
+    TResult? Function(List<RoomPlayer> players)? questionTimeUp,
+    TResult? Function(List<RoomPlayer> players)? allPlayersAnswered,
+    TResult? Function(
+      int totalQuestions,
+      int correctAnswers,
+      List<RoomPlayer> players,
+    )?
+    quizFinished,
   }) => throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
@@ -58,6 +100,27 @@ mixin _$RoomState {
     TResult Function(Room room)? joined,
     TResult Function()? left,
     TResult Function()? gameStarted,
+    TResult Function(Question question)? questionLoaded,
+    TResult Function(List<Question> questions)? questionsListLoaded,
+    TResult Function(
+      List<Question> questions,
+      int currentQuestionIndex,
+      int remainingTime,
+      Map<String, String?> playerAnswers,
+      String? selectedAnswer,
+      int correctCount,
+      bool isWaitingForPlayers,
+      List<RoomPlayer> players,
+    )?
+    quizStarted,
+    TResult Function(List<RoomPlayer> players)? questionTimeUp,
+    TResult Function(List<RoomPlayer> players)? allPlayersAnswered,
+    TResult Function(
+      int totalQuestions,
+      int correctAnswers,
+      List<RoomPlayer> players,
+    )?
+    quizFinished,
     required TResult orElse(),
   }) => throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -73,6 +136,12 @@ mixin _$RoomState {
     required TResult Function(_Joined value) joined,
     required TResult Function(_Left value) left,
     required TResult Function(_GameStarted value) gameStarted,
+    required TResult Function(_QuestionLoaded value) questionLoaded,
+    required TResult Function(_QuestionsListLoaded value) questionsListLoaded,
+    required TResult Function(_QuizStarted value) quizStarted,
+    required TResult Function(_QuestionTimeUp value) questionTimeUp,
+    required TResult Function(_AllPlayersAnswered value) allPlayersAnswered,
+    required TResult Function(_QuizFinished value) quizFinished,
   }) => throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
@@ -87,6 +156,12 @@ mixin _$RoomState {
     TResult? Function(_Joined value)? joined,
     TResult? Function(_Left value)? left,
     TResult? Function(_GameStarted value)? gameStarted,
+    TResult? Function(_QuestionLoaded value)? questionLoaded,
+    TResult? Function(_QuestionsListLoaded value)? questionsListLoaded,
+    TResult? Function(_QuizStarted value)? quizStarted,
+    TResult? Function(_QuestionTimeUp value)? questionTimeUp,
+    TResult? Function(_AllPlayersAnswered value)? allPlayersAnswered,
+    TResult? Function(_QuizFinished value)? quizFinished,
   }) => throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
@@ -101,6 +176,12 @@ mixin _$RoomState {
     TResult Function(_Joined value)? joined,
     TResult Function(_Left value)? left,
     TResult Function(_GameStarted value)? gameStarted,
+    TResult Function(_QuestionLoaded value)? questionLoaded,
+    TResult Function(_QuestionsListLoaded value)? questionsListLoaded,
+    TResult Function(_QuizStarted value)? quizStarted,
+    TResult Function(_QuestionTimeUp value)? questionTimeUp,
+    TResult Function(_AllPlayersAnswered value)? allPlayersAnswered,
+    TResult Function(_QuizFinished value)? quizFinished,
     required TResult orElse(),
   }) => throw _privateConstructorUsedError;
 }
@@ -179,6 +260,27 @@ class _$InitialImpl implements _Initial {
     required TResult Function(Room room) joined,
     required TResult Function() left,
     required TResult Function() gameStarted,
+    required TResult Function(Question question) questionLoaded,
+    required TResult Function(List<Question> questions) questionsListLoaded,
+    required TResult Function(
+      List<Question> questions,
+      int currentQuestionIndex,
+      int remainingTime,
+      Map<String, String?> playerAnswers,
+      String? selectedAnswer,
+      int correctCount,
+      bool isWaitingForPlayers,
+      List<RoomPlayer> players,
+    )
+    quizStarted,
+    required TResult Function(List<RoomPlayer> players) questionTimeUp,
+    required TResult Function(List<RoomPlayer> players) allPlayersAnswered,
+    required TResult Function(
+      int totalQuestions,
+      int correctAnswers,
+      List<RoomPlayer> players,
+    )
+    quizFinished,
   }) {
     return initial();
   }
@@ -197,6 +299,27 @@ class _$InitialImpl implements _Initial {
     TResult? Function(Room room)? joined,
     TResult? Function()? left,
     TResult? Function()? gameStarted,
+    TResult? Function(Question question)? questionLoaded,
+    TResult? Function(List<Question> questions)? questionsListLoaded,
+    TResult? Function(
+      List<Question> questions,
+      int currentQuestionIndex,
+      int remainingTime,
+      Map<String, String?> playerAnswers,
+      String? selectedAnswer,
+      int correctCount,
+      bool isWaitingForPlayers,
+      List<RoomPlayer> players,
+    )?
+    quizStarted,
+    TResult? Function(List<RoomPlayer> players)? questionTimeUp,
+    TResult? Function(List<RoomPlayer> players)? allPlayersAnswered,
+    TResult? Function(
+      int totalQuestions,
+      int correctAnswers,
+      List<RoomPlayer> players,
+    )?
+    quizFinished,
   }) {
     return initial?.call();
   }
@@ -215,6 +338,27 @@ class _$InitialImpl implements _Initial {
     TResult Function(Room room)? joined,
     TResult Function()? left,
     TResult Function()? gameStarted,
+    TResult Function(Question question)? questionLoaded,
+    TResult Function(List<Question> questions)? questionsListLoaded,
+    TResult Function(
+      List<Question> questions,
+      int currentQuestionIndex,
+      int remainingTime,
+      Map<String, String?> playerAnswers,
+      String? selectedAnswer,
+      int correctCount,
+      bool isWaitingForPlayers,
+      List<RoomPlayer> players,
+    )?
+    quizStarted,
+    TResult Function(List<RoomPlayer> players)? questionTimeUp,
+    TResult Function(List<RoomPlayer> players)? allPlayersAnswered,
+    TResult Function(
+      int totalQuestions,
+      int correctAnswers,
+      List<RoomPlayer> players,
+    )?
+    quizFinished,
     required TResult orElse(),
   }) {
     if (initial != null) {
@@ -237,6 +381,12 @@ class _$InitialImpl implements _Initial {
     required TResult Function(_Joined value) joined,
     required TResult Function(_Left value) left,
     required TResult Function(_GameStarted value) gameStarted,
+    required TResult Function(_QuestionLoaded value) questionLoaded,
+    required TResult Function(_QuestionsListLoaded value) questionsListLoaded,
+    required TResult Function(_QuizStarted value) quizStarted,
+    required TResult Function(_QuestionTimeUp value) questionTimeUp,
+    required TResult Function(_AllPlayersAnswered value) allPlayersAnswered,
+    required TResult Function(_QuizFinished value) quizFinished,
   }) {
     return initial(this);
   }
@@ -255,6 +405,12 @@ class _$InitialImpl implements _Initial {
     TResult? Function(_Joined value)? joined,
     TResult? Function(_Left value)? left,
     TResult? Function(_GameStarted value)? gameStarted,
+    TResult? Function(_QuestionLoaded value)? questionLoaded,
+    TResult? Function(_QuestionsListLoaded value)? questionsListLoaded,
+    TResult? Function(_QuizStarted value)? quizStarted,
+    TResult? Function(_QuestionTimeUp value)? questionTimeUp,
+    TResult? Function(_AllPlayersAnswered value)? allPlayersAnswered,
+    TResult? Function(_QuizFinished value)? quizFinished,
   }) {
     return initial?.call(this);
   }
@@ -273,6 +429,12 @@ class _$InitialImpl implements _Initial {
     TResult Function(_Joined value)? joined,
     TResult Function(_Left value)? left,
     TResult Function(_GameStarted value)? gameStarted,
+    TResult Function(_QuestionLoaded value)? questionLoaded,
+    TResult Function(_QuestionsListLoaded value)? questionsListLoaded,
+    TResult Function(_QuizStarted value)? quizStarted,
+    TResult Function(_QuestionTimeUp value)? questionTimeUp,
+    TResult Function(_AllPlayersAnswered value)? allPlayersAnswered,
+    TResult Function(_QuizFinished value)? quizFinished,
     required TResult orElse(),
   }) {
     if (initial != null) {
@@ -340,6 +502,27 @@ class _$LoadingImpl implements _Loading {
     required TResult Function(Room room) joined,
     required TResult Function() left,
     required TResult Function() gameStarted,
+    required TResult Function(Question question) questionLoaded,
+    required TResult Function(List<Question> questions) questionsListLoaded,
+    required TResult Function(
+      List<Question> questions,
+      int currentQuestionIndex,
+      int remainingTime,
+      Map<String, String?> playerAnswers,
+      String? selectedAnswer,
+      int correctCount,
+      bool isWaitingForPlayers,
+      List<RoomPlayer> players,
+    )
+    quizStarted,
+    required TResult Function(List<RoomPlayer> players) questionTimeUp,
+    required TResult Function(List<RoomPlayer> players) allPlayersAnswered,
+    required TResult Function(
+      int totalQuestions,
+      int correctAnswers,
+      List<RoomPlayer> players,
+    )
+    quizFinished,
   }) {
     return loading();
   }
@@ -358,6 +541,27 @@ class _$LoadingImpl implements _Loading {
     TResult? Function(Room room)? joined,
     TResult? Function()? left,
     TResult? Function()? gameStarted,
+    TResult? Function(Question question)? questionLoaded,
+    TResult? Function(List<Question> questions)? questionsListLoaded,
+    TResult? Function(
+      List<Question> questions,
+      int currentQuestionIndex,
+      int remainingTime,
+      Map<String, String?> playerAnswers,
+      String? selectedAnswer,
+      int correctCount,
+      bool isWaitingForPlayers,
+      List<RoomPlayer> players,
+    )?
+    quizStarted,
+    TResult? Function(List<RoomPlayer> players)? questionTimeUp,
+    TResult? Function(List<RoomPlayer> players)? allPlayersAnswered,
+    TResult? Function(
+      int totalQuestions,
+      int correctAnswers,
+      List<RoomPlayer> players,
+    )?
+    quizFinished,
   }) {
     return loading?.call();
   }
@@ -376,6 +580,27 @@ class _$LoadingImpl implements _Loading {
     TResult Function(Room room)? joined,
     TResult Function()? left,
     TResult Function()? gameStarted,
+    TResult Function(Question question)? questionLoaded,
+    TResult Function(List<Question> questions)? questionsListLoaded,
+    TResult Function(
+      List<Question> questions,
+      int currentQuestionIndex,
+      int remainingTime,
+      Map<String, String?> playerAnswers,
+      String? selectedAnswer,
+      int correctCount,
+      bool isWaitingForPlayers,
+      List<RoomPlayer> players,
+    )?
+    quizStarted,
+    TResult Function(List<RoomPlayer> players)? questionTimeUp,
+    TResult Function(List<RoomPlayer> players)? allPlayersAnswered,
+    TResult Function(
+      int totalQuestions,
+      int correctAnswers,
+      List<RoomPlayer> players,
+    )?
+    quizFinished,
     required TResult orElse(),
   }) {
     if (loading != null) {
@@ -398,6 +623,12 @@ class _$LoadingImpl implements _Loading {
     required TResult Function(_Joined value) joined,
     required TResult Function(_Left value) left,
     required TResult Function(_GameStarted value) gameStarted,
+    required TResult Function(_QuestionLoaded value) questionLoaded,
+    required TResult Function(_QuestionsListLoaded value) questionsListLoaded,
+    required TResult Function(_QuizStarted value) quizStarted,
+    required TResult Function(_QuestionTimeUp value) questionTimeUp,
+    required TResult Function(_AllPlayersAnswered value) allPlayersAnswered,
+    required TResult Function(_QuizFinished value) quizFinished,
   }) {
     return loading(this);
   }
@@ -416,6 +647,12 @@ class _$LoadingImpl implements _Loading {
     TResult? Function(_Joined value)? joined,
     TResult? Function(_Left value)? left,
     TResult? Function(_GameStarted value)? gameStarted,
+    TResult? Function(_QuestionLoaded value)? questionLoaded,
+    TResult? Function(_QuestionsListLoaded value)? questionsListLoaded,
+    TResult? Function(_QuizStarted value)? quizStarted,
+    TResult? Function(_QuestionTimeUp value)? questionTimeUp,
+    TResult? Function(_AllPlayersAnswered value)? allPlayersAnswered,
+    TResult? Function(_QuizFinished value)? quizFinished,
   }) {
     return loading?.call(this);
   }
@@ -434,6 +671,12 @@ class _$LoadingImpl implements _Loading {
     TResult Function(_Joined value)? joined,
     TResult Function(_Left value)? left,
     TResult Function(_GameStarted value)? gameStarted,
+    TResult Function(_QuestionLoaded value)? questionLoaded,
+    TResult Function(_QuestionsListLoaded value)? questionsListLoaded,
+    TResult Function(_QuizStarted value)? quizStarted,
+    TResult Function(_QuestionTimeUp value)? questionTimeUp,
+    TResult Function(_AllPlayersAnswered value)? allPlayersAnswered,
+    TResult Function(_QuizFinished value)? quizFinished,
     required TResult orElse(),
   }) {
     if (loading != null) {
@@ -528,6 +771,27 @@ class _$ErrorImpl implements _Error {
     required TResult Function(Room room) joined,
     required TResult Function() left,
     required TResult Function() gameStarted,
+    required TResult Function(Question question) questionLoaded,
+    required TResult Function(List<Question> questions) questionsListLoaded,
+    required TResult Function(
+      List<Question> questions,
+      int currentQuestionIndex,
+      int remainingTime,
+      Map<String, String?> playerAnswers,
+      String? selectedAnswer,
+      int correctCount,
+      bool isWaitingForPlayers,
+      List<RoomPlayer> players,
+    )
+    quizStarted,
+    required TResult Function(List<RoomPlayer> players) questionTimeUp,
+    required TResult Function(List<RoomPlayer> players) allPlayersAnswered,
+    required TResult Function(
+      int totalQuestions,
+      int correctAnswers,
+      List<RoomPlayer> players,
+    )
+    quizFinished,
   }) {
     return error(message);
   }
@@ -546,6 +810,27 @@ class _$ErrorImpl implements _Error {
     TResult? Function(Room room)? joined,
     TResult? Function()? left,
     TResult? Function()? gameStarted,
+    TResult? Function(Question question)? questionLoaded,
+    TResult? Function(List<Question> questions)? questionsListLoaded,
+    TResult? Function(
+      List<Question> questions,
+      int currentQuestionIndex,
+      int remainingTime,
+      Map<String, String?> playerAnswers,
+      String? selectedAnswer,
+      int correctCount,
+      bool isWaitingForPlayers,
+      List<RoomPlayer> players,
+    )?
+    quizStarted,
+    TResult? Function(List<RoomPlayer> players)? questionTimeUp,
+    TResult? Function(List<RoomPlayer> players)? allPlayersAnswered,
+    TResult? Function(
+      int totalQuestions,
+      int correctAnswers,
+      List<RoomPlayer> players,
+    )?
+    quizFinished,
   }) {
     return error?.call(message);
   }
@@ -564,6 +849,27 @@ class _$ErrorImpl implements _Error {
     TResult Function(Room room)? joined,
     TResult Function()? left,
     TResult Function()? gameStarted,
+    TResult Function(Question question)? questionLoaded,
+    TResult Function(List<Question> questions)? questionsListLoaded,
+    TResult Function(
+      List<Question> questions,
+      int currentQuestionIndex,
+      int remainingTime,
+      Map<String, String?> playerAnswers,
+      String? selectedAnswer,
+      int correctCount,
+      bool isWaitingForPlayers,
+      List<RoomPlayer> players,
+    )?
+    quizStarted,
+    TResult Function(List<RoomPlayer> players)? questionTimeUp,
+    TResult Function(List<RoomPlayer> players)? allPlayersAnswered,
+    TResult Function(
+      int totalQuestions,
+      int correctAnswers,
+      List<RoomPlayer> players,
+    )?
+    quizFinished,
     required TResult orElse(),
   }) {
     if (error != null) {
@@ -586,6 +892,12 @@ class _$ErrorImpl implements _Error {
     required TResult Function(_Joined value) joined,
     required TResult Function(_Left value) left,
     required TResult Function(_GameStarted value) gameStarted,
+    required TResult Function(_QuestionLoaded value) questionLoaded,
+    required TResult Function(_QuestionsListLoaded value) questionsListLoaded,
+    required TResult Function(_QuizStarted value) quizStarted,
+    required TResult Function(_QuestionTimeUp value) questionTimeUp,
+    required TResult Function(_AllPlayersAnswered value) allPlayersAnswered,
+    required TResult Function(_QuizFinished value) quizFinished,
   }) {
     return error(this);
   }
@@ -604,6 +916,12 @@ class _$ErrorImpl implements _Error {
     TResult? Function(_Joined value)? joined,
     TResult? Function(_Left value)? left,
     TResult? Function(_GameStarted value)? gameStarted,
+    TResult? Function(_QuestionLoaded value)? questionLoaded,
+    TResult? Function(_QuestionsListLoaded value)? questionsListLoaded,
+    TResult? Function(_QuizStarted value)? quizStarted,
+    TResult? Function(_QuestionTimeUp value)? questionTimeUp,
+    TResult? Function(_AllPlayersAnswered value)? allPlayersAnswered,
+    TResult? Function(_QuizFinished value)? quizFinished,
   }) {
     return error?.call(this);
   }
@@ -622,6 +940,12 @@ class _$ErrorImpl implements _Error {
     TResult Function(_Joined value)? joined,
     TResult Function(_Left value)? left,
     TResult Function(_GameStarted value)? gameStarted,
+    TResult Function(_QuestionLoaded value)? questionLoaded,
+    TResult Function(_QuestionsListLoaded value)? questionsListLoaded,
+    TResult Function(_QuizStarted value)? quizStarted,
+    TResult Function(_QuestionTimeUp value)? questionTimeUp,
+    TResult Function(_AllPlayersAnswered value)? allPlayersAnswered,
+    TResult Function(_QuizFinished value)? quizFinished,
     required TResult orElse(),
   }) {
     if (error != null) {
@@ -736,6 +1060,27 @@ class _$RoomLoadedImpl implements _RoomLoaded {
     required TResult Function(Room room) joined,
     required TResult Function() left,
     required TResult Function() gameStarted,
+    required TResult Function(Question question) questionLoaded,
+    required TResult Function(List<Question> questions) questionsListLoaded,
+    required TResult Function(
+      List<Question> questions,
+      int currentQuestionIndex,
+      int remainingTime,
+      Map<String, String?> playerAnswers,
+      String? selectedAnswer,
+      int correctCount,
+      bool isWaitingForPlayers,
+      List<RoomPlayer> players,
+    )
+    quizStarted,
+    required TResult Function(List<RoomPlayer> players) questionTimeUp,
+    required TResult Function(List<RoomPlayer> players) allPlayersAnswered,
+    required TResult Function(
+      int totalQuestions,
+      int correctAnswers,
+      List<RoomPlayer> players,
+    )
+    quizFinished,
   }) {
     return roomLoaded(room);
   }
@@ -754,6 +1099,27 @@ class _$RoomLoadedImpl implements _RoomLoaded {
     TResult? Function(Room room)? joined,
     TResult? Function()? left,
     TResult? Function()? gameStarted,
+    TResult? Function(Question question)? questionLoaded,
+    TResult? Function(List<Question> questions)? questionsListLoaded,
+    TResult? Function(
+      List<Question> questions,
+      int currentQuestionIndex,
+      int remainingTime,
+      Map<String, String?> playerAnswers,
+      String? selectedAnswer,
+      int correctCount,
+      bool isWaitingForPlayers,
+      List<RoomPlayer> players,
+    )?
+    quizStarted,
+    TResult? Function(List<RoomPlayer> players)? questionTimeUp,
+    TResult? Function(List<RoomPlayer> players)? allPlayersAnswered,
+    TResult? Function(
+      int totalQuestions,
+      int correctAnswers,
+      List<RoomPlayer> players,
+    )?
+    quizFinished,
   }) {
     return roomLoaded?.call(room);
   }
@@ -772,6 +1138,27 @@ class _$RoomLoadedImpl implements _RoomLoaded {
     TResult Function(Room room)? joined,
     TResult Function()? left,
     TResult Function()? gameStarted,
+    TResult Function(Question question)? questionLoaded,
+    TResult Function(List<Question> questions)? questionsListLoaded,
+    TResult Function(
+      List<Question> questions,
+      int currentQuestionIndex,
+      int remainingTime,
+      Map<String, String?> playerAnswers,
+      String? selectedAnswer,
+      int correctCount,
+      bool isWaitingForPlayers,
+      List<RoomPlayer> players,
+    )?
+    quizStarted,
+    TResult Function(List<RoomPlayer> players)? questionTimeUp,
+    TResult Function(List<RoomPlayer> players)? allPlayersAnswered,
+    TResult Function(
+      int totalQuestions,
+      int correctAnswers,
+      List<RoomPlayer> players,
+    )?
+    quizFinished,
     required TResult orElse(),
   }) {
     if (roomLoaded != null) {
@@ -794,6 +1181,12 @@ class _$RoomLoadedImpl implements _RoomLoaded {
     required TResult Function(_Joined value) joined,
     required TResult Function(_Left value) left,
     required TResult Function(_GameStarted value) gameStarted,
+    required TResult Function(_QuestionLoaded value) questionLoaded,
+    required TResult Function(_QuestionsListLoaded value) questionsListLoaded,
+    required TResult Function(_QuizStarted value) quizStarted,
+    required TResult Function(_QuestionTimeUp value) questionTimeUp,
+    required TResult Function(_AllPlayersAnswered value) allPlayersAnswered,
+    required TResult Function(_QuizFinished value) quizFinished,
   }) {
     return roomLoaded(this);
   }
@@ -812,6 +1205,12 @@ class _$RoomLoadedImpl implements _RoomLoaded {
     TResult? Function(_Joined value)? joined,
     TResult? Function(_Left value)? left,
     TResult? Function(_GameStarted value)? gameStarted,
+    TResult? Function(_QuestionLoaded value)? questionLoaded,
+    TResult? Function(_QuestionsListLoaded value)? questionsListLoaded,
+    TResult? Function(_QuizStarted value)? quizStarted,
+    TResult? Function(_QuestionTimeUp value)? questionTimeUp,
+    TResult? Function(_AllPlayersAnswered value)? allPlayersAnswered,
+    TResult? Function(_QuizFinished value)? quizFinished,
   }) {
     return roomLoaded?.call(this);
   }
@@ -830,6 +1229,12 @@ class _$RoomLoadedImpl implements _RoomLoaded {
     TResult Function(_Joined value)? joined,
     TResult Function(_Left value)? left,
     TResult Function(_GameStarted value)? gameStarted,
+    TResult Function(_QuestionLoaded value)? questionLoaded,
+    TResult Function(_QuestionsListLoaded value)? questionsListLoaded,
+    TResult Function(_QuizStarted value)? quizStarted,
+    TResult Function(_QuestionTimeUp value)? questionTimeUp,
+    TResult Function(_AllPlayersAnswered value)? allPlayersAnswered,
+    TResult Function(_QuizFinished value)? quizFinished,
     required TResult orElse(),
   }) {
     if (roomLoaded != null) {
@@ -938,6 +1343,27 @@ class _$RoomsUpdatedImpl implements _RoomsUpdated {
     required TResult Function(Room room) joined,
     required TResult Function() left,
     required TResult Function() gameStarted,
+    required TResult Function(Question question) questionLoaded,
+    required TResult Function(List<Question> questions) questionsListLoaded,
+    required TResult Function(
+      List<Question> questions,
+      int currentQuestionIndex,
+      int remainingTime,
+      Map<String, String?> playerAnswers,
+      String? selectedAnswer,
+      int correctCount,
+      bool isWaitingForPlayers,
+      List<RoomPlayer> players,
+    )
+    quizStarted,
+    required TResult Function(List<RoomPlayer> players) questionTimeUp,
+    required TResult Function(List<RoomPlayer> players) allPlayersAnswered,
+    required TResult Function(
+      int totalQuestions,
+      int correctAnswers,
+      List<RoomPlayer> players,
+    )
+    quizFinished,
   }) {
     return roomsUpdated(rooms);
   }
@@ -956,6 +1382,27 @@ class _$RoomsUpdatedImpl implements _RoomsUpdated {
     TResult? Function(Room room)? joined,
     TResult? Function()? left,
     TResult? Function()? gameStarted,
+    TResult? Function(Question question)? questionLoaded,
+    TResult? Function(List<Question> questions)? questionsListLoaded,
+    TResult? Function(
+      List<Question> questions,
+      int currentQuestionIndex,
+      int remainingTime,
+      Map<String, String?> playerAnswers,
+      String? selectedAnswer,
+      int correctCount,
+      bool isWaitingForPlayers,
+      List<RoomPlayer> players,
+    )?
+    quizStarted,
+    TResult? Function(List<RoomPlayer> players)? questionTimeUp,
+    TResult? Function(List<RoomPlayer> players)? allPlayersAnswered,
+    TResult? Function(
+      int totalQuestions,
+      int correctAnswers,
+      List<RoomPlayer> players,
+    )?
+    quizFinished,
   }) {
     return roomsUpdated?.call(rooms);
   }
@@ -974,6 +1421,27 @@ class _$RoomsUpdatedImpl implements _RoomsUpdated {
     TResult Function(Room room)? joined,
     TResult Function()? left,
     TResult Function()? gameStarted,
+    TResult Function(Question question)? questionLoaded,
+    TResult Function(List<Question> questions)? questionsListLoaded,
+    TResult Function(
+      List<Question> questions,
+      int currentQuestionIndex,
+      int remainingTime,
+      Map<String, String?> playerAnswers,
+      String? selectedAnswer,
+      int correctCount,
+      bool isWaitingForPlayers,
+      List<RoomPlayer> players,
+    )?
+    quizStarted,
+    TResult Function(List<RoomPlayer> players)? questionTimeUp,
+    TResult Function(List<RoomPlayer> players)? allPlayersAnswered,
+    TResult Function(
+      int totalQuestions,
+      int correctAnswers,
+      List<RoomPlayer> players,
+    )?
+    quizFinished,
     required TResult orElse(),
   }) {
     if (roomsUpdated != null) {
@@ -996,6 +1464,12 @@ class _$RoomsUpdatedImpl implements _RoomsUpdated {
     required TResult Function(_Joined value) joined,
     required TResult Function(_Left value) left,
     required TResult Function(_GameStarted value) gameStarted,
+    required TResult Function(_QuestionLoaded value) questionLoaded,
+    required TResult Function(_QuestionsListLoaded value) questionsListLoaded,
+    required TResult Function(_QuizStarted value) quizStarted,
+    required TResult Function(_QuestionTimeUp value) questionTimeUp,
+    required TResult Function(_AllPlayersAnswered value) allPlayersAnswered,
+    required TResult Function(_QuizFinished value) quizFinished,
   }) {
     return roomsUpdated(this);
   }
@@ -1014,6 +1488,12 @@ class _$RoomsUpdatedImpl implements _RoomsUpdated {
     TResult? Function(_Joined value)? joined,
     TResult? Function(_Left value)? left,
     TResult? Function(_GameStarted value)? gameStarted,
+    TResult? Function(_QuestionLoaded value)? questionLoaded,
+    TResult? Function(_QuestionsListLoaded value)? questionsListLoaded,
+    TResult? Function(_QuizStarted value)? quizStarted,
+    TResult? Function(_QuestionTimeUp value)? questionTimeUp,
+    TResult? Function(_AllPlayersAnswered value)? allPlayersAnswered,
+    TResult? Function(_QuizFinished value)? quizFinished,
   }) {
     return roomsUpdated?.call(this);
   }
@@ -1032,6 +1512,12 @@ class _$RoomsUpdatedImpl implements _RoomsUpdated {
     TResult Function(_Joined value)? joined,
     TResult Function(_Left value)? left,
     TResult Function(_GameStarted value)? gameStarted,
+    TResult Function(_QuestionLoaded value)? questionLoaded,
+    TResult Function(_QuestionsListLoaded value)? questionsListLoaded,
+    TResult Function(_QuizStarted value)? quizStarted,
+    TResult Function(_QuestionTimeUp value)? questionTimeUp,
+    TResult Function(_AllPlayersAnswered value)? allPlayersAnswered,
+    TResult Function(_QuizFinished value)? quizFinished,
     required TResult orElse(),
   }) {
     if (roomsUpdated != null) {
@@ -1144,6 +1630,27 @@ class _$PlayersUpdatedImpl implements _PlayersUpdated {
     required TResult Function(Room room) joined,
     required TResult Function() left,
     required TResult Function() gameStarted,
+    required TResult Function(Question question) questionLoaded,
+    required TResult Function(List<Question> questions) questionsListLoaded,
+    required TResult Function(
+      List<Question> questions,
+      int currentQuestionIndex,
+      int remainingTime,
+      Map<String, String?> playerAnswers,
+      String? selectedAnswer,
+      int correctCount,
+      bool isWaitingForPlayers,
+      List<RoomPlayer> players,
+    )
+    quizStarted,
+    required TResult Function(List<RoomPlayer> players) questionTimeUp,
+    required TResult Function(List<RoomPlayer> players) allPlayersAnswered,
+    required TResult Function(
+      int totalQuestions,
+      int correctAnswers,
+      List<RoomPlayer> players,
+    )
+    quizFinished,
   }) {
     return playersUpdated(players);
   }
@@ -1162,6 +1669,27 @@ class _$PlayersUpdatedImpl implements _PlayersUpdated {
     TResult? Function(Room room)? joined,
     TResult? Function()? left,
     TResult? Function()? gameStarted,
+    TResult? Function(Question question)? questionLoaded,
+    TResult? Function(List<Question> questions)? questionsListLoaded,
+    TResult? Function(
+      List<Question> questions,
+      int currentQuestionIndex,
+      int remainingTime,
+      Map<String, String?> playerAnswers,
+      String? selectedAnswer,
+      int correctCount,
+      bool isWaitingForPlayers,
+      List<RoomPlayer> players,
+    )?
+    quizStarted,
+    TResult? Function(List<RoomPlayer> players)? questionTimeUp,
+    TResult? Function(List<RoomPlayer> players)? allPlayersAnswered,
+    TResult? Function(
+      int totalQuestions,
+      int correctAnswers,
+      List<RoomPlayer> players,
+    )?
+    quizFinished,
   }) {
     return playersUpdated?.call(players);
   }
@@ -1180,6 +1708,27 @@ class _$PlayersUpdatedImpl implements _PlayersUpdated {
     TResult Function(Room room)? joined,
     TResult Function()? left,
     TResult Function()? gameStarted,
+    TResult Function(Question question)? questionLoaded,
+    TResult Function(List<Question> questions)? questionsListLoaded,
+    TResult Function(
+      List<Question> questions,
+      int currentQuestionIndex,
+      int remainingTime,
+      Map<String, String?> playerAnswers,
+      String? selectedAnswer,
+      int correctCount,
+      bool isWaitingForPlayers,
+      List<RoomPlayer> players,
+    )?
+    quizStarted,
+    TResult Function(List<RoomPlayer> players)? questionTimeUp,
+    TResult Function(List<RoomPlayer> players)? allPlayersAnswered,
+    TResult Function(
+      int totalQuestions,
+      int correctAnswers,
+      List<RoomPlayer> players,
+    )?
+    quizFinished,
     required TResult orElse(),
   }) {
     if (playersUpdated != null) {
@@ -1202,6 +1751,12 @@ class _$PlayersUpdatedImpl implements _PlayersUpdated {
     required TResult Function(_Joined value) joined,
     required TResult Function(_Left value) left,
     required TResult Function(_GameStarted value) gameStarted,
+    required TResult Function(_QuestionLoaded value) questionLoaded,
+    required TResult Function(_QuestionsListLoaded value) questionsListLoaded,
+    required TResult Function(_QuizStarted value) quizStarted,
+    required TResult Function(_QuestionTimeUp value) questionTimeUp,
+    required TResult Function(_AllPlayersAnswered value) allPlayersAnswered,
+    required TResult Function(_QuizFinished value) quizFinished,
   }) {
     return playersUpdated(this);
   }
@@ -1220,6 +1775,12 @@ class _$PlayersUpdatedImpl implements _PlayersUpdated {
     TResult? Function(_Joined value)? joined,
     TResult? Function(_Left value)? left,
     TResult? Function(_GameStarted value)? gameStarted,
+    TResult? Function(_QuestionLoaded value)? questionLoaded,
+    TResult? Function(_QuestionsListLoaded value)? questionsListLoaded,
+    TResult? Function(_QuizStarted value)? quizStarted,
+    TResult? Function(_QuestionTimeUp value)? questionTimeUp,
+    TResult? Function(_AllPlayersAnswered value)? allPlayersAnswered,
+    TResult? Function(_QuizFinished value)? quizFinished,
   }) {
     return playersUpdated?.call(this);
   }
@@ -1238,6 +1799,12 @@ class _$PlayersUpdatedImpl implements _PlayersUpdated {
     TResult Function(_Joined value)? joined,
     TResult Function(_Left value)? left,
     TResult Function(_GameStarted value)? gameStarted,
+    TResult Function(_QuestionLoaded value)? questionLoaded,
+    TResult Function(_QuestionsListLoaded value)? questionsListLoaded,
+    TResult Function(_QuizStarted value)? quizStarted,
+    TResult Function(_QuestionTimeUp value)? questionTimeUp,
+    TResult Function(_AllPlayersAnswered value)? allPlayersAnswered,
+    TResult Function(_QuizFinished value)? quizFinished,
     required TResult orElse(),
   }) {
     if (playersUpdated != null) {
@@ -1357,6 +1924,27 @@ class _$RoomUpdatedImpl implements _RoomUpdated {
     required TResult Function(Room room) joined,
     required TResult Function() left,
     required TResult Function() gameStarted,
+    required TResult Function(Question question) questionLoaded,
+    required TResult Function(List<Question> questions) questionsListLoaded,
+    required TResult Function(
+      List<Question> questions,
+      int currentQuestionIndex,
+      int remainingTime,
+      Map<String, String?> playerAnswers,
+      String? selectedAnswer,
+      int correctCount,
+      bool isWaitingForPlayers,
+      List<RoomPlayer> players,
+    )
+    quizStarted,
+    required TResult Function(List<RoomPlayer> players) questionTimeUp,
+    required TResult Function(List<RoomPlayer> players) allPlayersAnswered,
+    required TResult Function(
+      int totalQuestions,
+      int correctAnswers,
+      List<RoomPlayer> players,
+    )
+    quizFinished,
   }) {
     return roomUpdated(room);
   }
@@ -1375,6 +1963,27 @@ class _$RoomUpdatedImpl implements _RoomUpdated {
     TResult? Function(Room room)? joined,
     TResult? Function()? left,
     TResult? Function()? gameStarted,
+    TResult? Function(Question question)? questionLoaded,
+    TResult? Function(List<Question> questions)? questionsListLoaded,
+    TResult? Function(
+      List<Question> questions,
+      int currentQuestionIndex,
+      int remainingTime,
+      Map<String, String?> playerAnswers,
+      String? selectedAnswer,
+      int correctCount,
+      bool isWaitingForPlayers,
+      List<RoomPlayer> players,
+    )?
+    quizStarted,
+    TResult? Function(List<RoomPlayer> players)? questionTimeUp,
+    TResult? Function(List<RoomPlayer> players)? allPlayersAnswered,
+    TResult? Function(
+      int totalQuestions,
+      int correctAnswers,
+      List<RoomPlayer> players,
+    )?
+    quizFinished,
   }) {
     return roomUpdated?.call(room);
   }
@@ -1393,6 +2002,27 @@ class _$RoomUpdatedImpl implements _RoomUpdated {
     TResult Function(Room room)? joined,
     TResult Function()? left,
     TResult Function()? gameStarted,
+    TResult Function(Question question)? questionLoaded,
+    TResult Function(List<Question> questions)? questionsListLoaded,
+    TResult Function(
+      List<Question> questions,
+      int currentQuestionIndex,
+      int remainingTime,
+      Map<String, String?> playerAnswers,
+      String? selectedAnswer,
+      int correctCount,
+      bool isWaitingForPlayers,
+      List<RoomPlayer> players,
+    )?
+    quizStarted,
+    TResult Function(List<RoomPlayer> players)? questionTimeUp,
+    TResult Function(List<RoomPlayer> players)? allPlayersAnswered,
+    TResult Function(
+      int totalQuestions,
+      int correctAnswers,
+      List<RoomPlayer> players,
+    )?
+    quizFinished,
     required TResult orElse(),
   }) {
     if (roomUpdated != null) {
@@ -1415,6 +2045,12 @@ class _$RoomUpdatedImpl implements _RoomUpdated {
     required TResult Function(_Joined value) joined,
     required TResult Function(_Left value) left,
     required TResult Function(_GameStarted value) gameStarted,
+    required TResult Function(_QuestionLoaded value) questionLoaded,
+    required TResult Function(_QuestionsListLoaded value) questionsListLoaded,
+    required TResult Function(_QuizStarted value) quizStarted,
+    required TResult Function(_QuestionTimeUp value) questionTimeUp,
+    required TResult Function(_AllPlayersAnswered value) allPlayersAnswered,
+    required TResult Function(_QuizFinished value) quizFinished,
   }) {
     return roomUpdated(this);
   }
@@ -1433,6 +2069,12 @@ class _$RoomUpdatedImpl implements _RoomUpdated {
     TResult? Function(_Joined value)? joined,
     TResult? Function(_Left value)? left,
     TResult? Function(_GameStarted value)? gameStarted,
+    TResult? Function(_QuestionLoaded value)? questionLoaded,
+    TResult? Function(_QuestionsListLoaded value)? questionsListLoaded,
+    TResult? Function(_QuizStarted value)? quizStarted,
+    TResult? Function(_QuestionTimeUp value)? questionTimeUp,
+    TResult? Function(_AllPlayersAnswered value)? allPlayersAnswered,
+    TResult? Function(_QuizFinished value)? quizFinished,
   }) {
     return roomUpdated?.call(this);
   }
@@ -1451,6 +2093,12 @@ class _$RoomUpdatedImpl implements _RoomUpdated {
     TResult Function(_Joined value)? joined,
     TResult Function(_Left value)? left,
     TResult Function(_GameStarted value)? gameStarted,
+    TResult Function(_QuestionLoaded value)? questionLoaded,
+    TResult Function(_QuestionsListLoaded value)? questionsListLoaded,
+    TResult Function(_QuizStarted value)? quizStarted,
+    TResult Function(_QuestionTimeUp value)? questionTimeUp,
+    TResult Function(_AllPlayersAnswered value)? allPlayersAnswered,
+    TResult Function(_QuizFinished value)? quizFinished,
     required TResult orElse(),
   }) {
     if (roomUpdated != null) {
@@ -1566,6 +2214,27 @@ class _$QuestionsLoadedImpl implements _QuestionsLoaded {
     required TResult Function(Room room) joined,
     required TResult Function() left,
     required TResult Function() gameStarted,
+    required TResult Function(Question question) questionLoaded,
+    required TResult Function(List<Question> questions) questionsListLoaded,
+    required TResult Function(
+      List<Question> questions,
+      int currentQuestionIndex,
+      int remainingTime,
+      Map<String, String?> playerAnswers,
+      String? selectedAnswer,
+      int correctCount,
+      bool isWaitingForPlayers,
+      List<RoomPlayer> players,
+    )
+    quizStarted,
+    required TResult Function(List<RoomPlayer> players) questionTimeUp,
+    required TResult Function(List<RoomPlayer> players) allPlayersAnswered,
+    required TResult Function(
+      int totalQuestions,
+      int correctAnswers,
+      List<RoomPlayer> players,
+    )
+    quizFinished,
   }) {
     return questionsLoaded(questions);
   }
@@ -1584,6 +2253,27 @@ class _$QuestionsLoadedImpl implements _QuestionsLoaded {
     TResult? Function(Room room)? joined,
     TResult? Function()? left,
     TResult? Function()? gameStarted,
+    TResult? Function(Question question)? questionLoaded,
+    TResult? Function(List<Question> questions)? questionsListLoaded,
+    TResult? Function(
+      List<Question> questions,
+      int currentQuestionIndex,
+      int remainingTime,
+      Map<String, String?> playerAnswers,
+      String? selectedAnswer,
+      int correctCount,
+      bool isWaitingForPlayers,
+      List<RoomPlayer> players,
+    )?
+    quizStarted,
+    TResult? Function(List<RoomPlayer> players)? questionTimeUp,
+    TResult? Function(List<RoomPlayer> players)? allPlayersAnswered,
+    TResult? Function(
+      int totalQuestions,
+      int correctAnswers,
+      List<RoomPlayer> players,
+    )?
+    quizFinished,
   }) {
     return questionsLoaded?.call(questions);
   }
@@ -1602,6 +2292,27 @@ class _$QuestionsLoadedImpl implements _QuestionsLoaded {
     TResult Function(Room room)? joined,
     TResult Function()? left,
     TResult Function()? gameStarted,
+    TResult Function(Question question)? questionLoaded,
+    TResult Function(List<Question> questions)? questionsListLoaded,
+    TResult Function(
+      List<Question> questions,
+      int currentQuestionIndex,
+      int remainingTime,
+      Map<String, String?> playerAnswers,
+      String? selectedAnswer,
+      int correctCount,
+      bool isWaitingForPlayers,
+      List<RoomPlayer> players,
+    )?
+    quizStarted,
+    TResult Function(List<RoomPlayer> players)? questionTimeUp,
+    TResult Function(List<RoomPlayer> players)? allPlayersAnswered,
+    TResult Function(
+      int totalQuestions,
+      int correctAnswers,
+      List<RoomPlayer> players,
+    )?
+    quizFinished,
     required TResult orElse(),
   }) {
     if (questionsLoaded != null) {
@@ -1624,6 +2335,12 @@ class _$QuestionsLoadedImpl implements _QuestionsLoaded {
     required TResult Function(_Joined value) joined,
     required TResult Function(_Left value) left,
     required TResult Function(_GameStarted value) gameStarted,
+    required TResult Function(_QuestionLoaded value) questionLoaded,
+    required TResult Function(_QuestionsListLoaded value) questionsListLoaded,
+    required TResult Function(_QuizStarted value) quizStarted,
+    required TResult Function(_QuestionTimeUp value) questionTimeUp,
+    required TResult Function(_AllPlayersAnswered value) allPlayersAnswered,
+    required TResult Function(_QuizFinished value) quizFinished,
   }) {
     return questionsLoaded(this);
   }
@@ -1642,6 +2359,12 @@ class _$QuestionsLoadedImpl implements _QuestionsLoaded {
     TResult? Function(_Joined value)? joined,
     TResult? Function(_Left value)? left,
     TResult? Function(_GameStarted value)? gameStarted,
+    TResult? Function(_QuestionLoaded value)? questionLoaded,
+    TResult? Function(_QuestionsListLoaded value)? questionsListLoaded,
+    TResult? Function(_QuizStarted value)? quizStarted,
+    TResult? Function(_QuestionTimeUp value)? questionTimeUp,
+    TResult? Function(_AllPlayersAnswered value)? allPlayersAnswered,
+    TResult? Function(_QuizFinished value)? quizFinished,
   }) {
     return questionsLoaded?.call(this);
   }
@@ -1660,6 +2383,12 @@ class _$QuestionsLoadedImpl implements _QuestionsLoaded {
     TResult Function(_Joined value)? joined,
     TResult Function(_Left value)? left,
     TResult Function(_GameStarted value)? gameStarted,
+    TResult Function(_QuestionLoaded value)? questionLoaded,
+    TResult Function(_QuestionsListLoaded value)? questionsListLoaded,
+    TResult Function(_QuizStarted value)? quizStarted,
+    TResult Function(_QuestionTimeUp value)? questionTimeUp,
+    TResult Function(_AllPlayersAnswered value)? allPlayersAnswered,
+    TResult Function(_QuizFinished value)? quizFinished,
     required TResult orElse(),
   }) {
     if (questionsLoaded != null) {
@@ -1775,6 +2504,27 @@ class _$JoinedImpl implements _Joined {
     required TResult Function(Room room) joined,
     required TResult Function() left,
     required TResult Function() gameStarted,
+    required TResult Function(Question question) questionLoaded,
+    required TResult Function(List<Question> questions) questionsListLoaded,
+    required TResult Function(
+      List<Question> questions,
+      int currentQuestionIndex,
+      int remainingTime,
+      Map<String, String?> playerAnswers,
+      String? selectedAnswer,
+      int correctCount,
+      bool isWaitingForPlayers,
+      List<RoomPlayer> players,
+    )
+    quizStarted,
+    required TResult Function(List<RoomPlayer> players) questionTimeUp,
+    required TResult Function(List<RoomPlayer> players) allPlayersAnswered,
+    required TResult Function(
+      int totalQuestions,
+      int correctAnswers,
+      List<RoomPlayer> players,
+    )
+    quizFinished,
   }) {
     return joined(room);
   }
@@ -1793,6 +2543,27 @@ class _$JoinedImpl implements _Joined {
     TResult? Function(Room room)? joined,
     TResult? Function()? left,
     TResult? Function()? gameStarted,
+    TResult? Function(Question question)? questionLoaded,
+    TResult? Function(List<Question> questions)? questionsListLoaded,
+    TResult? Function(
+      List<Question> questions,
+      int currentQuestionIndex,
+      int remainingTime,
+      Map<String, String?> playerAnswers,
+      String? selectedAnswer,
+      int correctCount,
+      bool isWaitingForPlayers,
+      List<RoomPlayer> players,
+    )?
+    quizStarted,
+    TResult? Function(List<RoomPlayer> players)? questionTimeUp,
+    TResult? Function(List<RoomPlayer> players)? allPlayersAnswered,
+    TResult? Function(
+      int totalQuestions,
+      int correctAnswers,
+      List<RoomPlayer> players,
+    )?
+    quizFinished,
   }) {
     return joined?.call(room);
   }
@@ -1811,6 +2582,27 @@ class _$JoinedImpl implements _Joined {
     TResult Function(Room room)? joined,
     TResult Function()? left,
     TResult Function()? gameStarted,
+    TResult Function(Question question)? questionLoaded,
+    TResult Function(List<Question> questions)? questionsListLoaded,
+    TResult Function(
+      List<Question> questions,
+      int currentQuestionIndex,
+      int remainingTime,
+      Map<String, String?> playerAnswers,
+      String? selectedAnswer,
+      int correctCount,
+      bool isWaitingForPlayers,
+      List<RoomPlayer> players,
+    )?
+    quizStarted,
+    TResult Function(List<RoomPlayer> players)? questionTimeUp,
+    TResult Function(List<RoomPlayer> players)? allPlayersAnswered,
+    TResult Function(
+      int totalQuestions,
+      int correctAnswers,
+      List<RoomPlayer> players,
+    )?
+    quizFinished,
     required TResult orElse(),
   }) {
     if (joined != null) {
@@ -1833,6 +2625,12 @@ class _$JoinedImpl implements _Joined {
     required TResult Function(_Joined value) joined,
     required TResult Function(_Left value) left,
     required TResult Function(_GameStarted value) gameStarted,
+    required TResult Function(_QuestionLoaded value) questionLoaded,
+    required TResult Function(_QuestionsListLoaded value) questionsListLoaded,
+    required TResult Function(_QuizStarted value) quizStarted,
+    required TResult Function(_QuestionTimeUp value) questionTimeUp,
+    required TResult Function(_AllPlayersAnswered value) allPlayersAnswered,
+    required TResult Function(_QuizFinished value) quizFinished,
   }) {
     return joined(this);
   }
@@ -1851,6 +2649,12 @@ class _$JoinedImpl implements _Joined {
     TResult? Function(_Joined value)? joined,
     TResult? Function(_Left value)? left,
     TResult? Function(_GameStarted value)? gameStarted,
+    TResult? Function(_QuestionLoaded value)? questionLoaded,
+    TResult? Function(_QuestionsListLoaded value)? questionsListLoaded,
+    TResult? Function(_QuizStarted value)? quizStarted,
+    TResult? Function(_QuestionTimeUp value)? questionTimeUp,
+    TResult? Function(_AllPlayersAnswered value)? allPlayersAnswered,
+    TResult? Function(_QuizFinished value)? quizFinished,
   }) {
     return joined?.call(this);
   }
@@ -1869,6 +2673,12 @@ class _$JoinedImpl implements _Joined {
     TResult Function(_Joined value)? joined,
     TResult Function(_Left value)? left,
     TResult Function(_GameStarted value)? gameStarted,
+    TResult Function(_QuestionLoaded value)? questionLoaded,
+    TResult Function(_QuestionsListLoaded value)? questionsListLoaded,
+    TResult Function(_QuizStarted value)? quizStarted,
+    TResult Function(_QuestionTimeUp value)? questionTimeUp,
+    TResult Function(_AllPlayersAnswered value)? allPlayersAnswered,
+    TResult Function(_QuizFinished value)? quizFinished,
     required TResult orElse(),
   }) {
     if (joined != null) {
@@ -1942,6 +2752,27 @@ class _$LeftImpl implements _Left {
     required TResult Function(Room room) joined,
     required TResult Function() left,
     required TResult Function() gameStarted,
+    required TResult Function(Question question) questionLoaded,
+    required TResult Function(List<Question> questions) questionsListLoaded,
+    required TResult Function(
+      List<Question> questions,
+      int currentQuestionIndex,
+      int remainingTime,
+      Map<String, String?> playerAnswers,
+      String? selectedAnswer,
+      int correctCount,
+      bool isWaitingForPlayers,
+      List<RoomPlayer> players,
+    )
+    quizStarted,
+    required TResult Function(List<RoomPlayer> players) questionTimeUp,
+    required TResult Function(List<RoomPlayer> players) allPlayersAnswered,
+    required TResult Function(
+      int totalQuestions,
+      int correctAnswers,
+      List<RoomPlayer> players,
+    )
+    quizFinished,
   }) {
     return left();
   }
@@ -1960,6 +2791,27 @@ class _$LeftImpl implements _Left {
     TResult? Function(Room room)? joined,
     TResult? Function()? left,
     TResult? Function()? gameStarted,
+    TResult? Function(Question question)? questionLoaded,
+    TResult? Function(List<Question> questions)? questionsListLoaded,
+    TResult? Function(
+      List<Question> questions,
+      int currentQuestionIndex,
+      int remainingTime,
+      Map<String, String?> playerAnswers,
+      String? selectedAnswer,
+      int correctCount,
+      bool isWaitingForPlayers,
+      List<RoomPlayer> players,
+    )?
+    quizStarted,
+    TResult? Function(List<RoomPlayer> players)? questionTimeUp,
+    TResult? Function(List<RoomPlayer> players)? allPlayersAnswered,
+    TResult? Function(
+      int totalQuestions,
+      int correctAnswers,
+      List<RoomPlayer> players,
+    )?
+    quizFinished,
   }) {
     return left?.call();
   }
@@ -1978,6 +2830,27 @@ class _$LeftImpl implements _Left {
     TResult Function(Room room)? joined,
     TResult Function()? left,
     TResult Function()? gameStarted,
+    TResult Function(Question question)? questionLoaded,
+    TResult Function(List<Question> questions)? questionsListLoaded,
+    TResult Function(
+      List<Question> questions,
+      int currentQuestionIndex,
+      int remainingTime,
+      Map<String, String?> playerAnswers,
+      String? selectedAnswer,
+      int correctCount,
+      bool isWaitingForPlayers,
+      List<RoomPlayer> players,
+    )?
+    quizStarted,
+    TResult Function(List<RoomPlayer> players)? questionTimeUp,
+    TResult Function(List<RoomPlayer> players)? allPlayersAnswered,
+    TResult Function(
+      int totalQuestions,
+      int correctAnswers,
+      List<RoomPlayer> players,
+    )?
+    quizFinished,
     required TResult orElse(),
   }) {
     if (left != null) {
@@ -2000,6 +2873,12 @@ class _$LeftImpl implements _Left {
     required TResult Function(_Joined value) joined,
     required TResult Function(_Left value) left,
     required TResult Function(_GameStarted value) gameStarted,
+    required TResult Function(_QuestionLoaded value) questionLoaded,
+    required TResult Function(_QuestionsListLoaded value) questionsListLoaded,
+    required TResult Function(_QuizStarted value) quizStarted,
+    required TResult Function(_QuestionTimeUp value) questionTimeUp,
+    required TResult Function(_AllPlayersAnswered value) allPlayersAnswered,
+    required TResult Function(_QuizFinished value) quizFinished,
   }) {
     return left(this);
   }
@@ -2018,6 +2897,12 @@ class _$LeftImpl implements _Left {
     TResult? Function(_Joined value)? joined,
     TResult? Function(_Left value)? left,
     TResult? Function(_GameStarted value)? gameStarted,
+    TResult? Function(_QuestionLoaded value)? questionLoaded,
+    TResult? Function(_QuestionsListLoaded value)? questionsListLoaded,
+    TResult? Function(_QuizStarted value)? quizStarted,
+    TResult? Function(_QuestionTimeUp value)? questionTimeUp,
+    TResult? Function(_AllPlayersAnswered value)? allPlayersAnswered,
+    TResult? Function(_QuizFinished value)? quizFinished,
   }) {
     return left?.call(this);
   }
@@ -2036,6 +2921,12 @@ class _$LeftImpl implements _Left {
     TResult Function(_Joined value)? joined,
     TResult Function(_Left value)? left,
     TResult Function(_GameStarted value)? gameStarted,
+    TResult Function(_QuestionLoaded value)? questionLoaded,
+    TResult Function(_QuestionsListLoaded value)? questionsListLoaded,
+    TResult Function(_QuizStarted value)? quizStarted,
+    TResult Function(_QuestionTimeUp value)? questionTimeUp,
+    TResult Function(_AllPlayersAnswered value)? allPlayersAnswered,
+    TResult Function(_QuizFinished value)? quizFinished,
     required TResult orElse(),
   }) {
     if (left != null) {
@@ -2103,6 +2994,27 @@ class _$GameStartedImpl implements _GameStarted {
     required TResult Function(Room room) joined,
     required TResult Function() left,
     required TResult Function() gameStarted,
+    required TResult Function(Question question) questionLoaded,
+    required TResult Function(List<Question> questions) questionsListLoaded,
+    required TResult Function(
+      List<Question> questions,
+      int currentQuestionIndex,
+      int remainingTime,
+      Map<String, String?> playerAnswers,
+      String? selectedAnswer,
+      int correctCount,
+      bool isWaitingForPlayers,
+      List<RoomPlayer> players,
+    )
+    quizStarted,
+    required TResult Function(List<RoomPlayer> players) questionTimeUp,
+    required TResult Function(List<RoomPlayer> players) allPlayersAnswered,
+    required TResult Function(
+      int totalQuestions,
+      int correctAnswers,
+      List<RoomPlayer> players,
+    )
+    quizFinished,
   }) {
     return gameStarted();
   }
@@ -2121,6 +3033,27 @@ class _$GameStartedImpl implements _GameStarted {
     TResult? Function(Room room)? joined,
     TResult? Function()? left,
     TResult? Function()? gameStarted,
+    TResult? Function(Question question)? questionLoaded,
+    TResult? Function(List<Question> questions)? questionsListLoaded,
+    TResult? Function(
+      List<Question> questions,
+      int currentQuestionIndex,
+      int remainingTime,
+      Map<String, String?> playerAnswers,
+      String? selectedAnswer,
+      int correctCount,
+      bool isWaitingForPlayers,
+      List<RoomPlayer> players,
+    )?
+    quizStarted,
+    TResult? Function(List<RoomPlayer> players)? questionTimeUp,
+    TResult? Function(List<RoomPlayer> players)? allPlayersAnswered,
+    TResult? Function(
+      int totalQuestions,
+      int correctAnswers,
+      List<RoomPlayer> players,
+    )?
+    quizFinished,
   }) {
     return gameStarted?.call();
   }
@@ -2139,6 +3072,27 @@ class _$GameStartedImpl implements _GameStarted {
     TResult Function(Room room)? joined,
     TResult Function()? left,
     TResult Function()? gameStarted,
+    TResult Function(Question question)? questionLoaded,
+    TResult Function(List<Question> questions)? questionsListLoaded,
+    TResult Function(
+      List<Question> questions,
+      int currentQuestionIndex,
+      int remainingTime,
+      Map<String, String?> playerAnswers,
+      String? selectedAnswer,
+      int correctCount,
+      bool isWaitingForPlayers,
+      List<RoomPlayer> players,
+    )?
+    quizStarted,
+    TResult Function(List<RoomPlayer> players)? questionTimeUp,
+    TResult Function(List<RoomPlayer> players)? allPlayersAnswered,
+    TResult Function(
+      int totalQuestions,
+      int correctAnswers,
+      List<RoomPlayer> players,
+    )?
+    quizFinished,
     required TResult orElse(),
   }) {
     if (gameStarted != null) {
@@ -2161,6 +3115,12 @@ class _$GameStartedImpl implements _GameStarted {
     required TResult Function(_Joined value) joined,
     required TResult Function(_Left value) left,
     required TResult Function(_GameStarted value) gameStarted,
+    required TResult Function(_QuestionLoaded value) questionLoaded,
+    required TResult Function(_QuestionsListLoaded value) questionsListLoaded,
+    required TResult Function(_QuizStarted value) quizStarted,
+    required TResult Function(_QuestionTimeUp value) questionTimeUp,
+    required TResult Function(_AllPlayersAnswered value) allPlayersAnswered,
+    required TResult Function(_QuizFinished value) quizFinished,
   }) {
     return gameStarted(this);
   }
@@ -2179,6 +3139,12 @@ class _$GameStartedImpl implements _GameStarted {
     TResult? Function(_Joined value)? joined,
     TResult? Function(_Left value)? left,
     TResult? Function(_GameStarted value)? gameStarted,
+    TResult? Function(_QuestionLoaded value)? questionLoaded,
+    TResult? Function(_QuestionsListLoaded value)? questionsListLoaded,
+    TResult? Function(_QuizStarted value)? quizStarted,
+    TResult? Function(_QuestionTimeUp value)? questionTimeUp,
+    TResult? Function(_AllPlayersAnswered value)? allPlayersAnswered,
+    TResult? Function(_QuizFinished value)? quizFinished,
   }) {
     return gameStarted?.call(this);
   }
@@ -2197,6 +3163,12 @@ class _$GameStartedImpl implements _GameStarted {
     TResult Function(_Joined value)? joined,
     TResult Function(_Left value)? left,
     TResult Function(_GameStarted value)? gameStarted,
+    TResult Function(_QuestionLoaded value)? questionLoaded,
+    TResult Function(_QuestionsListLoaded value)? questionsListLoaded,
+    TResult Function(_QuizStarted value)? quizStarted,
+    TResult Function(_QuestionTimeUp value)? questionTimeUp,
+    TResult Function(_AllPlayersAnswered value)? allPlayersAnswered,
+    TResult Function(_QuizFinished value)? quizFinished,
     required TResult orElse(),
   }) {
     if (gameStarted != null) {
@@ -2208,4 +3180,1919 @@ class _$GameStartedImpl implements _GameStarted {
 
 abstract class _GameStarted implements RoomState {
   const factory _GameStarted() = _$GameStartedImpl;
+}
+
+/// @nodoc
+abstract class _$$QuestionLoadedImplCopyWith<$Res> {
+  factory _$$QuestionLoadedImplCopyWith(
+    _$QuestionLoadedImpl value,
+    $Res Function(_$QuestionLoadedImpl) then,
+  ) = __$$QuestionLoadedImplCopyWithImpl<$Res>;
+  @useResult
+  $Res call({Question question});
+
+  $QuestionCopyWith<$Res> get question;
+}
+
+/// @nodoc
+class __$$QuestionLoadedImplCopyWithImpl<$Res>
+    extends _$RoomStateCopyWithImpl<$Res, _$QuestionLoadedImpl>
+    implements _$$QuestionLoadedImplCopyWith<$Res> {
+  __$$QuestionLoadedImplCopyWithImpl(
+    _$QuestionLoadedImpl _value,
+    $Res Function(_$QuestionLoadedImpl) _then,
+  ) : super(_value, _then);
+
+  /// Create a copy of RoomState
+  /// with the given fields replaced by the non-null parameter values.
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({Object? question = null}) {
+    return _then(
+      _$QuestionLoadedImpl(
+        null == question
+            ? _value.question
+            : question // ignore: cast_nullable_to_non_nullable
+                  as Question,
+      ),
+    );
+  }
+
+  /// Create a copy of RoomState
+  /// with the given fields replaced by the non-null parameter values.
+  @override
+  @pragma('vm:prefer-inline')
+  $QuestionCopyWith<$Res> get question {
+    return $QuestionCopyWith<$Res>(_value.question, (value) {
+      return _then(_value.copyWith(question: value));
+    });
+  }
+}
+
+/// @nodoc
+
+class _$QuestionLoadedImpl implements _QuestionLoaded {
+  const _$QuestionLoadedImpl(this.question);
+
+  @override
+  final Question question;
+
+  @override
+  String toString() {
+    return 'RoomState.questionLoaded(question: $question)';
+  }
+
+  @override
+  bool operator ==(Object other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$QuestionLoadedImpl &&
+            (identical(other.question, question) ||
+                other.question == question));
+  }
+
+  @override
+  int get hashCode => Object.hash(runtimeType, question);
+
+  /// Create a copy of RoomState
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$QuestionLoadedImplCopyWith<_$QuestionLoadedImpl> get copyWith =>
+      __$$QuestionLoadedImplCopyWithImpl<_$QuestionLoadedImpl>(
+        this,
+        _$identity,
+      );
+
+  @override
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>({
+    required TResult Function() initial,
+    required TResult Function() loading,
+    required TResult Function(String message) error,
+    required TResult Function(Room room) roomLoaded,
+    required TResult Function(List<Room> rooms) roomsUpdated,
+    required TResult Function(List<RoomPlayer> players) playersUpdated,
+    required TResult Function(Room? room) roomUpdated,
+    required TResult Function(List<RoomQuestion> questions) questionsLoaded,
+    required TResult Function(Room room) joined,
+    required TResult Function() left,
+    required TResult Function() gameStarted,
+    required TResult Function(Question question) questionLoaded,
+    required TResult Function(List<Question> questions) questionsListLoaded,
+    required TResult Function(
+      List<Question> questions,
+      int currentQuestionIndex,
+      int remainingTime,
+      Map<String, String?> playerAnswers,
+      String? selectedAnswer,
+      int correctCount,
+      bool isWaitingForPlayers,
+      List<RoomPlayer> players,
+    )
+    quizStarted,
+    required TResult Function(List<RoomPlayer> players) questionTimeUp,
+    required TResult Function(List<RoomPlayer> players) allPlayersAnswered,
+    required TResult Function(
+      int totalQuestions,
+      int correctAnswers,
+      List<RoomPlayer> players,
+    )
+    quizFinished,
+  }) {
+    return questionLoaded(question);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult? Function()? initial,
+    TResult? Function()? loading,
+    TResult? Function(String message)? error,
+    TResult? Function(Room room)? roomLoaded,
+    TResult? Function(List<Room> rooms)? roomsUpdated,
+    TResult? Function(List<RoomPlayer> players)? playersUpdated,
+    TResult? Function(Room? room)? roomUpdated,
+    TResult? Function(List<RoomQuestion> questions)? questionsLoaded,
+    TResult? Function(Room room)? joined,
+    TResult? Function()? left,
+    TResult? Function()? gameStarted,
+    TResult? Function(Question question)? questionLoaded,
+    TResult? Function(List<Question> questions)? questionsListLoaded,
+    TResult? Function(
+      List<Question> questions,
+      int currentQuestionIndex,
+      int remainingTime,
+      Map<String, String?> playerAnswers,
+      String? selectedAnswer,
+      int correctCount,
+      bool isWaitingForPlayers,
+      List<RoomPlayer> players,
+    )?
+    quizStarted,
+    TResult? Function(List<RoomPlayer> players)? questionTimeUp,
+    TResult? Function(List<RoomPlayer> players)? allPlayersAnswered,
+    TResult? Function(
+      int totalQuestions,
+      int correctAnswers,
+      List<RoomPlayer> players,
+    )?
+    quizFinished,
+  }) {
+    return questionLoaded?.call(question);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function()? initial,
+    TResult Function()? loading,
+    TResult Function(String message)? error,
+    TResult Function(Room room)? roomLoaded,
+    TResult Function(List<Room> rooms)? roomsUpdated,
+    TResult Function(List<RoomPlayer> players)? playersUpdated,
+    TResult Function(Room? room)? roomUpdated,
+    TResult Function(List<RoomQuestion> questions)? questionsLoaded,
+    TResult Function(Room room)? joined,
+    TResult Function()? left,
+    TResult Function()? gameStarted,
+    TResult Function(Question question)? questionLoaded,
+    TResult Function(List<Question> questions)? questionsListLoaded,
+    TResult Function(
+      List<Question> questions,
+      int currentQuestionIndex,
+      int remainingTime,
+      Map<String, String?> playerAnswers,
+      String? selectedAnswer,
+      int correctCount,
+      bool isWaitingForPlayers,
+      List<RoomPlayer> players,
+    )?
+    quizStarted,
+    TResult Function(List<RoomPlayer> players)? questionTimeUp,
+    TResult Function(List<RoomPlayer> players)? allPlayersAnswered,
+    TResult Function(
+      int totalQuestions,
+      int correctAnswers,
+      List<RoomPlayer> players,
+    )?
+    quizFinished,
+    required TResult orElse(),
+  }) {
+    if (questionLoaded != null) {
+      return questionLoaded(question);
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>({
+    required TResult Function(_Initial value) initial,
+    required TResult Function(_Loading value) loading,
+    required TResult Function(_Error value) error,
+    required TResult Function(_RoomLoaded value) roomLoaded,
+    required TResult Function(_RoomsUpdated value) roomsUpdated,
+    required TResult Function(_PlayersUpdated value) playersUpdated,
+    required TResult Function(_RoomUpdated value) roomUpdated,
+    required TResult Function(_QuestionsLoaded value) questionsLoaded,
+    required TResult Function(_Joined value) joined,
+    required TResult Function(_Left value) left,
+    required TResult Function(_GameStarted value) gameStarted,
+    required TResult Function(_QuestionLoaded value) questionLoaded,
+    required TResult Function(_QuestionsListLoaded value) questionsListLoaded,
+    required TResult Function(_QuizStarted value) quizStarted,
+    required TResult Function(_QuestionTimeUp value) questionTimeUp,
+    required TResult Function(_AllPlayersAnswered value) allPlayersAnswered,
+    required TResult Function(_QuizFinished value) quizFinished,
+  }) {
+    return questionLoaded(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult? Function(_Initial value)? initial,
+    TResult? Function(_Loading value)? loading,
+    TResult? Function(_Error value)? error,
+    TResult? Function(_RoomLoaded value)? roomLoaded,
+    TResult? Function(_RoomsUpdated value)? roomsUpdated,
+    TResult? Function(_PlayersUpdated value)? playersUpdated,
+    TResult? Function(_RoomUpdated value)? roomUpdated,
+    TResult? Function(_QuestionsLoaded value)? questionsLoaded,
+    TResult? Function(_Joined value)? joined,
+    TResult? Function(_Left value)? left,
+    TResult? Function(_GameStarted value)? gameStarted,
+    TResult? Function(_QuestionLoaded value)? questionLoaded,
+    TResult? Function(_QuestionsListLoaded value)? questionsListLoaded,
+    TResult? Function(_QuizStarted value)? quizStarted,
+    TResult? Function(_QuestionTimeUp value)? questionTimeUp,
+    TResult? Function(_AllPlayersAnswered value)? allPlayersAnswered,
+    TResult? Function(_QuizFinished value)? quizFinished,
+  }) {
+    return questionLoaded?.call(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(_Initial value)? initial,
+    TResult Function(_Loading value)? loading,
+    TResult Function(_Error value)? error,
+    TResult Function(_RoomLoaded value)? roomLoaded,
+    TResult Function(_RoomsUpdated value)? roomsUpdated,
+    TResult Function(_PlayersUpdated value)? playersUpdated,
+    TResult Function(_RoomUpdated value)? roomUpdated,
+    TResult Function(_QuestionsLoaded value)? questionsLoaded,
+    TResult Function(_Joined value)? joined,
+    TResult Function(_Left value)? left,
+    TResult Function(_GameStarted value)? gameStarted,
+    TResult Function(_QuestionLoaded value)? questionLoaded,
+    TResult Function(_QuestionsListLoaded value)? questionsListLoaded,
+    TResult Function(_QuizStarted value)? quizStarted,
+    TResult Function(_QuestionTimeUp value)? questionTimeUp,
+    TResult Function(_AllPlayersAnswered value)? allPlayersAnswered,
+    TResult Function(_QuizFinished value)? quizFinished,
+    required TResult orElse(),
+  }) {
+    if (questionLoaded != null) {
+      return questionLoaded(this);
+    }
+    return orElse();
+  }
+}
+
+abstract class _QuestionLoaded implements RoomState {
+  const factory _QuestionLoaded(final Question question) = _$QuestionLoadedImpl;
+
+  Question get question;
+
+  /// Create a copy of RoomState
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  _$$QuestionLoadedImplCopyWith<_$QuestionLoadedImpl> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+abstract class _$$QuestionsListLoadedImplCopyWith<$Res> {
+  factory _$$QuestionsListLoadedImplCopyWith(
+    _$QuestionsListLoadedImpl value,
+    $Res Function(_$QuestionsListLoadedImpl) then,
+  ) = __$$QuestionsListLoadedImplCopyWithImpl<$Res>;
+  @useResult
+  $Res call({List<Question> questions});
+}
+
+/// @nodoc
+class __$$QuestionsListLoadedImplCopyWithImpl<$Res>
+    extends _$RoomStateCopyWithImpl<$Res, _$QuestionsListLoadedImpl>
+    implements _$$QuestionsListLoadedImplCopyWith<$Res> {
+  __$$QuestionsListLoadedImplCopyWithImpl(
+    _$QuestionsListLoadedImpl _value,
+    $Res Function(_$QuestionsListLoadedImpl) _then,
+  ) : super(_value, _then);
+
+  /// Create a copy of RoomState
+  /// with the given fields replaced by the non-null parameter values.
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({Object? questions = null}) {
+    return _then(
+      _$QuestionsListLoadedImpl(
+        null == questions
+            ? _value._questions
+            : questions // ignore: cast_nullable_to_non_nullable
+                  as List<Question>,
+      ),
+    );
+  }
+}
+
+/// @nodoc
+
+class _$QuestionsListLoadedImpl implements _QuestionsListLoaded {
+  const _$QuestionsListLoadedImpl(final List<Question> questions)
+    : _questions = questions;
+
+  final List<Question> _questions;
+  @override
+  List<Question> get questions {
+    if (_questions is EqualUnmodifiableListView) return _questions;
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableListView(_questions);
+  }
+
+  @override
+  String toString() {
+    return 'RoomState.questionsListLoaded(questions: $questions)';
+  }
+
+  @override
+  bool operator ==(Object other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$QuestionsListLoadedImpl &&
+            const DeepCollectionEquality().equals(
+              other._questions,
+              _questions,
+            ));
+  }
+
+  @override
+  int get hashCode =>
+      Object.hash(runtimeType, const DeepCollectionEquality().hash(_questions));
+
+  /// Create a copy of RoomState
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$QuestionsListLoadedImplCopyWith<_$QuestionsListLoadedImpl> get copyWith =>
+      __$$QuestionsListLoadedImplCopyWithImpl<_$QuestionsListLoadedImpl>(
+        this,
+        _$identity,
+      );
+
+  @override
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>({
+    required TResult Function() initial,
+    required TResult Function() loading,
+    required TResult Function(String message) error,
+    required TResult Function(Room room) roomLoaded,
+    required TResult Function(List<Room> rooms) roomsUpdated,
+    required TResult Function(List<RoomPlayer> players) playersUpdated,
+    required TResult Function(Room? room) roomUpdated,
+    required TResult Function(List<RoomQuestion> questions) questionsLoaded,
+    required TResult Function(Room room) joined,
+    required TResult Function() left,
+    required TResult Function() gameStarted,
+    required TResult Function(Question question) questionLoaded,
+    required TResult Function(List<Question> questions) questionsListLoaded,
+    required TResult Function(
+      List<Question> questions,
+      int currentQuestionIndex,
+      int remainingTime,
+      Map<String, String?> playerAnswers,
+      String? selectedAnswer,
+      int correctCount,
+      bool isWaitingForPlayers,
+      List<RoomPlayer> players,
+    )
+    quizStarted,
+    required TResult Function(List<RoomPlayer> players) questionTimeUp,
+    required TResult Function(List<RoomPlayer> players) allPlayersAnswered,
+    required TResult Function(
+      int totalQuestions,
+      int correctAnswers,
+      List<RoomPlayer> players,
+    )
+    quizFinished,
+  }) {
+    return questionsListLoaded(questions);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult? Function()? initial,
+    TResult? Function()? loading,
+    TResult? Function(String message)? error,
+    TResult? Function(Room room)? roomLoaded,
+    TResult? Function(List<Room> rooms)? roomsUpdated,
+    TResult? Function(List<RoomPlayer> players)? playersUpdated,
+    TResult? Function(Room? room)? roomUpdated,
+    TResult? Function(List<RoomQuestion> questions)? questionsLoaded,
+    TResult? Function(Room room)? joined,
+    TResult? Function()? left,
+    TResult? Function()? gameStarted,
+    TResult? Function(Question question)? questionLoaded,
+    TResult? Function(List<Question> questions)? questionsListLoaded,
+    TResult? Function(
+      List<Question> questions,
+      int currentQuestionIndex,
+      int remainingTime,
+      Map<String, String?> playerAnswers,
+      String? selectedAnswer,
+      int correctCount,
+      bool isWaitingForPlayers,
+      List<RoomPlayer> players,
+    )?
+    quizStarted,
+    TResult? Function(List<RoomPlayer> players)? questionTimeUp,
+    TResult? Function(List<RoomPlayer> players)? allPlayersAnswered,
+    TResult? Function(
+      int totalQuestions,
+      int correctAnswers,
+      List<RoomPlayer> players,
+    )?
+    quizFinished,
+  }) {
+    return questionsListLoaded?.call(questions);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function()? initial,
+    TResult Function()? loading,
+    TResult Function(String message)? error,
+    TResult Function(Room room)? roomLoaded,
+    TResult Function(List<Room> rooms)? roomsUpdated,
+    TResult Function(List<RoomPlayer> players)? playersUpdated,
+    TResult Function(Room? room)? roomUpdated,
+    TResult Function(List<RoomQuestion> questions)? questionsLoaded,
+    TResult Function(Room room)? joined,
+    TResult Function()? left,
+    TResult Function()? gameStarted,
+    TResult Function(Question question)? questionLoaded,
+    TResult Function(List<Question> questions)? questionsListLoaded,
+    TResult Function(
+      List<Question> questions,
+      int currentQuestionIndex,
+      int remainingTime,
+      Map<String, String?> playerAnswers,
+      String? selectedAnswer,
+      int correctCount,
+      bool isWaitingForPlayers,
+      List<RoomPlayer> players,
+    )?
+    quizStarted,
+    TResult Function(List<RoomPlayer> players)? questionTimeUp,
+    TResult Function(List<RoomPlayer> players)? allPlayersAnswered,
+    TResult Function(
+      int totalQuestions,
+      int correctAnswers,
+      List<RoomPlayer> players,
+    )?
+    quizFinished,
+    required TResult orElse(),
+  }) {
+    if (questionsListLoaded != null) {
+      return questionsListLoaded(questions);
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>({
+    required TResult Function(_Initial value) initial,
+    required TResult Function(_Loading value) loading,
+    required TResult Function(_Error value) error,
+    required TResult Function(_RoomLoaded value) roomLoaded,
+    required TResult Function(_RoomsUpdated value) roomsUpdated,
+    required TResult Function(_PlayersUpdated value) playersUpdated,
+    required TResult Function(_RoomUpdated value) roomUpdated,
+    required TResult Function(_QuestionsLoaded value) questionsLoaded,
+    required TResult Function(_Joined value) joined,
+    required TResult Function(_Left value) left,
+    required TResult Function(_GameStarted value) gameStarted,
+    required TResult Function(_QuestionLoaded value) questionLoaded,
+    required TResult Function(_QuestionsListLoaded value) questionsListLoaded,
+    required TResult Function(_QuizStarted value) quizStarted,
+    required TResult Function(_QuestionTimeUp value) questionTimeUp,
+    required TResult Function(_AllPlayersAnswered value) allPlayersAnswered,
+    required TResult Function(_QuizFinished value) quizFinished,
+  }) {
+    return questionsListLoaded(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult? Function(_Initial value)? initial,
+    TResult? Function(_Loading value)? loading,
+    TResult? Function(_Error value)? error,
+    TResult? Function(_RoomLoaded value)? roomLoaded,
+    TResult? Function(_RoomsUpdated value)? roomsUpdated,
+    TResult? Function(_PlayersUpdated value)? playersUpdated,
+    TResult? Function(_RoomUpdated value)? roomUpdated,
+    TResult? Function(_QuestionsLoaded value)? questionsLoaded,
+    TResult? Function(_Joined value)? joined,
+    TResult? Function(_Left value)? left,
+    TResult? Function(_GameStarted value)? gameStarted,
+    TResult? Function(_QuestionLoaded value)? questionLoaded,
+    TResult? Function(_QuestionsListLoaded value)? questionsListLoaded,
+    TResult? Function(_QuizStarted value)? quizStarted,
+    TResult? Function(_QuestionTimeUp value)? questionTimeUp,
+    TResult? Function(_AllPlayersAnswered value)? allPlayersAnswered,
+    TResult? Function(_QuizFinished value)? quizFinished,
+  }) {
+    return questionsListLoaded?.call(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(_Initial value)? initial,
+    TResult Function(_Loading value)? loading,
+    TResult Function(_Error value)? error,
+    TResult Function(_RoomLoaded value)? roomLoaded,
+    TResult Function(_RoomsUpdated value)? roomsUpdated,
+    TResult Function(_PlayersUpdated value)? playersUpdated,
+    TResult Function(_RoomUpdated value)? roomUpdated,
+    TResult Function(_QuestionsLoaded value)? questionsLoaded,
+    TResult Function(_Joined value)? joined,
+    TResult Function(_Left value)? left,
+    TResult Function(_GameStarted value)? gameStarted,
+    TResult Function(_QuestionLoaded value)? questionLoaded,
+    TResult Function(_QuestionsListLoaded value)? questionsListLoaded,
+    TResult Function(_QuizStarted value)? quizStarted,
+    TResult Function(_QuestionTimeUp value)? questionTimeUp,
+    TResult Function(_AllPlayersAnswered value)? allPlayersAnswered,
+    TResult Function(_QuizFinished value)? quizFinished,
+    required TResult orElse(),
+  }) {
+    if (questionsListLoaded != null) {
+      return questionsListLoaded(this);
+    }
+    return orElse();
+  }
+}
+
+abstract class _QuestionsListLoaded implements RoomState {
+  const factory _QuestionsListLoaded(final List<Question> questions) =
+      _$QuestionsListLoadedImpl;
+
+  List<Question> get questions;
+
+  /// Create a copy of RoomState
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  _$$QuestionsListLoadedImplCopyWith<_$QuestionsListLoadedImpl> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+abstract class _$$QuizStartedImplCopyWith<$Res> {
+  factory _$$QuizStartedImplCopyWith(
+    _$QuizStartedImpl value,
+    $Res Function(_$QuizStartedImpl) then,
+  ) = __$$QuizStartedImplCopyWithImpl<$Res>;
+  @useResult
+  $Res call({
+    List<Question> questions,
+    int currentQuestionIndex,
+    int remainingTime,
+    Map<String, String?> playerAnswers,
+    String? selectedAnswer,
+    int correctCount,
+    bool isWaitingForPlayers,
+    List<RoomPlayer> players,
+  });
+}
+
+/// @nodoc
+class __$$QuizStartedImplCopyWithImpl<$Res>
+    extends _$RoomStateCopyWithImpl<$Res, _$QuizStartedImpl>
+    implements _$$QuizStartedImplCopyWith<$Res> {
+  __$$QuizStartedImplCopyWithImpl(
+    _$QuizStartedImpl _value,
+    $Res Function(_$QuizStartedImpl) _then,
+  ) : super(_value, _then);
+
+  /// Create a copy of RoomState
+  /// with the given fields replaced by the non-null parameter values.
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? questions = null,
+    Object? currentQuestionIndex = null,
+    Object? remainingTime = null,
+    Object? playerAnswers = null,
+    Object? selectedAnswer = freezed,
+    Object? correctCount = null,
+    Object? isWaitingForPlayers = null,
+    Object? players = null,
+  }) {
+    return _then(
+      _$QuizStartedImpl(
+        questions: null == questions
+            ? _value._questions
+            : questions // ignore: cast_nullable_to_non_nullable
+                  as List<Question>,
+        currentQuestionIndex: null == currentQuestionIndex
+            ? _value.currentQuestionIndex
+            : currentQuestionIndex // ignore: cast_nullable_to_non_nullable
+                  as int,
+        remainingTime: null == remainingTime
+            ? _value.remainingTime
+            : remainingTime // ignore: cast_nullable_to_non_nullable
+                  as int,
+        playerAnswers: null == playerAnswers
+            ? _value._playerAnswers
+            : playerAnswers // ignore: cast_nullable_to_non_nullable
+                  as Map<String, String?>,
+        selectedAnswer: freezed == selectedAnswer
+            ? _value.selectedAnswer
+            : selectedAnswer // ignore: cast_nullable_to_non_nullable
+                  as String?,
+        correctCount: null == correctCount
+            ? _value.correctCount
+            : correctCount // ignore: cast_nullable_to_non_nullable
+                  as int,
+        isWaitingForPlayers: null == isWaitingForPlayers
+            ? _value.isWaitingForPlayers
+            : isWaitingForPlayers // ignore: cast_nullable_to_non_nullable
+                  as bool,
+        players: null == players
+            ? _value._players
+            : players // ignore: cast_nullable_to_non_nullable
+                  as List<RoomPlayer>,
+      ),
+    );
+  }
+}
+
+/// @nodoc
+
+class _$QuizStartedImpl implements _QuizStarted {
+  const _$QuizStartedImpl({
+    required final List<Question> questions,
+    required this.currentQuestionIndex,
+    required this.remainingTime,
+    required final Map<String, String?> playerAnswers,
+    required this.selectedAnswer,
+    required this.correctCount,
+    required this.isWaitingForPlayers,
+    required final List<RoomPlayer> players,
+  }) : _questions = questions,
+       _playerAnswers = playerAnswers,
+       _players = players;
+
+  final List<Question> _questions;
+  @override
+  List<Question> get questions {
+    if (_questions is EqualUnmodifiableListView) return _questions;
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableListView(_questions);
+  }
+
+  @override
+  final int currentQuestionIndex;
+  @override
+  final int remainingTime;
+  final Map<String, String?> _playerAnswers;
+  @override
+  Map<String, String?> get playerAnswers {
+    if (_playerAnswers is EqualUnmodifiableMapView) return _playerAnswers;
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableMapView(_playerAnswers);
+  }
+
+  // playerId -> selectedAnswer
+  @override
+  final String? selectedAnswer;
+  // current user's selected answer
+  @override
+  final int correctCount;
+  @override
+  final bool isWaitingForPlayers;
+  final List<RoomPlayer> _players;
+  @override
+  List<RoomPlayer> get players {
+    if (_players is EqualUnmodifiableListView) return _players;
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableListView(_players);
+  }
+
+  @override
+  String toString() {
+    return 'RoomState.quizStarted(questions: $questions, currentQuestionIndex: $currentQuestionIndex, remainingTime: $remainingTime, playerAnswers: $playerAnswers, selectedAnswer: $selectedAnswer, correctCount: $correctCount, isWaitingForPlayers: $isWaitingForPlayers, players: $players)';
+  }
+
+  @override
+  bool operator ==(Object other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$QuizStartedImpl &&
+            const DeepCollectionEquality().equals(
+              other._questions,
+              _questions,
+            ) &&
+            (identical(other.currentQuestionIndex, currentQuestionIndex) ||
+                other.currentQuestionIndex == currentQuestionIndex) &&
+            (identical(other.remainingTime, remainingTime) ||
+                other.remainingTime == remainingTime) &&
+            const DeepCollectionEquality().equals(
+              other._playerAnswers,
+              _playerAnswers,
+            ) &&
+            (identical(other.selectedAnswer, selectedAnswer) ||
+                other.selectedAnswer == selectedAnswer) &&
+            (identical(other.correctCount, correctCount) ||
+                other.correctCount == correctCount) &&
+            (identical(other.isWaitingForPlayers, isWaitingForPlayers) ||
+                other.isWaitingForPlayers == isWaitingForPlayers) &&
+            const DeepCollectionEquality().equals(other._players, _players));
+  }
+
+  @override
+  int get hashCode => Object.hash(
+    runtimeType,
+    const DeepCollectionEquality().hash(_questions),
+    currentQuestionIndex,
+    remainingTime,
+    const DeepCollectionEquality().hash(_playerAnswers),
+    selectedAnswer,
+    correctCount,
+    isWaitingForPlayers,
+    const DeepCollectionEquality().hash(_players),
+  );
+
+  /// Create a copy of RoomState
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$QuizStartedImplCopyWith<_$QuizStartedImpl> get copyWith =>
+      __$$QuizStartedImplCopyWithImpl<_$QuizStartedImpl>(this, _$identity);
+
+  @override
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>({
+    required TResult Function() initial,
+    required TResult Function() loading,
+    required TResult Function(String message) error,
+    required TResult Function(Room room) roomLoaded,
+    required TResult Function(List<Room> rooms) roomsUpdated,
+    required TResult Function(List<RoomPlayer> players) playersUpdated,
+    required TResult Function(Room? room) roomUpdated,
+    required TResult Function(List<RoomQuestion> questions) questionsLoaded,
+    required TResult Function(Room room) joined,
+    required TResult Function() left,
+    required TResult Function() gameStarted,
+    required TResult Function(Question question) questionLoaded,
+    required TResult Function(List<Question> questions) questionsListLoaded,
+    required TResult Function(
+      List<Question> questions,
+      int currentQuestionIndex,
+      int remainingTime,
+      Map<String, String?> playerAnswers,
+      String? selectedAnswer,
+      int correctCount,
+      bool isWaitingForPlayers,
+      List<RoomPlayer> players,
+    )
+    quizStarted,
+    required TResult Function(List<RoomPlayer> players) questionTimeUp,
+    required TResult Function(List<RoomPlayer> players) allPlayersAnswered,
+    required TResult Function(
+      int totalQuestions,
+      int correctAnswers,
+      List<RoomPlayer> players,
+    )
+    quizFinished,
+  }) {
+    return quizStarted(
+      questions,
+      currentQuestionIndex,
+      remainingTime,
+      playerAnswers,
+      selectedAnswer,
+      correctCount,
+      isWaitingForPlayers,
+      players,
+    );
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult? Function()? initial,
+    TResult? Function()? loading,
+    TResult? Function(String message)? error,
+    TResult? Function(Room room)? roomLoaded,
+    TResult? Function(List<Room> rooms)? roomsUpdated,
+    TResult? Function(List<RoomPlayer> players)? playersUpdated,
+    TResult? Function(Room? room)? roomUpdated,
+    TResult? Function(List<RoomQuestion> questions)? questionsLoaded,
+    TResult? Function(Room room)? joined,
+    TResult? Function()? left,
+    TResult? Function()? gameStarted,
+    TResult? Function(Question question)? questionLoaded,
+    TResult? Function(List<Question> questions)? questionsListLoaded,
+    TResult? Function(
+      List<Question> questions,
+      int currentQuestionIndex,
+      int remainingTime,
+      Map<String, String?> playerAnswers,
+      String? selectedAnswer,
+      int correctCount,
+      bool isWaitingForPlayers,
+      List<RoomPlayer> players,
+    )?
+    quizStarted,
+    TResult? Function(List<RoomPlayer> players)? questionTimeUp,
+    TResult? Function(List<RoomPlayer> players)? allPlayersAnswered,
+    TResult? Function(
+      int totalQuestions,
+      int correctAnswers,
+      List<RoomPlayer> players,
+    )?
+    quizFinished,
+  }) {
+    return quizStarted?.call(
+      questions,
+      currentQuestionIndex,
+      remainingTime,
+      playerAnswers,
+      selectedAnswer,
+      correctCount,
+      isWaitingForPlayers,
+      players,
+    );
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function()? initial,
+    TResult Function()? loading,
+    TResult Function(String message)? error,
+    TResult Function(Room room)? roomLoaded,
+    TResult Function(List<Room> rooms)? roomsUpdated,
+    TResult Function(List<RoomPlayer> players)? playersUpdated,
+    TResult Function(Room? room)? roomUpdated,
+    TResult Function(List<RoomQuestion> questions)? questionsLoaded,
+    TResult Function(Room room)? joined,
+    TResult Function()? left,
+    TResult Function()? gameStarted,
+    TResult Function(Question question)? questionLoaded,
+    TResult Function(List<Question> questions)? questionsListLoaded,
+    TResult Function(
+      List<Question> questions,
+      int currentQuestionIndex,
+      int remainingTime,
+      Map<String, String?> playerAnswers,
+      String? selectedAnswer,
+      int correctCount,
+      bool isWaitingForPlayers,
+      List<RoomPlayer> players,
+    )?
+    quizStarted,
+    TResult Function(List<RoomPlayer> players)? questionTimeUp,
+    TResult Function(List<RoomPlayer> players)? allPlayersAnswered,
+    TResult Function(
+      int totalQuestions,
+      int correctAnswers,
+      List<RoomPlayer> players,
+    )?
+    quizFinished,
+    required TResult orElse(),
+  }) {
+    if (quizStarted != null) {
+      return quizStarted(
+        questions,
+        currentQuestionIndex,
+        remainingTime,
+        playerAnswers,
+        selectedAnswer,
+        correctCount,
+        isWaitingForPlayers,
+        players,
+      );
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>({
+    required TResult Function(_Initial value) initial,
+    required TResult Function(_Loading value) loading,
+    required TResult Function(_Error value) error,
+    required TResult Function(_RoomLoaded value) roomLoaded,
+    required TResult Function(_RoomsUpdated value) roomsUpdated,
+    required TResult Function(_PlayersUpdated value) playersUpdated,
+    required TResult Function(_RoomUpdated value) roomUpdated,
+    required TResult Function(_QuestionsLoaded value) questionsLoaded,
+    required TResult Function(_Joined value) joined,
+    required TResult Function(_Left value) left,
+    required TResult Function(_GameStarted value) gameStarted,
+    required TResult Function(_QuestionLoaded value) questionLoaded,
+    required TResult Function(_QuestionsListLoaded value) questionsListLoaded,
+    required TResult Function(_QuizStarted value) quizStarted,
+    required TResult Function(_QuestionTimeUp value) questionTimeUp,
+    required TResult Function(_AllPlayersAnswered value) allPlayersAnswered,
+    required TResult Function(_QuizFinished value) quizFinished,
+  }) {
+    return quizStarted(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult? Function(_Initial value)? initial,
+    TResult? Function(_Loading value)? loading,
+    TResult? Function(_Error value)? error,
+    TResult? Function(_RoomLoaded value)? roomLoaded,
+    TResult? Function(_RoomsUpdated value)? roomsUpdated,
+    TResult? Function(_PlayersUpdated value)? playersUpdated,
+    TResult? Function(_RoomUpdated value)? roomUpdated,
+    TResult? Function(_QuestionsLoaded value)? questionsLoaded,
+    TResult? Function(_Joined value)? joined,
+    TResult? Function(_Left value)? left,
+    TResult? Function(_GameStarted value)? gameStarted,
+    TResult? Function(_QuestionLoaded value)? questionLoaded,
+    TResult? Function(_QuestionsListLoaded value)? questionsListLoaded,
+    TResult? Function(_QuizStarted value)? quizStarted,
+    TResult? Function(_QuestionTimeUp value)? questionTimeUp,
+    TResult? Function(_AllPlayersAnswered value)? allPlayersAnswered,
+    TResult? Function(_QuizFinished value)? quizFinished,
+  }) {
+    return quizStarted?.call(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(_Initial value)? initial,
+    TResult Function(_Loading value)? loading,
+    TResult Function(_Error value)? error,
+    TResult Function(_RoomLoaded value)? roomLoaded,
+    TResult Function(_RoomsUpdated value)? roomsUpdated,
+    TResult Function(_PlayersUpdated value)? playersUpdated,
+    TResult Function(_RoomUpdated value)? roomUpdated,
+    TResult Function(_QuestionsLoaded value)? questionsLoaded,
+    TResult Function(_Joined value)? joined,
+    TResult Function(_Left value)? left,
+    TResult Function(_GameStarted value)? gameStarted,
+    TResult Function(_QuestionLoaded value)? questionLoaded,
+    TResult Function(_QuestionsListLoaded value)? questionsListLoaded,
+    TResult Function(_QuizStarted value)? quizStarted,
+    TResult Function(_QuestionTimeUp value)? questionTimeUp,
+    TResult Function(_AllPlayersAnswered value)? allPlayersAnswered,
+    TResult Function(_QuizFinished value)? quizFinished,
+    required TResult orElse(),
+  }) {
+    if (quizStarted != null) {
+      return quizStarted(this);
+    }
+    return orElse();
+  }
+}
+
+abstract class _QuizStarted implements RoomState {
+  const factory _QuizStarted({
+    required final List<Question> questions,
+    required final int currentQuestionIndex,
+    required final int remainingTime,
+    required final Map<String, String?> playerAnswers,
+    required final String? selectedAnswer,
+    required final int correctCount,
+    required final bool isWaitingForPlayers,
+    required final List<RoomPlayer> players,
+  }) = _$QuizStartedImpl;
+
+  List<Question> get questions;
+  int get currentQuestionIndex;
+  int get remainingTime;
+  Map<String, String?> get playerAnswers; // playerId -> selectedAnswer
+  String? get selectedAnswer; // current user's selected answer
+  int get correctCount;
+  bool get isWaitingForPlayers;
+  List<RoomPlayer> get players;
+
+  /// Create a copy of RoomState
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  _$$QuizStartedImplCopyWith<_$QuizStartedImpl> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+abstract class _$$QuestionTimeUpImplCopyWith<$Res> {
+  factory _$$QuestionTimeUpImplCopyWith(
+    _$QuestionTimeUpImpl value,
+    $Res Function(_$QuestionTimeUpImpl) then,
+  ) = __$$QuestionTimeUpImplCopyWithImpl<$Res>;
+  @useResult
+  $Res call({List<RoomPlayer> players});
+}
+
+/// @nodoc
+class __$$QuestionTimeUpImplCopyWithImpl<$Res>
+    extends _$RoomStateCopyWithImpl<$Res, _$QuestionTimeUpImpl>
+    implements _$$QuestionTimeUpImplCopyWith<$Res> {
+  __$$QuestionTimeUpImplCopyWithImpl(
+    _$QuestionTimeUpImpl _value,
+    $Res Function(_$QuestionTimeUpImpl) _then,
+  ) : super(_value, _then);
+
+  /// Create a copy of RoomState
+  /// with the given fields replaced by the non-null parameter values.
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({Object? players = null}) {
+    return _then(
+      _$QuestionTimeUpImpl(
+        players: null == players
+            ? _value._players
+            : players // ignore: cast_nullable_to_non_nullable
+                  as List<RoomPlayer>,
+      ),
+    );
+  }
+}
+
+/// @nodoc
+
+class _$QuestionTimeUpImpl implements _QuestionTimeUp {
+  const _$QuestionTimeUpImpl({required final List<RoomPlayer> players})
+    : _players = players;
+
+  final List<RoomPlayer> _players;
+  @override
+  List<RoomPlayer> get players {
+    if (_players is EqualUnmodifiableListView) return _players;
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableListView(_players);
+  }
+
+  @override
+  String toString() {
+    return 'RoomState.questionTimeUp(players: $players)';
+  }
+
+  @override
+  bool operator ==(Object other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$QuestionTimeUpImpl &&
+            const DeepCollectionEquality().equals(other._players, _players));
+  }
+
+  @override
+  int get hashCode =>
+      Object.hash(runtimeType, const DeepCollectionEquality().hash(_players));
+
+  /// Create a copy of RoomState
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$QuestionTimeUpImplCopyWith<_$QuestionTimeUpImpl> get copyWith =>
+      __$$QuestionTimeUpImplCopyWithImpl<_$QuestionTimeUpImpl>(
+        this,
+        _$identity,
+      );
+
+  @override
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>({
+    required TResult Function() initial,
+    required TResult Function() loading,
+    required TResult Function(String message) error,
+    required TResult Function(Room room) roomLoaded,
+    required TResult Function(List<Room> rooms) roomsUpdated,
+    required TResult Function(List<RoomPlayer> players) playersUpdated,
+    required TResult Function(Room? room) roomUpdated,
+    required TResult Function(List<RoomQuestion> questions) questionsLoaded,
+    required TResult Function(Room room) joined,
+    required TResult Function() left,
+    required TResult Function() gameStarted,
+    required TResult Function(Question question) questionLoaded,
+    required TResult Function(List<Question> questions) questionsListLoaded,
+    required TResult Function(
+      List<Question> questions,
+      int currentQuestionIndex,
+      int remainingTime,
+      Map<String, String?> playerAnswers,
+      String? selectedAnswer,
+      int correctCount,
+      bool isWaitingForPlayers,
+      List<RoomPlayer> players,
+    )
+    quizStarted,
+    required TResult Function(List<RoomPlayer> players) questionTimeUp,
+    required TResult Function(List<RoomPlayer> players) allPlayersAnswered,
+    required TResult Function(
+      int totalQuestions,
+      int correctAnswers,
+      List<RoomPlayer> players,
+    )
+    quizFinished,
+  }) {
+    return questionTimeUp(players);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult? Function()? initial,
+    TResult? Function()? loading,
+    TResult? Function(String message)? error,
+    TResult? Function(Room room)? roomLoaded,
+    TResult? Function(List<Room> rooms)? roomsUpdated,
+    TResult? Function(List<RoomPlayer> players)? playersUpdated,
+    TResult? Function(Room? room)? roomUpdated,
+    TResult? Function(List<RoomQuestion> questions)? questionsLoaded,
+    TResult? Function(Room room)? joined,
+    TResult? Function()? left,
+    TResult? Function()? gameStarted,
+    TResult? Function(Question question)? questionLoaded,
+    TResult? Function(List<Question> questions)? questionsListLoaded,
+    TResult? Function(
+      List<Question> questions,
+      int currentQuestionIndex,
+      int remainingTime,
+      Map<String, String?> playerAnswers,
+      String? selectedAnswer,
+      int correctCount,
+      bool isWaitingForPlayers,
+      List<RoomPlayer> players,
+    )?
+    quizStarted,
+    TResult? Function(List<RoomPlayer> players)? questionTimeUp,
+    TResult? Function(List<RoomPlayer> players)? allPlayersAnswered,
+    TResult? Function(
+      int totalQuestions,
+      int correctAnswers,
+      List<RoomPlayer> players,
+    )?
+    quizFinished,
+  }) {
+    return questionTimeUp?.call(players);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function()? initial,
+    TResult Function()? loading,
+    TResult Function(String message)? error,
+    TResult Function(Room room)? roomLoaded,
+    TResult Function(List<Room> rooms)? roomsUpdated,
+    TResult Function(List<RoomPlayer> players)? playersUpdated,
+    TResult Function(Room? room)? roomUpdated,
+    TResult Function(List<RoomQuestion> questions)? questionsLoaded,
+    TResult Function(Room room)? joined,
+    TResult Function()? left,
+    TResult Function()? gameStarted,
+    TResult Function(Question question)? questionLoaded,
+    TResult Function(List<Question> questions)? questionsListLoaded,
+    TResult Function(
+      List<Question> questions,
+      int currentQuestionIndex,
+      int remainingTime,
+      Map<String, String?> playerAnswers,
+      String? selectedAnswer,
+      int correctCount,
+      bool isWaitingForPlayers,
+      List<RoomPlayer> players,
+    )?
+    quizStarted,
+    TResult Function(List<RoomPlayer> players)? questionTimeUp,
+    TResult Function(List<RoomPlayer> players)? allPlayersAnswered,
+    TResult Function(
+      int totalQuestions,
+      int correctAnswers,
+      List<RoomPlayer> players,
+    )?
+    quizFinished,
+    required TResult orElse(),
+  }) {
+    if (questionTimeUp != null) {
+      return questionTimeUp(players);
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>({
+    required TResult Function(_Initial value) initial,
+    required TResult Function(_Loading value) loading,
+    required TResult Function(_Error value) error,
+    required TResult Function(_RoomLoaded value) roomLoaded,
+    required TResult Function(_RoomsUpdated value) roomsUpdated,
+    required TResult Function(_PlayersUpdated value) playersUpdated,
+    required TResult Function(_RoomUpdated value) roomUpdated,
+    required TResult Function(_QuestionsLoaded value) questionsLoaded,
+    required TResult Function(_Joined value) joined,
+    required TResult Function(_Left value) left,
+    required TResult Function(_GameStarted value) gameStarted,
+    required TResult Function(_QuestionLoaded value) questionLoaded,
+    required TResult Function(_QuestionsListLoaded value) questionsListLoaded,
+    required TResult Function(_QuizStarted value) quizStarted,
+    required TResult Function(_QuestionTimeUp value) questionTimeUp,
+    required TResult Function(_AllPlayersAnswered value) allPlayersAnswered,
+    required TResult Function(_QuizFinished value) quizFinished,
+  }) {
+    return questionTimeUp(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult? Function(_Initial value)? initial,
+    TResult? Function(_Loading value)? loading,
+    TResult? Function(_Error value)? error,
+    TResult? Function(_RoomLoaded value)? roomLoaded,
+    TResult? Function(_RoomsUpdated value)? roomsUpdated,
+    TResult? Function(_PlayersUpdated value)? playersUpdated,
+    TResult? Function(_RoomUpdated value)? roomUpdated,
+    TResult? Function(_QuestionsLoaded value)? questionsLoaded,
+    TResult? Function(_Joined value)? joined,
+    TResult? Function(_Left value)? left,
+    TResult? Function(_GameStarted value)? gameStarted,
+    TResult? Function(_QuestionLoaded value)? questionLoaded,
+    TResult? Function(_QuestionsListLoaded value)? questionsListLoaded,
+    TResult? Function(_QuizStarted value)? quizStarted,
+    TResult? Function(_QuestionTimeUp value)? questionTimeUp,
+    TResult? Function(_AllPlayersAnswered value)? allPlayersAnswered,
+    TResult? Function(_QuizFinished value)? quizFinished,
+  }) {
+    return questionTimeUp?.call(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(_Initial value)? initial,
+    TResult Function(_Loading value)? loading,
+    TResult Function(_Error value)? error,
+    TResult Function(_RoomLoaded value)? roomLoaded,
+    TResult Function(_RoomsUpdated value)? roomsUpdated,
+    TResult Function(_PlayersUpdated value)? playersUpdated,
+    TResult Function(_RoomUpdated value)? roomUpdated,
+    TResult Function(_QuestionsLoaded value)? questionsLoaded,
+    TResult Function(_Joined value)? joined,
+    TResult Function(_Left value)? left,
+    TResult Function(_GameStarted value)? gameStarted,
+    TResult Function(_QuestionLoaded value)? questionLoaded,
+    TResult Function(_QuestionsListLoaded value)? questionsListLoaded,
+    TResult Function(_QuizStarted value)? quizStarted,
+    TResult Function(_QuestionTimeUp value)? questionTimeUp,
+    TResult Function(_AllPlayersAnswered value)? allPlayersAnswered,
+    TResult Function(_QuizFinished value)? quizFinished,
+    required TResult orElse(),
+  }) {
+    if (questionTimeUp != null) {
+      return questionTimeUp(this);
+    }
+    return orElse();
+  }
+}
+
+abstract class _QuestionTimeUp implements RoomState {
+  const factory _QuestionTimeUp({required final List<RoomPlayer> players}) =
+      _$QuestionTimeUpImpl;
+
+  List<RoomPlayer> get players;
+
+  /// Create a copy of RoomState
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  _$$QuestionTimeUpImplCopyWith<_$QuestionTimeUpImpl> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+abstract class _$$AllPlayersAnsweredImplCopyWith<$Res> {
+  factory _$$AllPlayersAnsweredImplCopyWith(
+    _$AllPlayersAnsweredImpl value,
+    $Res Function(_$AllPlayersAnsweredImpl) then,
+  ) = __$$AllPlayersAnsweredImplCopyWithImpl<$Res>;
+  @useResult
+  $Res call({List<RoomPlayer> players});
+}
+
+/// @nodoc
+class __$$AllPlayersAnsweredImplCopyWithImpl<$Res>
+    extends _$RoomStateCopyWithImpl<$Res, _$AllPlayersAnsweredImpl>
+    implements _$$AllPlayersAnsweredImplCopyWith<$Res> {
+  __$$AllPlayersAnsweredImplCopyWithImpl(
+    _$AllPlayersAnsweredImpl _value,
+    $Res Function(_$AllPlayersAnsweredImpl) _then,
+  ) : super(_value, _then);
+
+  /// Create a copy of RoomState
+  /// with the given fields replaced by the non-null parameter values.
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({Object? players = null}) {
+    return _then(
+      _$AllPlayersAnsweredImpl(
+        players: null == players
+            ? _value._players
+            : players // ignore: cast_nullable_to_non_nullable
+                  as List<RoomPlayer>,
+      ),
+    );
+  }
+}
+
+/// @nodoc
+
+class _$AllPlayersAnsweredImpl implements _AllPlayersAnswered {
+  const _$AllPlayersAnsweredImpl({required final List<RoomPlayer> players})
+    : _players = players;
+
+  final List<RoomPlayer> _players;
+  @override
+  List<RoomPlayer> get players {
+    if (_players is EqualUnmodifiableListView) return _players;
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableListView(_players);
+  }
+
+  @override
+  String toString() {
+    return 'RoomState.allPlayersAnswered(players: $players)';
+  }
+
+  @override
+  bool operator ==(Object other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$AllPlayersAnsweredImpl &&
+            const DeepCollectionEquality().equals(other._players, _players));
+  }
+
+  @override
+  int get hashCode =>
+      Object.hash(runtimeType, const DeepCollectionEquality().hash(_players));
+
+  /// Create a copy of RoomState
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$AllPlayersAnsweredImplCopyWith<_$AllPlayersAnsweredImpl> get copyWith =>
+      __$$AllPlayersAnsweredImplCopyWithImpl<_$AllPlayersAnsweredImpl>(
+        this,
+        _$identity,
+      );
+
+  @override
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>({
+    required TResult Function() initial,
+    required TResult Function() loading,
+    required TResult Function(String message) error,
+    required TResult Function(Room room) roomLoaded,
+    required TResult Function(List<Room> rooms) roomsUpdated,
+    required TResult Function(List<RoomPlayer> players) playersUpdated,
+    required TResult Function(Room? room) roomUpdated,
+    required TResult Function(List<RoomQuestion> questions) questionsLoaded,
+    required TResult Function(Room room) joined,
+    required TResult Function() left,
+    required TResult Function() gameStarted,
+    required TResult Function(Question question) questionLoaded,
+    required TResult Function(List<Question> questions) questionsListLoaded,
+    required TResult Function(
+      List<Question> questions,
+      int currentQuestionIndex,
+      int remainingTime,
+      Map<String, String?> playerAnswers,
+      String? selectedAnswer,
+      int correctCount,
+      bool isWaitingForPlayers,
+      List<RoomPlayer> players,
+    )
+    quizStarted,
+    required TResult Function(List<RoomPlayer> players) questionTimeUp,
+    required TResult Function(List<RoomPlayer> players) allPlayersAnswered,
+    required TResult Function(
+      int totalQuestions,
+      int correctAnswers,
+      List<RoomPlayer> players,
+    )
+    quizFinished,
+  }) {
+    return allPlayersAnswered(players);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult? Function()? initial,
+    TResult? Function()? loading,
+    TResult? Function(String message)? error,
+    TResult? Function(Room room)? roomLoaded,
+    TResult? Function(List<Room> rooms)? roomsUpdated,
+    TResult? Function(List<RoomPlayer> players)? playersUpdated,
+    TResult? Function(Room? room)? roomUpdated,
+    TResult? Function(List<RoomQuestion> questions)? questionsLoaded,
+    TResult? Function(Room room)? joined,
+    TResult? Function()? left,
+    TResult? Function()? gameStarted,
+    TResult? Function(Question question)? questionLoaded,
+    TResult? Function(List<Question> questions)? questionsListLoaded,
+    TResult? Function(
+      List<Question> questions,
+      int currentQuestionIndex,
+      int remainingTime,
+      Map<String, String?> playerAnswers,
+      String? selectedAnswer,
+      int correctCount,
+      bool isWaitingForPlayers,
+      List<RoomPlayer> players,
+    )?
+    quizStarted,
+    TResult? Function(List<RoomPlayer> players)? questionTimeUp,
+    TResult? Function(List<RoomPlayer> players)? allPlayersAnswered,
+    TResult? Function(
+      int totalQuestions,
+      int correctAnswers,
+      List<RoomPlayer> players,
+    )?
+    quizFinished,
+  }) {
+    return allPlayersAnswered?.call(players);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function()? initial,
+    TResult Function()? loading,
+    TResult Function(String message)? error,
+    TResult Function(Room room)? roomLoaded,
+    TResult Function(List<Room> rooms)? roomsUpdated,
+    TResult Function(List<RoomPlayer> players)? playersUpdated,
+    TResult Function(Room? room)? roomUpdated,
+    TResult Function(List<RoomQuestion> questions)? questionsLoaded,
+    TResult Function(Room room)? joined,
+    TResult Function()? left,
+    TResult Function()? gameStarted,
+    TResult Function(Question question)? questionLoaded,
+    TResult Function(List<Question> questions)? questionsListLoaded,
+    TResult Function(
+      List<Question> questions,
+      int currentQuestionIndex,
+      int remainingTime,
+      Map<String, String?> playerAnswers,
+      String? selectedAnswer,
+      int correctCount,
+      bool isWaitingForPlayers,
+      List<RoomPlayer> players,
+    )?
+    quizStarted,
+    TResult Function(List<RoomPlayer> players)? questionTimeUp,
+    TResult Function(List<RoomPlayer> players)? allPlayersAnswered,
+    TResult Function(
+      int totalQuestions,
+      int correctAnswers,
+      List<RoomPlayer> players,
+    )?
+    quizFinished,
+    required TResult orElse(),
+  }) {
+    if (allPlayersAnswered != null) {
+      return allPlayersAnswered(players);
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>({
+    required TResult Function(_Initial value) initial,
+    required TResult Function(_Loading value) loading,
+    required TResult Function(_Error value) error,
+    required TResult Function(_RoomLoaded value) roomLoaded,
+    required TResult Function(_RoomsUpdated value) roomsUpdated,
+    required TResult Function(_PlayersUpdated value) playersUpdated,
+    required TResult Function(_RoomUpdated value) roomUpdated,
+    required TResult Function(_QuestionsLoaded value) questionsLoaded,
+    required TResult Function(_Joined value) joined,
+    required TResult Function(_Left value) left,
+    required TResult Function(_GameStarted value) gameStarted,
+    required TResult Function(_QuestionLoaded value) questionLoaded,
+    required TResult Function(_QuestionsListLoaded value) questionsListLoaded,
+    required TResult Function(_QuizStarted value) quizStarted,
+    required TResult Function(_QuestionTimeUp value) questionTimeUp,
+    required TResult Function(_AllPlayersAnswered value) allPlayersAnswered,
+    required TResult Function(_QuizFinished value) quizFinished,
+  }) {
+    return allPlayersAnswered(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult? Function(_Initial value)? initial,
+    TResult? Function(_Loading value)? loading,
+    TResult? Function(_Error value)? error,
+    TResult? Function(_RoomLoaded value)? roomLoaded,
+    TResult? Function(_RoomsUpdated value)? roomsUpdated,
+    TResult? Function(_PlayersUpdated value)? playersUpdated,
+    TResult? Function(_RoomUpdated value)? roomUpdated,
+    TResult? Function(_QuestionsLoaded value)? questionsLoaded,
+    TResult? Function(_Joined value)? joined,
+    TResult? Function(_Left value)? left,
+    TResult? Function(_GameStarted value)? gameStarted,
+    TResult? Function(_QuestionLoaded value)? questionLoaded,
+    TResult? Function(_QuestionsListLoaded value)? questionsListLoaded,
+    TResult? Function(_QuizStarted value)? quizStarted,
+    TResult? Function(_QuestionTimeUp value)? questionTimeUp,
+    TResult? Function(_AllPlayersAnswered value)? allPlayersAnswered,
+    TResult? Function(_QuizFinished value)? quizFinished,
+  }) {
+    return allPlayersAnswered?.call(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(_Initial value)? initial,
+    TResult Function(_Loading value)? loading,
+    TResult Function(_Error value)? error,
+    TResult Function(_RoomLoaded value)? roomLoaded,
+    TResult Function(_RoomsUpdated value)? roomsUpdated,
+    TResult Function(_PlayersUpdated value)? playersUpdated,
+    TResult Function(_RoomUpdated value)? roomUpdated,
+    TResult Function(_QuestionsLoaded value)? questionsLoaded,
+    TResult Function(_Joined value)? joined,
+    TResult Function(_Left value)? left,
+    TResult Function(_GameStarted value)? gameStarted,
+    TResult Function(_QuestionLoaded value)? questionLoaded,
+    TResult Function(_QuestionsListLoaded value)? questionsListLoaded,
+    TResult Function(_QuizStarted value)? quizStarted,
+    TResult Function(_QuestionTimeUp value)? questionTimeUp,
+    TResult Function(_AllPlayersAnswered value)? allPlayersAnswered,
+    TResult Function(_QuizFinished value)? quizFinished,
+    required TResult orElse(),
+  }) {
+    if (allPlayersAnswered != null) {
+      return allPlayersAnswered(this);
+    }
+    return orElse();
+  }
+}
+
+abstract class _AllPlayersAnswered implements RoomState {
+  const factory _AllPlayersAnswered({required final List<RoomPlayer> players}) =
+      _$AllPlayersAnsweredImpl;
+
+  List<RoomPlayer> get players;
+
+  /// Create a copy of RoomState
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  _$$AllPlayersAnsweredImplCopyWith<_$AllPlayersAnsweredImpl> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+abstract class _$$QuizFinishedImplCopyWith<$Res> {
+  factory _$$QuizFinishedImplCopyWith(
+    _$QuizFinishedImpl value,
+    $Res Function(_$QuizFinishedImpl) then,
+  ) = __$$QuizFinishedImplCopyWithImpl<$Res>;
+  @useResult
+  $Res call({int totalQuestions, int correctAnswers, List<RoomPlayer> players});
+}
+
+/// @nodoc
+class __$$QuizFinishedImplCopyWithImpl<$Res>
+    extends _$RoomStateCopyWithImpl<$Res, _$QuizFinishedImpl>
+    implements _$$QuizFinishedImplCopyWith<$Res> {
+  __$$QuizFinishedImplCopyWithImpl(
+    _$QuizFinishedImpl _value,
+    $Res Function(_$QuizFinishedImpl) _then,
+  ) : super(_value, _then);
+
+  /// Create a copy of RoomState
+  /// with the given fields replaced by the non-null parameter values.
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? totalQuestions = null,
+    Object? correctAnswers = null,
+    Object? players = null,
+  }) {
+    return _then(
+      _$QuizFinishedImpl(
+        totalQuestions: null == totalQuestions
+            ? _value.totalQuestions
+            : totalQuestions // ignore: cast_nullable_to_non_nullable
+                  as int,
+        correctAnswers: null == correctAnswers
+            ? _value.correctAnswers
+            : correctAnswers // ignore: cast_nullable_to_non_nullable
+                  as int,
+        players: null == players
+            ? _value._players
+            : players // ignore: cast_nullable_to_non_nullable
+                  as List<RoomPlayer>,
+      ),
+    );
+  }
+}
+
+/// @nodoc
+
+class _$QuizFinishedImpl implements _QuizFinished {
+  const _$QuizFinishedImpl({
+    required this.totalQuestions,
+    required this.correctAnswers,
+    required final List<RoomPlayer> players,
+  }) : _players = players;
+
+  @override
+  final int totalQuestions;
+  @override
+  final int correctAnswers;
+  final List<RoomPlayer> _players;
+  @override
+  List<RoomPlayer> get players {
+    if (_players is EqualUnmodifiableListView) return _players;
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableListView(_players);
+  }
+
+  @override
+  String toString() {
+    return 'RoomState.quizFinished(totalQuestions: $totalQuestions, correctAnswers: $correctAnswers, players: $players)';
+  }
+
+  @override
+  bool operator ==(Object other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$QuizFinishedImpl &&
+            (identical(other.totalQuestions, totalQuestions) ||
+                other.totalQuestions == totalQuestions) &&
+            (identical(other.correctAnswers, correctAnswers) ||
+                other.correctAnswers == correctAnswers) &&
+            const DeepCollectionEquality().equals(other._players, _players));
+  }
+
+  @override
+  int get hashCode => Object.hash(
+    runtimeType,
+    totalQuestions,
+    correctAnswers,
+    const DeepCollectionEquality().hash(_players),
+  );
+
+  /// Create a copy of RoomState
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$QuizFinishedImplCopyWith<_$QuizFinishedImpl> get copyWith =>
+      __$$QuizFinishedImplCopyWithImpl<_$QuizFinishedImpl>(this, _$identity);
+
+  @override
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>({
+    required TResult Function() initial,
+    required TResult Function() loading,
+    required TResult Function(String message) error,
+    required TResult Function(Room room) roomLoaded,
+    required TResult Function(List<Room> rooms) roomsUpdated,
+    required TResult Function(List<RoomPlayer> players) playersUpdated,
+    required TResult Function(Room? room) roomUpdated,
+    required TResult Function(List<RoomQuestion> questions) questionsLoaded,
+    required TResult Function(Room room) joined,
+    required TResult Function() left,
+    required TResult Function() gameStarted,
+    required TResult Function(Question question) questionLoaded,
+    required TResult Function(List<Question> questions) questionsListLoaded,
+    required TResult Function(
+      List<Question> questions,
+      int currentQuestionIndex,
+      int remainingTime,
+      Map<String, String?> playerAnswers,
+      String? selectedAnswer,
+      int correctCount,
+      bool isWaitingForPlayers,
+      List<RoomPlayer> players,
+    )
+    quizStarted,
+    required TResult Function(List<RoomPlayer> players) questionTimeUp,
+    required TResult Function(List<RoomPlayer> players) allPlayersAnswered,
+    required TResult Function(
+      int totalQuestions,
+      int correctAnswers,
+      List<RoomPlayer> players,
+    )
+    quizFinished,
+  }) {
+    return quizFinished(totalQuestions, correctAnswers, players);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult? Function()? initial,
+    TResult? Function()? loading,
+    TResult? Function(String message)? error,
+    TResult? Function(Room room)? roomLoaded,
+    TResult? Function(List<Room> rooms)? roomsUpdated,
+    TResult? Function(List<RoomPlayer> players)? playersUpdated,
+    TResult? Function(Room? room)? roomUpdated,
+    TResult? Function(List<RoomQuestion> questions)? questionsLoaded,
+    TResult? Function(Room room)? joined,
+    TResult? Function()? left,
+    TResult? Function()? gameStarted,
+    TResult? Function(Question question)? questionLoaded,
+    TResult? Function(List<Question> questions)? questionsListLoaded,
+    TResult? Function(
+      List<Question> questions,
+      int currentQuestionIndex,
+      int remainingTime,
+      Map<String, String?> playerAnswers,
+      String? selectedAnswer,
+      int correctCount,
+      bool isWaitingForPlayers,
+      List<RoomPlayer> players,
+    )?
+    quizStarted,
+    TResult? Function(List<RoomPlayer> players)? questionTimeUp,
+    TResult? Function(List<RoomPlayer> players)? allPlayersAnswered,
+    TResult? Function(
+      int totalQuestions,
+      int correctAnswers,
+      List<RoomPlayer> players,
+    )?
+    quizFinished,
+  }) {
+    return quizFinished?.call(totalQuestions, correctAnswers, players);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function()? initial,
+    TResult Function()? loading,
+    TResult Function(String message)? error,
+    TResult Function(Room room)? roomLoaded,
+    TResult Function(List<Room> rooms)? roomsUpdated,
+    TResult Function(List<RoomPlayer> players)? playersUpdated,
+    TResult Function(Room? room)? roomUpdated,
+    TResult Function(List<RoomQuestion> questions)? questionsLoaded,
+    TResult Function(Room room)? joined,
+    TResult Function()? left,
+    TResult Function()? gameStarted,
+    TResult Function(Question question)? questionLoaded,
+    TResult Function(List<Question> questions)? questionsListLoaded,
+    TResult Function(
+      List<Question> questions,
+      int currentQuestionIndex,
+      int remainingTime,
+      Map<String, String?> playerAnswers,
+      String? selectedAnswer,
+      int correctCount,
+      bool isWaitingForPlayers,
+      List<RoomPlayer> players,
+    )?
+    quizStarted,
+    TResult Function(List<RoomPlayer> players)? questionTimeUp,
+    TResult Function(List<RoomPlayer> players)? allPlayersAnswered,
+    TResult Function(
+      int totalQuestions,
+      int correctAnswers,
+      List<RoomPlayer> players,
+    )?
+    quizFinished,
+    required TResult orElse(),
+  }) {
+    if (quizFinished != null) {
+      return quizFinished(totalQuestions, correctAnswers, players);
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>({
+    required TResult Function(_Initial value) initial,
+    required TResult Function(_Loading value) loading,
+    required TResult Function(_Error value) error,
+    required TResult Function(_RoomLoaded value) roomLoaded,
+    required TResult Function(_RoomsUpdated value) roomsUpdated,
+    required TResult Function(_PlayersUpdated value) playersUpdated,
+    required TResult Function(_RoomUpdated value) roomUpdated,
+    required TResult Function(_QuestionsLoaded value) questionsLoaded,
+    required TResult Function(_Joined value) joined,
+    required TResult Function(_Left value) left,
+    required TResult Function(_GameStarted value) gameStarted,
+    required TResult Function(_QuestionLoaded value) questionLoaded,
+    required TResult Function(_QuestionsListLoaded value) questionsListLoaded,
+    required TResult Function(_QuizStarted value) quizStarted,
+    required TResult Function(_QuestionTimeUp value) questionTimeUp,
+    required TResult Function(_AllPlayersAnswered value) allPlayersAnswered,
+    required TResult Function(_QuizFinished value) quizFinished,
+  }) {
+    return quizFinished(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult? Function(_Initial value)? initial,
+    TResult? Function(_Loading value)? loading,
+    TResult? Function(_Error value)? error,
+    TResult? Function(_RoomLoaded value)? roomLoaded,
+    TResult? Function(_RoomsUpdated value)? roomsUpdated,
+    TResult? Function(_PlayersUpdated value)? playersUpdated,
+    TResult? Function(_RoomUpdated value)? roomUpdated,
+    TResult? Function(_QuestionsLoaded value)? questionsLoaded,
+    TResult? Function(_Joined value)? joined,
+    TResult? Function(_Left value)? left,
+    TResult? Function(_GameStarted value)? gameStarted,
+    TResult? Function(_QuestionLoaded value)? questionLoaded,
+    TResult? Function(_QuestionsListLoaded value)? questionsListLoaded,
+    TResult? Function(_QuizStarted value)? quizStarted,
+    TResult? Function(_QuestionTimeUp value)? questionTimeUp,
+    TResult? Function(_AllPlayersAnswered value)? allPlayersAnswered,
+    TResult? Function(_QuizFinished value)? quizFinished,
+  }) {
+    return quizFinished?.call(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(_Initial value)? initial,
+    TResult Function(_Loading value)? loading,
+    TResult Function(_Error value)? error,
+    TResult Function(_RoomLoaded value)? roomLoaded,
+    TResult Function(_RoomsUpdated value)? roomsUpdated,
+    TResult Function(_PlayersUpdated value)? playersUpdated,
+    TResult Function(_RoomUpdated value)? roomUpdated,
+    TResult Function(_QuestionsLoaded value)? questionsLoaded,
+    TResult Function(_Joined value)? joined,
+    TResult Function(_Left value)? left,
+    TResult Function(_GameStarted value)? gameStarted,
+    TResult Function(_QuestionLoaded value)? questionLoaded,
+    TResult Function(_QuestionsListLoaded value)? questionsListLoaded,
+    TResult Function(_QuizStarted value)? quizStarted,
+    TResult Function(_QuestionTimeUp value)? questionTimeUp,
+    TResult Function(_AllPlayersAnswered value)? allPlayersAnswered,
+    TResult Function(_QuizFinished value)? quizFinished,
+    required TResult orElse(),
+  }) {
+    if (quizFinished != null) {
+      return quizFinished(this);
+    }
+    return orElse();
+  }
+}
+
+abstract class _QuizFinished implements RoomState {
+  const factory _QuizFinished({
+    required final int totalQuestions,
+    required final int correctAnswers,
+    required final List<RoomPlayer> players,
+  }) = _$QuizFinishedImpl;
+
+  int get totalQuestions;
+  int get correctAnswers;
+  List<RoomPlayer> get players;
+
+  /// Create a copy of RoomState
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  _$$QuizFinishedImplCopyWith<_$QuizFinishedImpl> get copyWith =>
+      throw _privateConstructorUsedError;
 }

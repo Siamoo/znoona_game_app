@@ -7,7 +7,8 @@ import 'package:znoona_game_app/features/home/widgets/custom_game_button.dart';
 import 'package:znoona_game_app/features/home/widgets/custom_home_appbar.dart';
 import 'package:znoona_game_app/features/home/widgets/custom_section_title.dart';
 import 'package:znoona_game_app/features/home/widgets/discover_button.dart';
-import 'package:znoona_game_app/features/quiz/categories/presentation/screens/categories_screen.dart';
+import 'package:znoona_game_app/features/quiz/room/presentation/refactors/room_creation_screen.dart';
+import 'package:znoona_game_app/features/quiz/room/presentation/refactors/room_joining_screen.dart';
 import 'package:znoona_game_app/features/user/auth/domain/entities/profile.dart';
 
 class HomeBody extends StatelessWidget {
@@ -50,13 +51,18 @@ class HomeBody extends StatelessWidget {
                             langkey: LangKeys.quizGame,
                             onPressed: () => ZnoonaNavigate.pushTo(
                               context,
-                              const CategoriesScreen(),
+                              const RoomJoiningScreen(),
                             ),
                           ),
                           GameButton(
                             image: AppImages.puzzle,
                             langkey: LangKeys.appName,
-                            onPressed: () {},
+                            onPressed: () {
+                              ZnoonaNavigate.pushTo(
+                                context,
+                                const RoomCreationScreen(),
+                              );
+                            },
                           ),
                         ],
                       ),

@@ -11,6 +11,8 @@ import 'package:znoona_game_app/core/service/shared_pref/pref_keys.dart';
 import 'package:znoona_game_app/core/service/shared_pref/shared_pref.dart';
 import 'package:znoona_game_app/core/style/theme/app_theme.dart';
 import 'package:znoona_game_app/features/home/screens/home_screen.dart';
+import 'package:znoona_game_app/features/quiz/categories/presentation/cubit/categories_cubit.dart';
+import 'package:znoona_game_app/features/quiz/room/presentation/cubit/room_cubit.dart';
 import 'package:znoona_game_app/features/user/auth/presentation/cubit/auth_cubit.dart';
 import 'package:znoona_game_app/features/user/auth/presentation/screens/login_screen.dart';
 
@@ -33,6 +35,8 @@ class ZnoonaGameApp extends StatelessWidget {
                 ..getSavedLanguage(),
             ),
             BlocProvider(create: (_) => sl<AuthCubit>()..getCurrentUser()),
+            BlocProvider(create: (_) => sl<RoomCubit>()..watchRooms()),
+            BlocProvider(create: (_) => sl<CategoriesCubit>()..loadCategories(),),
           ],
           child: ScreenUtilInit(
             designSize: const Size(384, 805),

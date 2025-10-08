@@ -3,17 +3,11 @@ import 'package:znoona_game_app/features/quiz/room/domain/entities/room_player.d
 import 'package:znoona_game_app/features/quiz/room/domain/repositories/room_repository.dart';
 
 
-class JoinRoomUseCase {
-  JoinRoomUseCase(this.repository);
+class GetRoomPlayersStreamUseCase {
+  GetRoomPlayersStreamUseCase(this.repository);
   final RoomRepository repository;
 
-  Future<Either<String, RoomPlayer>> call({
-    required String code,
-
-  }) {
-    return repository.joinRoom(
-      code: code,
-
-    );
+  Stream<Either<String, List<RoomPlayer>>> call(String roomId) {
+    return repository.getRoomPlayersStream(roomId);
   }
 }

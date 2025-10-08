@@ -3,17 +3,11 @@ import 'package:znoona_game_app/features/quiz/room/domain/entities/room.dart';
 import 'package:znoona_game_app/features/quiz/room/domain/repositories/room_repository.dart';
 
 
-class CreateRoomUseCase {
-  CreateRoomUseCase(this.repository);
+class WatchRoomUseCase {
+  WatchRoomUseCase(this.repository);
   final RoomRepository repository;
 
-  Future<Either<String, Room>> call({
-    required String categoryId,
-
-  }) {
-    return repository.createRoom(
-      categoryId: categoryId,
-
-    );
+  Stream<Either<String, Room?>> call(String roomId) {
+    return repository.watchRoom(roomId);
   }
 }

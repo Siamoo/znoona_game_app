@@ -1,7 +1,8 @@
 import 'package:dartz/dartz.dart';
-import '../entities/room.dart';
-import '../entities/room_player.dart';
-import '../entities/room_question.dart';
+import 'package:znoona_game_app/features/quiz/room/domain/entities/room.dart';
+import 'package:znoona_game_app/features/quiz/room/domain/entities/room_player.dart';
+import 'package:znoona_game_app/features/quiz/room/domain/entities/room_question.dart';
+
 
 abstract class RoomRepository {
   Future<Either<String, Room>> createRoom({
@@ -26,4 +27,5 @@ abstract class RoomRepository {
   Future<Either<String, void>> startGame(String roomId);
 
   Stream<Either<String, Room?>> watchRoom(String roomId);
+  
 }

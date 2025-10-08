@@ -3,6 +3,20 @@ import 'package:supabase_flutter/supabase_flutter.dart';
 
 // App Core
 import 'package:znoona_game_app/core/app/app_cubit/app_cubit.dart';
+import 'package:znoona_game_app/features/quiz/room/data/datasources/room_remote_data_source.dart';
+import 'package:znoona_game_app/features/quiz/room/data/repositories/room_repository_impl.dart';
+import 'package:znoona_game_app/features/quiz/room/domain/repositories/room_repository.dart';
+import 'package:znoona_game_app/features/quiz/room/domain/usecases/create_room_usecase.dart';
+import 'package:znoona_game_app/features/quiz/room/domain/usecases/get_room_players_stream_usecase.dart';
+import 'package:znoona_game_app/features/quiz/room/domain/usecases/get_room_questions_usecase.dart';
+import 'package:znoona_game_app/features/quiz/room/domain/usecases/get_rooms_stream_usecase.dart';
+import 'package:znoona_game_app/features/quiz/room/domain/usecases/join_room_usecase.dart';
+import 'package:znoona_game_app/features/quiz/room/domain/usecases/leave_room_usecase.dart';
+import 'package:znoona_game_app/features/quiz/room/domain/usecases/start_game_usecase.dart';
+import 'package:znoona_game_app/features/quiz/room/domain/usecases/watch_room_usecase.dart';
+import 'package:znoona_game_app/features/quiz/room/presentation/cubit/room_cubit.dart';
+
+// ---------------- QUIZ (Single Player) ----------------
 import 'package:znoona_game_app/features/quiz/single/data/datasources/questions_remote_data_source.dart';
 import 'package:znoona_game_app/features/quiz/single/data/repositories/questions_repository_impl.dart';
 import 'package:znoona_game_app/features/quiz/single/domain/repositories/questions_repository.dart';
@@ -21,14 +35,13 @@ import 'package:znoona_game_app/features/user/auth/domain/usecases/sign_up_useca
 import 'package:znoona_game_app/features/user/auth/presentation/cubit/auth_cubit.dart';
 
 // ---------------- CATEGORIES ----------------
-// ignore: directives_ordering
 import 'package:znoona_game_app/features/quiz/categories/data/datasources/categories_remote_data_source.dart';
 import 'package:znoona_game_app/features/quiz/categories/data/repositories/categories_repository_impl.dart';
 import 'package:znoona_game_app/features/quiz/categories/domain/repositories/categories_repository.dart';
 import 'package:znoona_game_app/features/quiz/categories/domain/usecases/get_categories_usecase.dart';
 import 'package:znoona_game_app/features/quiz/categories/presentation/cubit/categories_cubit.dart';
 
-// ---------------- QUESTIONS ----------------
+// ---------------- MULTIPLAYER ROOM ----------------
 
 
 final GetIt sl = GetIt.instance;
@@ -71,7 +84,7 @@ Future<void> setupInjector() async {
     /// Cubits
     ..registerFactory(() => CategoriesCubit(sl()))
 
-    // ---------------- QUESTIONS ----------------
+    // ---------------- QUESTIONS (Single Player) ----------------
     /// Datasources
     ..registerLazySingleton<QuestionsRemoteDataSource>(
       () => QuestionsRemoteDataSourceImpl(sl()),
@@ -83,5 +96,37 @@ Future<void> setupInjector() async {
     /// Usecases
     ..registerLazySingleton(() => GetQuestionsByCategoryUseCase(sl()))
     /// Cubits
-    ..registerFactory(() => QuestionsCubit(sl()));
+    ..registerFactory(() => QuestionsCubit(sl()))
+
+    // ---------------- MULTIPLAYER ROOM ----------------
+    /// Datasources
+    ..registerLazySingleton<RoomRemoteDataSource>(
+      () => RoomRemoteDataSource(sl()),
+    )
+    /// Repository
+    ..registerLazySingleton<RoomRepository>(
+      () => RoomRepositoryImpl(sl()),
+    )
+    /// Usecases
+    ..registerLazySingleton(() => CreateRoomUseCase(sl()))
+    ..registerLazySingleton(() => JoinRoomUseCase(sl()))
+    ..registerLazySingleton(() => LeaveRoomUseCase(sl()))
+    ..registerLazySingleton(() => GetRoomsStreamUseCase(sl()))
+    ..registerLazySingleton(() => GetRoomPlayersStreamUseCase(sl()))
+    ..registerLazySingleton(() => GetRoomQuestionsUseCase(sl()))
+    ..registerLazySingleton(() => StartGameUseCase(sl()))
+    ..registerLazySingleton(() => WatchRoomUseCase(sl()))
+    /// Cubits
+    ..registerFactory(
+      () => RoomCubit(
+        createRoomUseCase: sl(),
+        joinRoomUseCase: sl(),
+        leaveRoomUseCase: sl(),
+        getRoomsStreamUseCase: sl(),
+        getRoomPlayersStreamUseCase: sl(),
+        getRoomQuestionsUseCase: sl(),
+        startGameUseCase: sl(),
+        watchRoomUseCase: sl(),
+      ),
+    );
 }

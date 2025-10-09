@@ -15,16 +15,16 @@ import 'package:znoona_game_app/features/quiz/categories/presentation/cubit/cate
 import 'package:znoona_game_app/features/quiz/room/presentation/cubit/room_cubit.dart';
 import 'package:znoona_game_app/features/user/auth/presentation/cubit/auth_cubit.dart';
 import 'package:znoona_game_app/features/user/auth/presentation/screens/login_screen.dart';
-
 class ZnoonaGameApp extends StatelessWidget {
   const ZnoonaGameApp({super.key});
 
   @override
   Widget build(BuildContext context) {
     final session = Supabase.instance.client.auth.currentSession;
+
     return ValueListenableBuilder(
       valueListenable: ConnectivityController.instance.isConnected,
-      builder: (_, value, _) {
+      builder: (_, value, __) {
         return MultiBlocProvider(
           providers: [
             BlocProvider(
@@ -36,16 +36,17 @@ class ZnoonaGameApp extends StatelessWidget {
             ),
             BlocProvider(create: (_) => sl<AuthCubit>()..getCurrentUser()),
             BlocProvider(create: (_) => sl<RoomCubit>()..watchRooms()),
-            BlocProvider(create: (_) => sl<CategoriesCubit>()..loadCategories(),),
+            BlocProvider(
+              create: (_) => sl<CategoriesCubit>()..loadCategories(),
+            ),
           ],
           child: ScreenUtilInit(
             designSize: const Size(384, 805),
-            child: BlocBuilder<AppCubit, AppState>(
-              buildWhen: (previous, current) {
-                return previous != current;
-              },
+            builder: (_, __) => BlocBuilder<AppCubit, AppState>(
+              buildWhen: (previous, current) => previous != current,
               builder: (context, state) {
                 final cubit = context.read<AppCubit>();
+
                 return MaterialApp(
                   debugShowCheckedModeBanner: false,
                   title: 'Znoona Game App',
@@ -56,26 +57,37 @@ class ZnoonaGameApp extends StatelessWidget {
                       AppLocalizationsSetup.localeResolutionCallback,
                   localizationsDelegates:
                       AppLocalizationsSetup.localizationsDelegates,
+
+              
                   builder: (context, child) {
-                    return GestureDetector(
-                      onTap: () =>
-                          FocusManager.instance.primaryFocus?.unfocus(),
-                      child: Scaffold(
-                        body: Builder(
-                          builder: (context) {
-                            ConnectivityController.instance.init();
-                            return child!;
-                          },
+                    final mediaQuery = MediaQuery.of(context);
+                    // Option 1: Fully disable system font scaling
+                    return MediaQuery(
+                      data: mediaQuery.copyWith(
+                        textScaler: TextScaler.noScaling,
+                      ),
+                      child: GestureDetector(
+                        onTap: () =>
+                            FocusManager.instance.primaryFocus?.unfocus(),
+                        child: Scaffold(
+                          body: Builder(
+                            builder: (context) {
+                              ConnectivityController.instance.init();
+                              return child!;
+                            },
+                          ),
                         ),
                       ),
                     );
+
+
                   },
 
                   home: !value
                       ? const NoNetworkScreen()
                       : session != null
-                      ? const HomeScreen()
-                      : const LoginScreen(),
+                          ? const HomeScreen()
+                          : const LoginScreen(),
                 );
               },
             ),

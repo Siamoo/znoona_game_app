@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
+import 'package:znoona_game_app/core/helpers/znoona_navigate.dart';
+import 'package:znoona_game_app/core/helpers/znoona_texts.dart';
 import 'package:znoona_game_app/features/quiz/room/domain/entities/room.dart';
 import 'package:znoona_game_app/features/quiz/room/domain/entities/room_player.dart';
 import 'package:znoona_game_app/features/quiz/room/presentation/cubit/room_cubit.dart';
@@ -50,7 +52,9 @@ class _RoomLobbyPageState extends State<RoomLobbyPage> {
             },
             roomUpdated: (room) {
               if (room != null && room.status == 'playing') {
-                print('🎮 Room status changed to playing - navigating to game screen');
+                print(
+                  '🎮 Room status changed to playing - navigating to game screen',
+                );
                 _navigateToGameScreen();
               }
             },
@@ -105,11 +109,9 @@ class _RoomLobbyPageState extends State<RoomLobbyPage> {
     // Use a small delay to ensure the state is properly updated
     Future.delayed(const Duration(milliseconds: 500), () {
       if (mounted) {
-        Navigator.pushReplacement(
+        ZnoonaNavigate.pushReplacementTo(
           context,
-          MaterialPageRoute(
-            builder: (context) => GamePlayingScreen(room: widget.room),
-          ),
+          GamePlayingScreen(room: widget.room),
         );
       }
     });
@@ -139,6 +141,7 @@ class _RoomLobbyPageState extends State<RoomLobbyPage> {
     );
   }
 }
+
 // Room Info Card
 // Room Info Card - Add host information
 class _RoomInfoCard extends StatelessWidget {
@@ -162,7 +165,10 @@ class _RoomInfoCard extends StatelessWidget {
                   style: TextStyle(fontSize: 16, color: Colors.grey),
                 ),
                 Container(
-                  padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: 12,
+                    vertical: 6,
+                  ),
                   decoration: BoxDecoration(
                     color: Theme.of(context).primaryColor.withOpacity(0.1),
                     borderRadius: BorderRadius.circular(20),
@@ -192,7 +198,10 @@ class _RoomInfoCard extends StatelessWidget {
                   builder: (context, state) {
                     final currentRoom = _getCurrentRoom(state) ?? room;
                     return Container(
-                      padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 4),
+                      padding: const EdgeInsets.symmetric(
+                        horizontal: 12,
+                        vertical: 4,
+                      ),
                       decoration: BoxDecoration(
                         color: _getStatusColor(currentRoom.status),
                         borderRadius: BorderRadius.circular(12),
@@ -414,6 +423,7 @@ class _PlayerListItem extends StatelessWidget {
     );
   }
 }
+
 // Start Game Button_StartGameButton
 class _StartGameButton extends StatelessWidget {
   final Room room;
@@ -494,7 +504,8 @@ class _StartGameButton extends StatelessWidget {
           orElse: () => <RoomPlayer>[],
         );
 
-        final canStart = players.length >= 1; // At least 1 player (host) to start
+        final canStart =
+            players.length >= 1; // At least 1 player (host) to start
 
         return Column(
           children: [

@@ -256,16 +256,94 @@ class RoomRemoteDataSource {
   }
 
   /// ✅ Reset answers for new question
-  Future<void> resetAnswersForNewQuestion(String roomId) async {
-    await supabase
+/// ✅ Reset answers for new question
+/// ✅ Reset answers for new question
+Future<void> resetAnswersForNewQuestion(String roomId) async {
+  print('🔄 RESET: Resetting answers for room: $roomId');
+  
+  try {
+    // Use select() after update to verify the reset worked
+    final result = await supabase
         .from('room_players')
         .update({
           'selected_answer': null,
           'is_correct': null,
           'answered_at': null,
         })
+        .eq('room_id', roomId)
+        .select(); // ADD THIS to get confirmation
+    
+    print('🔄 RESET: Database update completed');
+    print('🔄 RESET: Affected rows: ${result.length}');
+    
+    // Verify the reset worked by checking current answers
+    final verification = await supabase
+        .from('room_players')
+        .select('user_id, selected_answer')
         .eq('room_id', roomId);
+    
+    final nonNullAnswers = verification.where((row) => row['selected_answer'] != null).toList();
+    print('🔄 RESET: Answers after reset - non-null: ${nonNullAnswers.length}');
+    
+  } catch (e) {
+    print('❌ RESET ERROR: $e');
+    throw Exception('Failed to reset answers: $e');
   }
-
+}
+/// 🎯 Stream player answers in real-time (IMPROVED FILTERING)
+Stream<Map<String, String>> watchPlayerAnswers(String roomId) {
+  print('📦 watchPlayerAnswers roomId: $roomId');
+  
+  DateTime? _lastResetTime;
+  
+  return supabase
+      .from('room_players')
+      .stream(primaryKey: ['id'])
+      .eq('room_id', roomId)
+      .map((List<Map<String, dynamic>> rows) {
+        final Map<String, String> answers = {};
+        final now = DateTime.now();
+        
+        // Track when we last reset to filter out old answers
+        if (_lastResetTime == null) {
+          _lastResetTime = now;
+          print('🕒 STREAM: First run, setting reset time to now');
+        }
+        
+        for (final row in rows) {
+          final userId = row['user_id']?.toString();
+          final selectedAnswer = row['selected_answer']?.toString();
+          final answeredAt = row['answered_at']?.toString();
+          
+          // Only include answers that are not null
+          if (userId != null && selectedAnswer != null) {
+            // If we have answered_at, use it for filtering
+            if (answeredAt != null) {
+              try {
+                final answeredTime = DateTime.parse(answeredAt);
+                final difference = now.difference(answeredTime);
+                
+                // Only include answers from the last 10 seconds
+                if (difference.inSeconds < 10) {
+                  answers[userId] = selectedAnswer;
+                } else {
+                  print('🕒 FILTERED: Old answer from user $userId (${difference.inSeconds}s ago)');
+                }
+              } catch (e) {
+                // If parsing fails, include the answer with warning
+                print('⚠️ Date parsing failed for user $userId, including answer anyway');
+                answers[userId] = selectedAnswer;
+              }
+            } else {
+              // No answered_at, include the answer
+              answers[userId] = selectedAnswer;
+            }
+          }
+        }
+        
+        print('🎯 Real-time answers update (filtered): $answers');
+        return answers;
+      });
+}
   
 }

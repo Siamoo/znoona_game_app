@@ -18,6 +18,7 @@ import 'package:znoona_game_app/features/quiz/room/domain/usecases/leave_room_us
 import 'package:znoona_game_app/features/quiz/room/domain/usecases/reset_answers_usecase.dart';
 import 'package:znoona_game_app/features/quiz/room/domain/usecases/start_game_usecase.dart';
 import 'package:znoona_game_app/features/quiz/room/domain/usecases/submit_answer_usecase.dart';
+import 'package:znoona_game_app/features/quiz/room/domain/usecases/watch_player_answers_usecase.dart';
 import 'package:znoona_game_app/features/quiz/room/domain/usecases/watch_room_usecase.dart';
 import 'package:znoona_game_app/features/quiz/room/presentation/cubit/room_cubit.dart';
 
@@ -120,6 +121,7 @@ Future<void> setupInjector() async {
     ..registerLazySingleton(() => SubmitAnswerUseCase(sl()))
     ..registerLazySingleton(() => GetPlayerAnswersUseCase(sl()))
     ..registerLazySingleton(() => ResetAnswersUseCase(sl()))
+    ..registerLazySingleton(() => WatchPlayerAnswersUseCase(sl()))
     /// Cubits
     ..registerFactory(
       () => RoomCubit(
@@ -135,7 +137,7 @@ Future<void> setupInjector() async {
         getQuestionsUseCase: sl(),
         submitAnswerUseCase: sl(),
         getPlayerAnswersUseCase: sl(),
-        resetAnswersUseCase: sl(),
+        resetAnswersUseCase: sl(), watchPlayerAnswersUseCase: sl(),
       ),
     );
 }

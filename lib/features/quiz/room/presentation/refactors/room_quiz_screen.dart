@@ -29,40 +29,22 @@ class RoomQuizBody extends StatefulWidget {
 
 class _RoomQuizBodyState extends State<RoomQuizBody> {
   Timer? _timer;
-  int _remainingTime = 15;
-  String? _selectedAnswer;
-  int _correctCount = 0;
-  int _currentQuestionIndex = 0;
-
-  // Get current quiz state from RoomCubit
-  List<Question> get questions => _currentQuestions;
-  List<Question> _currentQuestions = [];
-  Map<String, String?> _playerAnswers = {};
-  bool _isWaitingForPlayers = false;
 
   @override
   void initState() {
     super.initState();
     // Start the quiz with the provided questions
-    _currentQuestions = widget.questions;
-    _startQuiz();
-  }
-
-  void _startQuiz() {
-    // Start the quiz in RoomCubit
     context.read<RoomCubit>().startQuiz(widget.questions);
-    _startTimer();
   }
 
-  void _startTimer() {
+  void _startTimer(int remainingTime) {
     _timer?.cancel();
-    setState(() => _remainingTime = 15);
     _timer = Timer.periodic(const Duration(seconds: 1), (t) {
-      if (_remainingTime > 0) {
-        setState(() => _remainingTime--);
+      if (remainingTime > 0) {
+        remainingTime--;
+        // Timer updates are handled by cubit, we just track locally for UI
       } else {
         t.cancel();
-        _handleTimeUp();
       }
     });
   }
@@ -70,52 +52,18 @@ class _RoomQuizBodyState extends State<RoomQuizBody> {
   void _selectAnswer(String answer, String correctAnswer) {
     final currentUserId = _getCurrentUserId();
     
-    // Don't allow answering if already answered
-    if (_playerAnswers.containsKey(currentUserId)) {
-      return;
-    }
-
-    setState(() {
-      _selectedAnswer = answer;
-      if (answer == correctAnswer) {
-        _correctCount++;
-      }
-    });
-
     // Send answer to RoomCubit for multiplayer synchronization
     context.read<RoomCubit>().selectAnswer(answer);
-    
-    // Cancel timer since player has answered
-    _timer?.cancel();
   }
 
-  void _handleTimeUp() {
-    // Time's up - wait for RoomCubit to handle the transition
-    // The transition will be handled by the RoomCubit listener
-  }
-
-  void _goToNextQuestion() {
-    if (_currentQuestionIndex < questions.length - 1) {
-      setState(() {
-        _currentQuestionIndex++;
-        _selectedAnswer = null;
-        _remainingTime = 15;
-      });
-      _startTimer();
-    } else {
-      // Quiz finished
-      _showQuizResults();
-    }
-  }
-
-  void _showQuizResults() {
+  void _showQuizResults(int totalQuestions, int correctAnswers) {
     // Show results dialog or navigate to results screen
     showDialog(
       context: context,
       barrierDismissible: false,
       builder: (context) => AlertDialog(
         title: const Text('Quiz Finished!'),
-        content: Text('Your score: $_correctCount/${questions.length}'),
+        content: Text('Your score: $correctAnswers/$totalQuestions'),
         actions: [
           TextButton(
             onPressed: () {
@@ -136,54 +84,10 @@ class _RoomQuizBodyState extends State<RoomQuizBody> {
   }
 
   @override
-@override
-Widget build(BuildContext context) {
-  return BlocListener<RoomCubit, RoomState>(
-    listener: (context, state) {
-      state.whenOrNull(
-        quizStarted: (
-          questions,
-          currentQuestionIndex,
-          remainingTime,
-          playerAnswers,
-          selectedAnswer,
-          correctCount,
-          isWaitingForPlayers,
-          players, // ADD THIS PARAMETER
-        ) {
-          // Update local state with RoomCubit state
-          setState(() {
-            _currentQuestions = questions;
-            _currentQuestionIndex = currentQuestionIndex;
-            _remainingTime = remainingTime;
-            _playerAnswers = playerAnswers;
-            _selectedAnswer = selectedAnswer;
-            _correctCount = correctCount;
-            _isWaitingForPlayers = isWaitingForPlayers;
-          });
-
-          if ((_timer == null || !_timer!.isActive) && !isWaitingForPlayers && remainingTime > 0) {
-            _startTimer();
-          }
-        },
-        questionTimeUp: (players) { // UPDATE THIS
-          _timer?.cancel();
-        },
-        allPlayersAnswered: (players) { // UPDATE THIS
-          _timer?.cancel();
-          setState(() {
-            _isWaitingForPlayers = true;
-          });
-        },
-        quizFinished: (totalQuestions, correctAnswers, players) { // UPDATE THIS
-          _timer?.cancel();
-          _showQuizResults();
-        },
-      );
-    },
-    child: BlocBuilder<RoomCubit, RoomState>(
-      builder: (context, state) {
-        return state.maybeWhen(
+  Widget build(BuildContext context) {
+    return BlocListener<RoomCubit, RoomState>(
+      listener: (context, state) {
+        state.whenOrNull(
           quizStarted: (
             questions,
             currentQuestionIndex,
@@ -192,31 +96,68 @@ Widget build(BuildContext context) {
             selectedAnswer,
             correctCount,
             isWaitingForPlayers,
-            players, // ADD THIS
-          ) => _buildQuizContent(
-            questions: questions,
-            currentQuestionIndex: currentQuestionIndex,
-            remainingTime: remainingTime,
-            playerAnswers: playerAnswers,
-            selectedAnswer: selectedAnswer,
-            isWaitingForPlayers: isWaitingForPlayers,
-          ),
-          questionTimeUp: (players) => _buildTimeUpContent(), // UPDATE THIS
-          allPlayersAnswered: (players) => _buildAllAnsweredContent(), // UPDATE THIS
-          quizFinished: (total, correct, players) => _buildResultsContent(total, correct), // UPDATE THIS
-          orElse: () => const Center(child: CircularProgressIndicator()),
+            players,
+          ) {
+            // Start/restart timer when question changes
+            if ((_timer == null || !_timer!.isActive) && 
+                !isWaitingForPlayers && 
+                remainingTime > 0) {
+              _startTimer(remainingTime);
+            }
+          },
+          questionTimeUp: (players) {
+            _timer?.cancel();
+          },
+          allPlayersAnswered: (players) {
+            _timer?.cancel();
+          },
+          quizFinished: (totalQuestions, correctAnswers, players) {
+            _timer?.cancel();
+            _showQuizResults(totalQuestions, correctAnswers);
+          },
         );
       },
-    ),
-  );
-}
+      child: BlocBuilder<RoomCubit, RoomState>(
+        builder: (context, state) {
+          return state.maybeWhen(
+            quizStarted: (
+              questions,
+              currentQuestionIndex,
+              remainingTime,
+              playerAnswers,
+              selectedAnswer,
+              correctCount,
+              isWaitingForPlayers,
+              players,
+            ) => _buildQuizContent(
+              questions: questions,
+              currentQuestionIndex: currentQuestionIndex,
+              remainingTime: remainingTime,
+              playerAnswers: playerAnswers,
+              selectedAnswer: selectedAnswer,
+              correctCount: correctCount,
+              isWaitingForPlayers: isWaitingForPlayers,
+              players: players,
+            ),
+            questionTimeUp: (players) => _buildTimeUpContent(),
+            allPlayersAnswered: (players) => _buildAllAnsweredContent(),
+            quizFinished: (total, correct, players) => _buildResultsContent(total, correct),
+            orElse: () => const Center(child: CircularProgressIndicator()),
+          );
+        },
+      ),
+    );
+  }
+
   Widget _buildQuizContent({
     required List<Question> questions,
     required int currentQuestionIndex,
     required int remainingTime,
     required Map<String, String?> playerAnswers,
     required String? selectedAnswer,
+    required int correctCount,
     required bool isWaitingForPlayers,
+    required List<RoomPlayer> players,
   }) {
     if (questions.isEmpty) {
       return SafeArea(
@@ -237,15 +178,8 @@ Widget build(BuildContext context) {
 
     final question = questions[currentQuestionIndex];
     final currentUserId = _getCurrentUserId();
-    final hasAnswered = playerAnswers.containsKey(currentUserId);
-
-
-    // Auto-start timer if not running
-    if ((_timer == null || !_timer!.isActive) && !isWaitingForPlayers && remainingTime > 0)  {
-      WidgetsBinding.instance.addPostFrameCallback((_) {
-        _startTimer();
-      });
-    }
+    final hasAnswered = playerAnswers.containsKey(currentUserId) && 
+                       playerAnswers[currentUserId] != null;
 
     return Scaffold(
       body: SafeArea(
@@ -262,7 +196,14 @@ Widget build(BuildContext context) {
               ),
 
               // Timer and Players Status
-              _buildGameHeader(remainingTime, playerAnswers, isWaitingForPlayers),
+              _buildGameHeader(
+                remainingTime, 
+                playerAnswers, 
+                isWaitingForPlayers, 
+                players,
+                correctCount,
+                questions.length,
+              ),
 
               SizedBox(height: 40.sp),
 
@@ -290,7 +231,7 @@ Widget build(BuildContext context) {
                         option: option,
                         isSelected: isSelected,
                         selectedAnswer: selectedAnswer,
-                        onTap: hasAnswered ? null : () =>
+                        onTap: (hasAnswered || isWaitingForPlayers) ? null : () =>
                             _selectAnswer(option, question.correctAnswer),
                         isCorrect: isCorrect,
                         remainingTime: remainingTime,
@@ -306,17 +247,37 @@ Widget build(BuildContext context) {
     );
   }
 
-  Widget _buildGameHeader(int remainingTime, Map<String, String?> playerAnswers, bool isWaitingForPlayers) {
+  Widget _buildGameHeader(
+    int remainingTime, 
+    Map<String, String?> playerAnswers, 
+    bool isWaitingForPlayers,
+    List<RoomPlayer> players,
+    int correctCount,
+    int totalQuestions,
+  ) {
     return Column(
       children: [
-        // Timer
-        Text(
-          '⏳ $remainingTime',
-          style: GoogleFonts.beiruti(
-            fontSize: 18.sp,
-            fontWeight: FontWeight.bold,
-            color: ZnoonaColors.text(context),
-          ),
+        // Timer and Score
+        Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Text(
+              '⏳ $remainingTime',
+              style: GoogleFonts.beiruti(
+                fontSize: 18.sp,
+                fontWeight: FontWeight.bold,
+                color: ZnoonaColors.text(context),
+              ),
+            ),
+            Text(
+              'Score: $correctCount/$totalQuestions',
+              style: GoogleFonts.beiruti(
+                fontSize: 18.sp,
+                fontWeight: FontWeight.bold,
+                color: ZnoonaColors.text(context),
+              ),
+            ),
+          ],
         ),
         SizedBox(height: 16.sp),
 
@@ -341,64 +302,43 @@ Widget build(BuildContext context) {
         SizedBox(height: 8.sp),
 
         // Players Status
-        _buildPlayersStatus(playerAnswers),
+        _buildPlayersStatus(playerAnswers, players),
       ],
     );
   }
 
-Widget _buildPlayersStatus(Map<String, String?> playerAnswers) {
-  return BlocBuilder<RoomCubit, RoomState>(
-    builder: (context, state) {
-      // Get players from any quiz-related state
-      final List<RoomPlayer> players = state.maybeWhen(
-        playersUpdated: (List<RoomPlayer> players) => players,
-        quizStarted: (
-          questions,
-          currentQuestionIndex,
-          remainingTime,
-          playerAnswers,
-          selectedAnswer,
-          correctCount,
-          isWaitingForPlayers,
-          players, // ADD THIS PARAMETER
-        ) => players, // RETURN players from quiz state
-        questionTimeUp: (players) => players, // ADD THIS
-        allPlayersAnswered: (players) => players, // ADD THIS
-        quizFinished: (total, correct, players) => players, // ADD THIS
-        orElse: () => [],
-      );
+  Widget _buildPlayersStatus(Map<String, String?> playerAnswers, List<RoomPlayer> players) {
+    if (players.isEmpty) return const SizedBox();
 
-      if (players.isEmpty) return const SizedBox();
+    return Column(
+      children: [
+        Text(
+          'Players Status:',
+          style: TextStyle(
+            fontSize: 16.sp,
+            fontWeight: FontWeight.bold,
+          ),
+        ),
+        SizedBox(height: 8.sp),
+        Wrap(
+          spacing: 8.sp,
+          children: players.map((RoomPlayer player) {
+            final hasAnswered = playerAnswers.containsKey(player.userId) && 
+                               playerAnswers[player.userId] != null;
+            return Chip(
+              label: Text(player.username),
+              backgroundColor: hasAnswered ? Colors.green : Colors.orange,
+              labelStyle: TextStyle(
+                color: Colors.white,
+                fontSize: 12.sp,
+              ),
+            );
+          }).toList(),
+        ),
+      ],
+    );
+  }
 
-      return Column(
-        children: [
-          Text(
-            'Players Status:',
-            style: TextStyle(
-              fontSize: 16.sp,
-              fontWeight: FontWeight.bold,
-            ),
-          ),
-          SizedBox(height: 8.sp),
-          Wrap(
-            spacing: 8.sp,
-            children: players.map((RoomPlayer player) {
-              final hasAnswered = playerAnswers.containsKey(player.userId);
-              return Chip(
-                label: Text(player.username),
-                backgroundColor: hasAnswered ? Colors.green : Colors.orange,
-                labelStyle: TextStyle(
-                  color: Colors.white,
-                  fontSize: 12.sp,
-                ),
-              );
-            }).toList(),
-          ),
-        ],
-      );
-    },
-  );
-}
   Widget _buildTimeUpContent() {
     return Scaffold(
       body: SafeArea(
@@ -482,8 +422,6 @@ Widget _buildPlayersStatus(Map<String, String?> playerAnswers) {
   }
 
   String _getCurrentUserId() {
-    // Implement this based on your auth system
-    // Example:
     final user = Supabase.instance.client.auth.currentUser;
     return user?.id ?? 'unknown';
   }

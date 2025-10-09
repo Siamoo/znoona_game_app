@@ -194,4 +194,15 @@ class RoomRepositoryImpl implements RoomRepository {
       return Left(e.toString());
     }
   }
+  
+  @override
+  Stream<Either<String, Map<String, String>>> watchPlayerAnswers(String roomId) async* {
+    try {
+      await for (final answers in remote.watchPlayerAnswers(roomId)) {
+        yield Right(answers);
+      }
+    } on Exception catch (e) {
+      yield Left('Error watching player answers: $e');
+    }
+  }
 }

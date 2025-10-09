@@ -43,5 +43,13 @@ Future<Either<String, List<RoomQuestion>>> getRoomQuestions(String roomId);
   Future<Either<String, Map<String, String>>> getPlayerAnswers(String roomId);
 
   Future<Either<String, void>> resetAnswersForNewQuestion(String roomId);
+
+
+
+  // ADD THIS NEW STREAM METHOD
+  Stream<Either<String, Map<String, String>>> watchPlayerAnswers(String roomId);
+
+  // ... rest of your methods ...
+
 }
 

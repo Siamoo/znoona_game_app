@@ -29,35 +29,48 @@ class RoomQuizBody extends StatefulWidget {
 
 class _RoomQuizBodyState extends State<RoomQuizBody> {
   Timer? _timer;
+  List<Question> _currentQuestions = [];
+  int _currentQuestionIndex = 0;
+  int _currentRemainingTime = 15;
+  Map<String, String?> _currentPlayerAnswers = {};
+  String? _currentSelectedAnswer;
+  int _currentCorrectCount = 0;
+  bool _currentIsWaitingForPlayers = false;
+  List<RoomPlayer> _currentPlayers = [];
 
   @override
   void initState() {
     super.initState();
-    // Start the quiz with the provided questions
+    _currentQuestions = widget.questions;
     context.read<RoomCubit>().startQuiz(widget.questions);
   }
 
-  void _startTimer(int remainingTime) {
+  void _startTimer() {
     _timer?.cancel();
     _timer = Timer.periodic(const Duration(seconds: 1), (t) {
-      if (remainingTime > 0) {
-        remainingTime--;
-        // Timer updates are handled by cubit, we just track locally for UI
+      if (_currentRemainingTime > 0) {
+        setState(() {
+          _currentRemainingTime--;
+        });
       } else {
         t.cancel();
       }
     });
   }
 
-  void _selectAnswer(String answer, String correctAnswer) {
+  void _selectAnswer(String answer) {
     final currentUserId = _getCurrentUserId();
-    
-    // Send answer to RoomCubit for multiplayer synchronization
+
+    setState(() {
+      _currentSelectedAnswer = answer;
+      _currentPlayerAnswers = Map<String, String?>.from(_currentPlayerAnswers);
+      _currentPlayerAnswers[currentUserId] = answer;
+    });
+
     context.read<RoomCubit>().selectAnswer(answer);
   }
 
   void _showQuizResults(int totalQuestions, int correctAnswers) {
-    // Show results dialog or navigate to results screen
     showDialog(
       context: context,
       barrierDismissible: false,
@@ -67,8 +80,8 @@ class _RoomQuizBodyState extends State<RoomQuizBody> {
         actions: [
           TextButton(
             onPressed: () {
-              Navigator.pop(context); // Close dialog
-              Navigator.pop(context); // Go back to room
+              Navigator.pop(context);
+              Navigator.pop(context);
             },
             child: const Text('OK'),
           ),
@@ -87,6 +100,8 @@ class _RoomQuizBodyState extends State<RoomQuizBody> {
   Widget build(BuildContext context) {
     return BlocListener<RoomCubit, RoomState>(
       listener: (context, state) {
+        print('🎯 ROOM QUIZ LISTENER: ${state.runtimeType}');
+
         state.whenOrNull(
           quizStarted: (
             questions,
@@ -98,53 +113,43 @@ class _RoomQuizBodyState extends State<RoomQuizBody> {
             isWaitingForPlayers,
             players,
           ) {
-            // Start/restart timer when question changes
-            if ((_timer == null || !_timer!.isActive) && 
-                !isWaitingForPlayers && 
+            print('🔄 Updating quiz state - Question: ${currentQuestionIndex + 1}');
+
+            final mutablePlayerAnswers = Map<String, String?>.from(playerAnswers);
+
+            setState(() {
+              _currentQuestions = questions;
+              _currentQuestionIndex = currentQuestionIndex;
+              _currentRemainingTime = remainingTime;
+              _currentPlayerAnswers = mutablePlayerAnswers;
+              _currentSelectedAnswer = selectedAnswer;
+              _currentCorrectCount = correctCount;
+              _currentIsWaitingForPlayers = isWaitingForPlayers;
+              _currentPlayers = players;
+            });
+
+            if ((_timer == null || !_timer!.isActive) &&
+                !isWaitingForPlayers &&
                 remainingTime > 0) {
-              _startTimer(remainingTime);
+              _startTimer();
             }
           },
-          questionTimeUp: (players) {
-            _timer?.cancel();
-          },
-          allPlayersAnswered: (players) {
-            _timer?.cancel();
-          },
+          // REMOVED questionResults listener - no more results screen
           quizFinished: (totalQuestions, correctAnswers, players) {
             _timer?.cancel();
             _showQuizResults(totalQuestions, correctAnswers);
           },
         );
       },
-      child: BlocBuilder<RoomCubit, RoomState>(
-        builder: (context, state) {
-          return state.maybeWhen(
-            quizStarted: (
-              questions,
-              currentQuestionIndex,
-              remainingTime,
-              playerAnswers,
-              selectedAnswer,
-              correctCount,
-              isWaitingForPlayers,
-              players,
-            ) => _buildQuizContent(
-              questions: questions,
-              currentQuestionIndex: currentQuestionIndex,
-              remainingTime: remainingTime,
-              playerAnswers: playerAnswers,
-              selectedAnswer: selectedAnswer,
-              correctCount: correctCount,
-              isWaitingForPlayers: isWaitingForPlayers,
-              players: players,
-            ),
-            questionTimeUp: (players) => _buildTimeUpContent(),
-            allPlayersAnswered: (players) => _buildAllAnsweredContent(),
-            quizFinished: (total, correct, players) => _buildResultsContent(total, correct),
-            orElse: () => const Center(child: CircularProgressIndicator()),
-          );
-        },
+      child: _buildQuizContent(
+        questions: _currentQuestions.isNotEmpty ? _currentQuestions : widget.questions,
+        currentQuestionIndex: _currentQuestionIndex,
+        remainingTime: _currentRemainingTime,
+        playerAnswers: _currentPlayerAnswers,
+        selectedAnswer: _currentSelectedAnswer,
+        correctCount: _currentCorrectCount,
+        isWaitingForPlayers: _currentIsWaitingForPlayers,
+        players: _currentPlayers,
       ),
     );
   }
@@ -165,9 +170,7 @@ class _RoomQuizBodyState extends State<RoomQuizBody> {
           padding: EdgeInsets.symmetric(horizontal: 16.w),
           child: Column(
             children: [
-              CustomAppBar(
-                title: 'Room ${widget.room.code}',
-              ),
+              CustomAppBar(title: 'Room ${widget.room.code}'),
               SizedBox(height: 300.sp),
               const Center(child: Text('No questions found.')),
             ],
@@ -179,7 +182,7 @@ class _RoomQuizBodyState extends State<RoomQuizBody> {
     final question = questions[currentQuestionIndex];
     final currentUserId = _getCurrentUserId();
     final hasAnswered = playerAnswers.containsKey(currentUserId) && 
-                       playerAnswers[currentUserId] != null;
+                        playerAnswers[currentUserId] != null;
 
     return Scaffold(
       body: SafeArea(
@@ -187,7 +190,6 @@ class _RoomQuizBodyState extends State<RoomQuizBody> {
           padding: EdgeInsets.symmetric(horizontal: 16.w),
           child: Column(
             children: [
-              // App Bar with room info
               CustomAppBar(
                 title: 'Room ${widget.room.code}',
                 icon: Icons.close,
@@ -195,11 +197,10 @@ class _RoomQuizBodyState extends State<RoomQuizBody> {
                     '${currentQuestionIndex + 1}  ${ZnoonaTexts.tr(context, LangKeys.from)}  ${questions.length}  ${ZnoonaTexts.tr(context, LangKeys.question)}',
               ),
 
-              // Timer and Players Status
               _buildGameHeader(
-                remainingTime, 
-                playerAnswers, 
-                isWaitingForPlayers, 
+                remainingTime,
+                playerAnswers,
+                isWaitingForPlayers,
                 players,
                 correctCount,
                 questions.length,
@@ -207,7 +208,6 @@ class _RoomQuizBodyState extends State<RoomQuizBody> {
 
               SizedBox(height: 40.sp),
 
-              // Question and Options
               Expanded(
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
@@ -231,8 +231,9 @@ class _RoomQuizBodyState extends State<RoomQuizBody> {
                         option: option,
                         isSelected: isSelected,
                         selectedAnswer: selectedAnswer,
-                        onTap: (hasAnswered || isWaitingForPlayers) ? null : () =>
-                            _selectAnswer(option, question.correctAnswer),
+                        onTap: (hasAnswered || isWaitingForPlayers)
+                            ? null
+                            : () => _selectAnswer(option),
                         isCorrect: isCorrect,
                         remainingTime: remainingTime,
                       );
@@ -247,67 +248,103 @@ class _RoomQuizBodyState extends State<RoomQuizBody> {
     );
   }
 
-  Widget _buildGameHeader(
-    int remainingTime, 
-    Map<String, String?> playerAnswers, 
-    bool isWaitingForPlayers,
-    List<RoomPlayer> players,
-    int correctCount,
-    int totalQuestions,
-  ) {
-    return Column(
-      children: [
-        // Timer and Score
-        Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            Text(
-              '⏳ $remainingTime',
-              style: GoogleFonts.beiruti(
-                fontSize: 18.sp,
-                fontWeight: FontWeight.bold,
-                color: ZnoonaColors.text(context),
-              ),
-            ),
-            Text(
-              'Score: $correctCount/$totalQuestions',
-              style: GoogleFonts.beiruti(
-                fontSize: 18.sp,
-                fontWeight: FontWeight.bold,
-                color: ZnoonaColors.text(context),
-              ),
-            ),
-          ],
-        ),
-        SizedBox(height: 16.sp),
+Widget _buildGameHeader(
+  int remainingTime,
+  Map<String, String?> playerAnswers,
+  bool isWaitingForPlayers,
+  List<RoomPlayer> players,
+  int correctCount,
+  int totalQuestions,
+) {
+  final currentUserId = _getCurrentUserId();
+  final hasAnswered = playerAnswers.containsKey(currentUserId) && 
+                      playerAnswers[currentUserId] != null;
 
-        // Waiting message if all players answered
-        if (isWaitingForPlayers)
-          Container(
-            padding: EdgeInsets.all(8.sp),
-            decoration: BoxDecoration(
-              color: Colors.green.withOpacity(0.2),
-              borderRadius: BorderRadius.circular(8),
-            ),
-            child: Text(
-              '🎉 All players answered! Moving to next question...',
-              style: TextStyle(
-                fontSize: 14.sp,
-                color: Colors.green,
-                fontWeight: FontWeight.bold,
+  return Column(
+    children: [
+      // Timer and Score
+      Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          Column(
+            children: [
+              Text(
+                '⏳ $remainingTime',
+                style: GoogleFonts.beiruti(
+                  fontSize: 18.sp,
+                  fontWeight: FontWeight.bold,
+                  color: ZnoonaColors.text(context),
+                ),
               ),
+              if (remainingTime <= 5)
+                Text(
+                  'Time running out!',
+                  style: TextStyle(
+                    fontSize: 10.sp,
+                    color: Colors.red,
+                  ),
+                ),
+            ],
+          ),
+          Text(
+            'Score: $correctCount/$totalQuestions',
+            style: GoogleFonts.beiruti(
+              fontSize: 18.sp,
+              fontWeight: FontWeight.bold,
+              color: ZnoonaColors.text(context),
             ),
           ),
+        ],
+      ),
+      SizedBox(height: 16.sp),
 
-        SizedBox(height: 8.sp),
+      // SCENARIO 2: All players answered message
+      if (isWaitingForPlayers)
+        Container(
+          padding: EdgeInsets.all(8.sp),
+          decoration: BoxDecoration(
+            color: Colors.green.withOpacity(0.2),
+            borderRadius: BorderRadius.circular(8),
+          ),
+          child: Text(
+            '🎉 All players answered! Moving to next question...',
+            style: TextStyle(
+              fontSize: 14.sp,
+              color: Colors.green,
+              fontWeight: FontWeight.bold,
+            ),
+          ),
+        ),
 
-        // Players Status
-        _buildPlayersStatus(playerAnswers, players),
-      ],
-    );
-  }
+      // SCENARIO 1: Time running low warning
+      if (remainingTime <= 5 && !isWaitingForPlayers)
+        Container(
+          padding: EdgeInsets.all(8.sp),
+          decoration: BoxDecoration(
+            color: Colors.orange.withOpacity(0.2),
+            borderRadius: BorderRadius.circular(8),
+          ),
+          child: Text(
+            '⏰ Time running out! Answer quickly!',
+            style: TextStyle(
+              fontSize: 14.sp,
+              color: Colors.orange,
+              fontWeight: FontWeight.bold,
+            ),
+          ),
+        ),
 
-  Widget _buildPlayersStatus(Map<String, String?> playerAnswers, List<RoomPlayer> players) {
+      SizedBox(height: 8.sp),
+
+      // Players Status
+      _buildPlayersStatus(playerAnswers, players),
+    ],
+  );
+}
+  Widget _buildPlayersStatus(
+    Map<String, String?> playerAnswers,
+    List<RoomPlayer> players,
+  ) {
     if (players.isEmpty) return const SizedBox();
 
     return Column(
@@ -322,9 +359,9 @@ class _RoomQuizBodyState extends State<RoomQuizBody> {
         SizedBox(height: 8.sp),
         Wrap(
           spacing: 8.sp,
-          children: players.map((RoomPlayer player) {
+          children: players.map((player) {
             final hasAnswered = playerAnswers.containsKey(player.userId) && 
-                               playerAnswers[player.userId] != null;
+                                playerAnswers[player.userId] != null;
             return Chip(
               label: Text(player.username),
               backgroundColor: hasAnswered ? Colors.green : Colors.orange,
@@ -336,88 +373,6 @@ class _RoomQuizBodyState extends State<RoomQuizBody> {
           }).toList(),
         ),
       ],
-    );
-  }
-
-  Widget _buildTimeUpContent() {
-    return Scaffold(
-      body: SafeArea(
-        child: Center(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Icon(Icons.timer_off, size: 64.sp, color: Colors.orange),
-              SizedBox(height: 16.sp),
-              Text(
-                'Time\'s Up!',
-                style: TextStyle(fontSize: 24.sp, fontWeight: FontWeight.bold),
-              ),
-              SizedBox(height: 8.sp),
-              Text(
-                'Moving to next question...',
-                style: TextStyle(fontSize: 16.sp),
-              ),
-            ],
-          ),
-        ),
-      ),
-    );
-  }
-
-  Widget _buildAllAnsweredContent() {
-    return Scaffold(
-      body: SafeArea(
-        child: Center(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Icon(Icons.check_circle, size: 64.sp, color: Colors.green),
-              SizedBox(height: 16.sp),
-              Text(
-                'All Players Answered!',
-                style: TextStyle(fontSize: 24.sp, fontWeight: FontWeight.bold),
-              ),
-              SizedBox(height: 8.sp),
-              Text(
-                'Moving to next question...',
-                style: TextStyle(fontSize: 16.sp),
-              ),
-            ],
-          ),
-        ),
-      ),
-    );
-  }
-
-  Widget _buildResultsContent(int totalQuestions, int correctAnswers) {
-    return Scaffold(
-      body: SafeArea(
-        child: Center(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Icon(Icons.emoji_events, size: 64.sp, color: Colors.amber),
-              SizedBox(height: 16.sp),
-              Text(
-                'Quiz Finished!',
-                style: TextStyle(fontSize: 24.sp, fontWeight: FontWeight.bold),
-              ),
-              SizedBox(height: 8.sp),
-              Text(
-                'Score: $correctAnswers/$totalQuestions',
-                style: TextStyle(fontSize: 20.sp),
-              ),
-              SizedBox(height: 16.sp),
-              ElevatedButton(
-                onPressed: () {
-                  Navigator.pop(context);
-                },
-                child: const Text('Back to Room'),
-              ),
-            ],
-          ),
-        ),
-      ),
     );
   }
 

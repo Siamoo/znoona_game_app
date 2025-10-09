@@ -107,7 +107,7 @@ class _RoomLobbyPageState extends State<RoomLobbyPage> {
 
   void _navigateToGameScreen() {
     // Use a small delay to ensure the state is properly updated
-    Future.delayed(const Duration(milliseconds: 500), () {
+    Future.delayed(const Duration(milliseconds: 100), () {
       if (mounted) {
         ZnoonaNavigate.pushReplacementTo(
           context,

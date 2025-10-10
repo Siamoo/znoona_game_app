@@ -126,7 +126,7 @@ class RoomRemoteDataSource {
         .stream(primaryKey: ['id'])
         .map(
           (rows) => rows
-              .map((e) => RoomModel.fromJson(e as Map<String, dynamic>))
+              .map((e) => RoomModel.fromJson(e))
               .toList(),
         );
   }
@@ -140,7 +140,7 @@ class RoomRemoteDataSource {
         .eq('room_id', roomId)
         .map(
           (rows) => rows
-              .map((e) => RoomPlayerModel.fromJson(e as Map<String, dynamic>))
+              .map((e) => RoomPlayerModel.fromJson(e))
               .toList(),
         );
   }
@@ -172,7 +172,7 @@ class RoomRemoteDataSource {
     return supabase
         .from('rooms')
         .stream(primaryKey: ['id'])
-        .eq('id', roomId) // Use 'id' instead of 'code'
+        .eq('id', roomId) 
         .map((rows) => rows.isNotEmpty ? RoomModel.fromJson(rows.first) : null);
   }
 
@@ -187,7 +187,7 @@ class RoomRemoteDataSource {
     print('📦 getQuestion data: $data');
 
     // Use your existing QuestionModel from single feature
-    final questionModel = QuestionModel.fromJson(data as Map<String, dynamic>);
+    final questionModel = QuestionModel.fromJson(data);
     return questionModel.toEntity();
   }
 

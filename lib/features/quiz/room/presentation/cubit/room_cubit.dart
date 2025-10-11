@@ -35,7 +35,6 @@ class RoomCubit extends Cubit<RoomState> {
     required this.getRoomQuestionsUseCase,
     required this.startGameUseCase,
     required this.watchRoomUseCase,
-    required this.getQuestionUseCase,
     required this.getQuestionsUseCase,
     required this.submitAnswerUseCase,
     required this.getPlayerAnswersUseCase,
@@ -51,7 +50,6 @@ class RoomCubit extends Cubit<RoomState> {
   final GetRoomQuestionsUseCase getRoomQuestionsUseCase;
   final StartGameUseCase startGameUseCase;
   final WatchRoomUseCase watchRoomUseCase;
-  final GetQuestionUseCase getQuestionUseCase;
   final GetQuestionsUseCase getQuestionsUseCase;
   final SubmitAnswerUseCase submitAnswerUseCase;
   final GetPlayerAnswersUseCase getPlayerAnswersUseCase;
@@ -316,19 +314,6 @@ class RoomCubit extends Cubit<RoomState> {
     }
   }
 
-  /// ❓ Get single question
-  Future<void> getQuestion(String questionId) async {
-    emit(const RoomState.loading());
-
-    final result = await getQuestionUseCase(questionId);
-
-    if (isClosed) return;
-
-    result.fold(
-      (failure) => emit(RoomState.error(failure)),
-      (question) => emit(RoomState.questionLoaded(question)),
-    );
-  }
 
   /// ❓ Get multiple questions
   Future<void> getQuestions(List<String> questionIds) async {

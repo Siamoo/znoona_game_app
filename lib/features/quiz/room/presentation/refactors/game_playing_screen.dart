@@ -7,9 +7,9 @@ import 'package:znoona_game_app/features/quiz/room/presentation/refactors/room_q
 import 'package:znoona_game_app/features/quiz/single/domain/entities/question.dart';
 
 class GamePlayingScreen extends StatefulWidget {
-  final Room room;
 
   const GamePlayingScreen({super.key, required this.room});
+  final Room room;
 
   @override
   State<GamePlayingScreen> createState() => _GamePlayingScreenState();

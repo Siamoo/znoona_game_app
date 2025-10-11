@@ -29,7 +29,7 @@ class RoomRemoteDataSource {
       },
     );
 
-    print('📦 create_room_with_questions result: $result');
+    print('create_room_with_questions result: $result');
 
     if (result == null) {
       throw Exception('Failed to create room: result is null');
@@ -55,7 +55,7 @@ class RoomRemoteDataSource {
       throw Exception('Room not found after creation (ID: $roomId)');
     }
 
-    print('🔥 room json: $data');
+    print('room json: $data');
     return RoomModel.fromJson(data);
   }
 
@@ -75,7 +75,7 @@ class RoomRemoteDataSource {
         .eq('code', code)
         .maybeSingle();
 
-    print('📦 joinRoom roomData: $roomData');
+    print('joinRoom roomData: $roomData');
 
     if (roomData == null) throw Exception('Room not found with code $code');
 
@@ -97,14 +97,14 @@ class RoomRemoteDataSource {
         .select()
         .maybeSingle();
 
-    print('📦 joinRoom playerData: $playerData');
+    print('joinRoom playerData: $playerData');
 
     if (playerData == null) throw Exception('Failed to join room');
 
     return RoomPlayerModel.fromJson(playerData);
   }
 
-  /// 🚶 Leave a room
+  ///  Leave a room
   Future<void> leaveRoom({
     required String roomId,
   }) async {
@@ -115,12 +115,12 @@ class RoomRemoteDataSource {
       'room_id': roomId,
       'user_id': user.id,
     });
-    print('📦 leaveRoom user-- playerData: $user');
+    print('leaveRoom user-- playerData: $user');
   }
 
-  /// ♻️ Stream all rooms
+  /// Stream all rooms
   Stream<List<RoomModel>> getRoomsStream() {
-    print('📦 getRoomsStream');
+    print('getRoomsStream');
     return supabase
         .from('rooms')
         .stream(primaryKey: ['id'])
@@ -129,9 +129,9 @@ class RoomRemoteDataSource {
         );
   }
 
-  /// 👥 Stream all players in a room
+  /// Stream all players in a room
   Stream<List<RoomPlayerModel>> getRoomPlayersStream(String roomId) {
-    print('📦 getRoomPlayersStream roomId: $roomId');
+    print(' getRoomPlayersStream roomId: $roomId');
     return supabase
         .from('room_players')
         .stream(primaryKey: ['id'])
@@ -141,7 +141,7 @@ class RoomRemoteDataSource {
         );
   }
 
-  /// ❓ Get questions for a room
+  ///  Get questions for a room
   Future<List<RoomQuestionModel>> getRoomQuestions(String roomId) async {
     final data = await supabase
         .from('room_questions')
@@ -149,22 +149,22 @@ class RoomRemoteDataSource {
         .eq('room_id', roomId)
         .order('order_index', ascending: true);
 
-    print('📦 getRoomQuestions data: $data');
+    print(' getRoomQuestions data: $data');
 
     return (data as List)
         .map((e) => RoomQuestionModel.fromJson(e as Map<String, dynamic>))
         .toList();
   }
 
-  /// 🚀 Start game
+  ///  Start game
   Future<void> startGame(String roomId) async {
-    print('📦 startGame roomId: $roomId');
+    print(' startGame roomId: $roomId');
     await supabase.from('rooms').update({'status': 'playing'}).eq('id', roomId);
   }
 
-  /// 🧭 Watch single room
+  ///  Watch single room
   Stream<RoomModel?> watchRoom(String roomId) {
-    print('📦 watchRoom roomId: $roomId');
+    print(' watchRoom roomId: $roomId');
     return supabase
         .from('rooms')
         .stream(primaryKey: ['id'])
@@ -172,22 +172,8 @@ class RoomRemoteDataSource {
         .map((rows) => rows.isNotEmpty ? RoomModel.fromJson(rows.first) : null);
   }
 
-  /// ❓ Get question by ID
-  Future<Question> getQuestion(String questionId) async {
-    final data = await supabase
-        .from('questions')
-        .select()
-        .eq('id', questionId)
-        .single();
 
-    print('📦 getQuestion data: $data');
-
-    // Use your existing QuestionModel from single feature
-    final questionModel = QuestionModel.fromJson(data);
-    return questionModel.toEntity();
-  }
-
-  /// ❓ Get multiple questions by IDs
+  ///  Get multiple questions by IDs
   Future<List<Question>> getQuestions(List<String> questionIds) async {
     if (questionIds.isEmpty) return [];
 
@@ -196,7 +182,7 @@ class RoomRemoteDataSource {
         .select()
         .inFilter('id', questionIds); // Use inFilter instead of in
 
-    print('📦 getQuestions data: $data');
+    print(' getQuestions data: $data');
 
     // Use your existing QuestionModel from single feature
     return (data as List)
@@ -205,7 +191,7 @@ class RoomRemoteDataSource {
         .toList();
   }
 
-  /// ✅ Store player answer and update score in room_players table
+  ///  Store player answer and update score in room_players table
   Future<void> submitAnswer({
     required String roomId,
     required String userId,
@@ -236,7 +222,7 @@ class RoomRemoteDataSource {
         .eq('user_id', userId);
   }
 
-  /// ✅ Get all player answers for current room
+  ///  Get all player answers for current room
   Future<Map<String, String>> getPlayerAnswers(String roomId) async {
     final data = await supabase
         .from('room_players')
@@ -252,11 +238,9 @@ class RoomRemoteDataSource {
     return answers;
   }
 
-  /// ✅ Reset answers for new question
-  /// ✅ Reset answers for new question
-  /// ✅ Reset answers for new question
+  ///  Reset answers for new question
   Future<void> resetAnswersForNewQuestion(String roomId) async {
-    print('🔄 RESET: Resetting answers for room: $roomId');
+    print(' RESET: Resetting answers for room: $roomId');
 
     try {
       // Use select() after update to verify the reset worked
@@ -270,8 +254,8 @@ class RoomRemoteDataSource {
           .eq('room_id', roomId)
           .select(); // ADD THIS to get confirmation
 
-      print('🔄 RESET: Database update completed');
-      print('🔄 RESET: Affected rows: ${result.length}');
+      print(' RESET: Database update completed');
+      print(' RESET: Affected rows: ${result.length}');
 
       // Verify the reset worked by checking current answers
       final verification = await supabase
@@ -283,15 +267,15 @@ class RoomRemoteDataSource {
           .where((row) => row['selected_answer'] != null)
           .toList();
       print(
-        '🔄 RESET: Answers after reset - non-null: ${nonNullAnswers.length}',
+        ' RESET: Answers after reset - non-null: ${nonNullAnswers.length}',
       );
     } catch (e) {
-      print('❌ RESET ERROR: $e');
+      print(' RESET ERROR: $e');
       throw Exception('Failed to reset answers: $e');
     }
   }
 
-  /// 🎯 Watch player answers with filtering
+  ///  Watch player answers with filtering
   Stream<Map<String, String>> watchPlayerAnswers(String roomId) {
     final startTime = DateTime.now();
 

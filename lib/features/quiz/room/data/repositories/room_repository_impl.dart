@@ -130,17 +130,6 @@ class RoomRepositoryImpl implements RoomRepository {
     }
   }
 
-  /// ❓ Get single question by ID
-  @override
-  Future<Either<String, Question>> getQuestion(String questionId) async {
-    try {
-      final question = await remote.getQuestion(questionId);
-      return Right(question);
-    } on Exception catch (e) {
-      return Left(e.toString());
-    }
-  }
-
   /// ❓ Get multiple questions by IDs
   @override
   Future<Either<String, List<Question>>> getQuestions(
@@ -154,7 +143,6 @@ class RoomRepositoryImpl implements RoomRepository {
     }
   }
 
-  
   @override
   Future<Either<String, void>> submitAnswer({
     required String roomId,
@@ -176,7 +164,9 @@ class RoomRepositoryImpl implements RoomRepository {
   }
 
   @override
-  Future<Either<String, Map<String, String>>> getPlayerAnswers(String roomId) async {
+  Future<Either<String, Map<String, String>>> getPlayerAnswers(
+    String roomId,
+  ) async {
     try {
       final answers = await remote.getPlayerAnswers(roomId);
       return Right(answers);
@@ -194,9 +184,11 @@ class RoomRepositoryImpl implements RoomRepository {
       return Left(e.toString());
     }
   }
-  
+
   @override
-  Stream<Either<String, Map<String, String>>> watchPlayerAnswers(String roomId) async* {
+  Stream<Either<String, Map<String, String>>> watchPlayerAnswers(
+    String roomId,
+  ) async* {
     try {
       await for (final answers in remote.watchPlayerAnswers(roomId)) {
         yield Right(answers);

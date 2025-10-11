@@ -8,7 +8,6 @@ import 'package:znoona_game_app/features/quiz/room/data/repositories/room_reposi
 import 'package:znoona_game_app/features/quiz/room/domain/repositories/room_repository.dart';
 import 'package:znoona_game_app/features/quiz/room/domain/usecases/create_room_usecase.dart';
 import 'package:znoona_game_app/features/quiz/room/domain/usecases/get_player_answers_usecase.dart';
-import 'package:znoona_game_app/features/quiz/room/domain/usecases/get_question_usecase.dart';
 import 'package:znoona_game_app/features/quiz/room/domain/usecases/get_questions_usecase.dart';
 import 'package:znoona_game_app/features/quiz/room/domain/usecases/get_room_players_stream_usecase.dart';
 import 'package:znoona_game_app/features/quiz/room/domain/usecases/get_room_questions_usecase.dart';
@@ -116,7 +115,6 @@ Future<void> setupInjector() async {
     ..registerLazySingleton(() => GetRoomQuestionsUseCase(sl()))
     ..registerLazySingleton(() => StartGameUseCase(sl()))
     ..registerLazySingleton(() => WatchRoomUseCase(sl()))
-    ..registerLazySingleton(() => GetQuestionUseCase(sl()))
     ..registerLazySingleton(() => GetQuestionsUseCase(sl()))
     ..registerLazySingleton(() => SubmitAnswerUseCase(sl()))
     ..registerLazySingleton(() => GetPlayerAnswersUseCase(sl()))
@@ -133,11 +131,11 @@ Future<void> setupInjector() async {
         getRoomQuestionsUseCase: sl(),
         startGameUseCase: sl(),
         watchRoomUseCase: sl(),
-        getQuestionUseCase: sl(),
         getQuestionsUseCase: sl(),
         submitAnswerUseCase: sl(),
         getPlayerAnswersUseCase: sl(),
-        resetAnswersUseCase: sl(), watchPlayerAnswersUseCase: sl(),
+        resetAnswersUseCase: sl(),
+        watchPlayerAnswersUseCase: sl(),
       ),
     );
 }

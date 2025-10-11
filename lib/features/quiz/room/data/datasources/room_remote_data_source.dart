@@ -125,9 +125,7 @@ class RoomRemoteDataSource {
         .from('rooms')
         .stream(primaryKey: ['id'])
         .map(
-          (rows) => rows
-              .map((e) => RoomModel.fromJson(e))
-              .toList(),
+          (rows) => rows.map((e) => RoomModel.fromJson(e)).toList(),
         );
   }
 
@@ -139,9 +137,7 @@ class RoomRemoteDataSource {
         .stream(primaryKey: ['id'])
         .eq('room_id', roomId)
         .map(
-          (rows) => rows
-              .map((e) => RoomPlayerModel.fromJson(e))
-              .toList(),
+          (rows) => rows.map((e) => RoomPlayerModel.fromJson(e)).toList(),
         );
   }
 
@@ -172,7 +168,7 @@ class RoomRemoteDataSource {
     return supabase
         .from('rooms')
         .stream(primaryKey: ['id'])
-        .eq('id', roomId) 
+        .eq('id', roomId)
         .map((rows) => rows.isNotEmpty ? RoomModel.fromJson(rows.first) : null);
   }
 

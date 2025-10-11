@@ -27,7 +27,6 @@ Future<Either<String, List<RoomQuestion>>> getRoomQuestions(String roomId);
 
   Stream<Either<String, Room?>> watchRoom(String roomId);
 
-  Future<Either<String, Question>> getQuestion(String questionId);
 
   Future<Either<String, List<Question>>> getQuestions(List<String> questionIds);
 

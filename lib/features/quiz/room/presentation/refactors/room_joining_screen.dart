@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:znoona_game_app/core/helpers/znoona_navigate.dart';
 import 'package:znoona_game_app/features/quiz/room/presentation/cubit/room_cubit.dart';
 import 'package:znoona_game_app/features/quiz/room/presentation/refactors/room_lobby_screen.dart';
 
@@ -35,12 +36,7 @@ class _RoomJoiningScreenState extends State<RoomJoiningScreen> {
           state.whenOrNull(
             joined: (room) {
               // Navigate to room lobby when successfully joined
-              Navigator.pushReplacement(
-                context,
-                MaterialPageRoute(
-                  builder: (context) => RoomLobbyPage(room: room),
-                ),
-              );
+              ZnoonaNavigate.pushReplacementTo(context, RoomLobbyPage(room: room));
             },
             error: (message) {
               ScaffoldMessenger.of(context).showSnackBar(

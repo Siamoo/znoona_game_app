@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:znoona_game_app/core/helpers/znoona_navigate.dart';
 import 'package:znoona_game_app/features/quiz/categories/domain/entities/category.dart';
 import 'package:znoona_game_app/features/quiz/categories/presentation/cubit/categories_cubit.dart';
 import 'package:znoona_game_app/features/quiz/room/presentation/cubit/room_cubit.dart';
@@ -40,11 +41,9 @@ class _RoomCreationScreenState extends State<RoomCreationScreen> {
               state.whenOrNull(
                 roomLoaded: (room) {
                   // Navigate to room lobby when room is created
-                  Navigator.pushReplacement(
+                  ZnoonaNavigate.pushReplacementTo(
                     context,
-                    MaterialPageRoute(
-                      builder: (context) => RoomLobbyPage(room: room),
-                    ),
+                    RoomLobbyPage(room: room),
                   );
                 },
                 error: (message) {
@@ -188,7 +187,7 @@ class _LoadingCategories extends StatelessWidget {
 class _CategoryGrid extends StatelessWidget {
   final List<Category> categories;
   final Category? selectedCategory;
-  final Function(Category) onCategorySelected;
+  final dynamic Function(Category) onCategorySelected;
 
   const _CategoryGrid({
     required this.categories,

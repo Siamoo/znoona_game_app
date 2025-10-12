@@ -303,7 +303,7 @@ Widget _buildGameHeader(
         Container(
           padding: EdgeInsets.all(8.sp),
           decoration: BoxDecoration(
-            color: Colors.green.withOpacity(0.2),
+            color: Colors.green,
             borderRadius: BorderRadius.circular(8),
           ),
           child: Text(

@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 import 'package:znoona_game_app/core/helpers/znoona_navigate.dart';
-import 'package:znoona_game_app/core/helpers/znoona_texts.dart';
 import 'package:znoona_game_app/features/quiz/room/domain/entities/room.dart';
 import 'package:znoona_game_app/features/quiz/room/domain/entities/room_player.dart';
 import 'package:znoona_game_app/features/quiz/room/presentation/cubit/room_cubit.dart';
@@ -460,12 +459,7 @@ class _StartGameButton extends StatelessWidget {
             ElevatedButton(
               onPressed: () {
                 // Navigate to game screen
-                Navigator.pushReplacement(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) => GamePlayingScreen(room: room),
-                  ),
-                );
+                ZnoonaNavigate.pushReplacementTo(context, GamePlayingScreen(room: room));
               },
               style: ElevatedButton.styleFrom(
                 backgroundColor: Colors.green,

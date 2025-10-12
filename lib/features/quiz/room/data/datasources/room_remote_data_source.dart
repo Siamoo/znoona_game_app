@@ -19,7 +19,7 @@ class RoomRemoteDataSource {
     final metadata = user.userMetadata ?? {};
     final userNameMeta = metadata['full_name'] ?? 'Host';
 
-    final result = await supabase.rpc(
+    final result = await supabase.rpc<dynamic>(
       'create_room_with_questions',
       params: {
         'p_category_id': categoryId,

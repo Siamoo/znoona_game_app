@@ -7,7 +7,6 @@ import 'package:znoona_game_app/features/quiz/room/data/datasources/room_remote_
 import 'package:znoona_game_app/features/quiz/room/data/repositories/room_repository_impl.dart';
 import 'package:znoona_game_app/features/quiz/room/domain/repositories/room_repository.dart';
 import 'package:znoona_game_app/features/quiz/room/domain/usecases/create_room_usecase.dart';
-import 'package:znoona_game_app/features/quiz/room/domain/usecases/get_player_answers_usecase.dart';
 import 'package:znoona_game_app/features/quiz/room/domain/usecases/get_questions_usecase.dart';
 import 'package:znoona_game_app/features/quiz/room/domain/usecases/get_room_players_stream_usecase.dart';
 import 'package:znoona_game_app/features/quiz/room/domain/usecases/get_room_questions_usecase.dart';
@@ -117,7 +116,6 @@ Future<void> setupInjector() async {
     ..registerLazySingleton(() => WatchRoomUseCase(sl()))
     ..registerLazySingleton(() => GetQuestionsUseCase(sl()))
     ..registerLazySingleton(() => SubmitAnswerUseCase(sl()))
-    ..registerLazySingleton(() => GetPlayerAnswersUseCase(sl()))
     ..registerLazySingleton(() => ResetAnswersUseCase(sl()))
     ..registerLazySingleton(() => WatchPlayerAnswersUseCase(sl()))
     /// Cubits
@@ -133,7 +131,6 @@ Future<void> setupInjector() async {
         watchRoomUseCase: sl(),
         getQuestionsUseCase: sl(),
         submitAnswerUseCase: sl(),
-        getPlayerAnswersUseCase: sl(),
         resetAnswersUseCase: sl(),
         watchPlayerAnswersUseCase: sl(),
       ),

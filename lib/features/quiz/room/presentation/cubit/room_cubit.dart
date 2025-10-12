@@ -7,7 +7,6 @@ import 'package:znoona_game_app/features/quiz/room/domain/entities/room.dart';
 import 'package:znoona_game_app/features/quiz/room/domain/entities/room_player.dart';
 import 'package:znoona_game_app/features/quiz/room/domain/entities/room_question.dart';
 import 'package:znoona_game_app/features/quiz/room/domain/usecases/create_room_usecase.dart';
-import 'package:znoona_game_app/features/quiz/room/domain/usecases/get_player_answers_usecase.dart';
 import 'package:znoona_game_app/features/quiz/room/domain/usecases/get_questions_usecase.dart';
 import 'package:znoona_game_app/features/quiz/room/domain/usecases/get_room_players_stream_usecase.dart';
 import 'package:znoona_game_app/features/quiz/room/domain/usecases/get_room_questions_usecase.dart';
@@ -36,7 +35,6 @@ class RoomCubit extends Cubit<RoomState> {
     required this.watchRoomUseCase,
     required this.getQuestionsUseCase,
     required this.submitAnswerUseCase,
-    required this.getPlayerAnswersUseCase,
     required this.resetAnswersUseCase,
     required this.watchPlayerAnswersUseCase,
   }) : super(const RoomState.initial());
@@ -51,7 +49,6 @@ class RoomCubit extends Cubit<RoomState> {
   final WatchRoomUseCase watchRoomUseCase;
   final GetQuestionsUseCase getQuestionsUseCase;
   final SubmitAnswerUseCase submitAnswerUseCase;
-  final GetPlayerAnswersUseCase getPlayerAnswersUseCase;
   final ResetAnswersUseCase resetAnswersUseCase;
   final WatchPlayerAnswersUseCase watchPlayerAnswersUseCase;
 
@@ -71,7 +68,6 @@ class RoomCubit extends Cubit<RoomState> {
   Map<String, String?> _playerAnswers = {};
   List<RoomPlayer> _currentPlayers = [];
   String? _currentRoomId;
-  Timer? _answersPollTimer;
 
   Future<void> createRoom({
     required String categoryId,
@@ -146,11 +142,13 @@ class RoomCubit extends Cubit<RoomState> {
     await _playersSub?.cancel();
     await _roomWatcher?.cancel();
     _questionTimer?.cancel();
+    _answersSub?.cancel();
 
     _roomsSubscription = null;
     _roomsSub = null;
     _playersSub = null;
     _roomWatcher = null;
+    _answersSub = null;
 
     final result = await leaveRoomUseCase(roomId: roomId);
 
@@ -169,14 +167,8 @@ class RoomCubit extends Cubit<RoomState> {
     _roomsSub = getRoomsStreamUseCase().listen((either) {
       if (isClosed) return;
       either.fold(
-        (failure) {
-          emit(RoomState.error(failure));
-          print(failure);
-        },
-        (rooms) {
-
-          emit(RoomState.roomsUpdated(rooms));
-        },
+        (failure) => emit(RoomState.error(failure)),
+        (rooms) => emit(RoomState.roomsUpdated(rooms)),
       );
     });
   }
@@ -188,18 +180,8 @@ class RoomCubit extends Cubit<RoomState> {
       either.fold(
         (failure) => emit(RoomState.error(failure)),
         (players) {
-          print('✅ watchRoomPlayers update: ${players.length} players');
-          print(
-            '✅ Players: ${players.map((p) => '${p.username} (${p.userId})').toList()}',
-          );
-
           _currentPlayers = players;
           emit(RoomState.playersUpdated(players));
-
-          if (_isInQuizMode()) {
-            print('🟥🟥 In quiz mode, checking if all players answered...');
-            _checkAllPlayersAnswered();
-          }
         },
       );
     });
@@ -212,12 +194,8 @@ class RoomCubit extends Cubit<RoomState> {
       either.fold(
         (failure) => emit(RoomState.error(failure)),
         (room) {
-          if (room == null) {
-            print('🟦🟦 watchRoom returned null (temporary)');
-            return;
-          }
+          if (room == null) return;
 
-          print('🟦🟦 watchRoom update: ${room.status}');
           if (room.status == 'started') {
             emit(const RoomState.gameStarted());
           } else {
@@ -239,8 +217,6 @@ class RoomCubit extends Cubit<RoomState> {
       startResult.fold(
         (failure) => emit(RoomState.error(failure)),
         (_) async {
-          print('🟢🟢🟢 Room status updated to playing, now loading questions...');
-
           final questionsResult = await getRoomQuestions(roomId);
 
           if (isClosed) return;
@@ -266,9 +242,6 @@ class RoomCubit extends Cubit<RoomState> {
               actualQuestionsResult.fold(
                 (failure) => emit(RoomState.error(failure)),
                 (questions) {
-                  print(
-                    '🟢🟢🟢 Questions loaded successfully, starting quiz with ${questions.length} questions',
-                  );
                   startQuiz(questions);
                 },
               );
@@ -314,15 +287,8 @@ class RoomCubit extends Cubit<RoomState> {
     _playerAnswers.clear();
     _remainingTime = 15;
 
-    print('🔵🔵🔵 Starting quiz with ${questions.length} questions');
-    print(
-      '🔵🔵🔵 Current players: ${_currentPlayers.map((p) => p.username).toList()}',
-    );
-
     _clearExistingAnswers(_getCurrentRoomId());
-
     _watchPlayerAnswers(_getCurrentRoomId());
-
     _startQuestionTimer();
 
     emit(
@@ -340,11 +306,10 @@ class RoomCubit extends Cubit<RoomState> {
   }
 
   Future<void> _clearExistingAnswers(String roomId) async {
-    print('🧹🧹 CLEARING: Any existing answers before starting quiz');
     final resetResult = await resetAnswersUseCase(roomId);
     resetResult.fold(
-      (failure) => print('🧹❌ Failed to clear existing answers: $failure'),
-      (_) => print('🧹✅ Existing answers cleared'),
+      (failure) => print('Failed to clear existing answers: $failure'),
+      (_) => print('Existing answers cleared'),
     );
   }
 
@@ -356,10 +321,6 @@ class RoomCubit extends Cubit<RoomState> {
       if (_remainingTime > 0) {
         _remainingTime--;
         _emitQuizState();
-
-        if (_remainingTime <= 5) {
-          print('⏳ Time running low: $_remainingTime seconds remaining');
-        }
       } else {
         timer.cancel();
         _handleTimeUp();
@@ -373,16 +334,12 @@ class RoomCubit extends Cubit<RoomState> {
 
     if (_playerAnswers.containsKey(currentUser) &&
         _playerAnswers[currentUser] != null) {
-      print('⚪⚪ User $currentUser already answered');
       return;
     }
 
     if (_remainingTime <= 0) {
-      print('⚪⚪ Time is up, cannot answer');
       return;
     }
-
-    print('⚪⚪ User $currentUser selected answer: $answer');
 
     _selectedAnswer = answer;
     _playerAnswers[currentUser] = answer;
@@ -390,9 +347,6 @@ class RoomCubit extends Cubit<RoomState> {
     final isCorrect = answer == currentQuestion.correctAnswer;
     if (isCorrect) {
       _correctCount++;
-      print('⚪✅ Correct answer! Total correct: $_correctCount');
-    } else {
-      print('⚪❌ Wrong answer. Correct was: ${currentQuestion.correctAnswer}');
     }
 
     _emitQuizState();
@@ -405,74 +359,30 @@ class RoomCubit extends Cubit<RoomState> {
     );
 
     result.fold(
-      (failure) => print('⚪❌ Failed to submit answer to database: $failure'),
-      (_) => print('⚪✅ Answer submitted to database successfully'),
+      (failure) => print('Failed to submit answer to database: $failure'),
+      (_) => print('Answer submitted to database successfully'),
     );
-
-    _checkAllPlayersAnswered();
-  }
-
-  void _checkAllPlayersAnswered() {
-    if (_currentPlayers.isEmpty) {
-      print('⚪⚪⚠️ No players found to check answers');
-      return;
-    }
-
-    final activePlayers = _currentPlayers
-        .where((player) => player.isConnected)
-        .toList();
-
-    if (activePlayers.isEmpty) {
-      print('⚪⚪⚠️ No active players to check answers');
-      return;
-    }
-
-    final answeredPlayers = activePlayers
-        .where((player) => _playerAnswers[player.userId] != null)
-        .length;
-
-    final allCurrentPlayersAnswered = answeredPlayers == activePlayers.length;
-
-    print('⚪⚪🎯 Players answered: $answeredPlayers/${activePlayers.length}');
-    print('⚪⚪🎯 All players answered: $allCurrentPlayersAnswered');
-
-    if (allCurrentPlayersAnswered && _remainingTime > 0) {
-      print(
-        '⚪⚪🎉 ALL players have answered! Moving to next question immediately...',
-      );
-      _questionTimer?.cancel();
-      _moveToNextQuestion();
-    }
   }
 
   void _handleTimeUp() {
-    print('⏰⏰ Time\'s up! Moving to next question...');
     _questionTimer?.cancel();
-
     _moveToNextQuestion();
   }
 
   void _moveToNextQuestion() {
-    print('◽◽◽➡️ Moving to next question...');
-
     _answersSub?.cancel();
 
     if (_currentQuestionIndex < _questions.length - 1) {
-      // Move to next question
       _currentQuestionIndex++;
       _selectedAnswer = null;
       _playerAnswers.clear();
 
-      print('◽◽◽➡️ NOW on question ${_currentQuestionIndex + 1}');
-
       _resetAnswersForNewQuestion();
-
       _startQuestionTimer();
       _refreshAnswersStream(_getCurrentRoomId());
 
       _emitQuizState();
     } else {
-      print('◽◽◽🏁 QUIZ FINISHED!');
       _questionTimer?.cancel();
       _answersSub?.cancel();
       emit(
@@ -486,18 +396,14 @@ class RoomCubit extends Cubit<RoomState> {
   }
 
   Future<void> _resetAnswersForNewQuestion() async {
-    print('🔄🔄✅🔄✅ RESET: Resetting answers for new question...');
-
     try {
       final resetResult = await resetAnswersUseCase(_getCurrentRoomId());
       resetResult.fold(
-        (failure) => print('🔄❌ Failed to reset answers: $failure'),
-        (_) => print('🔄✅🔄✅🔄✅ Answers reset for new question'),
+        (failure) => print('Failed to reset answers: $failure'),
+        (_) => print('Answers reset for new question'),
       );
-
-      await Future.delayed(const Duration(milliseconds: 30000));
     } catch (e) {
-      print('🔄❌ Reset failed: $e, continuing anyway');
+      print('Reset failed: $e, continuing anyway');
     }
   }
 
@@ -507,8 +413,6 @@ class RoomCubit extends Cubit<RoomState> {
         _currentPlayers.every(
           (player) => _playerAnswers[player.userId] != null,
         );
-
-    print('🟣🟣🟣 All answered: $allPlayersAnswered Current count: ${_currentPlayers.length} Answers count: ${_playerAnswers.length}' );
 
     emit(
       RoomState.quizStarted(
@@ -525,9 +429,7 @@ class RoomCubit extends Cubit<RoomState> {
   }
 
   bool _isInQuizMode() {
-    return state is _QuizStarted ||
-        state is _QuestionTimeUp ||
-        state is _AllPlayersAnswered;
+    return state is _QuizStarted;
   }
 
   String _getCurrentUserId() {
@@ -535,133 +437,45 @@ class RoomCubit extends Cubit<RoomState> {
     return user?.id ?? 'unknown';
   }
 
-  void _startAnswerPolling(String roomId) {
-    _answersPollTimer?.cancel();
-
-    print('💨 STARTING answer polling for room: $roomId');
-
-    _answersPollTimer = Timer.periodic(const Duration(seconds: 3), (
-      timer,
-    ) async {
-      if (isClosed) {
-        timer.cancel();
-        return;
-      }
-
-      print('💨 POLLING: Checking for player answers...');
-
-      final result = await getPlayerAnswersUseCase(roomId);
-      result.fold(
-        (failure) {
-          print('💨❌ Polling failed: $failure');
-        },
-        (Map<String, String> answers) {
-          print('💨🔄 POLLING: Got answers: $answers');
-          print(
-            '💨🔄 POLLING: Current players: ${_currentPlayers.map((p) => p.userId).toList()}',
-          );
-
-          final Map<String, String?> updatedAnswers = {};
-          answers.forEach((key, value) {
-            updatedAnswers[key] = value;
-          });
-
-          if (_hasAnswersChanged(updatedAnswers)) {
-            print('💨🔄 POLLING: Answers changed, updating state');
-            _playerAnswers = updatedAnswers;
-
-            if (_isInQuizMode()) {
-              _emitQuizState();
-              _checkAllPlayersAnswered();
-            }
-          } else {
-            print('💨🔄 POLLING: No changes in answers');
-          }
-        },
-      );
-    });
-  }
-
-  bool _hasAnswersChanged(Map<String, String?> newAnswers) {
-    if (_playerAnswers.length != newAnswers.length) {
-      print(
-        '💞🔄 Answers changed: length different (${_playerAnswers.length} vs ${newAnswers.length})',
-      );
-      return true;
-    }
-
-    for (final entry in newAnswers.entries) {
-      if (_playerAnswers[entry.key] != entry.value) {
-        print(
-          '💞🔄 Answers changed: ${entry.key} changed from ${_playerAnswers[entry.key]} to ${entry.value}',
-        );
-        return true;
-      }
-    }
-
-    return false;
-  }
-
   void _watchPlayerAnswers(String roomId) {
     _answersSub?.cancel();
-
-    print('💦 STARTING real-time player answers watcher for room: $roomId');
-    print('💦 Current question: ${_currentQuestionIndex + 1}');
-    print('💦 Current local answers: $_playerAnswers');
 
     _answersSub = watchPlayerAnswersUseCase(roomId).listen(
       (either) {
         if (isClosed) return;
 
         either.fold(
-          (failure) {
-            print('💦❌ Real-time stream error: $failure');
-            _startAnswerPolling(roomId);
-          },
+          (failure) => print('Real-time stream error: $failure'),
           (Map<String, String> answers) {
-            print('💦🎯 REAL-TIME: Got answers: $answers');
-            print(
-              '💦🎯 REAL-TIME: Current players: ${_currentPlayers.map((p) => p.userId).toList()}',
-            );
-
             final Map<String, String?> updatedAnswers = {};
             answers.forEach((key, value) {
               updatedAnswers[key] = value;
             });
 
             _playerAnswers = updatedAnswers;
-            print('💦🎯 UPDATED playerAnswers: $_playerAnswers');
 
             if (_isInQuizMode()) {
               _emitQuizState();
-              _checkAllPlayersAnswered();
             }
           },
         );
       },
-      onError: (error) {
-        print('💦❌ Real-time stream onError: $error');
-        _startAnswerPolling(roomId);
-      },
+      onError: (error) => print('Real-time stream onError: $error'),
       cancelOnError: true,
     );
   }
 
   void _refreshAnswersStream(String roomId) {
-    print('🛑🔄 FORCE REFRESH: Restarting answers stream');
-
     _answersSub?.cancel();
 
-    Future.delayed(const Duration(milliseconds: 300), () {
+    Future.delayed(const Duration(milliseconds: 100), () {
       _watchPlayerAnswers(roomId);
     });
   }
 
   @override
   Future<void> close() async {
-    print('🧹 Cleaning up RoomCubit...');
     _questionTimer?.cancel();
-    _answersPollTimer?.cancel(); 
     await _roomsSubscription?.cancel();
     await _roomsSub?.cancel();
     await _playersSub?.cancel();
@@ -671,8 +485,7 @@ class RoomCubit extends Cubit<RoomState> {
     _roomsSub = null;
     _playersSub = null;
     _roomWatcher = null;
-    _answersSub = null; 
-    _answersPollTimer = null; 
+    _answersSub = null;
     return super.close();
   }
 }

@@ -172,7 +172,6 @@ class RoomRemoteDataSource {
         .map((rows) => rows.isNotEmpty ? RoomModel.fromJson(rows.first) : null);
   }
 
-
   ///  Get multiple questions by IDs
   Future<List<Question>> getQuestions(List<String> questionIds) async {
     if (questionIds.isEmpty) return [];
@@ -281,9 +280,9 @@ class RoomRemoteDataSource {
 
     return supabase
         .from('room_players')
-        .stream(primaryKey: ['id'])
-        .eq('room_id', roomId)
-        .map((List<Map<String, dynamic>> rows) {
+      .stream(primaryKey: ['id'])
+      .eq('room_id', roomId)
+      .map((List<Map<String, dynamic>> rows) {
           final Map<String, String> answers = {};
 
           for (final row in rows) {

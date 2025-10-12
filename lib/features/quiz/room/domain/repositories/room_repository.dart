@@ -30,7 +30,6 @@ Future<Either<String, List<RoomQuestion>>> getRoomQuestions(String roomId);
 
   Future<Either<String, List<Question>>> getQuestions(List<String> questionIds);
 
-  // ... your existing methods ...
 
   Future<Either<String, void>> submitAnswer({
     required String roomId,

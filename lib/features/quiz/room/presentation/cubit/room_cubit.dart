@@ -8,7 +8,6 @@ import 'package:znoona_game_app/features/quiz/room/domain/entities/room_player.d
 import 'package:znoona_game_app/features/quiz/room/domain/entities/room_question.dart';
 import 'package:znoona_game_app/features/quiz/room/domain/usecases/create_room_usecase.dart';
 import 'package:znoona_game_app/features/quiz/room/domain/usecases/get_player_answers_usecase.dart';
-import 'package:znoona_game_app/features/quiz/room/domain/usecases/get_question_usecase.dart';
 import 'package:znoona_game_app/features/quiz/room/domain/usecases/get_questions_usecase.dart';
 import 'package:znoona_game_app/features/quiz/room/domain/usecases/get_room_players_stream_usecase.dart';
 import 'package:znoona_game_app/features/quiz/room/domain/usecases/get_room_questions_usecase.dart';
@@ -69,13 +68,11 @@ class RoomCubit extends Cubit<RoomState> {
   int _correctCount = 0;
   String? _selectedAnswer;
   List<Question> _questions = [];
-  Map<String, String?> _playerAnswers = {}; // playerId -> selectedAnswer
+  Map<String, String?> _playerAnswers = {};
   List<RoomPlayer> _currentPlayers = [];
-  String? _currentRoomId; // Track current room ID
+  String? _currentRoomId;
   Timer? _answersPollTimer;
 
-  // 🔹 إنشاء روم جديد
-  // Update when creating/joining rooms
   Future<void> createRoom({
     required String categoryId,
   }) async {
@@ -86,12 +83,10 @@ class RoomCubit extends Cubit<RoomState> {
     result.fold(
       (failure) {
         emit(RoomState.error(failure));
-        print('❌ Create room failed: $failure');
+        print('Create room failed: $failure');
       },
       (room) async {
-        print('✅ Room created: ${room.id} (${room.code})');
-
-        _currentRoomId = room.id; // SET CURRENT ROOM ID
+        _currentRoomId = room.id;
 
         watchRoom(room.id);
         watchRoomPlayers(room.id);
@@ -119,15 +114,14 @@ class RoomCubit extends Cubit<RoomState> {
             (rooms) {
               try {
                 final room = rooms.firstWhere((r) => r.code == code);
-                print('✅ Joined room found: ${room.id}');
 
-                _currentRoomId = room.id; // SET CURRENT ROOM ID
+                _currentRoomId = room.id;
 
                 watchRoom(room.id);
                 watchRoomPlayers(room.id);
 
                 emit(RoomState.joined(room));
-              } catch (_) {
+              } on Exception catch (_) {
                 emit(const RoomState.error('Room not found!'));
               }
             },
@@ -144,11 +138,9 @@ class RoomCubit extends Cubit<RoomState> {
     return _currentRoomId!;
   }
 
-  // 🔹 مغادرة الروم
   Future<void> leaveRoom({
     required String roomId,
   }) async {
-    // إلغاء جميع الاشتراكات الحالية لتفادي التحديث بعد الإغلاق
     await _roomsSubscription?.cancel();
     await _roomsSub?.cancel();
     await _playersSub?.cancel();
@@ -162,37 +154,33 @@ class RoomCubit extends Cubit<RoomState> {
 
     final result = await leaveRoomUseCase(roomId: roomId);
 
-    if (isClosed) return; // 🔹 حماية إضافية من emit بعد الإغلاق
+    if (isClosed) return;
 
     result.fold(
       (failure) => emit(RoomState.error(failure)),
       (_) {
-        print('🧭 leaveRoom');
         emit(const RoomState.left());
       },
     );
   }
 
-  // 🔹 مراقبة جميع الغرف
   void watchRooms() {
     _roomsSub?.cancel();
     _roomsSub = getRoomsStreamUseCase().listen((either) {
-      if (isClosed) return; // 🔹 تأكد قبل emit
+      if (isClosed) return;
       either.fold(
         (failure) {
           emit(RoomState.error(failure));
           print(failure);
         },
         (rooms) {
-          print('🧭 watchRooms update: ${rooms.length}');
+
           emit(RoomState.roomsUpdated(rooms));
         },
       );
     });
   }
 
-  // 🔹 مراقبة لاعبي الروم
-  // 🔹 مراقبة لاعبي الروم
   void watchRoomPlayers(String roomId) {
     _playersSub?.cancel();
     _playersSub = getRoomPlayersStreamUseCase(roomId).listen((either) {
@@ -200,17 +188,16 @@ class RoomCubit extends Cubit<RoomState> {
       either.fold(
         (failure) => emit(RoomState.error(failure)),
         (players) {
-          print('🧭 watchRoomPlayers update: ${players.length} players');
+          print('✅ watchRoomPlayers update: ${players.length} players');
           print(
-            '🧭 Players: ${players.map((p) => '${p.username} (${p.userId})').toList()}',
+            '✅ Players: ${players.map((p) => '${p.username} (${p.userId})').toList()}',
           );
 
           _currentPlayers = players;
           emit(RoomState.playersUpdated(players));
 
-          // Check if all players have answered in quiz mode
           if (_isInQuizMode()) {
-            print('🔍 In quiz mode, checking if all players answered...');
+            print('🟥🟥 In quiz mode, checking if all players answered...');
             _checkAllPlayersAnswered();
           }
         },
@@ -218,7 +205,6 @@ class RoomCubit extends Cubit<RoomState> {
     });
   }
 
-  // 🔹 مراقبة حالة الروم
   void watchRoom(String roomId) {
     _roomWatcher?.cancel();
     _roomWatcher = watchRoomUseCase(roomId).listen((either) {
@@ -227,11 +213,11 @@ class RoomCubit extends Cubit<RoomState> {
         (failure) => emit(RoomState.error(failure)),
         (room) {
           if (room == null) {
-            print('⚠️ watchRoom returned null (temporary)');
+            print('🟦🟦 watchRoom returned null (temporary)');
             return;
           }
 
-          print('🧭 watchRoom update: ${room.status}');
+          print('🟦🟦 watchRoom update: ${room.status}');
           if (room.status == 'started') {
             emit(const RoomState.gameStarted());
           } else {
@@ -242,13 +228,10 @@ class RoomCubit extends Cubit<RoomState> {
     });
   }
 
-  // 🔹 بدء اللعبة
-  // 🔹 بدء اللعبة
   Future<void> startGame(String roomId) async {
     emit(const RoomState.loading());
 
     try {
-      // First update room status to 'playing' via the use case
       final startResult = await startGameUseCase(roomId);
 
       if (isClosed) return;
@@ -256,9 +239,8 @@ class RoomCubit extends Cubit<RoomState> {
       startResult.fold(
         (failure) => emit(RoomState.error(failure)),
         (_) async {
-          print('🚀 Room status updated to playing, now loading questions...');
+          print('🟢🟢🟢 Room status updated to playing, now loading questions...');
 
-          // Then load questions for the quiz
           final questionsResult = await getRoomQuestions(roomId);
 
           if (isClosed) return;
@@ -275,7 +257,6 @@ class RoomCubit extends Cubit<RoomState> {
                 return;
               }
 
-              // Use the use case directly to get questions (returns Either)
               final actualQuestionsResult = await getQuestionsUseCase(
                 questionIds,
               );
@@ -286,9 +267,8 @@ class RoomCubit extends Cubit<RoomState> {
                 (failure) => emit(RoomState.error(failure)),
                 (questions) {
                   print(
-                    '✅ Questions loaded successfully, starting quiz with ${questions.length} questions',
+                    '🟢🟢🟢 Questions loaded successfully, starting quiz with ${questions.length} questions',
                   );
-                  // Start the quiz with the loaded questions
                   startQuiz(questions);
                 },
               );
@@ -302,7 +282,6 @@ class RoomCubit extends Cubit<RoomState> {
     }
   }
 
-  // 🔹 تحميل أسئلة الروم
   Future<Either<String, List<RoomQuestion>>> getRoomQuestions(
     String roomId,
   ) async {
@@ -314,8 +293,6 @@ class RoomCubit extends Cubit<RoomState> {
     }
   }
 
-
-  /// ❓ Get multiple questions
   Future<void> getQuestions(List<String> questionIds) async {
     emit(const RoomState.loading());
 
@@ -329,313 +306,239 @@ class RoomCubit extends Cubit<RoomState> {
     );
   }
 
-/// 🚀 Start the quiz with questions
-void startQuiz(List<Question> questions) {
-  _questions = questions;
-  _currentQuestionIndex = 0;
-  _correctCount = 0;
-  _selectedAnswer = null;
-  _playerAnswers.clear();
-  _remainingTime = 15;
-
-  print('🚀 Starting quiz with ${questions.length} questions');
-  print('🚀 Current players: ${_currentPlayers.map((p) => p.username).toList()}');
-
-  // Clear any existing answers in database first
-  _clearExistingAnswers(_getCurrentRoomId());
-
-  // Start REAL-TIME answers monitoring
-  _watchPlayerAnswers(_getCurrentRoomId());
-
-  _startQuestionTimer();
-
-  emit(
-    RoomState.quizStarted(
-      questions: _questions,
-      currentQuestionIndex: _currentQuestionIndex,
-      remainingTime: _remainingTime,
-      playerAnswers: _playerAnswers,
-      selectedAnswer: _selectedAnswer,
-      correctCount: _correctCount,
-      isWaitingForPlayers: false,
-      players: _currentPlayers,
-    ),
-  );
-}
-
-
-  /// 🧹 Clear any existing answers when starting quiz
-  Future<void> _clearExistingAnswers(String roomId) async {
-    print('🧹 CLEARING: Any existing answers before starting quiz');
-    final resetResult = await resetAnswersUseCase(roomId);
-    resetResult.fold(
-      (failure) => print('❌ Failed to clear existing answers: $failure'),
-      (_) => print('✅ Existing answers cleared'),
-    );
-  }
-
-/// ⏱️ Start timer for current question
-void _startQuestionTimer() {
-  _questionTimer?.cancel();
-  _remainingTime = 15;
-
-  _questionTimer = Timer.periodic(const Duration(seconds: 1), (timer) {
-    if (_remainingTime > 0) {
-      _remainingTime--;
-      _emitQuizState();
-      
-      // Optional: Add a check when time is running low
-      if (_remainingTime <= 5) {
-        print('⏳ Time running low: $_remainingTime seconds remaining');
-      }
-    } else {
-      timer.cancel();
-      // SCENARIO 1: Time finished
-      _handleTimeUp();
-    }
-  });
-}
-
-/// ✅ Player selects an answer
-Future<void> selectAnswer(String answer) async {
-  final currentUser = _getCurrentUserId();
-  final currentQuestion = _questions[_currentQuestionIndex];
-
-  // Don't allow answering if already answered or time is up
-  if (_playerAnswers.containsKey(currentUser) &&
-      _playerAnswers[currentUser] != null) {
-    print('⚠️ User $currentUser already answered');
-    return;
-  }
-
-  if (_remainingTime <= 0) {
-    print('⚠️ Time is up, cannot answer');
-    return;
-  }
-
-  print('🎯 User $currentUser selected answer: $answer');
-
-  // Store answer locally immediately for better UX
-  _selectedAnswer = answer;
-  _playerAnswers[currentUser] = answer;
-
-  // Check if answer is correct
-  final isCorrect = answer == currentQuestion.correctAnswer;
-  if (isCorrect) {
-    _correctCount++;
-    print('✅ Correct answer! Total correct: $_correctCount');
-  } else {
-    print('❌ Wrong answer. Correct was: ${currentQuestion.correctAnswer}');
-  }
-
-  // Emit state immediately for better UX
-  _emitQuizState();
-
-  // Store answer in database for all players to see
-  final result = await submitAnswerUseCase(
-    roomId: _getCurrentRoomId(),
-    userId: currentUser,
-    selectedAnswer: answer,
-    isCorrect: isCorrect,
-  );
-
-  result.fold(
-    (failure) => print('❌ Failed to submit answer to database: $failure'),
-    (_) => print('✅ Answer submitted to database successfully'),
-  );
-
-  // SCENARIO 2: Check if all players answered after this answer
-  _checkAllPlayersAnswered();
-}
-
-/// 👥 Check if all players have answered current question
-void _checkAllPlayersAnswered() {
-  if (_currentPlayers.isEmpty) {
-    print('⚠️ No players found to check answers');
-    return;
-  }
-
-  // Count active/connected players
-  final activePlayers = _currentPlayers.where((player) => player.isConnected).toList();
-  
-  if (activePlayers.isEmpty) {
-    print('⚠️ No active players to check answers');
-    return;
-  }
-
-  // Count how many active players have answered
-  final answeredPlayers = activePlayers.where(
-    (player) => _playerAnswers[player.userId] != null
-  ).length;
-
-  final allCurrentPlayersAnswered = answeredPlayers == activePlayers.length;
-
-  print('🎯 Players answered: $answeredPlayers/${activePlayers.length}');
-  print('🎯 All players answered: $allCurrentPlayersAnswered');
-
-  // SCENARIO 2: All players answered - move to next question
-  if (allCurrentPlayersAnswered && _remainingTime > 0) {
-    print('🎉 ALL players have answered! Moving to next question immediately...');
-    _questionTimer?.cancel();
-    _moveToNextQuestion();
-  }
-}
-/// ⏰ Handle time up for current question
-void _handleTimeUp() {
-  print('⏰ Time\'s up! Moving to next question...');
-  _questionTimer?.cancel();
-  
-  // SCENARIO 1: Time finished - move to next question
-  _moveToNextQuestion();
-}
-
-/// ➡️ Move to next question (REPLACES _showQuestionResults)
-void _moveToNextQuestion() {
-  print('➡️ Moving to next question...');
-  
-  // Cancel current stream to prevent old data
-  _answersSub?.cancel();
-  
-  if (_currentQuestionIndex < _questions.length - 1) {
-    // Move to next question
-    _currentQuestionIndex++;
+  void startQuiz(List<Question> questions) {
+    _questions = questions;
+    _currentQuestionIndex = 0;
+    _correctCount = 0;
     _selectedAnswer = null;
     _playerAnswers.clear();
-    
-    print('➡️ NOW on question ${_currentQuestionIndex + 1}');
-    
-    // Reset answers in database for new question
-    _resetAnswersForNewQuestion();
-    
-    // Restart timer and stream
-    _startQuestionTimer();
-    _refreshAnswersStream(_getCurrentRoomId());
-    
-    _emitQuizState();
-    
-  } else {
-    // Quiz finished
-    print('🏁 QUIZ FINISHED!');
-    _questionTimer?.cancel();
-    _answersSub?.cancel();
-    emit(RoomState.quizFinished(
-      totalQuestions: _questions.length,
-      correctAnswers: _correctCount,
-      players: _currentPlayers,
-    ));
-  }
-}
+    _remainingTime = 15;
 
-/// 🔄 Reset answers for new question
-Future<void> _resetAnswersForNewQuestion() async {
-  print('🔄 RESET: Resetting answers for new question...');
-  
-  try {
-    final resetResult = await resetAnswersUseCase(_getCurrentRoomId());
-    resetResult.fold(
-      (failure) => print('❌ Failed to reset answers: $failure'),
-      (_) => print('✅ Answers reset for new question'),
+    print('🔵🔵🔵 Starting quiz with ${questions.length} questions');
+    print(
+      '🔵🔵🔵 Current players: ${_currentPlayers.map((p) => p.username).toList()}',
     );
-    
-    // Wait a bit for database to process
-    await Future.delayed(const Duration(milliseconds: 500));
-    
-  } catch (e) {
-    print('❌ Reset failed: $e, continuing anyway');
+
+    _clearExistingAnswers(_getCurrentRoomId());
+
+    _watchPlayerAnswers(_getCurrentRoomId());
+
+    _startQuestionTimer();
+
+    emit(
+      RoomState.quizStarted(
+        questions: _questions,
+        currentQuestionIndex: _currentQuestionIndex,
+        remainingTime: _remainingTime,
+        playerAnswers: _playerAnswers,
+        selectedAnswer: _selectedAnswer,
+        correctCount: _correctCount,
+        isWaitingForPlayers: false,
+        players: _currentPlayers,
+      ),
+    );
   }
-}
 
-/// 🔄 Emit current quiz state
-void _emitQuizState() {
-  final allPlayersAnswered = _currentPlayers.isNotEmpty &&
-      _currentPlayers.every((player) => _playerAnswers[player.userId] != null);
+  Future<void> _clearExistingAnswers(String roomId) async {
+    print('🧹🧹 CLEARING: Any existing answers before starting quiz');
+    final resetResult = await resetAnswersUseCase(roomId);
+    resetResult.fold(
+      (failure) => print('🧹❌ Failed to clear existing answers: $failure'),
+      (_) => print('🧹✅ Existing answers cleared'),
+    );
+  }
 
-  print('🔄 Emitting quiz state - All players answered: $allPlayersAnswered');
-  print('🔄 Current players count: ${_currentPlayers.length}');
-  print('🔄 Answers count: ${_playerAnswers.length}');
+  void _startQuestionTimer() {
+    _questionTimer?.cancel();
+    _remainingTime = 15;
 
-  emit(
-    RoomState.quizStarted(
-      questions: _questions,
-      currentQuestionIndex: _currentQuestionIndex,
-      remainingTime: _remainingTime,
-      playerAnswers: _playerAnswers,
-      selectedAnswer: _selectedAnswer,
-      correctCount: _correctCount,
-      isWaitingForPlayers: allPlayersAnswered,
-      players: _currentPlayers,
-    ),
-  );
-}
+    _questionTimer = Timer.periodic(const Duration(seconds: 1), (timer) {
+      if (_remainingTime > 0) {
+        _remainingTime--;
+        _emitQuizState();
 
+        if (_remainingTime <= 5) {
+          print('⏳ Time running low: $_remainingTime seconds remaining');
+        }
+      } else {
+        timer.cancel();
+        _handleTimeUp();
+      }
+    });
+  }
 
-  /// 🔍 Check if we're in quiz mode
+  Future<void> selectAnswer(String answer) async {
+    final currentUser = _getCurrentUserId();
+    final currentQuestion = _questions[_currentQuestionIndex];
+
+    if (_playerAnswers.containsKey(currentUser) &&
+        _playerAnswers[currentUser] != null) {
+      print('⚪⚪ User $currentUser already answered');
+      return;
+    }
+
+    if (_remainingTime <= 0) {
+      print('⚪⚪ Time is up, cannot answer');
+      return;
+    }
+
+    print('⚪⚪ User $currentUser selected answer: $answer');
+
+    _selectedAnswer = answer;
+    _playerAnswers[currentUser] = answer;
+
+    final isCorrect = answer == currentQuestion.correctAnswer;
+    if (isCorrect) {
+      _correctCount++;
+      print('⚪✅ Correct answer! Total correct: $_correctCount');
+    } else {
+      print('⚪❌ Wrong answer. Correct was: ${currentQuestion.correctAnswer}');
+    }
+
+    _emitQuizState();
+
+    final result = await submitAnswerUseCase(
+      roomId: _getCurrentRoomId(),
+      userId: currentUser,
+      selectedAnswer: answer,
+      isCorrect: isCorrect,
+    );
+
+    result.fold(
+      (failure) => print('⚪❌ Failed to submit answer to database: $failure'),
+      (_) => print('⚪✅ Answer submitted to database successfully'),
+    );
+
+    _checkAllPlayersAnswered();
+  }
+
+  void _checkAllPlayersAnswered() {
+    if (_currentPlayers.isEmpty) {
+      print('⚪⚪⚠️ No players found to check answers');
+      return;
+    }
+
+    final activePlayers = _currentPlayers
+        .where((player) => player.isConnected)
+        .toList();
+
+    if (activePlayers.isEmpty) {
+      print('⚪⚪⚠️ No active players to check answers');
+      return;
+    }
+
+    final answeredPlayers = activePlayers
+        .where((player) => _playerAnswers[player.userId] != null)
+        .length;
+
+    final allCurrentPlayersAnswered = answeredPlayers == activePlayers.length;
+
+    print('⚪⚪🎯 Players answered: $answeredPlayers/${activePlayers.length}');
+    print('⚪⚪🎯 All players answered: $allCurrentPlayersAnswered');
+
+    if (allCurrentPlayersAnswered && _remainingTime > 0) {
+      print(
+        '⚪⚪🎉 ALL players have answered! Moving to next question immediately...',
+      );
+      _questionTimer?.cancel();
+      _moveToNextQuestion();
+    }
+  }
+
+  void _handleTimeUp() {
+    print('⏰⏰ Time\'s up! Moving to next question...');
+    _questionTimer?.cancel();
+
+    _moveToNextQuestion();
+  }
+
+  void _moveToNextQuestion() {
+    print('◽◽◽➡️ Moving to next question...');
+
+    _answersSub?.cancel();
+
+    if (_currentQuestionIndex < _questions.length - 1) {
+      // Move to next question
+      _currentQuestionIndex++;
+      _selectedAnswer = null;
+      _playerAnswers.clear();
+
+      print('◽◽◽➡️ NOW on question ${_currentQuestionIndex + 1}');
+
+      _resetAnswersForNewQuestion();
+
+      _startQuestionTimer();
+      _refreshAnswersStream(_getCurrentRoomId());
+
+      _emitQuizState();
+    } else {
+      print('◽◽◽🏁 QUIZ FINISHED!');
+      _questionTimer?.cancel();
+      _answersSub?.cancel();
+      emit(
+        RoomState.quizFinished(
+          totalQuestions: _questions.length,
+          correctAnswers: _correctCount,
+          players: _currentPlayers,
+        ),
+      );
+    }
+  }
+
+  Future<void> _resetAnswersForNewQuestion() async {
+    print('🔄🔄✅🔄✅ RESET: Resetting answers for new question...');
+
+    try {
+      final resetResult = await resetAnswersUseCase(_getCurrentRoomId());
+      resetResult.fold(
+        (failure) => print('🔄❌ Failed to reset answers: $failure'),
+        (_) => print('🔄✅🔄✅🔄✅ Answers reset for new question'),
+      );
+
+      await Future.delayed(const Duration(milliseconds: 30000));
+    } catch (e) {
+      print('🔄❌ Reset failed: $e, continuing anyway');
+    }
+  }
+
+  void _emitQuizState() {
+    final allPlayersAnswered =
+        _currentPlayers.isNotEmpty &&
+        _currentPlayers.every(
+          (player) => _playerAnswers[player.userId] != null,
+        );
+
+    print('🟣🟣🟣 All answered: $allPlayersAnswered Current count: ${_currentPlayers.length} Answers count: ${_playerAnswers.length}' );
+
+    emit(
+      RoomState.quizStarted(
+        questions: _questions,
+        currentQuestionIndex: _currentQuestionIndex,
+        remainingTime: _remainingTime,
+        playerAnswers: _playerAnswers,
+        selectedAnswer: _selectedAnswer,
+        correctCount: _correctCount,
+        isWaitingForPlayers: allPlayersAnswered,
+        players: _currentPlayers,
+      ),
+    );
+  }
+
   bool _isInQuizMode() {
     return state is _QuizStarted ||
         state is _QuestionTimeUp ||
         state is _AllPlayersAnswered;
   }
 
-  /// 🆔 Get current user ID
   String _getCurrentUserId() {
-    // You'll need to implement this based on your auth system
-    // For example:
     final user = Supabase.instance.client.auth.currentUser;
     return user?.id ?? 'unknown';
   }
 
-  /// ➡️ Implementation of going to next question
-Future<void> _goToNextQuestionImpl() async {
-  if (_currentQuestionIndex < _questions.length - 1) {
-    // CANCEL stream FIRST
-    _answersSub?.cancel();
-    
-    print('➡️ MOVING to next question...');
-    
-    // Clear local state IMMEDIATELY
-    _currentQuestionIndex++;
-    _selectedAnswer = null;
-    _playerAnswers.clear();
-    
-    print('➡️ NOW on question ${_currentQuestionIndex + 1}');
-    
-    // Reset answers in database
-    try {
-      await resetAnswersUseCase(_getCurrentRoomId());
-      print('✅ Answers reset for new question');
-      
-      // Wait for database to process
-      await Future.delayed(const Duration(milliseconds: 2000));
-      
-    } catch (e) {
-      print('❌ Reset failed: $e, continuing anyway');
-    }
-    
-    // RESTART the answers stream AFTER reset
-    _refreshAnswersStream(_getCurrentRoomId());
-    
-    _startQuestionTimer();
-    _emitQuizState();
-    
-  } else {
-    // Quiz finished
-    _questionTimer?.cancel();
-    _answersSub?.cancel();
-    emit(RoomState.quizFinished(
-      totalQuestions: _questions.length,
-      correctAnswers: _correctCount,
-      players: _currentPlayers,
-    ));
-  }
-}
-
-
-
-  /// 🔄 Polling for player answers
   void _startAnswerPolling(String roomId) {
     _answersPollTimer?.cancel();
 
-    print('🔄 STARTING answer polling for room: $roomId');
+    print('💨 STARTING answer polling for room: $roomId');
 
     _answersPollTimer = Timer.periodic(const Duration(seconds: 3), (
       timer,
@@ -645,28 +548,26 @@ Future<void> _goToNextQuestionImpl() async {
         return;
       }
 
-      print('🔄 POLLING: Checking for player answers...');
+      print('💨 POLLING: Checking for player answers...');
 
       final result = await getPlayerAnswersUseCase(roomId);
       result.fold(
         (failure) {
-          print('❌ Polling failed: $failure');
+          print('💨❌ Polling failed: $failure');
         },
         (Map<String, String> answers) {
-          print('🔄 POLLING: Got answers: $answers');
+          print('💨🔄 POLLING: Got answers: $answers');
           print(
-            '🔄 POLLING: Current players: ${_currentPlayers.map((p) => p.userId).toList()}',
+            '💨🔄 POLLING: Current players: ${_currentPlayers.map((p) => p.userId).toList()}',
           );
 
-          // Convert Map<String, String> to Map<String, String?>
           final Map<String, String?> updatedAnswers = {};
           answers.forEach((key, value) {
             updatedAnswers[key] = value;
           });
 
-          // Only update if answers changed
           if (_hasAnswersChanged(updatedAnswers)) {
-            print('🔄 POLLING: Answers changed, updating state');
+            print('💨🔄 POLLING: Answers changed, updating state');
             _playerAnswers = updatedAnswers;
 
             if (_isInQuizMode()) {
@@ -674,18 +575,17 @@ Future<void> _goToNextQuestionImpl() async {
               _checkAllPlayersAnswered();
             }
           } else {
-            print('🔄 POLLING: No changes in answers');
+            print('💨🔄 POLLING: No changes in answers');
           }
         },
       );
     });
   }
 
-  /// 🔍 Check if answers have changed
   bool _hasAnswersChanged(Map<String, String?> newAnswers) {
     if (_playerAnswers.length != newAnswers.length) {
       print(
-        '🔄 Answers changed: length different (${_playerAnswers.length} vs ${newAnswers.length})',
+        '💞🔄 Answers changed: length different (${_playerAnswers.length} vs ${newAnswers.length})',
       );
       return true;
     }
@@ -693,7 +593,7 @@ Future<void> _goToNextQuestionImpl() async {
     for (final entry in newAnswers.entries) {
       if (_playerAnswers[entry.key] != entry.value) {
         print(
-          '🔄 Answers changed: ${entry.key} changed from ${_playerAnswers[entry.key]} to ${entry.value}',
+          '💞🔄 Answers changed: ${entry.key} changed from ${_playerAnswers[entry.key]} to ${entry.value}',
         );
         return true;
       }
@@ -702,67 +602,56 @@ Future<void> _goToNextQuestionImpl() async {
     return false;
   }
 
-  /// 🧪 Debug method to monitor state
-  void _debugQuizState() {
-    print(
-      '🐛 DEBUG: Question $_currentQuestionIndex, Time $_remainingTime, Players ${_currentPlayers.length}',
-    );
-    print('🐛 DEBUG: Answers: $_playerAnswers');
-    print(
-      '🐛 DEBUG: All answered: ${_currentPlayers.every((p) => _playerAnswers[p.userId] != null)}',
+  void _watchPlayerAnswers(String roomId) {
+    _answersSub?.cancel();
+
+    print('💦 STARTING real-time player answers watcher for room: $roomId');
+    print('💦 Current question: ${_currentQuestionIndex + 1}');
+    print('💦 Current local answers: $_playerAnswers');
+
+    _answersSub = watchPlayerAnswersUseCase(roomId).listen(
+      (either) {
+        if (isClosed) return;
+
+        either.fold(
+          (failure) {
+            print('💦❌ Real-time stream error: $failure');
+            _startAnswerPolling(roomId);
+          },
+          (Map<String, String> answers) {
+            print('💦🎯 REAL-TIME: Got answers: $answers');
+            print(
+              '💦🎯 REAL-TIME: Current players: ${_currentPlayers.map((p) => p.userId).toList()}',
+            );
+
+            final Map<String, String?> updatedAnswers = {};
+            answers.forEach((key, value) {
+              updatedAnswers[key] = value;
+            });
+
+            _playerAnswers = updatedAnswers;
+            print('💦🎯 UPDATED playerAnswers: $_playerAnswers');
+
+            if (_isInQuizMode()) {
+              _emitQuizState();
+              _checkAllPlayersAnswered();
+            }
+          },
+        );
+      },
+      onError: (error) {
+        print('💦❌ Real-time stream onError: $error');
+        _startAnswerPolling(roomId);
+      },
+      cancelOnError: true,
     );
   }
 
-  /// 🎯 Watch player answers in real-time
-/// 🎯 Watch player answers in real-time
-void _watchPlayerAnswers(String roomId) {
-  _answersSub?.cancel();
-
-  print('🎯 STARTING real-time player answers watcher for room: $roomId');
-  print('🎯 Current question: ${_currentQuestionIndex + 1}');
-  print('🎯 Current local answers: $_playerAnswers');
-
-  _answersSub = watchPlayerAnswersUseCase(roomId).listen((either) {
-    if (isClosed) return;
-    
-    either.fold(
-      (failure) {
-        print('❌ Real-time stream error: $failure');
-        _startAnswerPolling(roomId);
-      },
-      (Map<String, String> answers) {
-        print('🎯 REAL-TIME: Got answers: $answers');
-        print('🎯 REAL-TIME: Current players: ${_currentPlayers.map((p) => p.userId).toList()}');
-        
-        // Convert Map<String, String> to Map<String, String?>
-        final Map<String, String?> updatedAnswers = {};
-        answers.forEach((key, value) {
-          updatedAnswers[key] = value;
-        });
-        
-        // Update the playerAnswers with real-time data
-        _playerAnswers = updatedAnswers;
-        print('🎯 UPDATED playerAnswers: $_playerAnswers');
-        
-        if (_isInQuizMode()) {
-          _emitQuizState();
-          _checkAllPlayersAnswered(); // Check again after updating answers
-        }
-      },
-    );
-  }, onError: (error) {
-    print('❌ Real-time stream onError: $error');
-    _startAnswerPolling(roomId);
-  }, cancelOnError: true);
-}
-
-  /// 🔄 Force refresh the answers stream
   void _refreshAnswersStream(String roomId) {
-    print('🔄 FORCE REFRESH: Restarting answers stream');
+    print('🛑🔄 FORCE REFRESH: Restarting answers stream');
 
     _answersSub?.cancel();
 
-    // Small delay to ensure clean restart
     Future.delayed(const Duration(milliseconds: 300), () {
       _watchPlayerAnswers(roomId);
     });
@@ -772,18 +661,18 @@ void _watchPlayerAnswers(String roomId) {
   Future<void> close() async {
     print('🧹 Cleaning up RoomCubit...');
     _questionTimer?.cancel();
-    _answersPollTimer?.cancel(); // Add this
+    _answersPollTimer?.cancel(); 
     await _roomsSubscription?.cancel();
     await _roomsSub?.cancel();
     await _playersSub?.cancel();
     await _roomWatcher?.cancel();
-    await _answersSub?.cancel(); // Add this
+    await _answersSub?.cancel();
     _roomsSubscription = null;
     _roomsSub = null;
     _playersSub = null;
     _roomWatcher = null;
-    _answersSub = null; // Add this
-    _answersPollTimer = null; // Add this
+    _answersSub = null; 
+    _answersPollTimer = null; 
     return super.close();
   }
 }

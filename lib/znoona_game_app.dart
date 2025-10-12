@@ -24,7 +24,7 @@ class ZnoonaGameApp extends StatelessWidget {
 
     return ValueListenableBuilder(
       valueListenable: ConnectivityController.instance.isConnected,
-      builder: (_, value, __) {
+      builder: (_, value, _) {
         return MultiBlocProvider(
           providers: [
             BlocProvider(

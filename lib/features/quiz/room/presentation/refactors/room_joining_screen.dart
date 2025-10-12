@@ -36,7 +36,10 @@ class _RoomJoiningScreenState extends State<RoomJoiningScreen> {
           state.whenOrNull(
             joined: (room) {
               // Navigate to room lobby when successfully joined
-              ZnoonaNavigate.pushReplacementTo(context, RoomLobbyPage(room: room));
+              ZnoonaNavigate.pushReplacementTo(
+                context,
+                RoomLobbyPage(room: room),
+              );
             },
             error: (message) {
               ScaffoldMessenger.of(context).showSnackBar(
@@ -124,9 +127,10 @@ class _RoomJoiningScreenState extends State<RoomJoiningScreen> {
                           // Auto-uppercase and limit to 6 characters
                           if (value.length > 6) {
                             _codeController.text = value.substring(0, 6);
-                            _codeController.selection = TextSelection.collapsed(
-                              offset: 6,
-                            );
+                            _codeController.selection =
+                                const TextSelection.collapsed(
+                                  offset: 6,
+                                );
                           }
                           _codeController.text = value.toUpperCase();
                         },

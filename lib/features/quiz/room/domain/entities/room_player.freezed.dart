@@ -28,7 +28,13 @@ mixin _$RoomPlayer {
   bool get isHost => throw _privateConstructorUsedError;
   bool get isConnected => throw _privateConstructorUsedError;
   int get score => throw _privateConstructorUsedError;
+  bool get finishedQuiz => throw _privateConstructorUsedError;
+  DateTime? get finishedAt => throw _privateConstructorUsedError;
   DateTime? get joinedAt => throw _privateConstructorUsedError;
+  String? get selectedAnswer => throw _privateConstructorUsedError;
+  bool? get isCorrect => throw _privateConstructorUsedError;
+  DateTime? get answeredAt => throw _privateConstructorUsedError;
+  bool? get isReady => throw _privateConstructorUsedError;
 
   /// Serializes this RoomPlayer to a JSON map.
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
@@ -55,7 +61,13 @@ abstract class $RoomPlayerCopyWith<$Res> {
     bool isHost,
     bool isConnected,
     int score,
+    bool finishedQuiz,
+    DateTime? finishedAt,
     DateTime? joinedAt,
+    String? selectedAnswer,
+    bool? isCorrect,
+    DateTime? answeredAt,
+    bool? isReady,
   });
 }
 
@@ -81,7 +93,13 @@ class _$RoomPlayerCopyWithImpl<$Res, $Val extends RoomPlayer>
     Object? isHost = null,
     Object? isConnected = null,
     Object? score = null,
+    Object? finishedQuiz = null,
+    Object? finishedAt = freezed,
     Object? joinedAt = freezed,
+    Object? selectedAnswer = freezed,
+    Object? isCorrect = freezed,
+    Object? answeredAt = freezed,
+    Object? isReady = freezed,
   }) {
     return _then(
       _value.copyWith(
@@ -113,10 +131,34 @@ class _$RoomPlayerCopyWithImpl<$Res, $Val extends RoomPlayer>
                 ? _value.score
                 : score // ignore: cast_nullable_to_non_nullable
                       as int,
+            finishedQuiz: null == finishedQuiz
+                ? _value.finishedQuiz
+                : finishedQuiz // ignore: cast_nullable_to_non_nullable
+                      as bool,
+            finishedAt: freezed == finishedAt
+                ? _value.finishedAt
+                : finishedAt // ignore: cast_nullable_to_non_nullable
+                      as DateTime?,
             joinedAt: freezed == joinedAt
                 ? _value.joinedAt
                 : joinedAt // ignore: cast_nullable_to_non_nullable
                       as DateTime?,
+            selectedAnswer: freezed == selectedAnswer
+                ? _value.selectedAnswer
+                : selectedAnswer // ignore: cast_nullable_to_non_nullable
+                      as String?,
+            isCorrect: freezed == isCorrect
+                ? _value.isCorrect
+                : isCorrect // ignore: cast_nullable_to_non_nullable
+                      as bool?,
+            answeredAt: freezed == answeredAt
+                ? _value.answeredAt
+                : answeredAt // ignore: cast_nullable_to_non_nullable
+                      as DateTime?,
+            isReady: freezed == isReady
+                ? _value.isReady
+                : isReady // ignore: cast_nullable_to_non_nullable
+                      as bool?,
           )
           as $Val,
     );
@@ -140,7 +182,13 @@ abstract class _$$RoomPlayerImplCopyWith<$Res>
     bool isHost,
     bool isConnected,
     int score,
+    bool finishedQuiz,
+    DateTime? finishedAt,
     DateTime? joinedAt,
+    String? selectedAnswer,
+    bool? isCorrect,
+    DateTime? answeredAt,
+    bool? isReady,
   });
 }
 
@@ -165,7 +213,13 @@ class __$$RoomPlayerImplCopyWithImpl<$Res>
     Object? isHost = null,
     Object? isConnected = null,
     Object? score = null,
+    Object? finishedQuiz = null,
+    Object? finishedAt = freezed,
     Object? joinedAt = freezed,
+    Object? selectedAnswer = freezed,
+    Object? isCorrect = freezed,
+    Object? answeredAt = freezed,
+    Object? isReady = freezed,
   }) {
     return _then(
       _$RoomPlayerImpl(
@@ -197,10 +251,34 @@ class __$$RoomPlayerImplCopyWithImpl<$Res>
             ? _value.score
             : score // ignore: cast_nullable_to_non_nullable
                   as int,
+        finishedQuiz: null == finishedQuiz
+            ? _value.finishedQuiz
+            : finishedQuiz // ignore: cast_nullable_to_non_nullable
+                  as bool,
+        finishedAt: freezed == finishedAt
+            ? _value.finishedAt
+            : finishedAt // ignore: cast_nullable_to_non_nullable
+                  as DateTime?,
         joinedAt: freezed == joinedAt
             ? _value.joinedAt
             : joinedAt // ignore: cast_nullable_to_non_nullable
                   as DateTime?,
+        selectedAnswer: freezed == selectedAnswer
+            ? _value.selectedAnswer
+            : selectedAnswer // ignore: cast_nullable_to_non_nullable
+                  as String?,
+        isCorrect: freezed == isCorrect
+            ? _value.isCorrect
+            : isCorrect // ignore: cast_nullable_to_non_nullable
+                  as bool?,
+        answeredAt: freezed == answeredAt
+            ? _value.answeredAt
+            : answeredAt // ignore: cast_nullable_to_non_nullable
+                  as DateTime?,
+        isReady: freezed == isReady
+            ? _value.isReady
+            : isReady // ignore: cast_nullable_to_non_nullable
+                  as bool?,
       ),
     );
   }
@@ -217,7 +295,13 @@ class _$RoomPlayerImpl implements _RoomPlayer {
     required this.isHost,
     required this.isConnected,
     required this.score,
+    required this.finishedQuiz,
+    this.finishedAt,
     this.joinedAt,
+    this.selectedAnswer,
+    this.isCorrect,
+    this.answeredAt,
+    this.isReady,
   });
 
   factory _$RoomPlayerImpl.fromJson(Map<String, dynamic> json) =>
@@ -238,11 +322,23 @@ class _$RoomPlayerImpl implements _RoomPlayer {
   @override
   final int score;
   @override
+  final bool finishedQuiz;
+  @override
+  final DateTime? finishedAt;
+  @override
   final DateTime? joinedAt;
+  @override
+  final String? selectedAnswer;
+  @override
+  final bool? isCorrect;
+  @override
+  final DateTime? answeredAt;
+  @override
+  final bool? isReady;
 
   @override
   String toString() {
-    return 'RoomPlayer(id: $id, roomId: $roomId, userId: $userId, username: $username, isHost: $isHost, isConnected: $isConnected, score: $score, joinedAt: $joinedAt)';
+    return 'RoomPlayer(id: $id, roomId: $roomId, userId: $userId, username: $username, isHost: $isHost, isConnected: $isConnected, score: $score, finishedQuiz: $finishedQuiz, finishedAt: $finishedAt, joinedAt: $joinedAt, selectedAnswer: $selectedAnswer, isCorrect: $isCorrect, answeredAt: $answeredAt, isReady: $isReady)';
   }
 
   @override
@@ -259,8 +355,19 @@ class _$RoomPlayerImpl implements _RoomPlayer {
             (identical(other.isConnected, isConnected) ||
                 other.isConnected == isConnected) &&
             (identical(other.score, score) || other.score == score) &&
+            (identical(other.finishedQuiz, finishedQuiz) ||
+                other.finishedQuiz == finishedQuiz) &&
+            (identical(other.finishedAt, finishedAt) ||
+                other.finishedAt == finishedAt) &&
             (identical(other.joinedAt, joinedAt) ||
-                other.joinedAt == joinedAt));
+                other.joinedAt == joinedAt) &&
+            (identical(other.selectedAnswer, selectedAnswer) ||
+                other.selectedAnswer == selectedAnswer) &&
+            (identical(other.isCorrect, isCorrect) ||
+                other.isCorrect == isCorrect) &&
+            (identical(other.answeredAt, answeredAt) ||
+                other.answeredAt == answeredAt) &&
+            (identical(other.isReady, isReady) || other.isReady == isReady));
   }
 
   @JsonKey(includeFromJson: false, includeToJson: false)
@@ -274,7 +381,13 @@ class _$RoomPlayerImpl implements _RoomPlayer {
     isHost,
     isConnected,
     score,
+    finishedQuiz,
+    finishedAt,
     joinedAt,
+    selectedAnswer,
+    isCorrect,
+    answeredAt,
+    isReady,
   );
 
   /// Create a copy of RoomPlayer
@@ -300,7 +413,13 @@ abstract class _RoomPlayer implements RoomPlayer {
     required final bool isHost,
     required final bool isConnected,
     required final int score,
+    required final bool finishedQuiz,
+    final DateTime? finishedAt,
     final DateTime? joinedAt,
+    final String? selectedAnswer,
+    final bool? isCorrect,
+    final DateTime? answeredAt,
+    final bool? isReady,
   }) = _$RoomPlayerImpl;
 
   factory _RoomPlayer.fromJson(Map<String, dynamic> json) =
@@ -321,7 +440,19 @@ abstract class _RoomPlayer implements RoomPlayer {
   @override
   int get score;
   @override
+  bool get finishedQuiz;
+  @override
+  DateTime? get finishedAt;
+  @override
   DateTime? get joinedAt;
+  @override
+  String? get selectedAnswer;
+  @override
+  bool? get isCorrect;
+  @override
+  DateTime? get answeredAt;
+  @override
+  bool? get isReady;
 
   /// Create a copy of RoomPlayer
   /// with the given fields replaced by the non-null parameter values.

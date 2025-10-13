@@ -13,7 +13,13 @@ class RoomPlayer with _$RoomPlayer {
     required bool isHost,
     required bool isConnected,
     required int score,
+    required bool finishedQuiz, 
+    DateTime? finishedAt,       
     DateTime? joinedAt,
+    String? selectedAnswer,
+    bool? isCorrect,
+    DateTime? answeredAt,
+    bool? isReady,
   }) = _RoomPlayer;
 
   factory RoomPlayer.fromJson(Map<String, dynamic> json) =>

@@ -15,9 +15,19 @@ _$RoomPlayerImpl _$$RoomPlayerImplFromJson(Map<String, dynamic> json) =>
       isHost: json['isHost'] as bool,
       isConnected: json['isConnected'] as bool,
       score: (json['score'] as num).toInt(),
+      finishedQuiz: json['finishedQuiz'] as bool,
+      finishedAt: json['finishedAt'] == null
+          ? null
+          : DateTime.parse(json['finishedAt'] as String),
       joinedAt: json['joinedAt'] == null
           ? null
           : DateTime.parse(json['joinedAt'] as String),
+      selectedAnswer: json['selectedAnswer'] as String?,
+      isCorrect: json['isCorrect'] as bool?,
+      answeredAt: json['answeredAt'] == null
+          ? null
+          : DateTime.parse(json['answeredAt'] as String),
+      isReady: json['isReady'] as bool?,
     );
 
 Map<String, dynamic> _$$RoomPlayerImplToJson(_$RoomPlayerImpl instance) =>
@@ -29,5 +39,11 @@ Map<String, dynamic> _$$RoomPlayerImplToJson(_$RoomPlayerImpl instance) =>
       'isHost': instance.isHost,
       'isConnected': instance.isConnected,
       'score': instance.score,
+      'finishedQuiz': instance.finishedQuiz,
+      'finishedAt': instance.finishedAt?.toIso8601String(),
       'joinedAt': instance.joinedAt?.toIso8601String(),
+      'selectedAnswer': instance.selectedAnswer,
+      'isCorrect': instance.isCorrect,
+      'answeredAt': instance.answeredAt?.toIso8601String(),
+      'isReady': instance.isReady,
     };

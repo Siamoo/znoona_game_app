@@ -1,4 +1,5 @@
-part of 'room_cubit.dart';
+part of 'room_cubit.dart'; 
+
 @freezed
 class RoomState with _$RoomState {
   const factory RoomState.initial() = _Initial;
@@ -25,24 +26,31 @@ class RoomState with _$RoomState {
     required List<Question> questions,
     required int currentQuestionIndex,
     required int remainingTime,
-    required Map<String, String?> playerAnswers, 
-    required String? selectedAnswer, 
+    required Map<String, String?> playerAnswers,
+    required String? selectedAnswer,
     required int correctCount,
     required bool isWaitingForPlayers,
-    required List<RoomPlayer> players, 
+    required List<RoomPlayer> players,
   }) = _QuizStarted;
 
-  const factory RoomState.questionTimeUp({
-    required List<RoomPlayer> players, 
-  }) = _QuestionTimeUp;
-  
-  const factory RoomState.allPlayersAnswered({
-    required List<RoomPlayer> players, 
-  }) = _AllPlayersAnswered;
-  
+  const factory RoomState.playerFinished({
+    required int totalQuestions,
+    required int correctAnswers,
+    required int totalPlayers,
+    required int finishedPlayers,
+  }) = _PlayerFinished;
+
+  const factory RoomState.showingProgressiveResults({
+    required List<PlayerResult> results,
+    required int finishedPlayers,
+    required int totalPlayers,
+    required bool allPlayersFinished,
+    required int userRank,
+  }) = _ShowingProgressiveResults;
+
   const factory RoomState.quizFinished({
     required int totalQuestions,
     required int correctAnswers,
-    required List<RoomPlayer> players, 
+    required List<RoomPlayer> players,
   }) = _QuizFinished;
 }

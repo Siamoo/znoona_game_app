@@ -43,8 +43,21 @@ mixin _$RoomState {
       List<RoomPlayer> players,
     )
     quizStarted,
-    required TResult Function(List<RoomPlayer> players) questionTimeUp,
-    required TResult Function(List<RoomPlayer> players) allPlayersAnswered,
+    required TResult Function(
+      int totalQuestions,
+      int correctAnswers,
+      int totalPlayers,
+      int finishedPlayers,
+    )
+    playerFinished,
+    required TResult Function(
+      List<PlayerResult> results,
+      int finishedPlayers,
+      int totalPlayers,
+      bool allPlayersFinished,
+      int userRank,
+    )
+    showingProgressiveResults,
     required TResult Function(
       int totalQuestions,
       int correctAnswers,
@@ -78,8 +91,21 @@ mixin _$RoomState {
       List<RoomPlayer> players,
     )?
     quizStarted,
-    TResult? Function(List<RoomPlayer> players)? questionTimeUp,
-    TResult? Function(List<RoomPlayer> players)? allPlayersAnswered,
+    TResult? Function(
+      int totalQuestions,
+      int correctAnswers,
+      int totalPlayers,
+      int finishedPlayers,
+    )?
+    playerFinished,
+    TResult? Function(
+      List<PlayerResult> results,
+      int finishedPlayers,
+      int totalPlayers,
+      bool allPlayersFinished,
+      int userRank,
+    )?
+    showingProgressiveResults,
     TResult? Function(
       int totalQuestions,
       int correctAnswers,
@@ -113,8 +139,21 @@ mixin _$RoomState {
       List<RoomPlayer> players,
     )?
     quizStarted,
-    TResult Function(List<RoomPlayer> players)? questionTimeUp,
-    TResult Function(List<RoomPlayer> players)? allPlayersAnswered,
+    TResult Function(
+      int totalQuestions,
+      int correctAnswers,
+      int totalPlayers,
+      int finishedPlayers,
+    )?
+    playerFinished,
+    TResult Function(
+      List<PlayerResult> results,
+      int finishedPlayers,
+      int totalPlayers,
+      bool allPlayersFinished,
+      int userRank,
+    )?
+    showingProgressiveResults,
     TResult Function(
       int totalQuestions,
       int correctAnswers,
@@ -139,8 +178,9 @@ mixin _$RoomState {
     required TResult Function(_QuestionLoaded value) questionLoaded,
     required TResult Function(_QuestionsListLoaded value) questionsListLoaded,
     required TResult Function(_QuizStarted value) quizStarted,
-    required TResult Function(_QuestionTimeUp value) questionTimeUp,
-    required TResult Function(_AllPlayersAnswered value) allPlayersAnswered,
+    required TResult Function(_PlayerFinished value) playerFinished,
+    required TResult Function(_ShowingProgressiveResults value)
+    showingProgressiveResults,
     required TResult Function(_QuizFinished value) quizFinished,
   }) => throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -159,8 +199,9 @@ mixin _$RoomState {
     TResult? Function(_QuestionLoaded value)? questionLoaded,
     TResult? Function(_QuestionsListLoaded value)? questionsListLoaded,
     TResult? Function(_QuizStarted value)? quizStarted,
-    TResult? Function(_QuestionTimeUp value)? questionTimeUp,
-    TResult? Function(_AllPlayersAnswered value)? allPlayersAnswered,
+    TResult? Function(_PlayerFinished value)? playerFinished,
+    TResult? Function(_ShowingProgressiveResults value)?
+    showingProgressiveResults,
     TResult? Function(_QuizFinished value)? quizFinished,
   }) => throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -179,8 +220,9 @@ mixin _$RoomState {
     TResult Function(_QuestionLoaded value)? questionLoaded,
     TResult Function(_QuestionsListLoaded value)? questionsListLoaded,
     TResult Function(_QuizStarted value)? quizStarted,
-    TResult Function(_QuestionTimeUp value)? questionTimeUp,
-    TResult Function(_AllPlayersAnswered value)? allPlayersAnswered,
+    TResult Function(_PlayerFinished value)? playerFinished,
+    TResult Function(_ShowingProgressiveResults value)?
+    showingProgressiveResults,
     TResult Function(_QuizFinished value)? quizFinished,
     required TResult orElse(),
   }) => throw _privateConstructorUsedError;
@@ -273,8 +315,21 @@ class _$InitialImpl implements _Initial {
       List<RoomPlayer> players,
     )
     quizStarted,
-    required TResult Function(List<RoomPlayer> players) questionTimeUp,
-    required TResult Function(List<RoomPlayer> players) allPlayersAnswered,
+    required TResult Function(
+      int totalQuestions,
+      int correctAnswers,
+      int totalPlayers,
+      int finishedPlayers,
+    )
+    playerFinished,
+    required TResult Function(
+      List<PlayerResult> results,
+      int finishedPlayers,
+      int totalPlayers,
+      bool allPlayersFinished,
+      int userRank,
+    )
+    showingProgressiveResults,
     required TResult Function(
       int totalQuestions,
       int correctAnswers,
@@ -312,8 +367,21 @@ class _$InitialImpl implements _Initial {
       List<RoomPlayer> players,
     )?
     quizStarted,
-    TResult? Function(List<RoomPlayer> players)? questionTimeUp,
-    TResult? Function(List<RoomPlayer> players)? allPlayersAnswered,
+    TResult? Function(
+      int totalQuestions,
+      int correctAnswers,
+      int totalPlayers,
+      int finishedPlayers,
+    )?
+    playerFinished,
+    TResult? Function(
+      List<PlayerResult> results,
+      int finishedPlayers,
+      int totalPlayers,
+      bool allPlayersFinished,
+      int userRank,
+    )?
+    showingProgressiveResults,
     TResult? Function(
       int totalQuestions,
       int correctAnswers,
@@ -351,8 +419,21 @@ class _$InitialImpl implements _Initial {
       List<RoomPlayer> players,
     )?
     quizStarted,
-    TResult Function(List<RoomPlayer> players)? questionTimeUp,
-    TResult Function(List<RoomPlayer> players)? allPlayersAnswered,
+    TResult Function(
+      int totalQuestions,
+      int correctAnswers,
+      int totalPlayers,
+      int finishedPlayers,
+    )?
+    playerFinished,
+    TResult Function(
+      List<PlayerResult> results,
+      int finishedPlayers,
+      int totalPlayers,
+      bool allPlayersFinished,
+      int userRank,
+    )?
+    showingProgressiveResults,
     TResult Function(
       int totalQuestions,
       int correctAnswers,
@@ -384,8 +465,9 @@ class _$InitialImpl implements _Initial {
     required TResult Function(_QuestionLoaded value) questionLoaded,
     required TResult Function(_QuestionsListLoaded value) questionsListLoaded,
     required TResult Function(_QuizStarted value) quizStarted,
-    required TResult Function(_QuestionTimeUp value) questionTimeUp,
-    required TResult Function(_AllPlayersAnswered value) allPlayersAnswered,
+    required TResult Function(_PlayerFinished value) playerFinished,
+    required TResult Function(_ShowingProgressiveResults value)
+    showingProgressiveResults,
     required TResult Function(_QuizFinished value) quizFinished,
   }) {
     return initial(this);
@@ -408,8 +490,9 @@ class _$InitialImpl implements _Initial {
     TResult? Function(_QuestionLoaded value)? questionLoaded,
     TResult? Function(_QuestionsListLoaded value)? questionsListLoaded,
     TResult? Function(_QuizStarted value)? quizStarted,
-    TResult? Function(_QuestionTimeUp value)? questionTimeUp,
-    TResult? Function(_AllPlayersAnswered value)? allPlayersAnswered,
+    TResult? Function(_PlayerFinished value)? playerFinished,
+    TResult? Function(_ShowingProgressiveResults value)?
+    showingProgressiveResults,
     TResult? Function(_QuizFinished value)? quizFinished,
   }) {
     return initial?.call(this);
@@ -432,8 +515,9 @@ class _$InitialImpl implements _Initial {
     TResult Function(_QuestionLoaded value)? questionLoaded,
     TResult Function(_QuestionsListLoaded value)? questionsListLoaded,
     TResult Function(_QuizStarted value)? quizStarted,
-    TResult Function(_QuestionTimeUp value)? questionTimeUp,
-    TResult Function(_AllPlayersAnswered value)? allPlayersAnswered,
+    TResult Function(_PlayerFinished value)? playerFinished,
+    TResult Function(_ShowingProgressiveResults value)?
+    showingProgressiveResults,
     TResult Function(_QuizFinished value)? quizFinished,
     required TResult orElse(),
   }) {
@@ -515,8 +599,21 @@ class _$LoadingImpl implements _Loading {
       List<RoomPlayer> players,
     )
     quizStarted,
-    required TResult Function(List<RoomPlayer> players) questionTimeUp,
-    required TResult Function(List<RoomPlayer> players) allPlayersAnswered,
+    required TResult Function(
+      int totalQuestions,
+      int correctAnswers,
+      int totalPlayers,
+      int finishedPlayers,
+    )
+    playerFinished,
+    required TResult Function(
+      List<PlayerResult> results,
+      int finishedPlayers,
+      int totalPlayers,
+      bool allPlayersFinished,
+      int userRank,
+    )
+    showingProgressiveResults,
     required TResult Function(
       int totalQuestions,
       int correctAnswers,
@@ -554,8 +651,21 @@ class _$LoadingImpl implements _Loading {
       List<RoomPlayer> players,
     )?
     quizStarted,
-    TResult? Function(List<RoomPlayer> players)? questionTimeUp,
-    TResult? Function(List<RoomPlayer> players)? allPlayersAnswered,
+    TResult? Function(
+      int totalQuestions,
+      int correctAnswers,
+      int totalPlayers,
+      int finishedPlayers,
+    )?
+    playerFinished,
+    TResult? Function(
+      List<PlayerResult> results,
+      int finishedPlayers,
+      int totalPlayers,
+      bool allPlayersFinished,
+      int userRank,
+    )?
+    showingProgressiveResults,
     TResult? Function(
       int totalQuestions,
       int correctAnswers,
@@ -593,8 +703,21 @@ class _$LoadingImpl implements _Loading {
       List<RoomPlayer> players,
     )?
     quizStarted,
-    TResult Function(List<RoomPlayer> players)? questionTimeUp,
-    TResult Function(List<RoomPlayer> players)? allPlayersAnswered,
+    TResult Function(
+      int totalQuestions,
+      int correctAnswers,
+      int totalPlayers,
+      int finishedPlayers,
+    )?
+    playerFinished,
+    TResult Function(
+      List<PlayerResult> results,
+      int finishedPlayers,
+      int totalPlayers,
+      bool allPlayersFinished,
+      int userRank,
+    )?
+    showingProgressiveResults,
     TResult Function(
       int totalQuestions,
       int correctAnswers,
@@ -626,8 +749,9 @@ class _$LoadingImpl implements _Loading {
     required TResult Function(_QuestionLoaded value) questionLoaded,
     required TResult Function(_QuestionsListLoaded value) questionsListLoaded,
     required TResult Function(_QuizStarted value) quizStarted,
-    required TResult Function(_QuestionTimeUp value) questionTimeUp,
-    required TResult Function(_AllPlayersAnswered value) allPlayersAnswered,
+    required TResult Function(_PlayerFinished value) playerFinished,
+    required TResult Function(_ShowingProgressiveResults value)
+    showingProgressiveResults,
     required TResult Function(_QuizFinished value) quizFinished,
   }) {
     return loading(this);
@@ -650,8 +774,9 @@ class _$LoadingImpl implements _Loading {
     TResult? Function(_QuestionLoaded value)? questionLoaded,
     TResult? Function(_QuestionsListLoaded value)? questionsListLoaded,
     TResult? Function(_QuizStarted value)? quizStarted,
-    TResult? Function(_QuestionTimeUp value)? questionTimeUp,
-    TResult? Function(_AllPlayersAnswered value)? allPlayersAnswered,
+    TResult? Function(_PlayerFinished value)? playerFinished,
+    TResult? Function(_ShowingProgressiveResults value)?
+    showingProgressiveResults,
     TResult? Function(_QuizFinished value)? quizFinished,
   }) {
     return loading?.call(this);
@@ -674,8 +799,9 @@ class _$LoadingImpl implements _Loading {
     TResult Function(_QuestionLoaded value)? questionLoaded,
     TResult Function(_QuestionsListLoaded value)? questionsListLoaded,
     TResult Function(_QuizStarted value)? quizStarted,
-    TResult Function(_QuestionTimeUp value)? questionTimeUp,
-    TResult Function(_AllPlayersAnswered value)? allPlayersAnswered,
+    TResult Function(_PlayerFinished value)? playerFinished,
+    TResult Function(_ShowingProgressiveResults value)?
+    showingProgressiveResults,
     TResult Function(_QuizFinished value)? quizFinished,
     required TResult orElse(),
   }) {
@@ -784,8 +910,21 @@ class _$ErrorImpl implements _Error {
       List<RoomPlayer> players,
     )
     quizStarted,
-    required TResult Function(List<RoomPlayer> players) questionTimeUp,
-    required TResult Function(List<RoomPlayer> players) allPlayersAnswered,
+    required TResult Function(
+      int totalQuestions,
+      int correctAnswers,
+      int totalPlayers,
+      int finishedPlayers,
+    )
+    playerFinished,
+    required TResult Function(
+      List<PlayerResult> results,
+      int finishedPlayers,
+      int totalPlayers,
+      bool allPlayersFinished,
+      int userRank,
+    )
+    showingProgressiveResults,
     required TResult Function(
       int totalQuestions,
       int correctAnswers,
@@ -823,8 +962,21 @@ class _$ErrorImpl implements _Error {
       List<RoomPlayer> players,
     )?
     quizStarted,
-    TResult? Function(List<RoomPlayer> players)? questionTimeUp,
-    TResult? Function(List<RoomPlayer> players)? allPlayersAnswered,
+    TResult? Function(
+      int totalQuestions,
+      int correctAnswers,
+      int totalPlayers,
+      int finishedPlayers,
+    )?
+    playerFinished,
+    TResult? Function(
+      List<PlayerResult> results,
+      int finishedPlayers,
+      int totalPlayers,
+      bool allPlayersFinished,
+      int userRank,
+    )?
+    showingProgressiveResults,
     TResult? Function(
       int totalQuestions,
       int correctAnswers,
@@ -862,8 +1014,21 @@ class _$ErrorImpl implements _Error {
       List<RoomPlayer> players,
     )?
     quizStarted,
-    TResult Function(List<RoomPlayer> players)? questionTimeUp,
-    TResult Function(List<RoomPlayer> players)? allPlayersAnswered,
+    TResult Function(
+      int totalQuestions,
+      int correctAnswers,
+      int totalPlayers,
+      int finishedPlayers,
+    )?
+    playerFinished,
+    TResult Function(
+      List<PlayerResult> results,
+      int finishedPlayers,
+      int totalPlayers,
+      bool allPlayersFinished,
+      int userRank,
+    )?
+    showingProgressiveResults,
     TResult Function(
       int totalQuestions,
       int correctAnswers,
@@ -895,8 +1060,9 @@ class _$ErrorImpl implements _Error {
     required TResult Function(_QuestionLoaded value) questionLoaded,
     required TResult Function(_QuestionsListLoaded value) questionsListLoaded,
     required TResult Function(_QuizStarted value) quizStarted,
-    required TResult Function(_QuestionTimeUp value) questionTimeUp,
-    required TResult Function(_AllPlayersAnswered value) allPlayersAnswered,
+    required TResult Function(_PlayerFinished value) playerFinished,
+    required TResult Function(_ShowingProgressiveResults value)
+    showingProgressiveResults,
     required TResult Function(_QuizFinished value) quizFinished,
   }) {
     return error(this);
@@ -919,8 +1085,9 @@ class _$ErrorImpl implements _Error {
     TResult? Function(_QuestionLoaded value)? questionLoaded,
     TResult? Function(_QuestionsListLoaded value)? questionsListLoaded,
     TResult? Function(_QuizStarted value)? quizStarted,
-    TResult? Function(_QuestionTimeUp value)? questionTimeUp,
-    TResult? Function(_AllPlayersAnswered value)? allPlayersAnswered,
+    TResult? Function(_PlayerFinished value)? playerFinished,
+    TResult? Function(_ShowingProgressiveResults value)?
+    showingProgressiveResults,
     TResult? Function(_QuizFinished value)? quizFinished,
   }) {
     return error?.call(this);
@@ -943,8 +1110,9 @@ class _$ErrorImpl implements _Error {
     TResult Function(_QuestionLoaded value)? questionLoaded,
     TResult Function(_QuestionsListLoaded value)? questionsListLoaded,
     TResult Function(_QuizStarted value)? quizStarted,
-    TResult Function(_QuestionTimeUp value)? questionTimeUp,
-    TResult Function(_AllPlayersAnswered value)? allPlayersAnswered,
+    TResult Function(_PlayerFinished value)? playerFinished,
+    TResult Function(_ShowingProgressiveResults value)?
+    showingProgressiveResults,
     TResult Function(_QuizFinished value)? quizFinished,
     required TResult orElse(),
   }) {
@@ -1073,8 +1241,21 @@ class _$RoomLoadedImpl implements _RoomLoaded {
       List<RoomPlayer> players,
     )
     quizStarted,
-    required TResult Function(List<RoomPlayer> players) questionTimeUp,
-    required TResult Function(List<RoomPlayer> players) allPlayersAnswered,
+    required TResult Function(
+      int totalQuestions,
+      int correctAnswers,
+      int totalPlayers,
+      int finishedPlayers,
+    )
+    playerFinished,
+    required TResult Function(
+      List<PlayerResult> results,
+      int finishedPlayers,
+      int totalPlayers,
+      bool allPlayersFinished,
+      int userRank,
+    )
+    showingProgressiveResults,
     required TResult Function(
       int totalQuestions,
       int correctAnswers,
@@ -1112,8 +1293,21 @@ class _$RoomLoadedImpl implements _RoomLoaded {
       List<RoomPlayer> players,
     )?
     quizStarted,
-    TResult? Function(List<RoomPlayer> players)? questionTimeUp,
-    TResult? Function(List<RoomPlayer> players)? allPlayersAnswered,
+    TResult? Function(
+      int totalQuestions,
+      int correctAnswers,
+      int totalPlayers,
+      int finishedPlayers,
+    )?
+    playerFinished,
+    TResult? Function(
+      List<PlayerResult> results,
+      int finishedPlayers,
+      int totalPlayers,
+      bool allPlayersFinished,
+      int userRank,
+    )?
+    showingProgressiveResults,
     TResult? Function(
       int totalQuestions,
       int correctAnswers,
@@ -1151,8 +1345,21 @@ class _$RoomLoadedImpl implements _RoomLoaded {
       List<RoomPlayer> players,
     )?
     quizStarted,
-    TResult Function(List<RoomPlayer> players)? questionTimeUp,
-    TResult Function(List<RoomPlayer> players)? allPlayersAnswered,
+    TResult Function(
+      int totalQuestions,
+      int correctAnswers,
+      int totalPlayers,
+      int finishedPlayers,
+    )?
+    playerFinished,
+    TResult Function(
+      List<PlayerResult> results,
+      int finishedPlayers,
+      int totalPlayers,
+      bool allPlayersFinished,
+      int userRank,
+    )?
+    showingProgressiveResults,
     TResult Function(
       int totalQuestions,
       int correctAnswers,
@@ -1184,8 +1391,9 @@ class _$RoomLoadedImpl implements _RoomLoaded {
     required TResult Function(_QuestionLoaded value) questionLoaded,
     required TResult Function(_QuestionsListLoaded value) questionsListLoaded,
     required TResult Function(_QuizStarted value) quizStarted,
-    required TResult Function(_QuestionTimeUp value) questionTimeUp,
-    required TResult Function(_AllPlayersAnswered value) allPlayersAnswered,
+    required TResult Function(_PlayerFinished value) playerFinished,
+    required TResult Function(_ShowingProgressiveResults value)
+    showingProgressiveResults,
     required TResult Function(_QuizFinished value) quizFinished,
   }) {
     return roomLoaded(this);
@@ -1208,8 +1416,9 @@ class _$RoomLoadedImpl implements _RoomLoaded {
     TResult? Function(_QuestionLoaded value)? questionLoaded,
     TResult? Function(_QuestionsListLoaded value)? questionsListLoaded,
     TResult? Function(_QuizStarted value)? quizStarted,
-    TResult? Function(_QuestionTimeUp value)? questionTimeUp,
-    TResult? Function(_AllPlayersAnswered value)? allPlayersAnswered,
+    TResult? Function(_PlayerFinished value)? playerFinished,
+    TResult? Function(_ShowingProgressiveResults value)?
+    showingProgressiveResults,
     TResult? Function(_QuizFinished value)? quizFinished,
   }) {
     return roomLoaded?.call(this);
@@ -1232,8 +1441,9 @@ class _$RoomLoadedImpl implements _RoomLoaded {
     TResult Function(_QuestionLoaded value)? questionLoaded,
     TResult Function(_QuestionsListLoaded value)? questionsListLoaded,
     TResult Function(_QuizStarted value)? quizStarted,
-    TResult Function(_QuestionTimeUp value)? questionTimeUp,
-    TResult Function(_AllPlayersAnswered value)? allPlayersAnswered,
+    TResult Function(_PlayerFinished value)? playerFinished,
+    TResult Function(_ShowingProgressiveResults value)?
+    showingProgressiveResults,
     TResult Function(_QuizFinished value)? quizFinished,
     required TResult orElse(),
   }) {
@@ -1356,8 +1566,21 @@ class _$RoomsUpdatedImpl implements _RoomsUpdated {
       List<RoomPlayer> players,
     )
     quizStarted,
-    required TResult Function(List<RoomPlayer> players) questionTimeUp,
-    required TResult Function(List<RoomPlayer> players) allPlayersAnswered,
+    required TResult Function(
+      int totalQuestions,
+      int correctAnswers,
+      int totalPlayers,
+      int finishedPlayers,
+    )
+    playerFinished,
+    required TResult Function(
+      List<PlayerResult> results,
+      int finishedPlayers,
+      int totalPlayers,
+      bool allPlayersFinished,
+      int userRank,
+    )
+    showingProgressiveResults,
     required TResult Function(
       int totalQuestions,
       int correctAnswers,
@@ -1395,8 +1618,21 @@ class _$RoomsUpdatedImpl implements _RoomsUpdated {
       List<RoomPlayer> players,
     )?
     quizStarted,
-    TResult? Function(List<RoomPlayer> players)? questionTimeUp,
-    TResult? Function(List<RoomPlayer> players)? allPlayersAnswered,
+    TResult? Function(
+      int totalQuestions,
+      int correctAnswers,
+      int totalPlayers,
+      int finishedPlayers,
+    )?
+    playerFinished,
+    TResult? Function(
+      List<PlayerResult> results,
+      int finishedPlayers,
+      int totalPlayers,
+      bool allPlayersFinished,
+      int userRank,
+    )?
+    showingProgressiveResults,
     TResult? Function(
       int totalQuestions,
       int correctAnswers,
@@ -1434,8 +1670,21 @@ class _$RoomsUpdatedImpl implements _RoomsUpdated {
       List<RoomPlayer> players,
     )?
     quizStarted,
-    TResult Function(List<RoomPlayer> players)? questionTimeUp,
-    TResult Function(List<RoomPlayer> players)? allPlayersAnswered,
+    TResult Function(
+      int totalQuestions,
+      int correctAnswers,
+      int totalPlayers,
+      int finishedPlayers,
+    )?
+    playerFinished,
+    TResult Function(
+      List<PlayerResult> results,
+      int finishedPlayers,
+      int totalPlayers,
+      bool allPlayersFinished,
+      int userRank,
+    )?
+    showingProgressiveResults,
     TResult Function(
       int totalQuestions,
       int correctAnswers,
@@ -1467,8 +1716,9 @@ class _$RoomsUpdatedImpl implements _RoomsUpdated {
     required TResult Function(_QuestionLoaded value) questionLoaded,
     required TResult Function(_QuestionsListLoaded value) questionsListLoaded,
     required TResult Function(_QuizStarted value) quizStarted,
-    required TResult Function(_QuestionTimeUp value) questionTimeUp,
-    required TResult Function(_AllPlayersAnswered value) allPlayersAnswered,
+    required TResult Function(_PlayerFinished value) playerFinished,
+    required TResult Function(_ShowingProgressiveResults value)
+    showingProgressiveResults,
     required TResult Function(_QuizFinished value) quizFinished,
   }) {
     return roomsUpdated(this);
@@ -1491,8 +1741,9 @@ class _$RoomsUpdatedImpl implements _RoomsUpdated {
     TResult? Function(_QuestionLoaded value)? questionLoaded,
     TResult? Function(_QuestionsListLoaded value)? questionsListLoaded,
     TResult? Function(_QuizStarted value)? quizStarted,
-    TResult? Function(_QuestionTimeUp value)? questionTimeUp,
-    TResult? Function(_AllPlayersAnswered value)? allPlayersAnswered,
+    TResult? Function(_PlayerFinished value)? playerFinished,
+    TResult? Function(_ShowingProgressiveResults value)?
+    showingProgressiveResults,
     TResult? Function(_QuizFinished value)? quizFinished,
   }) {
     return roomsUpdated?.call(this);
@@ -1515,8 +1766,9 @@ class _$RoomsUpdatedImpl implements _RoomsUpdated {
     TResult Function(_QuestionLoaded value)? questionLoaded,
     TResult Function(_QuestionsListLoaded value)? questionsListLoaded,
     TResult Function(_QuizStarted value)? quizStarted,
-    TResult Function(_QuestionTimeUp value)? questionTimeUp,
-    TResult Function(_AllPlayersAnswered value)? allPlayersAnswered,
+    TResult Function(_PlayerFinished value)? playerFinished,
+    TResult Function(_ShowingProgressiveResults value)?
+    showingProgressiveResults,
     TResult Function(_QuizFinished value)? quizFinished,
     required TResult orElse(),
   }) {
@@ -1643,8 +1895,21 @@ class _$PlayersUpdatedImpl implements _PlayersUpdated {
       List<RoomPlayer> players,
     )
     quizStarted,
-    required TResult Function(List<RoomPlayer> players) questionTimeUp,
-    required TResult Function(List<RoomPlayer> players) allPlayersAnswered,
+    required TResult Function(
+      int totalQuestions,
+      int correctAnswers,
+      int totalPlayers,
+      int finishedPlayers,
+    )
+    playerFinished,
+    required TResult Function(
+      List<PlayerResult> results,
+      int finishedPlayers,
+      int totalPlayers,
+      bool allPlayersFinished,
+      int userRank,
+    )
+    showingProgressiveResults,
     required TResult Function(
       int totalQuestions,
       int correctAnswers,
@@ -1682,8 +1947,21 @@ class _$PlayersUpdatedImpl implements _PlayersUpdated {
       List<RoomPlayer> players,
     )?
     quizStarted,
-    TResult? Function(List<RoomPlayer> players)? questionTimeUp,
-    TResult? Function(List<RoomPlayer> players)? allPlayersAnswered,
+    TResult? Function(
+      int totalQuestions,
+      int correctAnswers,
+      int totalPlayers,
+      int finishedPlayers,
+    )?
+    playerFinished,
+    TResult? Function(
+      List<PlayerResult> results,
+      int finishedPlayers,
+      int totalPlayers,
+      bool allPlayersFinished,
+      int userRank,
+    )?
+    showingProgressiveResults,
     TResult? Function(
       int totalQuestions,
       int correctAnswers,
@@ -1721,8 +1999,21 @@ class _$PlayersUpdatedImpl implements _PlayersUpdated {
       List<RoomPlayer> players,
     )?
     quizStarted,
-    TResult Function(List<RoomPlayer> players)? questionTimeUp,
-    TResult Function(List<RoomPlayer> players)? allPlayersAnswered,
+    TResult Function(
+      int totalQuestions,
+      int correctAnswers,
+      int totalPlayers,
+      int finishedPlayers,
+    )?
+    playerFinished,
+    TResult Function(
+      List<PlayerResult> results,
+      int finishedPlayers,
+      int totalPlayers,
+      bool allPlayersFinished,
+      int userRank,
+    )?
+    showingProgressiveResults,
     TResult Function(
       int totalQuestions,
       int correctAnswers,
@@ -1754,8 +2045,9 @@ class _$PlayersUpdatedImpl implements _PlayersUpdated {
     required TResult Function(_QuestionLoaded value) questionLoaded,
     required TResult Function(_QuestionsListLoaded value) questionsListLoaded,
     required TResult Function(_QuizStarted value) quizStarted,
-    required TResult Function(_QuestionTimeUp value) questionTimeUp,
-    required TResult Function(_AllPlayersAnswered value) allPlayersAnswered,
+    required TResult Function(_PlayerFinished value) playerFinished,
+    required TResult Function(_ShowingProgressiveResults value)
+    showingProgressiveResults,
     required TResult Function(_QuizFinished value) quizFinished,
   }) {
     return playersUpdated(this);
@@ -1778,8 +2070,9 @@ class _$PlayersUpdatedImpl implements _PlayersUpdated {
     TResult? Function(_QuestionLoaded value)? questionLoaded,
     TResult? Function(_QuestionsListLoaded value)? questionsListLoaded,
     TResult? Function(_QuizStarted value)? quizStarted,
-    TResult? Function(_QuestionTimeUp value)? questionTimeUp,
-    TResult? Function(_AllPlayersAnswered value)? allPlayersAnswered,
+    TResult? Function(_PlayerFinished value)? playerFinished,
+    TResult? Function(_ShowingProgressiveResults value)?
+    showingProgressiveResults,
     TResult? Function(_QuizFinished value)? quizFinished,
   }) {
     return playersUpdated?.call(this);
@@ -1802,8 +2095,9 @@ class _$PlayersUpdatedImpl implements _PlayersUpdated {
     TResult Function(_QuestionLoaded value)? questionLoaded,
     TResult Function(_QuestionsListLoaded value)? questionsListLoaded,
     TResult Function(_QuizStarted value)? quizStarted,
-    TResult Function(_QuestionTimeUp value)? questionTimeUp,
-    TResult Function(_AllPlayersAnswered value)? allPlayersAnswered,
+    TResult Function(_PlayerFinished value)? playerFinished,
+    TResult Function(_ShowingProgressiveResults value)?
+    showingProgressiveResults,
     TResult Function(_QuizFinished value)? quizFinished,
     required TResult orElse(),
   }) {
@@ -1937,8 +2231,21 @@ class _$RoomUpdatedImpl implements _RoomUpdated {
       List<RoomPlayer> players,
     )
     quizStarted,
-    required TResult Function(List<RoomPlayer> players) questionTimeUp,
-    required TResult Function(List<RoomPlayer> players) allPlayersAnswered,
+    required TResult Function(
+      int totalQuestions,
+      int correctAnswers,
+      int totalPlayers,
+      int finishedPlayers,
+    )
+    playerFinished,
+    required TResult Function(
+      List<PlayerResult> results,
+      int finishedPlayers,
+      int totalPlayers,
+      bool allPlayersFinished,
+      int userRank,
+    )
+    showingProgressiveResults,
     required TResult Function(
       int totalQuestions,
       int correctAnswers,
@@ -1976,8 +2283,21 @@ class _$RoomUpdatedImpl implements _RoomUpdated {
       List<RoomPlayer> players,
     )?
     quizStarted,
-    TResult? Function(List<RoomPlayer> players)? questionTimeUp,
-    TResult? Function(List<RoomPlayer> players)? allPlayersAnswered,
+    TResult? Function(
+      int totalQuestions,
+      int correctAnswers,
+      int totalPlayers,
+      int finishedPlayers,
+    )?
+    playerFinished,
+    TResult? Function(
+      List<PlayerResult> results,
+      int finishedPlayers,
+      int totalPlayers,
+      bool allPlayersFinished,
+      int userRank,
+    )?
+    showingProgressiveResults,
     TResult? Function(
       int totalQuestions,
       int correctAnswers,
@@ -2015,8 +2335,21 @@ class _$RoomUpdatedImpl implements _RoomUpdated {
       List<RoomPlayer> players,
     )?
     quizStarted,
-    TResult Function(List<RoomPlayer> players)? questionTimeUp,
-    TResult Function(List<RoomPlayer> players)? allPlayersAnswered,
+    TResult Function(
+      int totalQuestions,
+      int correctAnswers,
+      int totalPlayers,
+      int finishedPlayers,
+    )?
+    playerFinished,
+    TResult Function(
+      List<PlayerResult> results,
+      int finishedPlayers,
+      int totalPlayers,
+      bool allPlayersFinished,
+      int userRank,
+    )?
+    showingProgressiveResults,
     TResult Function(
       int totalQuestions,
       int correctAnswers,
@@ -2048,8 +2381,9 @@ class _$RoomUpdatedImpl implements _RoomUpdated {
     required TResult Function(_QuestionLoaded value) questionLoaded,
     required TResult Function(_QuestionsListLoaded value) questionsListLoaded,
     required TResult Function(_QuizStarted value) quizStarted,
-    required TResult Function(_QuestionTimeUp value) questionTimeUp,
-    required TResult Function(_AllPlayersAnswered value) allPlayersAnswered,
+    required TResult Function(_PlayerFinished value) playerFinished,
+    required TResult Function(_ShowingProgressiveResults value)
+    showingProgressiveResults,
     required TResult Function(_QuizFinished value) quizFinished,
   }) {
     return roomUpdated(this);
@@ -2072,8 +2406,9 @@ class _$RoomUpdatedImpl implements _RoomUpdated {
     TResult? Function(_QuestionLoaded value)? questionLoaded,
     TResult? Function(_QuestionsListLoaded value)? questionsListLoaded,
     TResult? Function(_QuizStarted value)? quizStarted,
-    TResult? Function(_QuestionTimeUp value)? questionTimeUp,
-    TResult? Function(_AllPlayersAnswered value)? allPlayersAnswered,
+    TResult? Function(_PlayerFinished value)? playerFinished,
+    TResult? Function(_ShowingProgressiveResults value)?
+    showingProgressiveResults,
     TResult? Function(_QuizFinished value)? quizFinished,
   }) {
     return roomUpdated?.call(this);
@@ -2096,8 +2431,9 @@ class _$RoomUpdatedImpl implements _RoomUpdated {
     TResult Function(_QuestionLoaded value)? questionLoaded,
     TResult Function(_QuestionsListLoaded value)? questionsListLoaded,
     TResult Function(_QuizStarted value)? quizStarted,
-    TResult Function(_QuestionTimeUp value)? questionTimeUp,
-    TResult Function(_AllPlayersAnswered value)? allPlayersAnswered,
+    TResult Function(_PlayerFinished value)? playerFinished,
+    TResult Function(_ShowingProgressiveResults value)?
+    showingProgressiveResults,
     TResult Function(_QuizFinished value)? quizFinished,
     required TResult orElse(),
   }) {
@@ -2227,8 +2563,21 @@ class _$QuestionsLoadedImpl implements _QuestionsLoaded {
       List<RoomPlayer> players,
     )
     quizStarted,
-    required TResult Function(List<RoomPlayer> players) questionTimeUp,
-    required TResult Function(List<RoomPlayer> players) allPlayersAnswered,
+    required TResult Function(
+      int totalQuestions,
+      int correctAnswers,
+      int totalPlayers,
+      int finishedPlayers,
+    )
+    playerFinished,
+    required TResult Function(
+      List<PlayerResult> results,
+      int finishedPlayers,
+      int totalPlayers,
+      bool allPlayersFinished,
+      int userRank,
+    )
+    showingProgressiveResults,
     required TResult Function(
       int totalQuestions,
       int correctAnswers,
@@ -2266,8 +2615,21 @@ class _$QuestionsLoadedImpl implements _QuestionsLoaded {
       List<RoomPlayer> players,
     )?
     quizStarted,
-    TResult? Function(List<RoomPlayer> players)? questionTimeUp,
-    TResult? Function(List<RoomPlayer> players)? allPlayersAnswered,
+    TResult? Function(
+      int totalQuestions,
+      int correctAnswers,
+      int totalPlayers,
+      int finishedPlayers,
+    )?
+    playerFinished,
+    TResult? Function(
+      List<PlayerResult> results,
+      int finishedPlayers,
+      int totalPlayers,
+      bool allPlayersFinished,
+      int userRank,
+    )?
+    showingProgressiveResults,
     TResult? Function(
       int totalQuestions,
       int correctAnswers,
@@ -2305,8 +2667,21 @@ class _$QuestionsLoadedImpl implements _QuestionsLoaded {
       List<RoomPlayer> players,
     )?
     quizStarted,
-    TResult Function(List<RoomPlayer> players)? questionTimeUp,
-    TResult Function(List<RoomPlayer> players)? allPlayersAnswered,
+    TResult Function(
+      int totalQuestions,
+      int correctAnswers,
+      int totalPlayers,
+      int finishedPlayers,
+    )?
+    playerFinished,
+    TResult Function(
+      List<PlayerResult> results,
+      int finishedPlayers,
+      int totalPlayers,
+      bool allPlayersFinished,
+      int userRank,
+    )?
+    showingProgressiveResults,
     TResult Function(
       int totalQuestions,
       int correctAnswers,
@@ -2338,8 +2713,9 @@ class _$QuestionsLoadedImpl implements _QuestionsLoaded {
     required TResult Function(_QuestionLoaded value) questionLoaded,
     required TResult Function(_QuestionsListLoaded value) questionsListLoaded,
     required TResult Function(_QuizStarted value) quizStarted,
-    required TResult Function(_QuestionTimeUp value) questionTimeUp,
-    required TResult Function(_AllPlayersAnswered value) allPlayersAnswered,
+    required TResult Function(_PlayerFinished value) playerFinished,
+    required TResult Function(_ShowingProgressiveResults value)
+    showingProgressiveResults,
     required TResult Function(_QuizFinished value) quizFinished,
   }) {
     return questionsLoaded(this);
@@ -2362,8 +2738,9 @@ class _$QuestionsLoadedImpl implements _QuestionsLoaded {
     TResult? Function(_QuestionLoaded value)? questionLoaded,
     TResult? Function(_QuestionsListLoaded value)? questionsListLoaded,
     TResult? Function(_QuizStarted value)? quizStarted,
-    TResult? Function(_QuestionTimeUp value)? questionTimeUp,
-    TResult? Function(_AllPlayersAnswered value)? allPlayersAnswered,
+    TResult? Function(_PlayerFinished value)? playerFinished,
+    TResult? Function(_ShowingProgressiveResults value)?
+    showingProgressiveResults,
     TResult? Function(_QuizFinished value)? quizFinished,
   }) {
     return questionsLoaded?.call(this);
@@ -2386,8 +2763,9 @@ class _$QuestionsLoadedImpl implements _QuestionsLoaded {
     TResult Function(_QuestionLoaded value)? questionLoaded,
     TResult Function(_QuestionsListLoaded value)? questionsListLoaded,
     TResult Function(_QuizStarted value)? quizStarted,
-    TResult Function(_QuestionTimeUp value)? questionTimeUp,
-    TResult Function(_AllPlayersAnswered value)? allPlayersAnswered,
+    TResult Function(_PlayerFinished value)? playerFinished,
+    TResult Function(_ShowingProgressiveResults value)?
+    showingProgressiveResults,
     TResult Function(_QuizFinished value)? quizFinished,
     required TResult orElse(),
   }) {
@@ -2517,8 +2895,21 @@ class _$JoinedImpl implements _Joined {
       List<RoomPlayer> players,
     )
     quizStarted,
-    required TResult Function(List<RoomPlayer> players) questionTimeUp,
-    required TResult Function(List<RoomPlayer> players) allPlayersAnswered,
+    required TResult Function(
+      int totalQuestions,
+      int correctAnswers,
+      int totalPlayers,
+      int finishedPlayers,
+    )
+    playerFinished,
+    required TResult Function(
+      List<PlayerResult> results,
+      int finishedPlayers,
+      int totalPlayers,
+      bool allPlayersFinished,
+      int userRank,
+    )
+    showingProgressiveResults,
     required TResult Function(
       int totalQuestions,
       int correctAnswers,
@@ -2556,8 +2947,21 @@ class _$JoinedImpl implements _Joined {
       List<RoomPlayer> players,
     )?
     quizStarted,
-    TResult? Function(List<RoomPlayer> players)? questionTimeUp,
-    TResult? Function(List<RoomPlayer> players)? allPlayersAnswered,
+    TResult? Function(
+      int totalQuestions,
+      int correctAnswers,
+      int totalPlayers,
+      int finishedPlayers,
+    )?
+    playerFinished,
+    TResult? Function(
+      List<PlayerResult> results,
+      int finishedPlayers,
+      int totalPlayers,
+      bool allPlayersFinished,
+      int userRank,
+    )?
+    showingProgressiveResults,
     TResult? Function(
       int totalQuestions,
       int correctAnswers,
@@ -2595,8 +2999,21 @@ class _$JoinedImpl implements _Joined {
       List<RoomPlayer> players,
     )?
     quizStarted,
-    TResult Function(List<RoomPlayer> players)? questionTimeUp,
-    TResult Function(List<RoomPlayer> players)? allPlayersAnswered,
+    TResult Function(
+      int totalQuestions,
+      int correctAnswers,
+      int totalPlayers,
+      int finishedPlayers,
+    )?
+    playerFinished,
+    TResult Function(
+      List<PlayerResult> results,
+      int finishedPlayers,
+      int totalPlayers,
+      bool allPlayersFinished,
+      int userRank,
+    )?
+    showingProgressiveResults,
     TResult Function(
       int totalQuestions,
       int correctAnswers,
@@ -2628,8 +3045,9 @@ class _$JoinedImpl implements _Joined {
     required TResult Function(_QuestionLoaded value) questionLoaded,
     required TResult Function(_QuestionsListLoaded value) questionsListLoaded,
     required TResult Function(_QuizStarted value) quizStarted,
-    required TResult Function(_QuestionTimeUp value) questionTimeUp,
-    required TResult Function(_AllPlayersAnswered value) allPlayersAnswered,
+    required TResult Function(_PlayerFinished value) playerFinished,
+    required TResult Function(_ShowingProgressiveResults value)
+    showingProgressiveResults,
     required TResult Function(_QuizFinished value) quizFinished,
   }) {
     return joined(this);
@@ -2652,8 +3070,9 @@ class _$JoinedImpl implements _Joined {
     TResult? Function(_QuestionLoaded value)? questionLoaded,
     TResult? Function(_QuestionsListLoaded value)? questionsListLoaded,
     TResult? Function(_QuizStarted value)? quizStarted,
-    TResult? Function(_QuestionTimeUp value)? questionTimeUp,
-    TResult? Function(_AllPlayersAnswered value)? allPlayersAnswered,
+    TResult? Function(_PlayerFinished value)? playerFinished,
+    TResult? Function(_ShowingProgressiveResults value)?
+    showingProgressiveResults,
     TResult? Function(_QuizFinished value)? quizFinished,
   }) {
     return joined?.call(this);
@@ -2676,8 +3095,9 @@ class _$JoinedImpl implements _Joined {
     TResult Function(_QuestionLoaded value)? questionLoaded,
     TResult Function(_QuestionsListLoaded value)? questionsListLoaded,
     TResult Function(_QuizStarted value)? quizStarted,
-    TResult Function(_QuestionTimeUp value)? questionTimeUp,
-    TResult Function(_AllPlayersAnswered value)? allPlayersAnswered,
+    TResult Function(_PlayerFinished value)? playerFinished,
+    TResult Function(_ShowingProgressiveResults value)?
+    showingProgressiveResults,
     TResult Function(_QuizFinished value)? quizFinished,
     required TResult orElse(),
   }) {
@@ -2765,8 +3185,21 @@ class _$LeftImpl implements _Left {
       List<RoomPlayer> players,
     )
     quizStarted,
-    required TResult Function(List<RoomPlayer> players) questionTimeUp,
-    required TResult Function(List<RoomPlayer> players) allPlayersAnswered,
+    required TResult Function(
+      int totalQuestions,
+      int correctAnswers,
+      int totalPlayers,
+      int finishedPlayers,
+    )
+    playerFinished,
+    required TResult Function(
+      List<PlayerResult> results,
+      int finishedPlayers,
+      int totalPlayers,
+      bool allPlayersFinished,
+      int userRank,
+    )
+    showingProgressiveResults,
     required TResult Function(
       int totalQuestions,
       int correctAnswers,
@@ -2804,8 +3237,21 @@ class _$LeftImpl implements _Left {
       List<RoomPlayer> players,
     )?
     quizStarted,
-    TResult? Function(List<RoomPlayer> players)? questionTimeUp,
-    TResult? Function(List<RoomPlayer> players)? allPlayersAnswered,
+    TResult? Function(
+      int totalQuestions,
+      int correctAnswers,
+      int totalPlayers,
+      int finishedPlayers,
+    )?
+    playerFinished,
+    TResult? Function(
+      List<PlayerResult> results,
+      int finishedPlayers,
+      int totalPlayers,
+      bool allPlayersFinished,
+      int userRank,
+    )?
+    showingProgressiveResults,
     TResult? Function(
       int totalQuestions,
       int correctAnswers,
@@ -2843,8 +3289,21 @@ class _$LeftImpl implements _Left {
       List<RoomPlayer> players,
     )?
     quizStarted,
-    TResult Function(List<RoomPlayer> players)? questionTimeUp,
-    TResult Function(List<RoomPlayer> players)? allPlayersAnswered,
+    TResult Function(
+      int totalQuestions,
+      int correctAnswers,
+      int totalPlayers,
+      int finishedPlayers,
+    )?
+    playerFinished,
+    TResult Function(
+      List<PlayerResult> results,
+      int finishedPlayers,
+      int totalPlayers,
+      bool allPlayersFinished,
+      int userRank,
+    )?
+    showingProgressiveResults,
     TResult Function(
       int totalQuestions,
       int correctAnswers,
@@ -2876,8 +3335,9 @@ class _$LeftImpl implements _Left {
     required TResult Function(_QuestionLoaded value) questionLoaded,
     required TResult Function(_QuestionsListLoaded value) questionsListLoaded,
     required TResult Function(_QuizStarted value) quizStarted,
-    required TResult Function(_QuestionTimeUp value) questionTimeUp,
-    required TResult Function(_AllPlayersAnswered value) allPlayersAnswered,
+    required TResult Function(_PlayerFinished value) playerFinished,
+    required TResult Function(_ShowingProgressiveResults value)
+    showingProgressiveResults,
     required TResult Function(_QuizFinished value) quizFinished,
   }) {
     return left(this);
@@ -2900,8 +3360,9 @@ class _$LeftImpl implements _Left {
     TResult? Function(_QuestionLoaded value)? questionLoaded,
     TResult? Function(_QuestionsListLoaded value)? questionsListLoaded,
     TResult? Function(_QuizStarted value)? quizStarted,
-    TResult? Function(_QuestionTimeUp value)? questionTimeUp,
-    TResult? Function(_AllPlayersAnswered value)? allPlayersAnswered,
+    TResult? Function(_PlayerFinished value)? playerFinished,
+    TResult? Function(_ShowingProgressiveResults value)?
+    showingProgressiveResults,
     TResult? Function(_QuizFinished value)? quizFinished,
   }) {
     return left?.call(this);
@@ -2924,8 +3385,9 @@ class _$LeftImpl implements _Left {
     TResult Function(_QuestionLoaded value)? questionLoaded,
     TResult Function(_QuestionsListLoaded value)? questionsListLoaded,
     TResult Function(_QuizStarted value)? quizStarted,
-    TResult Function(_QuestionTimeUp value)? questionTimeUp,
-    TResult Function(_AllPlayersAnswered value)? allPlayersAnswered,
+    TResult Function(_PlayerFinished value)? playerFinished,
+    TResult Function(_ShowingProgressiveResults value)?
+    showingProgressiveResults,
     TResult Function(_QuizFinished value)? quizFinished,
     required TResult orElse(),
   }) {
@@ -3007,8 +3469,21 @@ class _$GameStartedImpl implements _GameStarted {
       List<RoomPlayer> players,
     )
     quizStarted,
-    required TResult Function(List<RoomPlayer> players) questionTimeUp,
-    required TResult Function(List<RoomPlayer> players) allPlayersAnswered,
+    required TResult Function(
+      int totalQuestions,
+      int correctAnswers,
+      int totalPlayers,
+      int finishedPlayers,
+    )
+    playerFinished,
+    required TResult Function(
+      List<PlayerResult> results,
+      int finishedPlayers,
+      int totalPlayers,
+      bool allPlayersFinished,
+      int userRank,
+    )
+    showingProgressiveResults,
     required TResult Function(
       int totalQuestions,
       int correctAnswers,
@@ -3046,8 +3521,21 @@ class _$GameStartedImpl implements _GameStarted {
       List<RoomPlayer> players,
     )?
     quizStarted,
-    TResult? Function(List<RoomPlayer> players)? questionTimeUp,
-    TResult? Function(List<RoomPlayer> players)? allPlayersAnswered,
+    TResult? Function(
+      int totalQuestions,
+      int correctAnswers,
+      int totalPlayers,
+      int finishedPlayers,
+    )?
+    playerFinished,
+    TResult? Function(
+      List<PlayerResult> results,
+      int finishedPlayers,
+      int totalPlayers,
+      bool allPlayersFinished,
+      int userRank,
+    )?
+    showingProgressiveResults,
     TResult? Function(
       int totalQuestions,
       int correctAnswers,
@@ -3085,8 +3573,21 @@ class _$GameStartedImpl implements _GameStarted {
       List<RoomPlayer> players,
     )?
     quizStarted,
-    TResult Function(List<RoomPlayer> players)? questionTimeUp,
-    TResult Function(List<RoomPlayer> players)? allPlayersAnswered,
+    TResult Function(
+      int totalQuestions,
+      int correctAnswers,
+      int totalPlayers,
+      int finishedPlayers,
+    )?
+    playerFinished,
+    TResult Function(
+      List<PlayerResult> results,
+      int finishedPlayers,
+      int totalPlayers,
+      bool allPlayersFinished,
+      int userRank,
+    )?
+    showingProgressiveResults,
     TResult Function(
       int totalQuestions,
       int correctAnswers,
@@ -3118,8 +3619,9 @@ class _$GameStartedImpl implements _GameStarted {
     required TResult Function(_QuestionLoaded value) questionLoaded,
     required TResult Function(_QuestionsListLoaded value) questionsListLoaded,
     required TResult Function(_QuizStarted value) quizStarted,
-    required TResult Function(_QuestionTimeUp value) questionTimeUp,
-    required TResult Function(_AllPlayersAnswered value) allPlayersAnswered,
+    required TResult Function(_PlayerFinished value) playerFinished,
+    required TResult Function(_ShowingProgressiveResults value)
+    showingProgressiveResults,
     required TResult Function(_QuizFinished value) quizFinished,
   }) {
     return gameStarted(this);
@@ -3142,8 +3644,9 @@ class _$GameStartedImpl implements _GameStarted {
     TResult? Function(_QuestionLoaded value)? questionLoaded,
     TResult? Function(_QuestionsListLoaded value)? questionsListLoaded,
     TResult? Function(_QuizStarted value)? quizStarted,
-    TResult? Function(_QuestionTimeUp value)? questionTimeUp,
-    TResult? Function(_AllPlayersAnswered value)? allPlayersAnswered,
+    TResult? Function(_PlayerFinished value)? playerFinished,
+    TResult? Function(_ShowingProgressiveResults value)?
+    showingProgressiveResults,
     TResult? Function(_QuizFinished value)? quizFinished,
   }) {
     return gameStarted?.call(this);
@@ -3166,8 +3669,9 @@ class _$GameStartedImpl implements _GameStarted {
     TResult Function(_QuestionLoaded value)? questionLoaded,
     TResult Function(_QuestionsListLoaded value)? questionsListLoaded,
     TResult Function(_QuizStarted value)? quizStarted,
-    TResult Function(_QuestionTimeUp value)? questionTimeUp,
-    TResult Function(_AllPlayersAnswered value)? allPlayersAnswered,
+    TResult Function(_PlayerFinished value)? playerFinished,
+    TResult Function(_ShowingProgressiveResults value)?
+    showingProgressiveResults,
     TResult Function(_QuizFinished value)? quizFinished,
     required TResult orElse(),
   }) {
@@ -3292,8 +3796,21 @@ class _$QuestionLoadedImpl implements _QuestionLoaded {
       List<RoomPlayer> players,
     )
     quizStarted,
-    required TResult Function(List<RoomPlayer> players) questionTimeUp,
-    required TResult Function(List<RoomPlayer> players) allPlayersAnswered,
+    required TResult Function(
+      int totalQuestions,
+      int correctAnswers,
+      int totalPlayers,
+      int finishedPlayers,
+    )
+    playerFinished,
+    required TResult Function(
+      List<PlayerResult> results,
+      int finishedPlayers,
+      int totalPlayers,
+      bool allPlayersFinished,
+      int userRank,
+    )
+    showingProgressiveResults,
     required TResult Function(
       int totalQuestions,
       int correctAnswers,
@@ -3331,8 +3848,21 @@ class _$QuestionLoadedImpl implements _QuestionLoaded {
       List<RoomPlayer> players,
     )?
     quizStarted,
-    TResult? Function(List<RoomPlayer> players)? questionTimeUp,
-    TResult? Function(List<RoomPlayer> players)? allPlayersAnswered,
+    TResult? Function(
+      int totalQuestions,
+      int correctAnswers,
+      int totalPlayers,
+      int finishedPlayers,
+    )?
+    playerFinished,
+    TResult? Function(
+      List<PlayerResult> results,
+      int finishedPlayers,
+      int totalPlayers,
+      bool allPlayersFinished,
+      int userRank,
+    )?
+    showingProgressiveResults,
     TResult? Function(
       int totalQuestions,
       int correctAnswers,
@@ -3370,8 +3900,21 @@ class _$QuestionLoadedImpl implements _QuestionLoaded {
       List<RoomPlayer> players,
     )?
     quizStarted,
-    TResult Function(List<RoomPlayer> players)? questionTimeUp,
-    TResult Function(List<RoomPlayer> players)? allPlayersAnswered,
+    TResult Function(
+      int totalQuestions,
+      int correctAnswers,
+      int totalPlayers,
+      int finishedPlayers,
+    )?
+    playerFinished,
+    TResult Function(
+      List<PlayerResult> results,
+      int finishedPlayers,
+      int totalPlayers,
+      bool allPlayersFinished,
+      int userRank,
+    )?
+    showingProgressiveResults,
     TResult Function(
       int totalQuestions,
       int correctAnswers,
@@ -3403,8 +3946,9 @@ class _$QuestionLoadedImpl implements _QuestionLoaded {
     required TResult Function(_QuestionLoaded value) questionLoaded,
     required TResult Function(_QuestionsListLoaded value) questionsListLoaded,
     required TResult Function(_QuizStarted value) quizStarted,
-    required TResult Function(_QuestionTimeUp value) questionTimeUp,
-    required TResult Function(_AllPlayersAnswered value) allPlayersAnswered,
+    required TResult Function(_PlayerFinished value) playerFinished,
+    required TResult Function(_ShowingProgressiveResults value)
+    showingProgressiveResults,
     required TResult Function(_QuizFinished value) quizFinished,
   }) {
     return questionLoaded(this);
@@ -3427,8 +3971,9 @@ class _$QuestionLoadedImpl implements _QuestionLoaded {
     TResult? Function(_QuestionLoaded value)? questionLoaded,
     TResult? Function(_QuestionsListLoaded value)? questionsListLoaded,
     TResult? Function(_QuizStarted value)? quizStarted,
-    TResult? Function(_QuestionTimeUp value)? questionTimeUp,
-    TResult? Function(_AllPlayersAnswered value)? allPlayersAnswered,
+    TResult? Function(_PlayerFinished value)? playerFinished,
+    TResult? Function(_ShowingProgressiveResults value)?
+    showingProgressiveResults,
     TResult? Function(_QuizFinished value)? quizFinished,
   }) {
     return questionLoaded?.call(this);
@@ -3451,8 +3996,9 @@ class _$QuestionLoadedImpl implements _QuestionLoaded {
     TResult Function(_QuestionLoaded value)? questionLoaded,
     TResult Function(_QuestionsListLoaded value)? questionsListLoaded,
     TResult Function(_QuizStarted value)? quizStarted,
-    TResult Function(_QuestionTimeUp value)? questionTimeUp,
-    TResult Function(_AllPlayersAnswered value)? allPlayersAnswered,
+    TResult Function(_PlayerFinished value)? playerFinished,
+    TResult Function(_ShowingProgressiveResults value)?
+    showingProgressiveResults,
     TResult Function(_QuizFinished value)? quizFinished,
     required TResult orElse(),
   }) {
@@ -3582,8 +4128,21 @@ class _$QuestionsListLoadedImpl implements _QuestionsListLoaded {
       List<RoomPlayer> players,
     )
     quizStarted,
-    required TResult Function(List<RoomPlayer> players) questionTimeUp,
-    required TResult Function(List<RoomPlayer> players) allPlayersAnswered,
+    required TResult Function(
+      int totalQuestions,
+      int correctAnswers,
+      int totalPlayers,
+      int finishedPlayers,
+    )
+    playerFinished,
+    required TResult Function(
+      List<PlayerResult> results,
+      int finishedPlayers,
+      int totalPlayers,
+      bool allPlayersFinished,
+      int userRank,
+    )
+    showingProgressiveResults,
     required TResult Function(
       int totalQuestions,
       int correctAnswers,
@@ -3621,8 +4180,21 @@ class _$QuestionsListLoadedImpl implements _QuestionsListLoaded {
       List<RoomPlayer> players,
     )?
     quizStarted,
-    TResult? Function(List<RoomPlayer> players)? questionTimeUp,
-    TResult? Function(List<RoomPlayer> players)? allPlayersAnswered,
+    TResult? Function(
+      int totalQuestions,
+      int correctAnswers,
+      int totalPlayers,
+      int finishedPlayers,
+    )?
+    playerFinished,
+    TResult? Function(
+      List<PlayerResult> results,
+      int finishedPlayers,
+      int totalPlayers,
+      bool allPlayersFinished,
+      int userRank,
+    )?
+    showingProgressiveResults,
     TResult? Function(
       int totalQuestions,
       int correctAnswers,
@@ -3660,8 +4232,21 @@ class _$QuestionsListLoadedImpl implements _QuestionsListLoaded {
       List<RoomPlayer> players,
     )?
     quizStarted,
-    TResult Function(List<RoomPlayer> players)? questionTimeUp,
-    TResult Function(List<RoomPlayer> players)? allPlayersAnswered,
+    TResult Function(
+      int totalQuestions,
+      int correctAnswers,
+      int totalPlayers,
+      int finishedPlayers,
+    )?
+    playerFinished,
+    TResult Function(
+      List<PlayerResult> results,
+      int finishedPlayers,
+      int totalPlayers,
+      bool allPlayersFinished,
+      int userRank,
+    )?
+    showingProgressiveResults,
     TResult Function(
       int totalQuestions,
       int correctAnswers,
@@ -3693,8 +4278,9 @@ class _$QuestionsListLoadedImpl implements _QuestionsListLoaded {
     required TResult Function(_QuestionLoaded value) questionLoaded,
     required TResult Function(_QuestionsListLoaded value) questionsListLoaded,
     required TResult Function(_QuizStarted value) quizStarted,
-    required TResult Function(_QuestionTimeUp value) questionTimeUp,
-    required TResult Function(_AllPlayersAnswered value) allPlayersAnswered,
+    required TResult Function(_PlayerFinished value) playerFinished,
+    required TResult Function(_ShowingProgressiveResults value)
+    showingProgressiveResults,
     required TResult Function(_QuizFinished value) quizFinished,
   }) {
     return questionsListLoaded(this);
@@ -3717,8 +4303,9 @@ class _$QuestionsListLoadedImpl implements _QuestionsListLoaded {
     TResult? Function(_QuestionLoaded value)? questionLoaded,
     TResult? Function(_QuestionsListLoaded value)? questionsListLoaded,
     TResult? Function(_QuizStarted value)? quizStarted,
-    TResult? Function(_QuestionTimeUp value)? questionTimeUp,
-    TResult? Function(_AllPlayersAnswered value)? allPlayersAnswered,
+    TResult? Function(_PlayerFinished value)? playerFinished,
+    TResult? Function(_ShowingProgressiveResults value)?
+    showingProgressiveResults,
     TResult? Function(_QuizFinished value)? quizFinished,
   }) {
     return questionsListLoaded?.call(this);
@@ -3741,8 +4328,9 @@ class _$QuestionsListLoadedImpl implements _QuestionsListLoaded {
     TResult Function(_QuestionLoaded value)? questionLoaded,
     TResult Function(_QuestionsListLoaded value)? questionsListLoaded,
     TResult Function(_QuizStarted value)? quizStarted,
-    TResult Function(_QuestionTimeUp value)? questionTimeUp,
-    TResult Function(_AllPlayersAnswered value)? allPlayersAnswered,
+    TResult Function(_PlayerFinished value)? playerFinished,
+    TResult Function(_ShowingProgressiveResults value)?
+    showingProgressiveResults,
     TResult Function(_QuizFinished value)? quizFinished,
     required TResult orElse(),
   }) {
@@ -3883,10 +4471,8 @@ class _$QuizStartedImpl implements _QuizStarted {
     return EqualUnmodifiableMapView(_playerAnswers);
   }
 
-  // playerId -> selectedAnswer
   @override
   final String? selectedAnswer;
-  // current user's selected answer
   @override
   final int correctCount;
   @override
@@ -3978,8 +4564,21 @@ class _$QuizStartedImpl implements _QuizStarted {
       List<RoomPlayer> players,
     )
     quizStarted,
-    required TResult Function(List<RoomPlayer> players) questionTimeUp,
-    required TResult Function(List<RoomPlayer> players) allPlayersAnswered,
+    required TResult Function(
+      int totalQuestions,
+      int correctAnswers,
+      int totalPlayers,
+      int finishedPlayers,
+    )
+    playerFinished,
+    required TResult Function(
+      List<PlayerResult> results,
+      int finishedPlayers,
+      int totalPlayers,
+      bool allPlayersFinished,
+      int userRank,
+    )
+    showingProgressiveResults,
     required TResult Function(
       int totalQuestions,
       int correctAnswers,
@@ -4026,8 +4625,21 @@ class _$QuizStartedImpl implements _QuizStarted {
       List<RoomPlayer> players,
     )?
     quizStarted,
-    TResult? Function(List<RoomPlayer> players)? questionTimeUp,
-    TResult? Function(List<RoomPlayer> players)? allPlayersAnswered,
+    TResult? Function(
+      int totalQuestions,
+      int correctAnswers,
+      int totalPlayers,
+      int finishedPlayers,
+    )?
+    playerFinished,
+    TResult? Function(
+      List<PlayerResult> results,
+      int finishedPlayers,
+      int totalPlayers,
+      bool allPlayersFinished,
+      int userRank,
+    )?
+    showingProgressiveResults,
     TResult? Function(
       int totalQuestions,
       int correctAnswers,
@@ -4074,8 +4686,21 @@ class _$QuizStartedImpl implements _QuizStarted {
       List<RoomPlayer> players,
     )?
     quizStarted,
-    TResult Function(List<RoomPlayer> players)? questionTimeUp,
-    TResult Function(List<RoomPlayer> players)? allPlayersAnswered,
+    TResult Function(
+      int totalQuestions,
+      int correctAnswers,
+      int totalPlayers,
+      int finishedPlayers,
+    )?
+    playerFinished,
+    TResult Function(
+      List<PlayerResult> results,
+      int finishedPlayers,
+      int totalPlayers,
+      bool allPlayersFinished,
+      int userRank,
+    )?
+    showingProgressiveResults,
     TResult Function(
       int totalQuestions,
       int correctAnswers,
@@ -4116,8 +4741,9 @@ class _$QuizStartedImpl implements _QuizStarted {
     required TResult Function(_QuestionLoaded value) questionLoaded,
     required TResult Function(_QuestionsListLoaded value) questionsListLoaded,
     required TResult Function(_QuizStarted value) quizStarted,
-    required TResult Function(_QuestionTimeUp value) questionTimeUp,
-    required TResult Function(_AllPlayersAnswered value) allPlayersAnswered,
+    required TResult Function(_PlayerFinished value) playerFinished,
+    required TResult Function(_ShowingProgressiveResults value)
+    showingProgressiveResults,
     required TResult Function(_QuizFinished value) quizFinished,
   }) {
     return quizStarted(this);
@@ -4140,8 +4766,9 @@ class _$QuizStartedImpl implements _QuizStarted {
     TResult? Function(_QuestionLoaded value)? questionLoaded,
     TResult? Function(_QuestionsListLoaded value)? questionsListLoaded,
     TResult? Function(_QuizStarted value)? quizStarted,
-    TResult? Function(_QuestionTimeUp value)? questionTimeUp,
-    TResult? Function(_AllPlayersAnswered value)? allPlayersAnswered,
+    TResult? Function(_PlayerFinished value)? playerFinished,
+    TResult? Function(_ShowingProgressiveResults value)?
+    showingProgressiveResults,
     TResult? Function(_QuizFinished value)? quizFinished,
   }) {
     return quizStarted?.call(this);
@@ -4164,8 +4791,9 @@ class _$QuizStartedImpl implements _QuizStarted {
     TResult Function(_QuestionLoaded value)? questionLoaded,
     TResult Function(_QuestionsListLoaded value)? questionsListLoaded,
     TResult Function(_QuizStarted value)? quizStarted,
-    TResult Function(_QuestionTimeUp value)? questionTimeUp,
-    TResult Function(_AllPlayersAnswered value)? allPlayersAnswered,
+    TResult Function(_PlayerFinished value)? playerFinished,
+    TResult Function(_ShowingProgressiveResults value)?
+    showingProgressiveResults,
     TResult Function(_QuizFinished value)? quizFinished,
     required TResult orElse(),
   }) {
@@ -4191,8 +4819,8 @@ abstract class _QuizStarted implements RoomState {
   List<Question> get questions;
   int get currentQuestionIndex;
   int get remainingTime;
-  Map<String, String?> get playerAnswers; // playerId -> selectedAnswer
-  String? get selectedAnswer; // current user's selected answer
+  Map<String, String?> get playerAnswers;
+  String? get selectedAnswer;
   int get correctCount;
   bool get isWaitingForPlayers;
   List<RoomPlayer> get players;
@@ -4205,35 +4833,57 @@ abstract class _QuizStarted implements RoomState {
 }
 
 /// @nodoc
-abstract class _$$QuestionTimeUpImplCopyWith<$Res> {
-  factory _$$QuestionTimeUpImplCopyWith(
-    _$QuestionTimeUpImpl value,
-    $Res Function(_$QuestionTimeUpImpl) then,
-  ) = __$$QuestionTimeUpImplCopyWithImpl<$Res>;
+abstract class _$$PlayerFinishedImplCopyWith<$Res> {
+  factory _$$PlayerFinishedImplCopyWith(
+    _$PlayerFinishedImpl value,
+    $Res Function(_$PlayerFinishedImpl) then,
+  ) = __$$PlayerFinishedImplCopyWithImpl<$Res>;
   @useResult
-  $Res call({List<RoomPlayer> players});
+  $Res call({
+    int totalQuestions,
+    int correctAnswers,
+    int totalPlayers,
+    int finishedPlayers,
+  });
 }
 
 /// @nodoc
-class __$$QuestionTimeUpImplCopyWithImpl<$Res>
-    extends _$RoomStateCopyWithImpl<$Res, _$QuestionTimeUpImpl>
-    implements _$$QuestionTimeUpImplCopyWith<$Res> {
-  __$$QuestionTimeUpImplCopyWithImpl(
-    _$QuestionTimeUpImpl _value,
-    $Res Function(_$QuestionTimeUpImpl) _then,
+class __$$PlayerFinishedImplCopyWithImpl<$Res>
+    extends _$RoomStateCopyWithImpl<$Res, _$PlayerFinishedImpl>
+    implements _$$PlayerFinishedImplCopyWith<$Res> {
+  __$$PlayerFinishedImplCopyWithImpl(
+    _$PlayerFinishedImpl _value,
+    $Res Function(_$PlayerFinishedImpl) _then,
   ) : super(_value, _then);
 
   /// Create a copy of RoomState
   /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
-  $Res call({Object? players = null}) {
+  $Res call({
+    Object? totalQuestions = null,
+    Object? correctAnswers = null,
+    Object? totalPlayers = null,
+    Object? finishedPlayers = null,
+  }) {
     return _then(
-      _$QuestionTimeUpImpl(
-        players: null == players
-            ? _value._players
-            : players // ignore: cast_nullable_to_non_nullable
-                  as List<RoomPlayer>,
+      _$PlayerFinishedImpl(
+        totalQuestions: null == totalQuestions
+            ? _value.totalQuestions
+            : totalQuestions // ignore: cast_nullable_to_non_nullable
+                  as int,
+        correctAnswers: null == correctAnswers
+            ? _value.correctAnswers
+            : correctAnswers // ignore: cast_nullable_to_non_nullable
+                  as int,
+        totalPlayers: null == totalPlayers
+            ? _value.totalPlayers
+            : totalPlayers // ignore: cast_nullable_to_non_nullable
+                  as int,
+        finishedPlayers: null == finishedPlayers
+            ? _value.finishedPlayers
+            : finishedPlayers // ignore: cast_nullable_to_non_nullable
+                  as int,
       ),
     );
   }
@@ -4241,42 +4891,59 @@ class __$$QuestionTimeUpImplCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$QuestionTimeUpImpl implements _QuestionTimeUp {
-  const _$QuestionTimeUpImpl({required final List<RoomPlayer> players})
-    : _players = players;
+class _$PlayerFinishedImpl implements _PlayerFinished {
+  const _$PlayerFinishedImpl({
+    required this.totalQuestions,
+    required this.correctAnswers,
+    required this.totalPlayers,
+    required this.finishedPlayers,
+  });
 
-  final List<RoomPlayer> _players;
   @override
-  List<RoomPlayer> get players {
-    if (_players is EqualUnmodifiableListView) return _players;
-    // ignore: implicit_dynamic_type
-    return EqualUnmodifiableListView(_players);
-  }
+  final int totalQuestions;
+  @override
+  final int correctAnswers;
+  @override
+  final int totalPlayers;
+  @override
+  final int finishedPlayers;
 
   @override
   String toString() {
-    return 'RoomState.questionTimeUp(players: $players)';
+    return 'RoomState.playerFinished(totalQuestions: $totalQuestions, correctAnswers: $correctAnswers, totalPlayers: $totalPlayers, finishedPlayers: $finishedPlayers)';
   }
 
   @override
   bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$QuestionTimeUpImpl &&
-            const DeepCollectionEquality().equals(other._players, _players));
+            other is _$PlayerFinishedImpl &&
+            (identical(other.totalQuestions, totalQuestions) ||
+                other.totalQuestions == totalQuestions) &&
+            (identical(other.correctAnswers, correctAnswers) ||
+                other.correctAnswers == correctAnswers) &&
+            (identical(other.totalPlayers, totalPlayers) ||
+                other.totalPlayers == totalPlayers) &&
+            (identical(other.finishedPlayers, finishedPlayers) ||
+                other.finishedPlayers == finishedPlayers));
   }
 
   @override
-  int get hashCode =>
-      Object.hash(runtimeType, const DeepCollectionEquality().hash(_players));
+  int get hashCode => Object.hash(
+    runtimeType,
+    totalQuestions,
+    correctAnswers,
+    totalPlayers,
+    finishedPlayers,
+  );
 
   /// Create a copy of RoomState
   /// with the given fields replaced by the non-null parameter values.
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   @pragma('vm:prefer-inline')
-  _$$QuestionTimeUpImplCopyWith<_$QuestionTimeUpImpl> get copyWith =>
-      __$$QuestionTimeUpImplCopyWithImpl<_$QuestionTimeUpImpl>(
+  _$$PlayerFinishedImplCopyWith<_$PlayerFinishedImpl> get copyWith =>
+      __$$PlayerFinishedImplCopyWithImpl<_$PlayerFinishedImpl>(
         this,
         _$identity,
       );
@@ -4308,8 +4975,21 @@ class _$QuestionTimeUpImpl implements _QuestionTimeUp {
       List<RoomPlayer> players,
     )
     quizStarted,
-    required TResult Function(List<RoomPlayer> players) questionTimeUp,
-    required TResult Function(List<RoomPlayer> players) allPlayersAnswered,
+    required TResult Function(
+      int totalQuestions,
+      int correctAnswers,
+      int totalPlayers,
+      int finishedPlayers,
+    )
+    playerFinished,
+    required TResult Function(
+      List<PlayerResult> results,
+      int finishedPlayers,
+      int totalPlayers,
+      bool allPlayersFinished,
+      int userRank,
+    )
+    showingProgressiveResults,
     required TResult Function(
       int totalQuestions,
       int correctAnswers,
@@ -4317,7 +4997,12 @@ class _$QuestionTimeUpImpl implements _QuestionTimeUp {
     )
     quizFinished,
   }) {
-    return questionTimeUp(players);
+    return playerFinished(
+      totalQuestions,
+      correctAnswers,
+      totalPlayers,
+      finishedPlayers,
+    );
   }
 
   @override
@@ -4347,8 +5032,21 @@ class _$QuestionTimeUpImpl implements _QuestionTimeUp {
       List<RoomPlayer> players,
     )?
     quizStarted,
-    TResult? Function(List<RoomPlayer> players)? questionTimeUp,
-    TResult? Function(List<RoomPlayer> players)? allPlayersAnswered,
+    TResult? Function(
+      int totalQuestions,
+      int correctAnswers,
+      int totalPlayers,
+      int finishedPlayers,
+    )?
+    playerFinished,
+    TResult? Function(
+      List<PlayerResult> results,
+      int finishedPlayers,
+      int totalPlayers,
+      bool allPlayersFinished,
+      int userRank,
+    )?
+    showingProgressiveResults,
     TResult? Function(
       int totalQuestions,
       int correctAnswers,
@@ -4356,7 +5054,12 @@ class _$QuestionTimeUpImpl implements _QuestionTimeUp {
     )?
     quizFinished,
   }) {
-    return questionTimeUp?.call(players);
+    return playerFinished?.call(
+      totalQuestions,
+      correctAnswers,
+      totalPlayers,
+      finishedPlayers,
+    );
   }
 
   @override
@@ -4386,8 +5089,21 @@ class _$QuestionTimeUpImpl implements _QuestionTimeUp {
       List<RoomPlayer> players,
     )?
     quizStarted,
-    TResult Function(List<RoomPlayer> players)? questionTimeUp,
-    TResult Function(List<RoomPlayer> players)? allPlayersAnswered,
+    TResult Function(
+      int totalQuestions,
+      int correctAnswers,
+      int totalPlayers,
+      int finishedPlayers,
+    )?
+    playerFinished,
+    TResult Function(
+      List<PlayerResult> results,
+      int finishedPlayers,
+      int totalPlayers,
+      bool allPlayersFinished,
+      int userRank,
+    )?
+    showingProgressiveResults,
     TResult Function(
       int totalQuestions,
       int correctAnswers,
@@ -4396,8 +5112,13 @@ class _$QuestionTimeUpImpl implements _QuestionTimeUp {
     quizFinished,
     required TResult orElse(),
   }) {
-    if (questionTimeUp != null) {
-      return questionTimeUp(players);
+    if (playerFinished != null) {
+      return playerFinished(
+        totalQuestions,
+        correctAnswers,
+        totalPlayers,
+        finishedPlayers,
+      );
     }
     return orElse();
   }
@@ -4419,11 +5140,12 @@ class _$QuestionTimeUpImpl implements _QuestionTimeUp {
     required TResult Function(_QuestionLoaded value) questionLoaded,
     required TResult Function(_QuestionsListLoaded value) questionsListLoaded,
     required TResult Function(_QuizStarted value) quizStarted,
-    required TResult Function(_QuestionTimeUp value) questionTimeUp,
-    required TResult Function(_AllPlayersAnswered value) allPlayersAnswered,
+    required TResult Function(_PlayerFinished value) playerFinished,
+    required TResult Function(_ShowingProgressiveResults value)
+    showingProgressiveResults,
     required TResult Function(_QuizFinished value) quizFinished,
   }) {
-    return questionTimeUp(this);
+    return playerFinished(this);
   }
 
   @override
@@ -4443,11 +5165,12 @@ class _$QuestionTimeUpImpl implements _QuestionTimeUp {
     TResult? Function(_QuestionLoaded value)? questionLoaded,
     TResult? Function(_QuestionsListLoaded value)? questionsListLoaded,
     TResult? Function(_QuizStarted value)? quizStarted,
-    TResult? Function(_QuestionTimeUp value)? questionTimeUp,
-    TResult? Function(_AllPlayersAnswered value)? allPlayersAnswered,
+    TResult? Function(_PlayerFinished value)? playerFinished,
+    TResult? Function(_ShowingProgressiveResults value)?
+    showingProgressiveResults,
     TResult? Function(_QuizFinished value)? quizFinished,
   }) {
-    return questionTimeUp?.call(this);
+    return playerFinished?.call(this);
   }
 
   @override
@@ -4467,61 +5190,97 @@ class _$QuestionTimeUpImpl implements _QuestionTimeUp {
     TResult Function(_QuestionLoaded value)? questionLoaded,
     TResult Function(_QuestionsListLoaded value)? questionsListLoaded,
     TResult Function(_QuizStarted value)? quizStarted,
-    TResult Function(_QuestionTimeUp value)? questionTimeUp,
-    TResult Function(_AllPlayersAnswered value)? allPlayersAnswered,
+    TResult Function(_PlayerFinished value)? playerFinished,
+    TResult Function(_ShowingProgressiveResults value)?
+    showingProgressiveResults,
     TResult Function(_QuizFinished value)? quizFinished,
     required TResult orElse(),
   }) {
-    if (questionTimeUp != null) {
-      return questionTimeUp(this);
+    if (playerFinished != null) {
+      return playerFinished(this);
     }
     return orElse();
   }
 }
 
-abstract class _QuestionTimeUp implements RoomState {
-  const factory _QuestionTimeUp({required final List<RoomPlayer> players}) =
-      _$QuestionTimeUpImpl;
+abstract class _PlayerFinished implements RoomState {
+  const factory _PlayerFinished({
+    required final int totalQuestions,
+    required final int correctAnswers,
+    required final int totalPlayers,
+    required final int finishedPlayers,
+  }) = _$PlayerFinishedImpl;
 
-  List<RoomPlayer> get players;
+  int get totalQuestions;
+  int get correctAnswers;
+  int get totalPlayers;
+  int get finishedPlayers;
 
   /// Create a copy of RoomState
   /// with the given fields replaced by the non-null parameter values.
   @JsonKey(includeFromJson: false, includeToJson: false)
-  _$$QuestionTimeUpImplCopyWith<_$QuestionTimeUpImpl> get copyWith =>
+  _$$PlayerFinishedImplCopyWith<_$PlayerFinishedImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }
 
 /// @nodoc
-abstract class _$$AllPlayersAnsweredImplCopyWith<$Res> {
-  factory _$$AllPlayersAnsweredImplCopyWith(
-    _$AllPlayersAnsweredImpl value,
-    $Res Function(_$AllPlayersAnsweredImpl) then,
-  ) = __$$AllPlayersAnsweredImplCopyWithImpl<$Res>;
+abstract class _$$ShowingProgressiveResultsImplCopyWith<$Res> {
+  factory _$$ShowingProgressiveResultsImplCopyWith(
+    _$ShowingProgressiveResultsImpl value,
+    $Res Function(_$ShowingProgressiveResultsImpl) then,
+  ) = __$$ShowingProgressiveResultsImplCopyWithImpl<$Res>;
   @useResult
-  $Res call({List<RoomPlayer> players});
+  $Res call({
+    List<PlayerResult> results,
+    int finishedPlayers,
+    int totalPlayers,
+    bool allPlayersFinished,
+    int userRank,
+  });
 }
 
 /// @nodoc
-class __$$AllPlayersAnsweredImplCopyWithImpl<$Res>
-    extends _$RoomStateCopyWithImpl<$Res, _$AllPlayersAnsweredImpl>
-    implements _$$AllPlayersAnsweredImplCopyWith<$Res> {
-  __$$AllPlayersAnsweredImplCopyWithImpl(
-    _$AllPlayersAnsweredImpl _value,
-    $Res Function(_$AllPlayersAnsweredImpl) _then,
+class __$$ShowingProgressiveResultsImplCopyWithImpl<$Res>
+    extends _$RoomStateCopyWithImpl<$Res, _$ShowingProgressiveResultsImpl>
+    implements _$$ShowingProgressiveResultsImplCopyWith<$Res> {
+  __$$ShowingProgressiveResultsImplCopyWithImpl(
+    _$ShowingProgressiveResultsImpl _value,
+    $Res Function(_$ShowingProgressiveResultsImpl) _then,
   ) : super(_value, _then);
 
   /// Create a copy of RoomState
   /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
-  $Res call({Object? players = null}) {
+  $Res call({
+    Object? results = null,
+    Object? finishedPlayers = null,
+    Object? totalPlayers = null,
+    Object? allPlayersFinished = null,
+    Object? userRank = null,
+  }) {
     return _then(
-      _$AllPlayersAnsweredImpl(
-        players: null == players
-            ? _value._players
-            : players // ignore: cast_nullable_to_non_nullable
-                  as List<RoomPlayer>,
+      _$ShowingProgressiveResultsImpl(
+        results: null == results
+            ? _value._results
+            : results // ignore: cast_nullable_to_non_nullable
+                  as List<PlayerResult>,
+        finishedPlayers: null == finishedPlayers
+            ? _value.finishedPlayers
+            : finishedPlayers // ignore: cast_nullable_to_non_nullable
+                  as int,
+        totalPlayers: null == totalPlayers
+            ? _value.totalPlayers
+            : totalPlayers // ignore: cast_nullable_to_non_nullable
+                  as int,
+        allPlayersFinished: null == allPlayersFinished
+            ? _value.allPlayersFinished
+            : allPlayersFinished // ignore: cast_nullable_to_non_nullable
+                  as bool,
+        userRank: null == userRank
+            ? _value.userRank
+            : userRank // ignore: cast_nullable_to_non_nullable
+                  as int,
       ),
     );
   }
@@ -4529,45 +5288,73 @@ class __$$AllPlayersAnsweredImplCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$AllPlayersAnsweredImpl implements _AllPlayersAnswered {
-  const _$AllPlayersAnsweredImpl({required final List<RoomPlayer> players})
-    : _players = players;
+class _$ShowingProgressiveResultsImpl implements _ShowingProgressiveResults {
+  const _$ShowingProgressiveResultsImpl({
+    required final List<PlayerResult> results,
+    required this.finishedPlayers,
+    required this.totalPlayers,
+    required this.allPlayersFinished,
+    required this.userRank,
+  }) : _results = results;
 
-  final List<RoomPlayer> _players;
+  final List<PlayerResult> _results;
   @override
-  List<RoomPlayer> get players {
-    if (_players is EqualUnmodifiableListView) return _players;
+  List<PlayerResult> get results {
+    if (_results is EqualUnmodifiableListView) return _results;
     // ignore: implicit_dynamic_type
-    return EqualUnmodifiableListView(_players);
+    return EqualUnmodifiableListView(_results);
   }
 
   @override
+  final int finishedPlayers;
+  @override
+  final int totalPlayers;
+  @override
+  final bool allPlayersFinished;
+  @override
+  final int userRank;
+
+  @override
   String toString() {
-    return 'RoomState.allPlayersAnswered(players: $players)';
+    return 'RoomState.showingProgressiveResults(results: $results, finishedPlayers: $finishedPlayers, totalPlayers: $totalPlayers, allPlayersFinished: $allPlayersFinished, userRank: $userRank)';
   }
 
   @override
   bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$AllPlayersAnsweredImpl &&
-            const DeepCollectionEquality().equals(other._players, _players));
+            other is _$ShowingProgressiveResultsImpl &&
+            const DeepCollectionEquality().equals(other._results, _results) &&
+            (identical(other.finishedPlayers, finishedPlayers) ||
+                other.finishedPlayers == finishedPlayers) &&
+            (identical(other.totalPlayers, totalPlayers) ||
+                other.totalPlayers == totalPlayers) &&
+            (identical(other.allPlayersFinished, allPlayersFinished) ||
+                other.allPlayersFinished == allPlayersFinished) &&
+            (identical(other.userRank, userRank) ||
+                other.userRank == userRank));
   }
 
   @override
-  int get hashCode =>
-      Object.hash(runtimeType, const DeepCollectionEquality().hash(_players));
+  int get hashCode => Object.hash(
+    runtimeType,
+    const DeepCollectionEquality().hash(_results),
+    finishedPlayers,
+    totalPlayers,
+    allPlayersFinished,
+    userRank,
+  );
 
   /// Create a copy of RoomState
   /// with the given fields replaced by the non-null parameter values.
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   @pragma('vm:prefer-inline')
-  _$$AllPlayersAnsweredImplCopyWith<_$AllPlayersAnsweredImpl> get copyWith =>
-      __$$AllPlayersAnsweredImplCopyWithImpl<_$AllPlayersAnsweredImpl>(
-        this,
-        _$identity,
-      );
+  _$$ShowingProgressiveResultsImplCopyWith<_$ShowingProgressiveResultsImpl>
+  get copyWith =>
+      __$$ShowingProgressiveResultsImplCopyWithImpl<
+        _$ShowingProgressiveResultsImpl
+      >(this, _$identity);
 
   @override
   @optionalTypeArgs
@@ -4596,8 +5383,21 @@ class _$AllPlayersAnsweredImpl implements _AllPlayersAnswered {
       List<RoomPlayer> players,
     )
     quizStarted,
-    required TResult Function(List<RoomPlayer> players) questionTimeUp,
-    required TResult Function(List<RoomPlayer> players) allPlayersAnswered,
+    required TResult Function(
+      int totalQuestions,
+      int correctAnswers,
+      int totalPlayers,
+      int finishedPlayers,
+    )
+    playerFinished,
+    required TResult Function(
+      List<PlayerResult> results,
+      int finishedPlayers,
+      int totalPlayers,
+      bool allPlayersFinished,
+      int userRank,
+    )
+    showingProgressiveResults,
     required TResult Function(
       int totalQuestions,
       int correctAnswers,
@@ -4605,7 +5405,13 @@ class _$AllPlayersAnsweredImpl implements _AllPlayersAnswered {
     )
     quizFinished,
   }) {
-    return allPlayersAnswered(players);
+    return showingProgressiveResults(
+      results,
+      finishedPlayers,
+      totalPlayers,
+      allPlayersFinished,
+      userRank,
+    );
   }
 
   @override
@@ -4635,8 +5441,21 @@ class _$AllPlayersAnsweredImpl implements _AllPlayersAnswered {
       List<RoomPlayer> players,
     )?
     quizStarted,
-    TResult? Function(List<RoomPlayer> players)? questionTimeUp,
-    TResult? Function(List<RoomPlayer> players)? allPlayersAnswered,
+    TResult? Function(
+      int totalQuestions,
+      int correctAnswers,
+      int totalPlayers,
+      int finishedPlayers,
+    )?
+    playerFinished,
+    TResult? Function(
+      List<PlayerResult> results,
+      int finishedPlayers,
+      int totalPlayers,
+      bool allPlayersFinished,
+      int userRank,
+    )?
+    showingProgressiveResults,
     TResult? Function(
       int totalQuestions,
       int correctAnswers,
@@ -4644,7 +5463,13 @@ class _$AllPlayersAnsweredImpl implements _AllPlayersAnswered {
     )?
     quizFinished,
   }) {
-    return allPlayersAnswered?.call(players);
+    return showingProgressiveResults?.call(
+      results,
+      finishedPlayers,
+      totalPlayers,
+      allPlayersFinished,
+      userRank,
+    );
   }
 
   @override
@@ -4674,8 +5499,21 @@ class _$AllPlayersAnsweredImpl implements _AllPlayersAnswered {
       List<RoomPlayer> players,
     )?
     quizStarted,
-    TResult Function(List<RoomPlayer> players)? questionTimeUp,
-    TResult Function(List<RoomPlayer> players)? allPlayersAnswered,
+    TResult Function(
+      int totalQuestions,
+      int correctAnswers,
+      int totalPlayers,
+      int finishedPlayers,
+    )?
+    playerFinished,
+    TResult Function(
+      List<PlayerResult> results,
+      int finishedPlayers,
+      int totalPlayers,
+      bool allPlayersFinished,
+      int userRank,
+    )?
+    showingProgressiveResults,
     TResult Function(
       int totalQuestions,
       int correctAnswers,
@@ -4684,8 +5522,14 @@ class _$AllPlayersAnsweredImpl implements _AllPlayersAnswered {
     quizFinished,
     required TResult orElse(),
   }) {
-    if (allPlayersAnswered != null) {
-      return allPlayersAnswered(players);
+    if (showingProgressiveResults != null) {
+      return showingProgressiveResults(
+        results,
+        finishedPlayers,
+        totalPlayers,
+        allPlayersFinished,
+        userRank,
+      );
     }
     return orElse();
   }
@@ -4707,11 +5551,12 @@ class _$AllPlayersAnsweredImpl implements _AllPlayersAnswered {
     required TResult Function(_QuestionLoaded value) questionLoaded,
     required TResult Function(_QuestionsListLoaded value) questionsListLoaded,
     required TResult Function(_QuizStarted value) quizStarted,
-    required TResult Function(_QuestionTimeUp value) questionTimeUp,
-    required TResult Function(_AllPlayersAnswered value) allPlayersAnswered,
+    required TResult Function(_PlayerFinished value) playerFinished,
+    required TResult Function(_ShowingProgressiveResults value)
+    showingProgressiveResults,
     required TResult Function(_QuizFinished value) quizFinished,
   }) {
-    return allPlayersAnswered(this);
+    return showingProgressiveResults(this);
   }
 
   @override
@@ -4731,11 +5576,12 @@ class _$AllPlayersAnsweredImpl implements _AllPlayersAnswered {
     TResult? Function(_QuestionLoaded value)? questionLoaded,
     TResult? Function(_QuestionsListLoaded value)? questionsListLoaded,
     TResult? Function(_QuizStarted value)? quizStarted,
-    TResult? Function(_QuestionTimeUp value)? questionTimeUp,
-    TResult? Function(_AllPlayersAnswered value)? allPlayersAnswered,
+    TResult? Function(_PlayerFinished value)? playerFinished,
+    TResult? Function(_ShowingProgressiveResults value)?
+    showingProgressiveResults,
     TResult? Function(_QuizFinished value)? quizFinished,
   }) {
-    return allPlayersAnswered?.call(this);
+    return showingProgressiveResults?.call(this);
   }
 
   @override
@@ -4755,29 +5601,39 @@ class _$AllPlayersAnsweredImpl implements _AllPlayersAnswered {
     TResult Function(_QuestionLoaded value)? questionLoaded,
     TResult Function(_QuestionsListLoaded value)? questionsListLoaded,
     TResult Function(_QuizStarted value)? quizStarted,
-    TResult Function(_QuestionTimeUp value)? questionTimeUp,
-    TResult Function(_AllPlayersAnswered value)? allPlayersAnswered,
+    TResult Function(_PlayerFinished value)? playerFinished,
+    TResult Function(_ShowingProgressiveResults value)?
+    showingProgressiveResults,
     TResult Function(_QuizFinished value)? quizFinished,
     required TResult orElse(),
   }) {
-    if (allPlayersAnswered != null) {
-      return allPlayersAnswered(this);
+    if (showingProgressiveResults != null) {
+      return showingProgressiveResults(this);
     }
     return orElse();
   }
 }
 
-abstract class _AllPlayersAnswered implements RoomState {
-  const factory _AllPlayersAnswered({required final List<RoomPlayer> players}) =
-      _$AllPlayersAnsweredImpl;
+abstract class _ShowingProgressiveResults implements RoomState {
+  const factory _ShowingProgressiveResults({
+    required final List<PlayerResult> results,
+    required final int finishedPlayers,
+    required final int totalPlayers,
+    required final bool allPlayersFinished,
+    required final int userRank,
+  }) = _$ShowingProgressiveResultsImpl;
 
-  List<RoomPlayer> get players;
+  List<PlayerResult> get results;
+  int get finishedPlayers;
+  int get totalPlayers;
+  bool get allPlayersFinished;
+  int get userRank;
 
   /// Create a copy of RoomState
   /// with the given fields replaced by the non-null parameter values.
   @JsonKey(includeFromJson: false, includeToJson: false)
-  _$$AllPlayersAnsweredImplCopyWith<_$AllPlayersAnsweredImpl> get copyWith =>
-      throw _privateConstructorUsedError;
+  _$$ShowingProgressiveResultsImplCopyWith<_$ShowingProgressiveResultsImpl>
+  get copyWith => throw _privateConstructorUsedError;
 }
 
 /// @nodoc
@@ -4908,8 +5764,21 @@ class _$QuizFinishedImpl implements _QuizFinished {
       List<RoomPlayer> players,
     )
     quizStarted,
-    required TResult Function(List<RoomPlayer> players) questionTimeUp,
-    required TResult Function(List<RoomPlayer> players) allPlayersAnswered,
+    required TResult Function(
+      int totalQuestions,
+      int correctAnswers,
+      int totalPlayers,
+      int finishedPlayers,
+    )
+    playerFinished,
+    required TResult Function(
+      List<PlayerResult> results,
+      int finishedPlayers,
+      int totalPlayers,
+      bool allPlayersFinished,
+      int userRank,
+    )
+    showingProgressiveResults,
     required TResult Function(
       int totalQuestions,
       int correctAnswers,
@@ -4947,8 +5816,21 @@ class _$QuizFinishedImpl implements _QuizFinished {
       List<RoomPlayer> players,
     )?
     quizStarted,
-    TResult? Function(List<RoomPlayer> players)? questionTimeUp,
-    TResult? Function(List<RoomPlayer> players)? allPlayersAnswered,
+    TResult? Function(
+      int totalQuestions,
+      int correctAnswers,
+      int totalPlayers,
+      int finishedPlayers,
+    )?
+    playerFinished,
+    TResult? Function(
+      List<PlayerResult> results,
+      int finishedPlayers,
+      int totalPlayers,
+      bool allPlayersFinished,
+      int userRank,
+    )?
+    showingProgressiveResults,
     TResult? Function(
       int totalQuestions,
       int correctAnswers,
@@ -4986,8 +5868,21 @@ class _$QuizFinishedImpl implements _QuizFinished {
       List<RoomPlayer> players,
     )?
     quizStarted,
-    TResult Function(List<RoomPlayer> players)? questionTimeUp,
-    TResult Function(List<RoomPlayer> players)? allPlayersAnswered,
+    TResult Function(
+      int totalQuestions,
+      int correctAnswers,
+      int totalPlayers,
+      int finishedPlayers,
+    )?
+    playerFinished,
+    TResult Function(
+      List<PlayerResult> results,
+      int finishedPlayers,
+      int totalPlayers,
+      bool allPlayersFinished,
+      int userRank,
+    )?
+    showingProgressiveResults,
     TResult Function(
       int totalQuestions,
       int correctAnswers,
@@ -5019,8 +5914,9 @@ class _$QuizFinishedImpl implements _QuizFinished {
     required TResult Function(_QuestionLoaded value) questionLoaded,
     required TResult Function(_QuestionsListLoaded value) questionsListLoaded,
     required TResult Function(_QuizStarted value) quizStarted,
-    required TResult Function(_QuestionTimeUp value) questionTimeUp,
-    required TResult Function(_AllPlayersAnswered value) allPlayersAnswered,
+    required TResult Function(_PlayerFinished value) playerFinished,
+    required TResult Function(_ShowingProgressiveResults value)
+    showingProgressiveResults,
     required TResult Function(_QuizFinished value) quizFinished,
   }) {
     return quizFinished(this);
@@ -5043,8 +5939,9 @@ class _$QuizFinishedImpl implements _QuizFinished {
     TResult? Function(_QuestionLoaded value)? questionLoaded,
     TResult? Function(_QuestionsListLoaded value)? questionsListLoaded,
     TResult? Function(_QuizStarted value)? quizStarted,
-    TResult? Function(_QuestionTimeUp value)? questionTimeUp,
-    TResult? Function(_AllPlayersAnswered value)? allPlayersAnswered,
+    TResult? Function(_PlayerFinished value)? playerFinished,
+    TResult? Function(_ShowingProgressiveResults value)?
+    showingProgressiveResults,
     TResult? Function(_QuizFinished value)? quizFinished,
   }) {
     return quizFinished?.call(this);
@@ -5067,8 +5964,9 @@ class _$QuizFinishedImpl implements _QuizFinished {
     TResult Function(_QuestionLoaded value)? questionLoaded,
     TResult Function(_QuestionsListLoaded value)? questionsListLoaded,
     TResult Function(_QuizStarted value)? quizStarted,
-    TResult Function(_QuestionTimeUp value)? questionTimeUp,
-    TResult Function(_AllPlayersAnswered value)? allPlayersAnswered,
+    TResult Function(_PlayerFinished value)? playerFinished,
+    TResult Function(_ShowingProgressiveResults value)?
+    showingProgressiveResults,
     TResult Function(_QuizFinished value)? quizFinished,
     required TResult orElse(),
   }) {

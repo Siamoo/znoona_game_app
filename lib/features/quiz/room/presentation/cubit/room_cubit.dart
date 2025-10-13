@@ -564,9 +564,6 @@ void _emergencyMarkFinished(
 ) {
   print('🚨 Using emergency mark finished for user: $userId');
   
-  // Direct database update as last resort
-  // You'll need to add this to your repository/remote data source
-  // For now, we'll just start the results stream and hope for the best
   _startProgressiveResultsStream(roomId, totalQuestions);
   _emitInitialFinishedState(roomId, totalQuestions, correctAnswers);
 }
@@ -624,11 +621,10 @@ Future<void> _verifyAndStartResults(
   }
 }
 
-// NEW: Fix player state before marking as finished
+
 Future<void> _fixPlayerState(String roomId, String userId) async {
   try {
-    // Call the fix function if you added it to repository
-    // For now, we'll just log
+
     print('🔧 Preparing to fix player state for: $userId');
   } catch (e) {
     print('⚠️ Error in fixPlayerState: $e');
@@ -677,7 +673,7 @@ void _startProgressiveResultsStream(String roomId, int totalQuestions) {
   );
 }
 
-  // ADD this helper method:
+
   Future<void> _emitInitialFinishedState(
     String roomId,
     int totalQuestions,
@@ -705,7 +701,6 @@ void _startProgressiveResultsStream(String roomId, int totalQuestions) {
     );
   }
 
-  // UPDATE _calculateProgressiveResults to use RoomPlayer instead of Map:
   List<PlayerResult> _calculateProgressiveResults(
     List<RoomPlayer> players,
     int totalQuestions,

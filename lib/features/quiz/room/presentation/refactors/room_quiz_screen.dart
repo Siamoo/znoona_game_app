@@ -11,6 +11,7 @@ import 'package:znoona_game_app/core/language/lang_keys.dart';
 import 'package:znoona_game_app/features/quiz/room/domain/entities/room.dart';
 import 'package:znoona_game_app/features/quiz/room/domain/entities/room_player.dart';
 import 'package:znoona_game_app/features/quiz/room/presentation/cubit/room_cubit.dart';
+import 'package:znoona_game_app/features/quiz/room/presentation/refactors/progressive_results_screen.dart';
 import 'package:znoona_game_app/features/quiz/single/domain/entities/question.dart';
 import 'package:znoona_game_app/features/quiz/single/presentation/widgets/option_button.dart';
 
@@ -54,40 +55,112 @@ class _RoomQuizBodyState extends State<RoomQuizBody> {
         });
       } else {
         t.cancel();
+        _handleTimeUp();
       }
     });
   }
 
   void _selectAnswer(String answer) {
     final currentUserId = _getCurrentUserId();
+    final currentQuestion = _currentQuestions[_currentQuestionIndex];
 
-    setState(() {
-      _currentSelectedAnswer = answer;
-      _currentPlayerAnswers = Map<String, String?>.from(_currentPlayerAnswers);
-      _currentPlayerAnswers[currentUserId] = answer;
-    });
+    // Prevent double answering
+    if (_currentPlayerAnswers.containsKey(currentUserId) &&
+        _currentPlayerAnswers[currentUserId] != null) {
+      return;
+    }
 
+    if (_currentRemainingTime <= 0) {
+      return;
+    }
+
+    _currentSelectedAnswer = answer;
+    _currentPlayerAnswers = Map<String, String?>.from(_currentPlayerAnswers);
+    _currentPlayerAnswers[currentUserId] = answer;
+
+    final isCorrect = answer == currentQuestion.correctAnswer;
+    if (isCorrect) {
+      _currentCorrectCount++;
+    }
+
+    _emitQuizState();
+
+    // Submit answer to database
     context.read<RoomCubit>().selectAnswer(answer);
   }
 
-  void _showQuizResults(int totalQuestions, int correctAnswers) {
-    showDialog(
-      context: context,
-      barrierDismissible: false,
-      builder: (context) => AlertDialog(
-        title: const Text('Quiz Finished!'),
-        content: Text('Your score: $correctAnswers/$totalQuestions'),
-        actions: [
-          TextButton(
-            onPressed: () {
-              Navigator.pop(context);
-              Navigator.pop(context);
-            },
-            child: const Text('OK'),
-          ),
-        ],
-      ),
+  void _handleTimeUp() {
+    _timer?.cancel();
+    _moveToNextQuestion();
+  }
+
+  void _moveToNextQuestion() {
+    if (_currentQuestionIndex < _currentQuestions.length - 1) {
+      _currentQuestionIndex++;
+      _currentSelectedAnswer = null;
+      _currentPlayerAnswers.clear();
+      _currentRemainingTime = 15;
+
+      _startTimer();
+      _emitQuizState();
+    } else {
+      _handleQuizCompletion();
+    }
+  }
+
+  void _handleQuizCompletion() {
+    final totalQuestions = _currentQuestions.length;
+    final correctAnswers = _currentCorrectCount;
+    final finalScore = correctAnswers * 10;
+
+    print(
+      '🎯 Quiz completed! Score: $finalScore, Correct: $correctAnswers/$totalQuestions',
     );
+
+    // Mark player as finished and start results stream
+    context.read<RoomCubit>().markPlayerFinished(
+      roomId: widget.room.id,
+      finalScore: finalScore,
+      correctAnswers: correctAnswers,
+      totalQuestions: totalQuestions,
+    );
+
+    // Navigate to results screen
+    _navigateToResultsScreen();
+  }
+
+  void _navigateToResultsScreen() {
+    // Use a small delay to ensure state is updated
+    Future.delayed(const Duration(milliseconds: 300), () {
+      if (mounted) {
+        Navigator.pushReplacement(
+          context,
+          MaterialPageRoute(
+            builder: (context) =>
+                ProgressiveResultsScreen(roomId: widget.room.id),
+          ),
+        );
+      }
+    });
+  }
+
+  void _emitQuizState() {
+    final allPlayersAnswered =
+        _currentPlayers.isNotEmpty &&
+        _currentPlayers.every(
+          (player) => _currentPlayerAnswers[player.userId] != null,
+        );
+
+    if (mounted) {
+      setState(() {
+        _currentIsWaitingForPlayers = allPlayersAnswered;
+      });
+    }
+  }
+
+  String _getCurrentUserId() {
+    final user = Supabase.instance.client.auth.currentUser;
+    return user?.id ?? 'unknown';
   }
 
   @override
@@ -103,46 +176,54 @@ class _RoomQuizBodyState extends State<RoomQuizBody> {
         print('🎯 ROOM QUIZ LISTENER: ${state.runtimeType}');
 
         state.whenOrNull(
-          quizStarted: (
-            questions,
-            currentQuestionIndex,
-            remainingTime,
-            playerAnswers,
-            selectedAnswer,
-            correctCount,
-            isWaitingForPlayers,
-            players,
-          ) {
-            print('🔄 Updating quiz state - Question: ${currentQuestionIndex + 1}');
+          quizStarted:
+              (
+                questions,
+                currentQuestionIndex,
+                remainingTime,
+                playerAnswers,
+                selectedAnswer,
+                correctCount,
+                isWaitingForPlayers,
+                players,
+              ) {
+                print(
+                  '🔄 Updating quiz state - Question: ${currentQuestionIndex + 1}',
+                );
 
-            final mutablePlayerAnswers = Map<String, String?>.from(playerAnswers);
+                final mutablePlayerAnswers = Map<String, String?>.from(
+                  playerAnswers,
+                );
 
-            setState(() {
-              _currentQuestions = questions;
-              _currentQuestionIndex = currentQuestionIndex;
-              _currentRemainingTime = remainingTime;
-              _currentPlayerAnswers = mutablePlayerAnswers;
-              _currentSelectedAnswer = selectedAnswer;
-              _currentCorrectCount = correctCount;
-              _currentIsWaitingForPlayers = isWaitingForPlayers;
-              _currentPlayers = players;
-            });
+                setState(() {
+                  _currentQuestions = questions;
+                  _currentQuestionIndex = currentQuestionIndex;
+                  _currentRemainingTime = remainingTime;
+                  _currentPlayerAnswers = mutablePlayerAnswers;
+                  _currentSelectedAnswer = selectedAnswer;
+                  _currentCorrectCount = correctCount;
+                  _currentIsWaitingForPlayers = isWaitingForPlayers;
+                  _currentPlayers = players;
+                });
 
-            if ((_timer == null || !_timer!.isActive) &&
-                !isWaitingForPlayers &&
-                remainingTime > 0) {
-              _startTimer();
-            }
-          },
-          // REMOVED questionResults listener - no more results screen
+                // Start timer if not already running
+                if ((_timer == null || !_timer!.isActive) &&
+                    !isWaitingForPlayers &&
+                    remainingTime > 0) {
+                  _startTimer();
+                }
+              },
+
           quizFinished: (totalQuestions, correctAnswers, players) {
             _timer?.cancel();
-            _showQuizResults(totalQuestions, correctAnswers);
+            _handleQuizCompletion();
           },
         );
       },
       child: _buildQuizContent(
-        questions: _currentQuestions.isNotEmpty ? _currentQuestions : widget.questions,
+        questions: _currentQuestions.isNotEmpty
+            ? _currentQuestions
+            : widget.questions,
         currentQuestionIndex: _currentQuestionIndex,
         remainingTime: _currentRemainingTime,
         playerAnswers: _currentPlayerAnswers,
@@ -181,8 +262,9 @@ class _RoomQuizBodyState extends State<RoomQuizBody> {
 
     final question = questions[currentQuestionIndex];
     final currentUserId = _getCurrentUserId();
-    final hasAnswered = playerAnswers.containsKey(currentUserId) && 
-                        playerAnswers[currentUserId] != null;
+    final hasAnswered =
+        playerAnswers.containsKey(currentUserId) &&
+        playerAnswers[currentUserId] != null;
 
     return Scaffold(
       body: SafeArea(
@@ -208,38 +290,36 @@ class _RoomQuizBodyState extends State<RoomQuizBody> {
 
               SizedBox(height: 40.sp),
 
-              Expanded(
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  crossAxisAlignment: CrossAxisAlignment.stretch,
-                  children: [
-                    Text(
-                      question.question,
-                      style: GoogleFonts.beiruti(
-                        fontSize: 22.sp,
-                        fontWeight: FontWeight.bold,
-                        color: ZnoonaColors.text(context),
-                      ),
-                      textAlign: TextAlign.center,
+              Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: [
+                  Text(
+                    question.question,
+                    style: GoogleFonts.beiruti(
+                      fontSize: 22.sp,
+                      fontWeight: FontWeight.bold,
+                      color: ZnoonaColors.text(context),
                     ),
-                    const SizedBox(height: 20),
-                    ...question.options.map((option) {
-                      final isSelected = option == selectedAnswer;
-                      final isCorrect = option == question.correctAnswer;
+                    textAlign: TextAlign.center,
+                  ),
+                  const SizedBox(height: 20),
+                  ...question.options.map((option) {
+                    final isSelected = option == selectedAnswer;
+                    final isCorrect = option == question.correctAnswer;
 
-                      return OptionButton(
-                        option: option,
-                        isSelected: isSelected,
-                        selectedAnswer: selectedAnswer,
-                        onTap: (hasAnswered || isWaitingForPlayers)
-                            ? null
-                            : () => _selectAnswer(option),
-                        isCorrect: isCorrect,
-                        remainingTime: remainingTime,
-                      );
-                    }),
-                  ],
-                ),
+                    return OptionButton(
+                      option: option,
+                      isSelected: isSelected,
+                      selectedAnswer: selectedAnswer,
+                      onTap: (hasAnswered || isWaitingForPlayers)
+                          ? null
+                          : () => _selectAnswer(option),
+                      isCorrect: isCorrect,
+                      remainingTime: remainingTime,
+                    );
+                  }),
+                ],
               ),
             ],
           ),
@@ -248,99 +328,100 @@ class _RoomQuizBodyState extends State<RoomQuizBody> {
     );
   }
 
-Widget _buildGameHeader(
-  int remainingTime,
-  Map<String, String?> playerAnswers,
-  bool isWaitingForPlayers,
-  List<RoomPlayer> players,
-  int correctCount,
-  int totalQuestions,
-) {
-  final currentUserId = _getCurrentUserId();
-  final hasAnswered = playerAnswers.containsKey(currentUserId) && 
-                      playerAnswers[currentUserId] != null;
+  Widget _buildGameHeader(
+    int remainingTime,
+    Map<String, String?> playerAnswers,
+    bool isWaitingForPlayers,
+    List<RoomPlayer> players,
+    int correctCount,
+    int totalQuestions,
+  ) {
+    final currentUserId = _getCurrentUserId();
+    final hasAnswered =
+        playerAnswers.containsKey(currentUserId) &&
+        playerAnswers[currentUserId] != null;
 
-  return Column(
-    children: [
-      // Timer and Score
-      Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [
-          Column(
-            children: [
-              Text(
-                '⏳ $remainingTime',
-                style: GoogleFonts.beiruti(
-                  fontSize: 18.sp,
-                  fontWeight: FontWeight.bold,
-                  color: ZnoonaColors.text(context),
-                ),
-              ),
-              if (remainingTime <= 5)
+    return Column(
+      children: [
+        Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Column(
+              children: [
                 Text(
-                  'Time running out!',
-                  style: TextStyle(
-                    fontSize: 10.sp,
-                    color: Colors.red,
+                  '⏳ $remainingTime',
+                  style: GoogleFonts.beiruti(
+                    fontSize: 18.sp,
+                    fontWeight: FontWeight.bold,
+                    color: ZnoonaColors.text(context),
                   ),
                 ),
-            ],
-          ),
-          Text(
-            'Score: $correctCount/$totalQuestions',
-            style: GoogleFonts.beiruti(
-              fontSize: 18.sp,
-              fontWeight: FontWeight.bold,
-              color: ZnoonaColors.text(context),
+                if (remainingTime <= 5)
+                  Text(
+                    'Time running out!',
+                    style: TextStyle(
+                      fontSize: 10.sp,
+                      color: Colors.red,
+                    ),
+                  ),
+              ],
             ),
-          ),
-        ],
-      ),
-      SizedBox(height: 16.sp),
+            Text(
+              'Score: $correctCount/$totalQuestions',
+              style: GoogleFonts.beiruti(
+                fontSize: 18.sp,
+                fontWeight: FontWeight.bold,
+                color: ZnoonaColors.text(context),
+              ),
+            ),
+          ],
+        ),
+        SizedBox(height: 16.sp),
 
-      // SCENARIO 2: All players answered message
-      if (isWaitingForPlayers)
-        Container(
-          padding: EdgeInsets.all(8.sp),
-          decoration: BoxDecoration(
-            color: Colors.green,
-            borderRadius: BorderRadius.circular(8),
-          ),
-          child: Text(
-            '🎉 All players answered! Moving to next question...',
-            style: TextStyle(
-              fontSize: 14.sp,
+        // SCENARIO 2: All players answered message
+        if (isWaitingForPlayers)
+          Container(
+            padding: EdgeInsets.all(8.sp),
+            decoration: BoxDecoration(
               color: Colors.green,
-              fontWeight: FontWeight.bold,
+              borderRadius: BorderRadius.circular(8),
             ),
-          ),
-        ),
-
-      // SCENARIO 1: Time running low warning
-      if (remainingTime <= 5 && !isWaitingForPlayers)
-        Container(
-          padding: EdgeInsets.all(8.sp),
-          decoration: BoxDecoration(
-            color: Colors.orange.withOpacity(0.2),
-            borderRadius: BorderRadius.circular(8),
-          ),
-          child: Text(
-            '⏰ Time running out! Answer quickly!',
-            style: TextStyle(
-              fontSize: 14.sp,
+            child: Text(
+              '🎉 All players answered! Moving to next question...',
+              style: TextStyle(
+                fontSize: 14.sp,
+                color: Colors.green,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+          )
+        else if (remainingTime <= 5 && !isWaitingForPlayers)
+          Container(
+            padding: EdgeInsets.all(8.sp),
+            decoration: BoxDecoration(
               color: Colors.orange,
-              fontWeight: FontWeight.bold,
+              borderRadius: BorderRadius.circular(8),
             ),
-          ),
-        ),
+            child: Text(
+              '⏰ Time running out! Answer quickly!',
+              style: TextStyle(
+                fontSize: 14.sp,
+                color: Colors.orange,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+          )
+        else
+          SizedBox(height: 50.sp),
 
-      SizedBox(height: 8.sp),
+        SizedBox(height: 8.sp),
 
-      // Players Status
-      _buildPlayersStatus(playerAnswers, players),
-    ],
-  );
-}
+        // Players Status
+        _buildPlayersStatus(playerAnswers, players),
+      ],
+    );
+  }
+
   Widget _buildPlayersStatus(
     Map<String, String?> playerAnswers,
     List<RoomPlayer> players,
@@ -360,8 +441,9 @@ Widget _buildGameHeader(
         Wrap(
           spacing: 8.sp,
           children: players.map((player) {
-            final hasAnswered = playerAnswers.containsKey(player.userId) && 
-                                playerAnswers[player.userId] != null;
+            final hasAnswered =
+                playerAnswers.containsKey(player.userId) &&
+                playerAnswers[player.userId] != null;
             return Chip(
               label: Text(player.username),
               backgroundColor: hasAnswered ? Colors.green : Colors.orange,
@@ -374,10 +456,5 @@ Widget _buildGameHeader(
         ),
       ],
     );
-  }
-
-  String _getCurrentUserId() {
-    final user = Supabase.instance.client.auth.currentUser;
-    return user?.id ?? 'unknown';
   }
 }

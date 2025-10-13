@@ -188,4 +188,42 @@ class RoomRepositoryImpl implements RoomRepository {
       yield Left('Error watching player answers: $e');
     }
   }
+  @override
+Future<Either<String, void>> markPlayerFinished({
+  required String roomId,
+  required String userId,
+  required int finalScore,
+}) async {
+  try {
+    await remote.markPlayerFinished(
+      roomId: roomId,
+      userId: userId,
+      finalScore: finalScore,
+    );
+    return const Right(null);
+  } on Exception catch (e) {
+    return Left(e.toString());
+  }
+}
+
+@override
+Stream<Either<String, List<RoomPlayer>>> getRoomPlayersStreamForResults(String roomId) async* {
+  try {
+    await for (final players in remote.getRoomPlayersStreamForResults(roomId)) {
+      yield Right(players.map((p) => p.toEntity()).toList());
+    }
+  } on Exception catch (e) {
+    yield Left(e.toString());
+  }
+}
+
+@override
+Future<Either<String, List<RoomPlayer>>> getRoomPlayers(String roomId) async {
+  try {
+    final players = await remote.getRoomPlayers(roomId);
+    return Right(players.map((p) => p.toEntity()).toList());
+  } on Exception catch (e) {
+    return Left(e.toString());
+  }
+}
 }

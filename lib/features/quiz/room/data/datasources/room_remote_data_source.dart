@@ -28,7 +28,6 @@ class RoomRemoteDataSource {
       },
     );
 
-
     if (result == null) {
       throw Exception('Failed to create room: result is null');
     }
@@ -71,7 +70,6 @@ class RoomRemoteDataSource {
         .eq('code', code)
         .maybeSingle();
 
-
     if (roomData == null) throw Exception('Room not found with code $code');
 
     final roomId = roomData['id'];
@@ -91,7 +89,6 @@ class RoomRemoteDataSource {
         })
         .select()
         .maybeSingle();
-
 
     if (playerData == null) throw Exception('Failed to join room');
 
@@ -166,7 +163,7 @@ class RoomRemoteDataSource {
     final data = await supabase
         .from('questions')
         .select()
-        .inFilter('id', questionIds); 
+        .inFilter('id', questionIds);
 
     print(' getQuestions data: $data');
 
@@ -182,7 +179,6 @@ class RoomRemoteDataSource {
     required String selectedAnswer,
     required bool isCorrect,
   }) async {
-
     final playerData = await supabase
         .from('room_players')
         .select('score')
@@ -210,7 +206,7 @@ class RoomRemoteDataSource {
         .from('room_players')
         .select('user_id, selected_answer, is_correct')
         .eq('room_id', roomId)
-        .not('selected_answer', 'is', null); 
+        .not('selected_answer', 'is', null);
 
     final Map<String, String> answers = {};
     for (final item in data) {
@@ -232,7 +228,7 @@ class RoomRemoteDataSource {
             'answered_at': null,
           })
           .eq('room_id', roomId)
-          .select(); 
+          .select();
 
       print(' RESET: Database update completed');
       print(' RESET: Affected rows: ${result.length}');
@@ -259,9 +255,9 @@ class RoomRemoteDataSource {
 
     return supabase
         .from('room_players')
-      .stream(primaryKey: ['id'])
-      .eq('room_id', roomId)
-      .map((List<Map<String, dynamic>> rows) {
+        .stream(primaryKey: ['id'])
+        .eq('room_id', roomId)
+        .map((List<Map<String, dynamic>> rows) {
           final Map<String, String> answers = {};
 
           for (final row in rows) {
@@ -284,5 +280,119 @@ class RoomRemoteDataSource {
 
           return answers;
         });
+  }
+
+  Future<void> markPlayerFinished({
+    required String roomId,
+    required String userId,
+    required int finalScore,
+  }) async {
+    final finishedAt = DateTime.now().toIso8601String();
+    print('🕒 Setting finished_at: $finishedAt');
+
+    try {
+      final result = await supabase
+          .from('room_players')
+          .update({
+            'finished_quiz': true,
+            'finished_at': finishedAt, 
+            'score': finalScore,
+          })
+          .eq('room_id', roomId)
+          .eq('user_id', userId)
+          .select(); 
+
+      print('✅ Database update result: $result');
+
+      if (result != null && result.isNotEmpty) {
+        final updatedPlayer = result.first;
+        print(
+          '🔍 Updated player - finished_quiz: ${updatedPlayer['finished_quiz']}, '
+          'finished_at: ${updatedPlayer['finished_at']}',
+        );
+      }
+    } catch (e) {
+      print('❌ Database update error: $e');
+      rethrow;
+    }
+  }
+
+  Future<void> fixBrokenFinishedAt({
+  required String roomId,
+  required String userId,
+}) async {
+  try {
+    final currentData = await supabase
+        .from('room_players')
+        .select()
+        .eq('room_id', roomId)
+        .eq('user_id', userId)
+        .single();
+
+    print('🔧 Checking player state: '
+        'finished_quiz: ${currentData['finished_quiz']}, '
+        'finished_at: ${currentData['finished_at']}');
+
+    if (currentData['finished_quiz'] == true && currentData['finished_at'] == null) {
+      final fixedTime = DateTime.now().toIso8601String();
+      print('🛠️ Fixing broken finished_at: $fixedTime');
+      
+      await supabase
+          .from('room_players')
+          .update({
+            'finished_at': fixedTime,
+          })
+          .eq('room_id', roomId)
+          .eq('user_id', userId);
+      
+      print('✅ Fixed broken finished_at');
+    }
+  } catch (e) {
+    print('❌ Error fixing broken finished_at: $e');
+  }
+}
+
+Stream<List<RoomPlayerModel>> getRoomPlayersStreamForResults(String roomId) {
+  print('🔍 Starting room players stream for results - Room: $roomId');
+  
+  return supabase
+      .from('room_players')
+      .stream(primaryKey: ['id'])
+      .eq('room_id', roomId)
+      .map((rows) {
+        print('📨 Stream received ${rows.length} players');
+        
+        for (final row in rows) {
+          print('👤 Player: ${row['username']}, '
+              'finished_quiz: ${row['finished_quiz']}, '
+              'finished_at: ${row['finished_at']}');
+        }
+        
+        final players = rows.map((e) => RoomPlayerModel.fromJson(e)).toList();
+        
+        final finishedCount = players.where((p) => p.finishedQuiz).length;
+        final finishedWithTimestamp = players.where((p) => p.finishedAt != null).length;
+        
+        print('🎯 Stream: $finishedCount/${players.length} players finished, '
+            '$finishedWithTimestamp with timestamp');
+        
+        return players;
+      })
+      .handleError((error) {
+        print('❌ Stream error: $error');
+        throw Exception('Stream error: $error'); 
+      });
+}
+
+
+  Future<List<RoomPlayerModel>> getRoomPlayers(String roomId) async {
+    final data = await supabase
+        .from('room_players')
+        .select()
+        .eq('room_id', roomId);
+
+    return (data as List)
+        .map((e) => RoomPlayerModel.fromJson(e as Map<String, dynamic>))
+        .toList();
   }
 }

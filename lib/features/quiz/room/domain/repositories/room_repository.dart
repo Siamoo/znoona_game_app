@@ -46,6 +46,16 @@ Future<Either<String, List<RoomQuestion>>> getRoomQuestions(String roomId);
 
   Stream<Either<String, Map<String, String>>> watchPlayerAnswers(String roomId);
 
+  Future<Either<String, void>> markPlayerFinished({
+  required String roomId,
+  required String userId,
+  required int finalScore,
+});
+
+Stream<Either<String, List<RoomPlayer>>> getRoomPlayersStreamForResults(String roomId);
+
+Future<Either<String, List<RoomPlayer>>> getRoomPlayers(String roomId);
+
 
 }
 

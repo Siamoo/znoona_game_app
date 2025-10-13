@@ -13,7 +13,6 @@ class RoomRepositoryImpl implements RoomRepository {
   RoomRepositoryImpl(this.remote);
   final RoomRemoteDataSource remote;
 
-  /// 🏠 Create room with questions
   @override
   Future<Either<String, Room>> createRoom({
     required String categoryId,
@@ -28,7 +27,6 @@ class RoomRepositoryImpl implements RoomRepository {
     }
   }
 
-  /// 🚪 Join room
   @override
   Future<Either<String, RoomPlayer>> joinRoom({
     required String code,
@@ -43,7 +41,6 @@ class RoomRepositoryImpl implements RoomRepository {
     }
   }
 
-  /// 🚶 Leave room
   @override
   Future<Either<String, void>> leaveRoom({
     required String roomId,
@@ -58,7 +55,6 @@ class RoomRepositoryImpl implements RoomRepository {
     }
   }
 
-  /// ♻️ Realtime stream of all rooms
   @override
   Stream<Either<String, List<Room>>> getRoomsStream() async* {
     try {
@@ -72,7 +68,6 @@ class RoomRepositoryImpl implements RoomRepository {
     }
   }
 
-  /// 👥 Realtime stream of players in specific room
   @override
   Stream<Either<String, List<RoomPlayer>>> getRoomPlayersStream(
     String roomId,
@@ -88,7 +83,6 @@ class RoomRepositoryImpl implements RoomRepository {
     }
   }
 
-  /// ❓ Load questions for room
   @override
   Future<Either<String, List<RoomQuestion>>> getRoomQuestions(
     String roomId,
@@ -103,7 +97,6 @@ class RoomRepositoryImpl implements RoomRepository {
     }
   }
 
-  /// 🚀 Start game (update status)
   @override
   Future<Either<String, void>> startGame(String roomId) async {
     try {
@@ -114,7 +107,6 @@ class RoomRepositoryImpl implements RoomRepository {
     }
   }
 
-  /// 🧭 Watch specific room in realtime
   @override
   Stream<Either<String, Room?>> watchRoom(String roomId) async* {
     try {
@@ -130,7 +122,6 @@ class RoomRepositoryImpl implements RoomRepository {
     }
   }
 
-  /// ❓ Get multiple questions by IDs
   @override
   Future<Either<String, List<Question>>> getQuestions(
     List<String> questionIds,

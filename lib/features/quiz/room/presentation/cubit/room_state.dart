@@ -21,29 +21,28 @@ class RoomState with _$RoomState {
   const factory RoomState.questionsListLoaded(List<Question> questions) =
       _QuestionsListLoaded;
 
-  // NEW QUIZ STATES - UPDATED to include players
   const factory RoomState.quizStarted({
     required List<Question> questions,
     required int currentQuestionIndex,
     required int remainingTime,
-    required Map<String, String?> playerAnswers, // playerId -> selectedAnswer
-    required String? selectedAnswer, // current user's selected answer
+    required Map<String, String?> playerAnswers, 
+    required String? selectedAnswer, 
     required int correctCount,
     required bool isWaitingForPlayers,
-    required List<RoomPlayer> players, // ADD THIS LINE
+    required List<RoomPlayer> players, 
   }) = _QuizStarted;
 
   const factory RoomState.questionTimeUp({
-    required List<RoomPlayer> players, // ADD THIS LINE
+    required List<RoomPlayer> players, 
   }) = _QuestionTimeUp;
   
   const factory RoomState.allPlayersAnswered({
-    required List<RoomPlayer> players, // ADD THIS LINE
+    required List<RoomPlayer> players, 
   }) = _AllPlayersAnswered;
   
   const factory RoomState.quizFinished({
     required int totalQuestions,
     required int correctAnswers,
-    required List<RoomPlayer> players, // ADD THIS LINE
+    required List<RoomPlayer> players, 
   }) = _QuizFinished;
 }

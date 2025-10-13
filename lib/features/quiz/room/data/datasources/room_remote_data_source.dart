@@ -9,7 +9,6 @@ class RoomRemoteDataSource {
   RoomRemoteDataSource(this.supabase);
   final SupabaseClient supabase;
 
-  ///  Create a new room (via Supabase RPC)
   Future<RoomModel> createRoom({
     required String categoryId,
   }) async {
@@ -29,13 +28,11 @@ class RoomRemoteDataSource {
       },
     );
 
-    print('create_room_with_questions result: $result');
 
     if (result == null) {
       throw Exception('Failed to create room: result is null');
     }
 
-    // handle both list and map returns
     final dynamic roomEntry = (result is List && result.isNotEmpty)
         ? result.first
         : result;
@@ -59,7 +56,6 @@ class RoomRemoteDataSource {
     return RoomModel.fromJson(data);
   }
 
-  ///  Join existing room by code
   Future<RoomPlayerModel> joinRoom({
     required String code,
   }) async {
@@ -75,7 +71,6 @@ class RoomRemoteDataSource {
         .eq('code', code)
         .maybeSingle();
 
-    print('joinRoom roomData: $roomData');
 
     if (roomData == null) throw Exception('Room not found with code $code');
 
@@ -97,14 +92,12 @@ class RoomRemoteDataSource {
         .select()
         .maybeSingle();
 
-    print('joinRoom playerData: $playerData');
 
     if (playerData == null) throw Exception('Failed to join room');
 
     return RoomPlayerModel.fromJson(playerData);
   }
 
-  ///  Leave a room
   Future<void> leaveRoom({
     required String roomId,
   }) async {
@@ -115,10 +108,9 @@ class RoomRemoteDataSource {
       'room_id': roomId,
       'user_id': user.id,
     });
-    print('leaveRoom user-- playerData: $user');
+    print('🔚leaveRoom user-- playerData: $user');
   }
 
-  /// Stream all rooms
   Stream<List<RoomModel>> getRoomsStream() {
     print('getRoomsStream');
     return supabase
@@ -129,7 +121,6 @@ class RoomRemoteDataSource {
         );
   }
 
-  /// Stream all players in a room
   Stream<List<RoomPlayerModel>> getRoomPlayersStream(String roomId) {
     print(' getRoomPlayersStream roomId: $roomId');
     return supabase
@@ -141,7 +132,6 @@ class RoomRemoteDataSource {
         );
   }
 
-  ///  Get questions for a room
   Future<List<RoomQuestionModel>> getRoomQuestions(String roomId) async {
     final data = await supabase
         .from('room_questions')
@@ -156,13 +146,11 @@ class RoomRemoteDataSource {
         .toList();
   }
 
-  ///  Start game
   Future<void> startGame(String roomId) async {
     print(' startGame roomId: $roomId');
     await supabase.from('rooms').update({'status': 'playing'}).eq('id', roomId);
   }
 
-  ///  Watch single room
   Stream<RoomModel?> watchRoom(String roomId) {
     print(' watchRoom roomId: $roomId');
     return supabase
@@ -172,32 +160,29 @@ class RoomRemoteDataSource {
         .map((rows) => rows.isNotEmpty ? RoomModel.fromJson(rows.first) : null);
   }
 
-  ///  Get multiple questions by IDs
   Future<List<Question>> getQuestions(List<String> questionIds) async {
     if (questionIds.isEmpty) return [];
 
     final data = await supabase
         .from('questions')
         .select()
-        .inFilter('id', questionIds); // Use inFilter instead of in
+        .inFilter('id', questionIds); 
 
     print(' getQuestions data: $data');
 
-    // Use your existing QuestionModel from single feature
     return (data as List)
         .map((e) => QuestionModel.fromJson(e as Map<String, dynamic>))
         .map((model) => model.toEntity())
         .toList();
   }
 
-  ///  Store player answer and update score in room_players table
   Future<void> submitAnswer({
     required String roomId,
     required String userId,
     required String selectedAnswer,
     required bool isCorrect,
   }) async {
-    // Get current player data
+
     final playerData = await supabase
         .from('room_players')
         .select('score')
@@ -208,7 +193,6 @@ class RoomRemoteDataSource {
     final currentScore = playerData['score'] as int? ?? 0;
     final newScore = isCorrect ? currentScore + 10 : currentScore;
 
-    // Update player's answer and score
     await supabase
         .from('room_players')
         .update({
@@ -221,13 +205,12 @@ class RoomRemoteDataSource {
         .eq('user_id', userId);
   }
 
-  ///  Get all player answers for current room
   Future<Map<String, String>> getPlayerAnswers(String roomId) async {
     final data = await supabase
         .from('room_players')
         .select('user_id, selected_answer, is_correct')
         .eq('room_id', roomId)
-        .not('selected_answer', 'is', null); // FIXED: Correct NOT NULL check
+        .not('selected_answer', 'is', null); 
 
     final Map<String, String> answers = {};
     for (final item in data) {
@@ -237,12 +220,10 @@ class RoomRemoteDataSource {
     return answers;
   }
 
-  ///  Reset answers for new question
   Future<void> resetAnswersForNewQuestion(String roomId) async {
     print(' RESET: Resetting answers for room: $roomId');
 
     try {
-      // Use select() after update to verify the reset worked
       final result = await supabase
           .from('room_players')
           .update({
@@ -251,12 +232,11 @@ class RoomRemoteDataSource {
             'answered_at': null,
           })
           .eq('room_id', roomId)
-          .select(); // ADD THIS to get confirmation
+          .select(); 
 
       print(' RESET: Database update completed');
       print(' RESET: Affected rows: ${result.length}');
 
-      // Verify the reset worked by checking current answers
       final verification = await supabase
           .from('room_players')
           .select('user_id, selected_answer')
@@ -274,7 +254,6 @@ class RoomRemoteDataSource {
     }
   }
 
-  ///  Watch player answers with filtering
   Stream<Map<String, String>> watchPlayerAnswers(String roomId) {
     final startTime = DateTime.now();
 
@@ -290,7 +269,6 @@ class RoomRemoteDataSource {
             final selectedAnswer = row['selected_answer']?.toString();
             final answeredAt = row['answered_at']?.toString();
 
-            // Only include answers from current question session
             if (userId != null &&
                 selectedAnswer != null &&
                 answeredAt != null) {

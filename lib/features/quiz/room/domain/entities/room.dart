@@ -11,8 +11,8 @@ class Room with _$Room {
     required String id,
     required String code,
     required String hostId,
+    required String status,     // waiting | playing | finished
     String? categoryId,
-    required String status, // waiting | playing | finished
     Map<String, dynamic>? state,
     String? title,
     DateTime? createdAt,

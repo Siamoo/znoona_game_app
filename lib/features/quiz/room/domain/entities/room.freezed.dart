@@ -24,9 +24,9 @@ mixin _$Room {
   String get id => throw _privateConstructorUsedError;
   String get code => throw _privateConstructorUsedError;
   String get hostId => throw _privateConstructorUsedError;
-  String? get categoryId => throw _privateConstructorUsedError;
   String get status =>
       throw _privateConstructorUsedError; // waiting | playing | finished
+  String? get categoryId => throw _privateConstructorUsedError;
   Map<String, dynamic>? get state => throw _privateConstructorUsedError;
   String? get title => throw _privateConstructorUsedError;
   DateTime? get createdAt => throw _privateConstructorUsedError;
@@ -51,8 +51,8 @@ abstract class $RoomCopyWith<$Res> {
     String id,
     String code,
     String hostId,
-    String? categoryId,
     String status,
+    String? categoryId,
     Map<String, dynamic>? state,
     String? title,
     DateTime? createdAt,
@@ -79,8 +79,8 @@ class _$RoomCopyWithImpl<$Res, $Val extends Room>
     Object? id = null,
     Object? code = null,
     Object? hostId = null,
-    Object? categoryId = freezed,
     Object? status = null,
+    Object? categoryId = freezed,
     Object? state = freezed,
     Object? title = freezed,
     Object? createdAt = freezed,
@@ -101,14 +101,14 @@ class _$RoomCopyWithImpl<$Res, $Val extends Room>
                 ? _value.hostId
                 : hostId // ignore: cast_nullable_to_non_nullable
                       as String,
-            categoryId: freezed == categoryId
-                ? _value.categoryId
-                : categoryId // ignore: cast_nullable_to_non_nullable
-                      as String?,
             status: null == status
                 ? _value.status
                 : status // ignore: cast_nullable_to_non_nullable
                       as String,
+            categoryId: freezed == categoryId
+                ? _value.categoryId
+                : categoryId // ignore: cast_nullable_to_non_nullable
+                      as String?,
             state: freezed == state
                 ? _value.state
                 : state // ignore: cast_nullable_to_non_nullable
@@ -147,8 +147,8 @@ abstract class _$$RoomImplCopyWith<$Res> implements $RoomCopyWith<$Res> {
     String id,
     String code,
     String hostId,
-    String? categoryId,
     String status,
+    String? categoryId,
     Map<String, dynamic>? state,
     String? title,
     DateTime? createdAt,
@@ -172,8 +172,8 @@ class __$$RoomImplCopyWithImpl<$Res>
     Object? id = null,
     Object? code = null,
     Object? hostId = null,
-    Object? categoryId = freezed,
     Object? status = null,
+    Object? categoryId = freezed,
     Object? state = freezed,
     Object? title = freezed,
     Object? createdAt = freezed,
@@ -194,14 +194,14 @@ class __$$RoomImplCopyWithImpl<$Res>
             ? _value.hostId
             : hostId // ignore: cast_nullable_to_non_nullable
                   as String,
-        categoryId: freezed == categoryId
-            ? _value.categoryId
-            : categoryId // ignore: cast_nullable_to_non_nullable
-                  as String?,
         status: null == status
             ? _value.status
             : status // ignore: cast_nullable_to_non_nullable
                   as String,
+        categoryId: freezed == categoryId
+            ? _value.categoryId
+            : categoryId // ignore: cast_nullable_to_non_nullable
+                  as String?,
         state: freezed == state
             ? _value._state
             : state // ignore: cast_nullable_to_non_nullable
@@ -234,8 +234,8 @@ class _$RoomImpl implements _Room {
     required this.id,
     required this.code,
     required this.hostId,
-    this.categoryId,
     required this.status,
+    this.categoryId,
     final Map<String, dynamic>? state,
     this.title,
     this.createdAt,
@@ -255,12 +255,11 @@ class _$RoomImpl implements _Room {
   @override
   final String hostId;
   @override
-  final String? categoryId;
-  @override
   final String status;
   // waiting | playing | finished
+  @override
+  final String? categoryId;
   final Map<String, dynamic>? _state;
-  // waiting | playing | finished
   @override
   Map<String, dynamic>? get state {
     final value = _state;
@@ -296,7 +295,7 @@ class _$RoomImpl implements _Room {
 
   @override
   String toString() {
-    return 'Room(id: $id, code: $code, hostId: $hostId, categoryId: $categoryId, status: $status, state: $state, title: $title, createdAt: $createdAt, players: $players, questions: $questions)';
+    return 'Room(id: $id, code: $code, hostId: $hostId, status: $status, categoryId: $categoryId, state: $state, title: $title, createdAt: $createdAt, players: $players, questions: $questions)';
   }
 
   @override
@@ -307,9 +306,9 @@ class _$RoomImpl implements _Room {
             (identical(other.id, id) || other.id == id) &&
             (identical(other.code, code) || other.code == code) &&
             (identical(other.hostId, hostId) || other.hostId == hostId) &&
+            (identical(other.status, status) || other.status == status) &&
             (identical(other.categoryId, categoryId) ||
                 other.categoryId == categoryId) &&
-            (identical(other.status, status) || other.status == status) &&
             const DeepCollectionEquality().equals(other._state, _state) &&
             (identical(other.title, title) || other.title == title) &&
             (identical(other.createdAt, createdAt) ||
@@ -328,8 +327,8 @@ class _$RoomImpl implements _Room {
     id,
     code,
     hostId,
-    categoryId,
     status,
+    categoryId,
     const DeepCollectionEquality().hash(_state),
     title,
     createdAt,
@@ -356,8 +355,8 @@ abstract class _Room implements Room {
     required final String id,
     required final String code,
     required final String hostId,
-    final String? categoryId,
     required final String status,
+    final String? categoryId,
     final Map<String, dynamic>? state,
     final String? title,
     final DateTime? createdAt,
@@ -374,9 +373,9 @@ abstract class _Room implements Room {
   @override
   String get hostId;
   @override
-  String? get categoryId;
-  @override
   String get status; // waiting | playing | finished
+  @override
+  String? get categoryId;
   @override
   Map<String, dynamic>? get state;
   @override

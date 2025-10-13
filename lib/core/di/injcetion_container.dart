@@ -8,11 +8,14 @@ import 'package:znoona_game_app/features/quiz/room/data/repositories/room_reposi
 import 'package:znoona_game_app/features/quiz/room/domain/repositories/room_repository.dart';
 import 'package:znoona_game_app/features/quiz/room/domain/usecases/create_room_usecase.dart';
 import 'package:znoona_game_app/features/quiz/room/domain/usecases/get_questions_usecase.dart';
+import 'package:znoona_game_app/features/quiz/room/domain/usecases/get_room_players_stream_results_usecase.dart';
 import 'package:znoona_game_app/features/quiz/room/domain/usecases/get_room_players_stream_usecase.dart';
+import 'package:znoona_game_app/features/quiz/room/domain/usecases/get_room_players_usecase.dart';
 import 'package:znoona_game_app/features/quiz/room/domain/usecases/get_room_questions_usecase.dart';
 import 'package:znoona_game_app/features/quiz/room/domain/usecases/get_rooms_stream_usecase.dart';
 import 'package:znoona_game_app/features/quiz/room/domain/usecases/join_room_usecase.dart';
 import 'package:znoona_game_app/features/quiz/room/domain/usecases/leave_room_usecase.dart';
+import 'package:znoona_game_app/features/quiz/room/domain/usecases/mark_player_finished_usecase.dart';
 import 'package:znoona_game_app/features/quiz/room/domain/usecases/reset_answers_usecase.dart';
 import 'package:znoona_game_app/features/quiz/room/domain/usecases/start_game_usecase.dart';
 import 'package:znoona_game_app/features/quiz/room/domain/usecases/submit_answer_usecase.dart';
@@ -118,6 +121,10 @@ Future<void> setupInjector() async {
     ..registerLazySingleton(() => SubmitAnswerUseCase(sl()))
     ..registerLazySingleton(() => ResetAnswersUseCase(sl()))
     ..registerLazySingleton(() => WatchPlayerAnswersUseCase(sl()))
+    ..registerLazySingleton(() => MarkPlayerFinishedUseCase(sl()))
+    ..registerLazySingleton(() => GetRoomPlayersStreamResultsUseCase(sl()))
+    ..registerLazySingleton(() => GetRoomPlayersUseCase(sl()))
+    
     /// Cubits
     ..registerFactory(
       () => RoomCubit(
@@ -133,6 +140,9 @@ Future<void> setupInjector() async {
         submitAnswerUseCase: sl(),
         resetAnswersUseCase: sl(),
         watchPlayerAnswersUseCase: sl(),
+        markPlayerFinishedUseCase: sl(),
+        getRoomPlayersStreamResultsUseCase: sl(),
+        getRoomPlayersUseCase: sl(),
       ),
     );
 }

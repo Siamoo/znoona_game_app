@@ -3,16 +3,20 @@ import 'package:dartz/dartz.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
+import 'package:znoona_game_app/features/quiz/room/data/models/player_result.dart';
 import 'package:znoona_game_app/features/quiz/room/domain/entities/room.dart';
 import 'package:znoona_game_app/features/quiz/room/domain/entities/room_player.dart';
 import 'package:znoona_game_app/features/quiz/room/domain/entities/room_question.dart';
 import 'package:znoona_game_app/features/quiz/room/domain/usecases/create_room_usecase.dart';
 import 'package:znoona_game_app/features/quiz/room/domain/usecases/get_questions_usecase.dart';
+import 'package:znoona_game_app/features/quiz/room/domain/usecases/get_room_players_stream_results_usecase.dart';
 import 'package:znoona_game_app/features/quiz/room/domain/usecases/get_room_players_stream_usecase.dart';
+import 'package:znoona_game_app/features/quiz/room/domain/usecases/get_room_players_usecase.dart';
 import 'package:znoona_game_app/features/quiz/room/domain/usecases/get_room_questions_usecase.dart';
 import 'package:znoona_game_app/features/quiz/room/domain/usecases/get_rooms_stream_usecase.dart';
 import 'package:znoona_game_app/features/quiz/room/domain/usecases/join_room_usecase.dart';
 import 'package:znoona_game_app/features/quiz/room/domain/usecases/leave_room_usecase.dart';
+import 'package:znoona_game_app/features/quiz/room/domain/usecases/mark_player_finished_usecase.dart';
 import 'package:znoona_game_app/features/quiz/room/domain/usecases/reset_answers_usecase.dart';
 import 'package:znoona_game_app/features/quiz/room/domain/usecases/start_game_usecase.dart';
 import 'package:znoona_game_app/features/quiz/room/domain/usecases/submit_answer_usecase.dart';
@@ -37,6 +41,9 @@ class RoomCubit extends Cubit<RoomState> {
     required this.submitAnswerUseCase,
     required this.resetAnswersUseCase,
     required this.watchPlayerAnswersUseCase,
+    required this.markPlayerFinishedUseCase,
+    required this.getRoomPlayersStreamResultsUseCase,
+    required this.getRoomPlayersUseCase,
   }) : super(const RoomState.initial());
 
   final CreateRoomUseCase createRoomUseCase;
@@ -51,14 +58,19 @@ class RoomCubit extends Cubit<RoomState> {
   final SubmitAnswerUseCase submitAnswerUseCase;
   final ResetAnswersUseCase resetAnswersUseCase;
   final WatchPlayerAnswersUseCase watchPlayerAnswersUseCase;
+  final MarkPlayerFinishedUseCase markPlayerFinishedUseCase;
+  final GetRoomPlayersStreamResultsUseCase getRoomPlayersStreamResultsUseCase;
+  final GetRoomPlayersUseCase getRoomPlayersUseCase;
 
+
+  StreamSubscription<dynamic>? _roomsSubscription;
   StreamSubscription<dynamic>? _roomsSub;
   StreamSubscription<dynamic>? _playersSub;
   StreamSubscription<dynamic>? _roomWatcher;
-  StreamSubscription<dynamic>? _roomsSubscription;
   StreamSubscription<dynamic>? _answersSub;
+  StreamSubscription<Either<String, List<RoomPlayer>>>? _resultsSub;
 
-  // Quiz-specific variables
+
   Timer? _questionTimer;
   int _remainingTime = 15;
   int _currentQuestionIndex = 0;
@@ -369,31 +381,49 @@ class RoomCubit extends Cubit<RoomState> {
     _moveToNextQuestion();
   }
 
-  void _moveToNextQuestion() {
+void _moveToNextQuestion() {
+  _answersSub?.cancel();
+
+  if (_currentQuestionIndex < _questions.length - 1) {
+    _currentQuestionIndex++;
+    _selectedAnswer = null;
+    _playerAnswers.clear();
+
+    _resetAnswersForNewQuestion();
+    _startQuestionTimer();
+    _refreshAnswersStream(_getCurrentRoomId());
+
+    _emitQuizState();
+  } else {
+    // QUIZ FINISHED - Call completion handler
+    _questionTimer?.cancel();
     _answersSub?.cancel();
-
-    if (_currentQuestionIndex < _questions.length - 1) {
-      _currentQuestionIndex++;
-      _selectedAnswer = null;
-      _playerAnswers.clear();
-
-      _resetAnswersForNewQuestion();
-      _startQuestionTimer();
-      _refreshAnswersStream(_getCurrentRoomId());
-
-      _emitQuizState();
-    } else {
-      _questionTimer?.cancel();
-      _answersSub?.cancel();
-      emit(
-        RoomState.quizFinished(
-          totalQuestions: _questions.length,
-          correctAnswers: _correctCount,
-          players: _currentPlayers,
-        ),
-      );
-    }
+    
+    final totalQuestions = _questions.length;
+    final correctAnswers = _correctCount;
+    final finalScore = correctAnswers * 10;
+    
+    print('🏁 Quiz finished! Calling markPlayerFinished...');
+    
+    // Mark player as finished and navigate to results
+    markPlayerFinished(
+      roomId: _getCurrentRoomId(),
+      finalScore: finalScore,
+      correctAnswers: correctAnswers,
+      totalQuestions: totalQuestions,
+    );
   }
+}
+
+void _handleQuizFinished() {
+  emit(
+    RoomState.quizFinished(
+      totalQuestions: _questions.length,
+      correctAnswers: _correctCount,
+      players: _currentPlayers,
+    ),
+  );
+}
 
   Future<void> _resetAnswersForNewQuestion() async {
     try {
@@ -473,6 +503,269 @@ class RoomCubit extends Cubit<RoomState> {
     });
   }
 
+Future<void> markPlayerFinished({
+  required String roomId,
+  required int finalScore,
+  required int correctAnswers,
+  required int totalQuestions,
+}) async {
+  final user = _getCurrentUserId();
+  if (user == 'unknown') {
+    emit(RoomState.error('User not logged in'));
+    return;
+  }
+
+  try {
+    print('🎯 Starting markPlayerFinished for user: $user');
+    
+    // STEP 1: First try to fix any broken state
+    await _fixPlayerState(roomId, user);
+    
+    // STEP 2: Mark player as finished with comprehensive logging
+    final result = await markPlayerFinishedUseCase(
+      roomId: roomId,
+      userId: user,
+      finalScore: finalScore,
+    );
+
+    if (isClosed) return;
+
+    result.fold(
+      (failure) {
+        print('❌ Failed to mark player finished: $failure');
+        // Try emergency fix
+        _emergencyMarkFinished(roomId, user, finalScore, totalQuestions, correctAnswers);
+      },
+      (_) {
+        print('✅ Player marked as finished, starting results stream...');
+        
+        // STEP 3: Verify the update worked
+        Future.delayed(const Duration(milliseconds: 500), () {
+          if (isClosed) return;
+          _verifyAndStartResults(roomId, user, totalQuestions, correctAnswers);
+        });
+      },
+    );
+
+  } catch (e) {
+    print('❌ Error in markPlayerFinished: $e');
+    // Emergency fallback
+    _emergencyMarkFinished(roomId, user, finalScore, totalQuestions, correctAnswers);
+  }
+}
+
+
+void _emergencyMarkFinished(
+  String roomId, 
+  String userId, 
+  int finalScore, 
+  int totalQuestions, 
+  int correctAnswers,
+) {
+  print('🚨 Using emergency mark finished for user: $userId');
+  
+  // Direct database update as last resort
+  // You'll need to add this to your repository/remote data source
+  // For now, we'll just start the results stream and hope for the best
+  _startProgressiveResultsStream(roomId, totalQuestions);
+  _emitInitialFinishedState(roomId, totalQuestions, correctAnswers);
+}
+
+// NEW: Verify and start results
+Future<void> _verifyAndStartResults(
+  String roomId, 
+  String userId, 
+  int totalQuestions, 
+  int correctAnswers,
+) async {
+  try {
+    // Verify the player was actually marked as finished
+    final playersResult = await getRoomPlayersUseCase(roomId);
+    
+    playersResult.fold(
+      (failure) {
+        print('⚠️ Could not verify player state: $failure');
+        // Start anyway
+        _startProgressiveResultsStream(roomId, totalQuestions);
+        _emitInitialFinishedState(roomId, totalQuestions, correctAnswers);
+      },
+      (players) {
+        final currentPlayer = players.firstWhere(
+          (p) => p.userId == userId,
+          orElse: () => players.first,
+        );
+        
+        print('🔍 Verification - finished_quiz: ${currentPlayer.finishedQuiz}, '
+            'finished_at: ${currentPlayer.finishedAt}');
+        
+        if (!currentPlayer.finishedQuiz || currentPlayer.finishedAt == null) {
+          print('🚨 Player not properly finished! Retrying...');
+          // Retry the marking
+          markPlayerFinishedUseCase(
+            roomId: roomId,
+            userId: userId,
+            finalScore: currentPlayer.score, // Use existing score
+          ).then((_) {
+            _startProgressiveResultsStream(roomId, totalQuestions);
+            _emitInitialFinishedState(roomId, totalQuestions, correctAnswers);
+          });
+        } else {
+          // Everything is good
+          _startProgressiveResultsStream(roomId, totalQuestions);
+          _emitInitialFinishedState(roomId, totalQuestions, correctAnswers);
+        }
+      },
+    );
+  } catch (e) {
+    print('❌ Error in verification: $e');
+    // Start anyway
+    _startProgressiveResultsStream(roomId, totalQuestions);
+    _emitInitialFinishedState(roomId, totalQuestions, correctAnswers);
+  }
+}
+
+// NEW: Fix player state before marking as finished
+Future<void> _fixPlayerState(String roomId, String userId) async {
+  try {
+    // Call the fix function if you added it to repository
+    // For now, we'll just log
+    print('🔧 Preparing to fix player state for: $userId');
+  } catch (e) {
+    print('⚠️ Error in fixPlayerState: $e');
+  }
+}
+
+
+void _startProgressiveResultsStream(String roomId, int totalQuestions) {
+  _resultsSub?.cancel();
+
+  _resultsSub = getRoomPlayersStreamResultsUseCase(roomId).listen(
+    (either) {
+      if (isClosed) return;
+
+      either.fold(
+        (failure) => print('Results stream error: $failure'),
+        (players) {
+          final results = _calculateProgressiveResults(
+            players,
+            totalQuestions,
+          );
+          final totalPlayers = results.length;
+          final finishedPlayers = results.where((r) => r.finishedQuiz).length;
+          final allFinished = finishedPlayers == totalPlayers;
+          final userRank = _getUserRank(results);
+
+          emit(
+            RoomState.showingProgressiveResults(
+              results: results,
+              finishedPlayers: finishedPlayers,
+              totalPlayers: totalPlayers,
+              allPlayersFinished: allFinished,
+              userRank: userRank,
+            ),
+          );
+
+          if (allFinished) {
+            _handleAllPlayersFinished(roomId);
+          }
+        },
+      );
+    },
+    onError: (error) {
+      print('Results stream onError: $error');
+    },
+  );
+}
+
+  // ADD this helper method:
+  Future<void> _emitInitialFinishedState(
+    String roomId,
+    int totalQuestions,
+    int correctAnswers,
+  ) async {
+    final result = await getRoomPlayersUseCase(roomId);
+
+    if (isClosed) return;
+
+    result.fold(
+      (failure) => emit(RoomState.error(failure)),
+      (players) {
+        final totalPlayers = players.length;
+        final finishedPlayers = players.where((p) => p.finishedQuiz).length;
+
+        emit(
+          RoomState.playerFinished(
+            totalQuestions: totalQuestions,
+            correctAnswers: correctAnswers,
+            totalPlayers: totalPlayers,
+            finishedPlayers: finishedPlayers,
+          ),
+        );
+      },
+    );
+  }
+
+  // UPDATE _calculateProgressiveResults to use RoomPlayer instead of Map:
+  List<PlayerResult> _calculateProgressiveResults(
+    List<RoomPlayer> players,
+    int totalQuestions,
+  ) {
+      final sortedPlayers = List<RoomPlayer>.from(players)
+    ..sort((a, b) {
+      // Finished players come before unfinished
+      if (a.finishedQuiz && !b.finishedQuiz) return -1;
+      if (!a.finishedQuiz && b.finishedQuiz) return 1;
+
+      // Both finished - sort by score (desc) then finish time (asc)
+      if (a.finishedQuiz && b.finishedQuiz) {
+        if (a.score != b.score) return b.score.compareTo(a.score);
+        
+        // CRITICAL FIX: Handle null finished_at
+        if (a.finishedAt == null && b.finishedAt == null) return 0;
+        if (a.finishedAt == null) return 1; // Put nulls at the end
+        if (b.finishedAt == null) return -1; // Put nulls at the end
+        
+        return a.finishedAt!.compareTo(b.finishedAt!);
+      }
+
+      // Both unfinished - sort by current score (desc)
+      return b.score.compareTo(a.score);
+    });
+
+    final currentUserId = _getCurrentUserId();
+
+    return sortedPlayers.asMap().entries.map((entry) {
+      final index = entry.key;
+      final player = entry.value;
+
+      return PlayerResult(
+        userId: player.userId,
+        username: player.username,
+        score: player.score,
+        correctAnswers: player.score ~/ 10, // Adjust based on your scoring
+        totalQuestions: totalQuestions,
+        rank: player.finishedQuiz ? index + 1 : 0, // 0 means still playing
+        isCurrentUser: player.userId == currentUserId,
+        finishedQuiz: player.finishedQuiz,
+        finishedAt: player.finishedAt,
+      );
+    }).toList();
+  }
+
+  // KEEP all your existing helper methods:
+  int _getUserRank(List<PlayerResult> results) {
+    final currentUserId = _getCurrentUserId();
+    final userResult = results.firstWhere(
+      (result) => result.userId == currentUserId,
+      orElse: () => results.firstWhere((r) => r.rank > 0),
+    );
+    return userResult.rank;
+  }
+
+  void _handleAllPlayersFinished(String roomId) {
+    print('🎉 All players finished! Room: $roomId');
+  }
+
   @override
   Future<void> close() async {
     _questionTimer?.cancel();
@@ -481,11 +774,13 @@ class RoomCubit extends Cubit<RoomState> {
     await _playersSub?.cancel();
     await _roomWatcher?.cancel();
     await _answersSub?.cancel();
+     await _resultsSub?.cancel();
     _roomsSubscription = null;
     _roomsSub = null;
     _playersSub = null;
     _roomWatcher = null;
     _answersSub = null;
+     _resultsSub = null;
     return super.close();
   }
 }

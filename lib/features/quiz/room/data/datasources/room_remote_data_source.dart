@@ -295,12 +295,12 @@ class RoomRemoteDataSource {
           .from('room_players')
           .update({
             'finished_quiz': true,
-            'finished_at': finishedAt, 
+            'finished_at': finishedAt,
             'score': finalScore,
           })
           .eq('room_id', roomId)
           .eq('user_id', userId)
-          .select(); 
+          .select();
 
       print('✅ Database update result: $result');
 
@@ -318,71 +318,85 @@ class RoomRemoteDataSource {
   }
 
   Future<void> fixBrokenFinishedAt({
-  required String roomId,
-  required String userId,
-}) async {
-  try {
-    final currentData = await supabase
-        .from('room_players')
-        .select()
-        .eq('room_id', roomId)
-        .eq('user_id', userId)
-        .single();
-
-    print('🔧 Checking player state: '
-        'finished_quiz: ${currentData['finished_quiz']}, '
-        'finished_at: ${currentData['finished_at']}');
-
-    if (currentData['finished_quiz'] == true && currentData['finished_at'] == null) {
-      final fixedTime = DateTime.now().toIso8601String();
-      print('🛠️ Fixing broken finished_at: $fixedTime');
-      
-      await supabase
+    required String roomId,
+    required String userId,
+  }) async {
+    try {
+      final currentData = await supabase
           .from('room_players')
-          .update({
-            'finished_at': fixedTime,
-          })
+          .select()
           .eq('room_id', roomId)
-          .eq('user_id', userId);
-      
-      print('✅ Fixed broken finished_at');
-    }
-  } catch (e) {
-    print('❌ Error fixing broken finished_at: $e');
-  }
-}
+          .eq('user_id', userId)
+          .single();
 
-Stream<List<RoomPlayerModel>> getRoomPlayersStreamForResults(String roomId) {
-  print('🔍 Starting room players stream for results - Room: $roomId');
-  
-  return supabase
-      .from('room_players')
-      .stream(primaryKey: ['id'])
-      .eq('room_id', roomId)
-      .map((rows) {
-        print('📨 Stream received ${rows.length} players');
-        
-        for (final row in rows) {
-          print('👤 Player: ${row['username']}, '
+      print(
+        '🔧 Checking player state: '
+        'finished_quiz: ${currentData['finished_quiz']}, '
+        'finished_at: ${currentData['finished_at']}',
+      );
+
+      if (currentData['finished_quiz'] == true &&
+          currentData['finished_at'] == null) {
+        final fixedTime = DateTime.now().toIso8601String();
+        print('🛠️ Fixing broken finished_at: $fixedTime');
+
+        await supabase
+            .from('room_players')
+            .update({
+              'finished_at': fixedTime,
+            })
+            .eq('room_id', roomId)
+            .eq('user_id', userId);
+
+        print('✅ Fixed broken finished_at');
+      }
+    } catch (e) {
+      print('❌ Error fixing broken finished_at: $e');
+    }
+  }
+
+  Stream<List<RoomPlayerModel>> getRoomPlayersStreamForResults(String roomId) {
+    print('🔍 Starting synchronized room players stream - Room: $roomId');
+
+    return supabase
+        .from('room_players')
+        .stream(primaryKey: ['id'])
+        .eq('room_id', roomId)
+        .asyncMap((rows) async {
+          print('📨 Stream received ${rows.length} players');
+
+          // Add a small delay to ensure all updates are captured
+          await Future.delayed(const Duration(milliseconds: 100));
+
+          // Debug: Check each player's finished_at
+          for (final row in rows) {
+            print(
+              '👤 Player: ${row['username']}, '
               'finished_quiz: ${row['finished_quiz']}, '
-              'finished_at: ${row['finished_at']}');
-        }
-        
-        final players = rows.map((e) => RoomPlayerModel.fromJson(e)).toList();
-        
-        final finishedCount = players.where((p) => p.finishedQuiz).length;
-        final finishedWithTimestamp = players.where((p) => p.finishedAt != null).length;
-        
-        print('🎯 Stream: $finishedCount/${players.length} players finished, '
-            '$finishedWithTimestamp with timestamp');
-        
-        return players;
-      })
-      .handleError((error) {
-        print('❌ Stream error: $error');
-        throw Exception('Stream error: $error'); 
-      });
-}
+              'finished_at: ${row['finished_at']}',
+            );
+          }
+
+          final players = rows.map((e) => RoomPlayerModel.fromJson(e)).toList();
+
+          // Log finished players for debugging
+          final finishedCount = players.where((p) => p.finishedQuiz).length;
+          final finishedWithTimestamp = players
+              .where((p) => p.finishedAt != null)
+              .length;
+
+          print(
+            '🎯 Stream: $finishedCount/${players.length} players finished, '
+            '$finishedWithTimestamp with timestamp',
+          );
+
+          return players;
+        })
+        .handleError((error) {
+          print('❌ Stream error: $error');
+          throw Exception('Stream error: $error');
+        });
+  }
 
 
   Future<List<RoomPlayerModel>> getRoomPlayers(String roomId) async {

@@ -81,7 +81,6 @@ class RoomCubit extends Cubit<RoomState> {
   List<RoomPlayer> _currentPlayers = [];
   String? _currentRoomId;
 
-  // ADD THIS PUBLIC METHOD TO FIX THE ERROR
   void watchPlayerAnswers(String roomId) {
     _watchPlayerAnswers(roomId);
   }

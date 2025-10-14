@@ -36,7 +36,6 @@ class _RoomQuizBodyState extends State<RoomQuizBody> {
   Map<String, String?> _currentPlayerAnswers = {};
   String? _currentSelectedAnswer;
   int _currentCorrectCount = 0;
-  bool _currentIsWaitingForPlayers = false;
   List<RoomPlayer> _currentPlayers = [];
 
   @override
@@ -44,10 +43,13 @@ class _RoomQuizBodyState extends State<RoomQuizBody> {
     super.initState();
     _currentQuestions = widget.questions;
     context.read<RoomCubit>().startQuiz(widget.questions);
+    context.read<RoomCubit>().watchPlayerAnswers(widget.room.id);
   }
 
   void _startTimer() {
     _timer?.cancel();
+    _currentRemainingTime = 15;
+
     _timer = Timer.periodic(const Duration(seconds: 1), (t) {
       if (_currentRemainingTime > 0) {
         setState(() {
@@ -55,7 +57,7 @@ class _RoomQuizBodyState extends State<RoomQuizBody> {
         });
       } else {
         t.cancel();
-        _handleTimeUp();
+        print('⏰ Time up in UI');
       }
     });
   }
@@ -89,80 +91,6 @@ class _RoomQuizBodyState extends State<RoomQuizBody> {
     context.read<RoomCubit>().selectAnswer(answer);
   }
 
-  void _handleTimeUp() {
-    _timer?.cancel();
-    _moveToNextQuestion();
-  }
-
-  void _moveToNextQuestion() {
-    if (_currentQuestionIndex < _currentQuestions.length - 1) {
-      _currentQuestionIndex++;
-      _currentSelectedAnswer = null;
-      _currentPlayerAnswers.clear();
-      _currentRemainingTime = 15;
-
-      _startTimer();
-      _emitQuizState();
-    } else {
-      _handleQuizCompletion();
-    }
-  }
-
-  void _handleQuizCompletion() {
-    final totalQuestions = _currentQuestions.length;
-    final correctAnswers = _currentCorrectCount;
-    final finalScore = correctAnswers * 10;
-
-    print(
-      '🎯 Quiz completed! Score: $finalScore, Correct: $correctAnswers/$totalQuestions',
-    );
-
-    // Mark player as finished and start results stream
-    context.read<RoomCubit>().markPlayerFinished(
-      roomId: widget.room.id,
-      finalScore: finalScore,
-      correctAnswers: correctAnswers,
-      totalQuestions: totalQuestions,
-    );
-
-    // Navigate to results screen
-    _navigateToResultsScreen();
-  }
-
-  void _navigateToResultsScreen() {
-    // Use a small delay to ensure state is updated
-    Future.delayed(const Duration(milliseconds: 300), () {
-      if (mounted) {
-        Navigator.pushReplacement(
-          context,
-          MaterialPageRoute(
-            builder: (context) =>
-                ProgressiveResultsScreen(roomId: widget.room.id),
-          ),
-        );
-      }
-    });
-  }
-
-  void _emitQuizState() {
-    final allPlayersAnswered =
-        _currentPlayers.isNotEmpty &&
-        _currentPlayers.every(
-          (player) => _currentPlayerAnswers[player.userId] != null,
-        );
-
-    if (mounted) {
-      setState(() {
-        _currentIsWaitingForPlayers = allPlayersAnswered;
-      });
-    }
-  }
-
-  String _getCurrentUserId() {
-    final user = Supabase.instance.client.auth.currentUser;
-    return user?.id ?? 'unknown';
-  }
-
   @override
   void dispose() {
     _timer?.cancel();
@@ -188,7 +116,8 @@ class _RoomQuizBodyState extends State<RoomQuizBody> {
                 players,
               ) {
                 print(
-                  '🔄 Updating quiz state - Question: ${currentQuestionIndex + 1}',
+                  '🔄 Updating quiz state - Question: ${currentQuestionIndex + 1}, '
+                  'Time: $remainingTime',
                 );
 
                 final mutablePlayerAnswers = Map<String, String?>.from(
@@ -202,21 +131,20 @@ class _RoomQuizBodyState extends State<RoomQuizBody> {
                   _currentPlayerAnswers = mutablePlayerAnswers;
                   _currentSelectedAnswer = selectedAnswer;
                   _currentCorrectCount = correctCount;
-                  _currentIsWaitingForPlayers = isWaitingForPlayers;
                   _currentPlayers = players;
                 });
 
-                // Start timer if not already running
+                // Start timer if not already running and time is > 0
                 if ((_timer == null || !_timer!.isActive) &&
-                    !isWaitingForPlayers &&
                     remainingTime > 0) {
                   _startTimer();
                 }
               },
 
           quizFinished: (totalQuestions, correctAnswers, players) {
+            print('🏁 Quiz finished - navigating to results');
             _timer?.cancel();
-            _handleQuizCompletion();
+            _navigateToResultsScreen();
           },
         );
       },
@@ -229,10 +157,36 @@ class _RoomQuizBodyState extends State<RoomQuizBody> {
         playerAnswers: _currentPlayerAnswers,
         selectedAnswer: _currentSelectedAnswer,
         correctCount: _currentCorrectCount,
-        isWaitingForPlayers: _currentIsWaitingForPlayers,
         players: _currentPlayers,
       ),
     );
+  }
+
+  void _navigateToResultsScreen() {
+    print('🚀 Navigating to results screen for room: ${widget.room.id}');
+
+    Future.delayed(const Duration(milliseconds: 500), () {
+      if (mounted) {
+        Navigator.pushReplacement(
+          context,
+          MaterialPageRoute(
+            builder: (context) =>
+                ProgressiveResultsScreen(roomId: widget.room.id),
+          ),
+        );
+      }
+    });
+  }
+
+  void _emitQuizState() {
+    if (mounted) {
+      setState(() {});
+    }
+  }
+
+  String _getCurrentUserId() {
+    final user = Supabase.instance.client.auth.currentUser;
+    return user?.id ?? 'unknown';
   }
 
   Widget _buildQuizContent({
@@ -242,7 +196,6 @@ class _RoomQuizBodyState extends State<RoomQuizBody> {
     required Map<String, String?> playerAnswers,
     required String? selectedAnswer,
     required int correctCount,
-    required bool isWaitingForPlayers,
     required List<RoomPlayer> players,
   }) {
     if (questions.isEmpty) {
@@ -282,7 +235,6 @@ class _RoomQuizBodyState extends State<RoomQuizBody> {
               _buildGameHeader(
                 remainingTime,
                 playerAnswers,
-                isWaitingForPlayers,
                 players,
                 correctCount,
                 questions.length,
@@ -312,9 +264,7 @@ class _RoomQuizBodyState extends State<RoomQuizBody> {
                       option: option,
                       isSelected: isSelected,
                       selectedAnswer: selectedAnswer,
-                      onTap: (hasAnswered || isWaitingForPlayers)
-                          ? null
-                          : () => _selectAnswer(option),
+                      onTap: hasAnswered ? null : () => _selectAnswer(option),
                       isCorrect: isCorrect,
                       remainingTime: remainingTime,
                     );
@@ -331,7 +281,6 @@ class _RoomQuizBodyState extends State<RoomQuizBody> {
   Widget _buildGameHeader(
     int remainingTime,
     Map<String, String?> playerAnswers,
-    bool isWaitingForPlayers,
     List<RoomPlayer> players,
     int correctCount,
     int totalQuestions,
@@ -340,6 +289,19 @@ class _RoomQuizBodyState extends State<RoomQuizBody> {
     final hasAnswered =
         playerAnswers.containsKey(currentUserId) &&
         playerAnswers[currentUserId] != null;
+
+    final connectedPlayers = players.where((p) => p.isConnected).toList();
+    final answeredPlayers = connectedPlayers
+        .where(
+          (p) =>
+              playerAnswers.containsKey(p.userId) &&
+              playerAnswers[p.userId] != null,
+        )
+        .length;
+    final totalConnected = connectedPlayers.length;
+    final progress = totalConnected > 0
+        ? answeredPlayers / totalConnected
+        : 0.0;
 
     return Column(
       children: [
@@ -378,37 +340,29 @@ class _RoomQuizBodyState extends State<RoomQuizBody> {
         ),
         SizedBox(height: 16.sp),
 
-        // SCENARIO 2: All players answered message
-        if (isWaitingForPlayers)
+        // Time running out warning
+        if (remainingTime <= 5)
           Container(
             padding: EdgeInsets.all(8.sp),
             decoration: BoxDecoration(
-              color: Colors.green,
+              color: Colors.orange.withOpacity(0.1),
               borderRadius: BorderRadius.circular(8),
+              border: Border.all(color: Colors.orange),
             ),
-            child: Text(
-              '🎉 All players answered! Moving to next question...',
-              style: TextStyle(
-                fontSize: 14.sp,
-                color: Colors.green,
-                fontWeight: FontWeight.bold,
-              ),
-            ),
-          )
-        else if (remainingTime <= 5 && !isWaitingForPlayers)
-          Container(
-            padding: EdgeInsets.all(8.sp),
-            decoration: BoxDecoration(
-              color: Colors.orange,
-              borderRadius: BorderRadius.circular(8),
-            ),
-            child: Text(
-              '⏰ Time running out! Answer quickly!',
-              style: TextStyle(
-                fontSize: 14.sp,
-                color: Colors.orange,
-                fontWeight: FontWeight.bold,
-              ),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Icon(Icons.timer, color: Colors.orange, size: 16.sp),
+                SizedBox(width: 8.sp),
+                Text(
+                  'Time running out! Answer quickly!',
+                  style: TextStyle(
+                    fontSize: 14.sp,
+                    color: Colors.orange,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+              ],
             ),
           )
         else
@@ -416,8 +370,14 @@ class _RoomQuizBodyState extends State<RoomQuizBody> {
 
         SizedBox(height: 8.sp),
 
-        // Players Status
-        _buildPlayersStatus(playerAnswers, players),
+        // Players Status with progress
+        _buildPlayersStatus(
+          playerAnswers,
+          players,
+          progress,
+          answeredPlayers,
+          totalConnected,
+        ),
       ],
     );
   }
@@ -425,22 +385,50 @@ class _RoomQuizBodyState extends State<RoomQuizBody> {
   Widget _buildPlayersStatus(
     Map<String, String?> playerAnswers,
     List<RoomPlayer> players,
+    double progress,
+    int answeredPlayers,
+    int totalConnected,
   ) {
     if (players.isEmpty) return const SizedBox();
 
     return Column(
       children: [
-        Text(
-          'Players Status:',
-          style: TextStyle(
-            fontSize: 16.sp,
-            fontWeight: FontWeight.bold,
+        // Progress bar
+        Container(
+          width: double.infinity,
+          height: 8.sp,
+          decoration: BoxDecoration(
+            color: Colors.grey.shade300,
+            borderRadius: BorderRadius.circular(4.sp),
+          ),
+          child: Stack(
+            children: [
+              Container(
+                width: double.infinity,
+                height: 8.sp,
+                decoration: BoxDecoration(
+                  color: Colors.grey.shade300,
+                  borderRadius: BorderRadius.circular(4.sp),
+                ),
+              ),
+              AnimatedContainer(
+                duration: const Duration(milliseconds: 300),
+                width: MediaQuery.of(context).size.width * progress,
+                height: 8.sp,
+                decoration: BoxDecoration(
+                  color: _getProgressColor(progress),
+                  borderRadius: BorderRadius.circular(4.sp),
+                ),
+              ),
+            ],
           ),
         ),
         SizedBox(height: 8.sp),
+
+        // Players list
         Wrap(
           spacing: 8.sp,
-          children: players.map((player) {
+          children: players.where((p) => p.isConnected).map((player) {
             final hasAnswered =
                 playerAnswers.containsKey(player.userId) &&
                 playerAnswers[player.userId] != null;
@@ -451,10 +439,29 @@ class _RoomQuizBodyState extends State<RoomQuizBody> {
                 color: Colors.white,
                 fontSize: 12.sp,
               ),
+              avatar: hasAnswered
+                  ? Icon(Icons.check, size: 16.sp, color: Colors.white)
+                  : Icon(Icons.person, size: 16.sp, color: Colors.white),
             );
           }).toList(),
         ),
+
+        // Progress text
+        Text(
+          '$answeredPlayers/$totalConnected players answered',
+          style: TextStyle(
+            fontSize: 12.sp,
+            color: Colors.grey.shade600,
+            fontWeight: FontWeight.w500,
+          ),
+        ),
       ],
     );
+  }
+
+  Color _getProgressColor(double progress) {
+    if (progress < 0.5) return Colors.orange;
+    if (progress < 1.0) return Colors.blue;
+    return Colors.green;
   }
 }

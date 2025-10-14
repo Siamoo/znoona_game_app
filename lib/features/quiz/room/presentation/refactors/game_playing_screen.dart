@@ -3,7 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:znoona_game_app/features/quiz/room/domain/entities/room.dart';
 import 'package:znoona_game_app/features/quiz/room/domain/entities/room_question.dart';
 import 'package:znoona_game_app/features/quiz/room/presentation/cubit/room_cubit.dart';
-import 'package:znoona_game_app/features/quiz/room/presentation/refactors/room_quiz_screen.dart';
+import 'package:znoona_game_app/features/quiz/room/presentation/refactors/room_quiz_body.dart';
 import 'package:znoona_game_app/features/quiz/single/domain/entities/question.dart';
 
 class GamePlayingScreen extends StatefulWidget {

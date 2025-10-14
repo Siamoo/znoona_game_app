@@ -4,16 +4,15 @@ import 'package:znoona_game_app/features/quiz/room/data/models/player_result.dar
 import 'package:znoona_game_app/features/quiz/room/presentation/cubit/room_cubit.dart';
 
 class ProgressiveResultsScreen extends StatelessWidget {
+  const ProgressiveResultsScreen({required this.roomId, super.key});
   final String roomId;
-  
-  const ProgressiveResultsScreen({super.key, required this.roomId});
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         title: const Text('Quiz Results'),
-        leading: Container(), // Remove back button
+        leading: Container(),
         backgroundColor: Colors.transparent,
         elevation: 0,
       ),
@@ -22,14 +21,12 @@ class ProgressiveResultsScreen extends StatelessWidget {
           state.whenOrNull(
             showingProgressiveResults: (results, finishedPlayers, totalPlayers, allFinished, userRank) {
               if (allFinished) {
-                // Optional: Show celebration when all finish
                 Future.delayed(const Duration(seconds: 2), () {
                   _showAllFinishedCelebration(context);
                 });
               }
             },
             left: () {
-              // Handle if user leaves room from results screen
               Navigator.popUntil(context, (route) => route.isFirst);
             },
             error: (message) {
@@ -66,10 +63,9 @@ class ProgressiveResultsScreen extends StatelessWidget {
               return _ErrorScreen(
                 message: message,
                 onRetry: () {
-                  // You might want to retry loading results
                   context.read<RoomCubit>().markPlayerFinished(
                     roomId: roomId,
-                    finalScore: 0, // These would need to be stored somewhere
+                    finalScore: 0,
                     correctAnswers: 0,
                     totalQuestions: 10,
                   );
@@ -190,15 +186,12 @@ class _WaitingForPlayersScreen extends StatelessWidget {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            // Animated celebration icon
             Icon(
               Icons.celebration,
               size: 80,
               color: _getCelebrationColor(progress),
             ),
             const SizedBox(height: 20),
-            
-            // Title
             Text(
               'Quiz Completed! 🎉',
               style: Theme.of(context).textTheme.headlineSmall?.copyWith(
@@ -206,8 +199,6 @@ class _WaitingForPlayersScreen extends StatelessWidget {
               ),
             ),
             const SizedBox(height: 16),
-            
-            // User's score
             Container(
               padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 12),
               decoration: BoxDecoration(
@@ -224,12 +215,9 @@ class _WaitingForPlayersScreen extends StatelessWidget {
               ),
             ),
             const SizedBox(height: 40),
-            
-            // Progress indicator
             Stack(
               alignment: Alignment.center,
               children: [
-                // Background circle
                 Container(
                   width: 120,
                   height: 120,
@@ -238,7 +226,6 @@ class _WaitingForPlayersScreen extends StatelessWidget {
                     shape: BoxShape.circle,
                   ),
                 ),
-                // Progress circle
                 SizedBox(
                   width: 120,
                   height: 120,
@@ -251,7 +238,6 @@ class _WaitingForPlayersScreen extends StatelessWidget {
                     ),
                   ),
                 ),
-                // Progress text
                 Column(
                   mainAxisSize: MainAxisSize.min,
                   children: [
@@ -274,16 +260,12 @@ class _WaitingForPlayersScreen extends StatelessWidget {
               ],
             ),
             const SizedBox(height: 30),
-            
-            // Status message
             Text(
               _getStatusMessage(progress),
               style: Theme.of(context).textTheme.titleMedium,
               textAlign: TextAlign.center,
             ),
             const SizedBox(height: 8),
-            
-            // Detailed progress
             Text(
               '$finishedPlayers out of $totalPlayers players finished',
               style: TextStyle(
@@ -292,8 +274,6 @@ class _WaitingForPlayersScreen extends StatelessWidget {
               ),
             ),
             const SizedBox(height: 30),
-            
-            // Players finished indicator with animation
             AnimatedContainer(
               duration: const Duration(milliseconds: 500),
               padding: const EdgeInsets.all(16),
@@ -371,6 +351,9 @@ class _ProgressiveResultsBody extends StatelessWidget {
       orElse: () => results.first,
     );
 
+    // Group players by rank to handle ties
+    final rankedGroups = _groupPlayersByRank(results);
+
     return Container(
       decoration: BoxDecoration(
         gradient: LinearGradient(
@@ -386,26 +369,31 @@ class _ProgressiveResultsBody extends StatelessWidget {
         padding: const EdgeInsets.all(16.0),
         child: Column(
           children: [
-            // Header with user's rank highlight
             _buildUserRankCard(context, currentUserResult),
             const SizedBox(height: 20),
-            
-            // Progress header
             _buildProgressHeader(context),
             const SizedBox(height: 20),
-            
-            // Results list
             Expanded(
-              child: _buildResultsList(context),
+              child: _buildResultsList(context, rankedGroups),
             ),
-            
-            // Action buttons when all finished
-            if (allPlayersFinished) 
-              _buildActionButtons(context),
+            if (allPlayersFinished) _buildActionButtons(context),
           ],
         ),
       ),
     );
+  }
+
+  // NEW: Group players by rank to handle ties
+  Map<int, List<PlayerResult>> _groupPlayersByRank(List<PlayerResult> results) {
+    final groups = <int, List<PlayerResult>>{};
+    
+    for (final result in results) {
+      if (result.rank > 0) { // Only include finished players with ranks
+        groups.putIfAbsent(result.rank, () => []).add(result);
+      }
+    }
+    
+    return groups;
   }
 
   Widget _buildUserRankCard(BuildContext context, PlayerResult userResult) {
@@ -430,7 +418,6 @@ class _ProgressiveResultsBody extends StatelessWidget {
         ),
         child: Row(
           children: [
-            // Rank badge
             Container(
               width: 60,
               height: 60,
@@ -450,8 +437,6 @@ class _ProgressiveResultsBody extends StatelessWidget {
               ),
             ),
             const SizedBox(width: 16),
-            
-            // User info
             Expanded(
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -480,11 +465,21 @@ class _ProgressiveResultsBody extends StatelessWidget {
                       fontSize: 14,
                     ),
                   ),
+                  // NEW: Show tie information if applicable
+                  if (_hasTies(userResult.rank, results)) ...[
+                    const SizedBox(height: 4),
+                    Text(
+                      'Tied with other players',
+                      style: TextStyle(
+                        color: Colors.white.withOpacity(0.8),
+                        fontSize: 12,
+                        fontStyle: FontStyle.italic,
+                      ),
+                    ),
+                  ],
                 ],
               ),
             ),
-            
-            // Trophy icon
             Icon(
               _getTrophyIcon(userResult.rank),
               color: Colors.white,
@@ -494,6 +489,11 @@ class _ProgressiveResultsBody extends StatelessWidget {
         ),
       ),
     );
+  }
+
+  // NEW: Check if there are ties for a given rank
+  bool _hasTies(int rank, List<PlayerResult> results) {
+    return results.where((r) => r.rank == rank).length > 1;
   }
 
   Widget _buildProgressHeader(BuildContext context) {
@@ -567,7 +567,8 @@ class _ProgressiveResultsBody extends StatelessWidget {
     );
   }
 
-  Widget _buildResultsList(BuildContext context) {
+  // UPDATED: Build results list with tie handling
+  Widget _buildResultsList(BuildContext context, Map<int, List<PlayerResult>> rankedGroups) {
     return Card(
       elevation: 2,
       shape: RoundedRectangleBorder(
@@ -601,16 +602,78 @@ class _ProgressiveResultsBody extends StatelessWidget {
             ),
             const SizedBox(height: 16),
             Expanded(
-              child: ListView.separated(
-                itemCount: results.length,
-                separatorBuilder: (context, index) => const Divider(height: 1),
-                itemBuilder: (context, index) {
-                  final result = results[index];
-                  return _PlayerResultTile(
-                    result: result,
-                    index: index,
-                  );
-                },
+              child: ListView(
+                children: [
+                  // Display ranked players (finished)
+                  ...rankedGroups.entries.map((entry) {
+                    final rank = entry.key;
+                    final players = entry.value;
+                    
+                    return Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        // Rank header with tie indicator
+                        Padding(
+                          padding: const EdgeInsets.symmetric(vertical: 8.0),
+                          child: Row(
+                            children: [
+                              Container(
+                                width: 32,
+                                height: 32,
+                                decoration: BoxDecoration(
+                                  color: _getRankColor(rank),
+                                  shape: BoxShape.circle,
+                                ),
+                                child: Center(
+                                  child: Text(
+                                    '$rank',
+                                    style: const TextStyle(
+                                      color: Colors.white,
+                                      fontWeight: FontWeight.bold,
+                                      fontSize: 14,
+                                    ),
+                                  ),
+                                ),
+                              ),
+                              const SizedBox(width: 8),
+                              Text(
+                                'Rank $rank${players.length > 1 ? ' (Tied)' : ''}',
+                                style: const TextStyle(
+                                  fontSize: 16,
+                                  fontWeight: FontWeight.bold,
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                        // Players in this rank
+                        ...players.map((result) => _PlayerResultTile(
+                          result: result,
+                          showRank: false, // Don't show individual rank since it's in the header
+                        )),
+                        const SizedBox(height: 8),
+                      ],
+                    );
+                  }),
+                  
+                  // Display unranked players (still playing)
+                  if (results.any((r) => r.rank == 0)) ...[
+                    const Padding(
+                      padding: EdgeInsets.symmetric(vertical: 8.0),
+                      child: Text(
+                        'Still Playing',
+                        style: TextStyle(
+                          fontSize: 16,
+                          fontWeight: FontWeight.bold,
+                          color: Colors.orange,
+                        ),
+                      ),
+                    ),
+                    ...results.where((r) => r.rank == 0).map((result) => 
+                      _PlayerResultTile(result: result, showRank: true)
+                    ),
+                  ],
+                ],
               ),
             ),
           ],
@@ -711,10 +774,10 @@ class _ProgressiveResultsBody extends StatelessWidget {
           ElevatedButton(
             onPressed: () {
               Navigator.pop(context);
-              // TODO: Implement play again logic
-              // context.read<RoomCubit>().resetAndStartNewGame(roomId);
               ScaffoldMessenger.of(context).showSnackBar(
-                const SnackBar(content: Text('Play again feature coming soon!')),
+                const SnackBar(
+                  content: Text('Play again feature coming soon!'),
+                ),
               );
             },
             child: const Text('Play Again'),
@@ -739,13 +802,14 @@ class _ProgressiveResultsBody extends StatelessWidget {
   }
 }
 
+// UPDATED: PlayerResultTile with optional rank display
 class _PlayerResultTile extends StatelessWidget {
   final PlayerResult result;
-  final int index;
+  final bool showRank;
 
   const _PlayerResultTile({
     required this.result,
-    required this.index,
+    required this.showRank,
   });
 
   @override
@@ -755,35 +819,43 @@ class _PlayerResultTile extends StatelessWidget {
       decoration: BoxDecoration(
         color: result.isCurrentUser ? Colors.blue.shade50 : Colors.transparent,
         borderRadius: BorderRadius.circular(8),
-        border: result.isCurrentUser 
-            ? Border.all(color: Colors.blue.shade200) 
+        border: result.isCurrentUser
+            ? Border.all(color: Colors.blue.shade200)
             : null,
       ),
       child: ListTile(
-        leading: Container(
-          width: 36,
-          height: 36,
-          decoration: BoxDecoration(
-            color: _getRankColor(result.rank),
-            shape: BoxShape.circle,
-          ),
-          child: Center(
-            child: result.finishedQuiz
-                ? Text(
+        leading: showRank && result.rank > 0
+            ? Container(
+                width: 36,
+                height: 36,
+                decoration: BoxDecoration(
+                  color: _getRankColor(result.rank),
+                  shape: BoxShape.circle,
+                ),
+                child: Center(
+                  child: Text(
                     '${result.rank}',
                     style: const TextStyle(
                       color: Colors.white,
                       fontWeight: FontWeight.bold,
                       fontSize: 14,
                     ),
-                  )
-                : const Icon(
-                    Icons.timer,
-                    color: Colors.white,
-                    size: 16,
                   ),
-          ),
-        ),
+                ),
+              )
+            : Container(
+                width: 36,
+                height: 36,
+                decoration: BoxDecoration(
+                  color: result.finishedQuiz ? Colors.green : Colors.orange,
+                  shape: BoxShape.circle,
+                ),
+                child: Center(
+                  child: result.finishedQuiz
+                      ? const Icon(Icons.flag, color: Colors.white, size: 16)
+                      : const Icon(Icons.timer, color: Colors.white, size: 16),
+                ),
+              ),
         title: Row(
           children: [
             Text(

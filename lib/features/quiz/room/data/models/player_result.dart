@@ -1,13 +1,4 @@
 class PlayerResult {
-  final String userId;
-  final String username;
-  final int score;
-  final int correctAnswers;
-  final int totalQuestions;
-  final int rank;
-  final bool isCurrentUser;
-  final bool finishedQuiz;
-  final DateTime? finishedAt;
 
   PlayerResult({
     required this.userId,
@@ -20,6 +11,15 @@ class PlayerResult {
     required this.finishedQuiz,
     this.finishedAt,
   });
+  final String userId;
+  final String username;
+  final int score;
+  final int correctAnswers;
+  final int totalQuestions;
+  final int rank;
+  final bool isCurrentUser;
+  final bool finishedQuiz;
+  final DateTime? finishedAt;
 
   @override
   String toString() {

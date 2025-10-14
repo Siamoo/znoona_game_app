@@ -81,6 +81,11 @@ class RoomCubit extends Cubit<RoomState> {
   List<RoomPlayer> _currentPlayers = [];
   String? _currentRoomId;
 
+  // ADD THIS PUBLIC METHOD TO FIX THE ERROR
+  void watchPlayerAnswers(String roomId) {
+    _watchPlayerAnswers(roomId);
+  }
+
   Future<void> createRoom({
     required String categoryId,
   }) async {
@@ -325,20 +330,22 @@ class RoomCubit extends Cubit<RoomState> {
     );
   }
 
-  void _startQuestionTimer() {
-    _questionTimer?.cancel();
-    _remainingTime = 15;
+void _startQuestionTimer() {
+  _questionTimer?.cancel();
+  _remainingTime = 15;
 
-    _questionTimer = Timer.periodic(const Duration(seconds: 1), (timer) {
-      if (_remainingTime > 0) {
-        _remainingTime--;
-        _emitQuizState();
-      } else {
-        timer.cancel();
-        _handleTimeUp();
-      }
-    });
-  }
+  _questionTimer = Timer.periodic(const Duration(seconds: 1), (timer) {
+    if (_remainingTime > 0) {
+      _remainingTime--;
+      _emitQuizState();
+    } else {
+      timer.cancel();
+      print('⏰ Time finished - moving to next question');
+      _handleTimeUp();
+    }
+  });
+}
+
 
   Future<void> selectAnswer(String answer) async {
     final currentUser = _getCurrentUserId();
@@ -394,8 +401,10 @@ void _moveToNextQuestion() {
     _refreshAnswersStream(_getCurrentRoomId());
 
     _emitQuizState();
+    
+    print('➡️ Moved to question ${_currentQuestionIndex + 1}/${_questions.length}');
   } else {
-    // QUIZ FINISHED - Call completion handler
+    // QUIZ FINISHED - Emit quiz finished state
     _questionTimer?.cancel();
     _answersSub?.cancel();
     
@@ -403,9 +412,18 @@ void _moveToNextQuestion() {
     final correctAnswers = _correctCount;
     final finalScore = correctAnswers * 10;
     
-    print('🏁 Quiz finished! Calling markPlayerFinished...');
+    print('🏁 Quiz finished! Questions: $totalQuestions, Correct: $correctAnswers');
     
-    // Mark player as finished and navigate to results
+    // Emit quiz finished state first
+    emit(
+      RoomState.quizFinished(
+        totalQuestions: totalQuestions,
+        correctAnswers: correctAnswers,
+        players: _currentPlayers,
+      ),
+    );
+    
+    // Then mark player as finished
     markPlayerFinished(
       roomId: _getCurrentRoomId(),
       finalScore: finalScore,
@@ -415,15 +433,7 @@ void _moveToNextQuestion() {
   }
 }
 
-void _handleQuizFinished() {
-  emit(
-    RoomState.quizFinished(
-      totalQuestions: _questions.length,
-      correctAnswers: _correctCount,
-      players: _currentPlayers,
-    ),
-  );
-}
+
 
   Future<void> _resetAnswersForNewQuestion() async {
     try {
@@ -503,176 +513,171 @@ void _handleQuizFinished() {
     });
   }
 
-Future<void> markPlayerFinished({
-  required String roomId,
-  required int finalScore,
-  required int correctAnswers,
-  required int totalQuestions,
-}) async {
-  final user = _getCurrentUserId();
-  if (user == 'unknown') {
-    emit(RoomState.error('User not logged in'));
-    return;
-  }
+  Future<void> markPlayerFinished({
+    required String roomId,
+    required int finalScore,
+    required int correctAnswers,
+    required int totalQuestions,
+  }) async {
+    final user = _getCurrentUserId();
+    if (user == 'unknown') {
+      emit(RoomState.error('User not logged in'));
+      return;
+    }
 
-  try {
-    print('🎯 Starting markPlayerFinished for user: $user');
-    
-    // STEP 1: First try to fix any broken state
-    await _fixPlayerState(roomId, user);
-    
-    // STEP 2: Mark player as finished with comprehensive logging
-    final result = await markPlayerFinishedUseCase(
-      roomId: roomId,
-      userId: user,
-      finalScore: finalScore,
-    );
+    try {
+      print('🎯 Starting markPlayerFinished for user: $user');
+      
+      // STEP 1: First try to fix any broken state
+      await _fixPlayerState(roomId, user);
+      
+      // STEP 2: Mark player as finished with comprehensive logging
+      final result = await markPlayerFinishedUseCase(
+        roomId: roomId,
+        userId: user,
+        finalScore: finalScore,
+      );
 
-    if (isClosed) return;
+      if (isClosed) return;
 
-    result.fold(
-      (failure) {
-        print('❌ Failed to mark player finished: $failure');
-        // Try emergency fix
-        _emergencyMarkFinished(roomId, user, finalScore, totalQuestions, correctAnswers);
-      },
-      (_) {
-        print('✅ Player marked as finished, starting results stream...');
-        
-        // STEP 3: Verify the update worked
-        Future.delayed(const Duration(milliseconds: 500), () {
-          if (isClosed) return;
-          _verifyAndStartResults(roomId, user, totalQuestions, correctAnswers);
-        });
-      },
-    );
-
-  } catch (e) {
-    print('❌ Error in markPlayerFinished: $e');
-    // Emergency fallback
-    _emergencyMarkFinished(roomId, user, finalScore, totalQuestions, correctAnswers);
-  }
-}
-
-
-void _emergencyMarkFinished(
-  String roomId, 
-  String userId, 
-  int finalScore, 
-  int totalQuestions, 
-  int correctAnswers,
-) {
-  print('🚨 Using emergency mark finished for user: $userId');
-  
-  _startProgressiveResultsStream(roomId, totalQuestions);
-  _emitInitialFinishedState(roomId, totalQuestions, correctAnswers);
-}
-
-// NEW: Verify and start results
-Future<void> _verifyAndStartResults(
-  String roomId, 
-  String userId, 
-  int totalQuestions, 
-  int correctAnswers,
-) async {
-  try {
-    // Verify the player was actually marked as finished
-    final playersResult = await getRoomPlayersUseCase(roomId);
-    
-    playersResult.fold(
-      (failure) {
-        print('⚠️ Could not verify player state: $failure');
-        // Start anyway
-        _startProgressiveResultsStream(roomId, totalQuestions);
-        _emitInitialFinishedState(roomId, totalQuestions, correctAnswers);
-      },
-      (players) {
-        final currentPlayer = players.firstWhere(
-          (p) => p.userId == userId,
-          orElse: () => players.first,
-        );
-        
-        print('🔍 Verification - finished_quiz: ${currentPlayer.finishedQuiz}, '
-            'finished_at: ${currentPlayer.finishedAt}');
-        
-        if (!currentPlayer.finishedQuiz || currentPlayer.finishedAt == null) {
-          print('🚨 Player not properly finished! Retrying...');
-          // Retry the marking
-          markPlayerFinishedUseCase(
-            roomId: roomId,
-            userId: userId,
-            finalScore: currentPlayer.score, // Use existing score
-          ).then((_) {
-            _startProgressiveResultsStream(roomId, totalQuestions);
-            _emitInitialFinishedState(roomId, totalQuestions, correctAnswers);
+      result.fold(
+        (failure) {
+          print('❌ Failed to mark player finished: $failure');
+          // Try emergency fix
+          _emergencyMarkFinished(roomId, user, finalScore, totalQuestions, correctAnswers);
+        },
+        (_) {
+          print('✅ Player marked as finished, starting results stream...');
+          
+          // STEP 3: Verify the update worked
+          Future.delayed(const Duration(milliseconds: 500), () {
+            if (isClosed) return;
+            _verifyAndStartResults(roomId, user, totalQuestions, correctAnswers);
           });
-        } else {
-          // Everything is good
-          _startProgressiveResultsStream(roomId, totalQuestions);
-          _emitInitialFinishedState(roomId, totalQuestions, correctAnswers);
-        }
-      },
-    );
-  } catch (e) {
-    print('❌ Error in verification: $e');
-    // Start anyway
+        },
+      );
+
+    } catch (e) {
+      print('❌ Error in markPlayerFinished: $e');
+      // Emergency fallback
+      _emergencyMarkFinished(roomId, user, finalScore, totalQuestions, correctAnswers);
+    }
+  }
+
+  void _emergencyMarkFinished(
+    String roomId, 
+    String userId, 
+    int finalScore, 
+    int totalQuestions, 
+    int correctAnswers,
+  ) {
+    print('🚨 Using emergency mark finished for user: $userId');
+    
     _startProgressiveResultsStream(roomId, totalQuestions);
     _emitInitialFinishedState(roomId, totalQuestions, correctAnswers);
   }
-}
 
-
-Future<void> _fixPlayerState(String roomId, String userId) async {
-  try {
-
-    print('🔧 Preparing to fix player state for: $userId');
-  } catch (e) {
-    print('⚠️ Error in fixPlayerState: $e');
-  }
-}
-
-
-void _startProgressiveResultsStream(String roomId, int totalQuestions) {
-  _resultsSub?.cancel();
-
-  _resultsSub = getRoomPlayersStreamResultsUseCase(roomId).listen(
-    (either) {
-      if (isClosed) return;
-
-      either.fold(
-        (failure) => print('Results stream error: $failure'),
+  // NEW: Verify and start results
+  Future<void> _verifyAndStartResults(
+    String roomId, 
+    String userId, 
+    int totalQuestions, 
+    int correctAnswers,
+  ) async {
+    try {
+      // Verify the player was actually marked as finished
+      final playersResult = await getRoomPlayersUseCase(roomId);
+      
+      playersResult.fold(
+        (failure) {
+          print('⚠️ Could not verify player state: $failure');
+          // Start anyway
+          _startProgressiveResultsStream(roomId, totalQuestions);
+          _emitInitialFinishedState(roomId, totalQuestions, correctAnswers);
+        },
         (players) {
-          final results = _calculateProgressiveResults(
-            players,
-            totalQuestions,
+          final currentPlayer = players.firstWhere(
+            (p) => p.userId == userId,
+            orElse: () => players.first,
           );
-          final totalPlayers = results.length;
-          final finishedPlayers = results.where((r) => r.finishedQuiz).length;
-          final allFinished = finishedPlayers == totalPlayers;
-          final userRank = _getUserRank(results);
-
-          emit(
-            RoomState.showingProgressiveResults(
-              results: results,
-              finishedPlayers: finishedPlayers,
-              totalPlayers: totalPlayers,
-              allPlayersFinished: allFinished,
-              userRank: userRank,
-            ),
-          );
-
-          if (allFinished) {
-            _handleAllPlayersFinished(roomId);
+          
+          print('🔍 Verification - finished_quiz: ${currentPlayer.finishedQuiz}, '
+              'finished_at: ${currentPlayer.finishedAt}');
+          
+          if (!currentPlayer.finishedQuiz || currentPlayer.finishedAt == null) {
+            print('🚨 Player not properly finished! Retrying...');
+            // Retry the marking
+            markPlayerFinishedUseCase(
+              roomId: roomId,
+              userId: userId,
+              finalScore: currentPlayer.score, // Use existing score
+            ).then((_) {
+              _startProgressiveResultsStream(roomId, totalQuestions);
+              _emitInitialFinishedState(roomId, totalQuestions, correctAnswers);
+            });
+          } else {
+            // Everything is good
+            _startProgressiveResultsStream(roomId, totalQuestions);
+            _emitInitialFinishedState(roomId, totalQuestions, correctAnswers);
           }
         },
       );
-    },
-    onError: (error) {
-      print('Results stream onError: $error');
-    },
-  );
-}
+    } catch (e) {
+      print('❌ Error in verification: $e');
+      // Start anyway
+      _startProgressiveResultsStream(roomId, totalQuestions);
+      _emitInitialFinishedState(roomId, totalQuestions, correctAnswers);
+    }
+  }
 
+  Future<void> _fixPlayerState(String roomId, String userId) async {
+    try {
+      print('🔧 Preparing to fix player state for: $userId');
+    } catch (e) {
+      print('⚠️ Error in fixPlayerState: $e');
+    }
+  }
+
+  void _startProgressiveResultsStream(String roomId, int totalQuestions) {
+    _resultsSub?.cancel();
+
+    _resultsSub = getRoomPlayersStreamResultsUseCase(roomId).listen(
+      (either) {
+        if (isClosed) return;
+
+        either.fold(
+          (failure) => print('Results stream error: $failure'),
+          (players) {
+            final results = _calculateProgressiveResults(
+              players,
+              totalQuestions,
+            );
+            final totalPlayers = results.length;
+            final finishedPlayers = results.where((r) => r.finishedQuiz).length;
+            final allFinished = finishedPlayers == totalPlayers;
+            final userRank = _getUserRank(results);
+
+            emit(
+              RoomState.showingProgressiveResults(
+                results: results,
+                finishedPlayers: finishedPlayers,
+                totalPlayers: totalPlayers,
+                allPlayersFinished: allFinished,
+                userRank: userRank,
+              ),
+            );
+
+            if (allFinished) {
+              _handleAllPlayersFinished(roomId);
+            }
+          },
+        );
+      },
+      onError: (error) {
+        print('Results stream onError: $error');
+      },
+    );
+  }
 
   Future<void> _emitInitialFinishedState(
     String roomId,
@@ -701,11 +706,13 @@ void _startProgressiveResultsStream(String roomId, int totalQuestions) {
     );
   }
 
-  List<PlayerResult> _calculateProgressiveResults(
-    List<RoomPlayer> players,
-    int totalQuestions,
-  ) {
-      final sortedPlayers = List<RoomPlayer>.from(players)
+
+List<PlayerResult> _calculateProgressiveResults(
+  List<RoomPlayer> players,
+  int totalQuestions,
+) {
+  // Sort players by score (descending) and finished status
+  final sortedPlayers = List<RoomPlayer>.from(players)
     ..sort((a, b) {
       // Finished players come before unfinished
       if (a.finishedQuiz && !b.finishedQuiz) return -1;
@@ -715,7 +722,7 @@ void _startProgressiveResultsStream(String roomId, int totalQuestions) {
       if (a.finishedQuiz && b.finishedQuiz) {
         if (a.score != b.score) return b.score.compareTo(a.score);
         
-        // CRITICAL FIX: Handle null finished_at
+        // Handle null finished_at
         if (a.finishedAt == null && b.finishedAt == null) return 0;
         if (a.finishedAt == null) return 1; // Put nulls at the end
         if (b.finishedAt == null) return -1; // Put nulls at the end
@@ -727,26 +734,84 @@ void _startProgressiveResultsStream(String roomId, int totalQuestions) {
       return b.score.compareTo(a.score);
     });
 
-    final currentUserId = _getCurrentUserId();
+  final currentUserId = _getCurrentUserId();
 
-    return sortedPlayers.asMap().entries.map((entry) {
-      final index = entry.key;
-      final player = entry.value;
+  // Calculate ranks with ties handling
+  return _assignRanksWithTies(sortedPlayers, totalQuestions, currentUserId);
+}
 
-      return PlayerResult(
-        userId: player.userId,
-        username: player.username,
-        score: player.score,
-        correctAnswers: player.score ~/ 10, // Adjust based on your scoring
+List<PlayerResult> _assignRanksWithTies(
+  List<RoomPlayer> sortedPlayers,
+  int totalQuestions,
+  String currentUserId,
+) {
+  final results = <PlayerResult>[];
+  int currentRank = 1;
+  int index = 0;
+
+  while (index < sortedPlayers.length) {
+    final currentPlayer = sortedPlayers[index];
+    
+    // If player is not finished, assign rank 0
+    if (!currentPlayer.finishedQuiz) {
+      results.add(_createPlayerResult(
+        player: currentPlayer,
+        rank: 0,
         totalQuestions: totalQuestions,
-        rank: player.finishedQuiz ? index + 1 : 0, // 0 means still playing
-        isCurrentUser: player.userId == currentUserId,
-        finishedQuiz: player.finishedQuiz,
-        finishedAt: player.finishedAt,
-      );
-    }).toList();
+        currentUserId: currentUserId,
+      ));
+      index++;
+      continue;
+    }
+
+    // Find all players with the same score (ties)
+    final currentScore = currentPlayer.score;
+    final tiedPlayers = <RoomPlayer>[];
+    
+    int j = index;
+    while (j < sortedPlayers.length && 
+           sortedPlayers[j].finishedQuiz && 
+           sortedPlayers[j].score == currentScore) {
+      tiedPlayers.add(sortedPlayers[j]);
+      j++;
+    }
+
+    // Assign the same rank to all tied players
+    for (final tiedPlayer in tiedPlayers) {
+      results.add(_createPlayerResult(
+        player: tiedPlayer,
+        rank: currentRank,
+        totalQuestions: totalQuestions,
+        currentUserId: currentUserId,
+      ));
+    }
+
+    // Move to next group and update rank
+    index += tiedPlayers.length;
+    currentRank += tiedPlayers.length;
   }
 
+  return results;
+}
+
+PlayerResult _createPlayerResult({
+  required RoomPlayer player,
+  required int rank,
+  required int totalQuestions,
+  required String currentUserId,
+}) {
+  return PlayerResult(
+    userId: player.userId,
+    username: player.username,
+    score: player.score,
+    correctAnswers: player.score ~/ 10, // Adjust based on your scoring
+    totalQuestions: totalQuestions,
+    rank: rank,
+    isCurrentUser: player.userId == currentUserId,
+    finishedQuiz: player.finishedQuiz,
+    finishedAt: player.finishedAt,
+  );
+}
   // KEEP all your existing helper methods:
   int _getUserRank(List<PlayerResult> results) {
     final currentUserId = _getCurrentUserId();

@@ -8,7 +8,8 @@ import 'package:znoona_game_app/core/language/lang_keys.dart';
 import 'package:znoona_game_app/features/quiz/room/domain/entities/room.dart';
 import 'package:znoona_game_app/features/quiz/room/domain/entities/room_player.dart';
 import 'package:znoona_game_app/features/quiz/room/presentation/cubit/room_cubit.dart';
-import 'package:znoona_game_app/features/quiz/room/presentation/refactors/game_playing_screen.dart';
+import 'package:znoona_game_app/features/quiz/room/presentation/refactors/game_playing_body.dart';
+import 'package:znoona_game_app/features/quiz/room/presentation/screen/game_playing_screen.dart';
 
 class RoomLobbyBody extends StatefulWidget {
   const RoomLobbyBody({required this.room, super.key});
@@ -97,12 +98,11 @@ class _RoomLobbyBodyState extends State<RoomLobbyBody> {
       if (mounted) {
         ZnoonaNavigate.pushReplacementTo(
           context,
-          GamePlayingScreen(room: widget.room),
+          GamePlayingBody(room: widget.room),
         );
       }
     });
   }
-
 }
 
 class _RoomInfoCard extends StatelessWidget {

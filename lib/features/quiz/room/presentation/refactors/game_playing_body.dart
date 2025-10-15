@@ -6,16 +6,15 @@ import 'package:znoona_game_app/features/quiz/room/presentation/cubit/room_cubit
 import 'package:znoona_game_app/features/quiz/room/presentation/refactors/room_quiz_body.dart';
 import 'package:znoona_game_app/features/quiz/single/domain/entities/question.dart';
 
-class GamePlayingScreen extends StatefulWidget {
-
-  const GamePlayingScreen({super.key, required this.room});
+class GamePlayingBody extends StatefulWidget {
+  const GamePlayingBody({required this.room, super.key});
   final Room room;
 
   @override
-  State<GamePlayingScreen> createState() => _GamePlayingScreenState();
+  State<GamePlayingBody> createState() => _GamePlayingBodyState();
 }
 
-class _GamePlayingScreenState extends State<GamePlayingScreen> {
+class _GamePlayingBodyState extends State<GamePlayingBody> {
   List<Question> _questions = [];
   bool _isLoadingQuestions = false;
   String? _errorMessage;
@@ -37,7 +36,9 @@ class _GamePlayingScreenState extends State<GamePlayingScreen> {
     });
 
     try {
-      final result = await context.read<RoomCubit>().getRoomQuestions(widget.room.id);
+      final result = await context.read<RoomCubit>().getRoomQuestions(
+        widget.room.id,
+      );
 
       // Check mounted before processing result
       if (!mounted) return;
@@ -51,7 +52,9 @@ class _GamePlayingScreenState extends State<GamePlayingScreen> {
           });
         },
         (List<RoomQuestion> roomQuestions) {
-          final List<String> questionIds = roomQuestions.map((rq) => rq.questionId).toList();
+          final List<String> questionIds = roomQuestions
+              .map((rq) => rq.questionId)
+              .toList();
 
           if (questionIds.isNotEmpty) {
             context.read<RoomCubit>().getQuestions(questionIds);
@@ -109,7 +112,6 @@ class _GamePlayingScreenState extends State<GamePlayingScreen> {
     );
   }
 
-
   Widget _buildContent() {
     if (_isLoadingQuestions) {
       return Scaffold(
@@ -127,7 +129,7 @@ class _GamePlayingScreenState extends State<GamePlayingScreen> {
             children: [
               const Icon(Icons.error, size: 64, color: Colors.red),
               const SizedBox(height: 16),
-              Text('Failed to load questions'),
+              const Text('Failed to load questions'),
               const SizedBox(height: 8),
               Text(_errorMessage!, textAlign: TextAlign.center),
               const SizedBox(height: 16),

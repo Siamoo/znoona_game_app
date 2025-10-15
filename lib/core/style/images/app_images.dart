@@ -20,6 +20,8 @@ class AppImages {
   static const wonCup = 'assets/images/user/won_cup.png';
   static const goodResult = 'assets/images/user/good_result.png';
   static const notGood = 'assets/images/user/not_good.png';
+  static const multi = 'assets/images/user/Multi.png';
+  static const solo = 'assets/images/user/Solo.png';
 
   //Svg
   static const mode = 'assets/svg/dark_mode.svg';

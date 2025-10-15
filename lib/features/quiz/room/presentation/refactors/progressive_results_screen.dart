@@ -19,13 +19,20 @@ class ProgressiveResultsScreen extends StatelessWidget {
       body: BlocConsumer<RoomCubit, RoomState>(
         listener: (context, state) {
           state.whenOrNull(
-            showingProgressiveResults: (results, finishedPlayers, totalPlayers, allFinished, userRank) {
-              if (allFinished) {
-                Future.delayed(const Duration(seconds: 2), () {
-                  _showAllFinishedCelebration(context);
-                });
-              }
-            },
+            showingProgressiveResults:
+                (
+                  results,
+                  finishedPlayers,
+                  totalPlayers,
+                  allFinished,
+                  userRank,
+                ) {
+                  if (allFinished) {
+                    Future.delayed(const Duration(seconds: 2), () {
+                      _showAllFinishedCelebration(context);
+                    });
+                  }
+                },
             left: () {
               Navigator.popUntil(context, (route) => route.isFirst);
             },
@@ -41,24 +48,37 @@ class ProgressiveResultsScreen extends StatelessWidget {
         },
         builder: (context, state) {
           return state.maybeWhen(
-            playerFinished: (totalQuestions, correctAnswers, totalPlayers, finishedPlayers) {
-              return _WaitingForPlayersScreen(
-                totalQuestions: totalQuestions,
-                correctAnswers: correctAnswers,
-                totalPlayers: totalPlayers,
-                finishedPlayers: finishedPlayers,
-              );
-            },
-            showingProgressiveResults: (results, finishedPlayers, totalPlayers, allFinished, userRank) {
-              return _ProgressiveResultsBody(
-                results: results,
-                finishedPlayers: finishedPlayers,
-                totalPlayers: totalPlayers,
-                allPlayersFinished: allFinished,
-                userRank: userRank,
-                roomId: roomId,
-              );
-            },
+            playerFinished:
+                (
+                  totalQuestions,
+                  correctAnswers,
+                  totalPlayers,
+                  finishedPlayers,
+                ) {
+                  return _WaitingForPlayersScreen(
+                    totalQuestions: totalQuestions,
+                    correctAnswers: correctAnswers,
+                    totalPlayers: totalPlayers,
+                    finishedPlayers: finishedPlayers,
+                  );
+                },
+            showingProgressiveResults:
+                (
+                  results,
+                  finishedPlayers,
+                  totalPlayers,
+                  allFinished,
+                  userRank,
+                ) {
+                  return _ProgressiveResultsBody(
+                    results: results,
+                    finishedPlayers: finishedPlayers,
+                    totalPlayers: totalPlayers,
+                    allPlayersFinished: allFinished,
+                    userRank: userRank,
+                    roomId: roomId,
+                  );
+                },
             error: (message) {
               return _ErrorScreen(
                 message: message,
@@ -179,7 +199,7 @@ class _WaitingForPlayersScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final progress = finishedPlayers / totalPlayers;
-    
+
     return Center(
       child: Padding(
         padding: const EdgeInsets.all(24.0),
@@ -386,13 +406,14 @@ class _ProgressiveResultsBody extends StatelessWidget {
   // NEW: Group players by rank to handle ties
   Map<int, List<PlayerResult>> _groupPlayersByRank(List<PlayerResult> results) {
     final groups = <int, List<PlayerResult>>{};
-    
+
     for (final result in results) {
-      if (result.rank > 0) { // Only include finished players with ranks
+      if (result.rank > 0) {
+        // Only include finished players with ranks
         groups.putIfAbsent(result.rank, () => []).add(result);
       }
     }
-    
+
     return groups;
   }
 
@@ -514,13 +535,18 @@ class _ProgressiveResultsBody extends StatelessWidget {
                   ),
                 ),
                 Container(
-                  padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 4),
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: 12,
+                    vertical: 4,
+                  ),
                   decoration: BoxDecoration(
                     color: allPlayersFinished ? Colors.green : Colors.blue,
                     borderRadius: BorderRadius.circular(12),
                   ),
                   child: Text(
-                    allPlayersFinished ? 'Complete! 🎉' : '$finishedPlayers/$totalPlayers',
+                    allPlayersFinished
+                        ? 'Complete! 🎉'
+                        : '$finishedPlayers/$totalPlayers',
                     style: const TextStyle(
                       color: Colors.white,
                       fontWeight: FontWeight.bold,
@@ -552,7 +578,9 @@ class _ProgressiveResultsBody extends StatelessWidget {
                   ),
                 ),
                 Text(
-                  allPlayersFinished ? 'All players completed!' : 'Waiting for ${totalPlayers - finishedPlayers}',
+                  allPlayersFinished
+                      ? 'All players completed!'
+                      : 'Waiting for ${totalPlayers - finishedPlayers}',
                   style: TextStyle(
                     color: allPlayersFinished ? Colors.green : Colors.blue,
                     fontSize: 12,
@@ -568,7 +596,10 @@ class _ProgressiveResultsBody extends StatelessWidget {
   }
 
   // UPDATED: Build results list with tie handling
-  Widget _buildResultsList(BuildContext context, Map<int, List<PlayerResult>> rankedGroups) {
+  Widget _buildResultsList(
+    BuildContext context,
+    Map<int, List<PlayerResult>> rankedGroups,
+  ) {
     return Card(
       elevation: 2,
       shape: RoundedRectangleBorder(
@@ -608,7 +639,7 @@ class _ProgressiveResultsBody extends StatelessWidget {
                   ...rankedGroups.entries.map((entry) {
                     final rank = entry.key;
                     final players = entry.value;
-                    
+
                     return Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
@@ -647,15 +678,18 @@ class _ProgressiveResultsBody extends StatelessWidget {
                           ),
                         ),
                         // Players in this rank
-                        ...players.map((result) => _PlayerResultTile(
-                          result: result,
-                          showRank: false, // Don't show individual rank since it's in the header
-                        )),
+                        ...players.map(
+                          (result) => _PlayerResultTile(
+                            result: result,
+                            showRank:
+                                false, // Don't show individual rank since it's in the header
+                          ),
+                        ),
                         const SizedBox(height: 8),
                       ],
                     );
                   }),
-                  
+
                   // Display unranked players (still playing)
                   if (results.any((r) => r.rank == 0)) ...[
                     const Padding(
@@ -669,9 +703,12 @@ class _ProgressiveResultsBody extends StatelessWidget {
                         ),
                       ),
                     ),
-                    ...results.where((r) => r.rank == 0).map((result) => 
-                      _PlayerResultTile(result: result, showRank: true)
-                    ),
+                    ...results
+                        .where((r) => r.rank == 0)
+                        .map(
+                          (result) =>
+                              _PlayerResultTile(result: result, showRank: true),
+                        ),
                   ],
                 ],
               ),
@@ -751,6 +788,7 @@ class _ProgressiveResultsBody extends StatelessWidget {
             onPressed: () {
               Navigator.pop(context);
               context.read<RoomCubit>().leaveRoom(roomId: roomId);
+              Navigator.pop(context);
             },
             style: TextButton.styleFrom(foregroundColor: Colors.red),
             child: const Text('Leave'),
@@ -861,8 +899,12 @@ class _PlayerResultTile extends StatelessWidget {
             Text(
               result.username,
               style: TextStyle(
-                fontWeight: result.isCurrentUser ? FontWeight.bold : FontWeight.normal,
-                color: result.isCurrentUser ? Colors.blue.shade800 : Colors.black,
+                fontWeight: result.isCurrentUser
+                    ? FontWeight.bold
+                    : FontWeight.normal,
+                color: result.isCurrentUser
+                    ? Colors.blue.shade800
+                    : Colors.black,
               ),
             ),
             if (result.isCurrentUser) ...[

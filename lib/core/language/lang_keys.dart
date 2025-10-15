@@ -87,4 +87,6 @@ class LangKeys {
   static const String players = 'players';
   static const String start = 'start';
   static const String join = 'join';
+  static const String room = 'room';
+  static const String solo = 'solo';
 }

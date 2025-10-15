@@ -22,13 +22,13 @@ class CustomAppBar extends StatelessWidget {
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
-        IconButton(
-          icon: Icon(
+        InkWell(
+          child: Icon(
             icon ?? Icons.arrow_back_ios_new,
             color: ZnoonaColors.text(context),
             size: 24.sp,
           ),
-          onPressed: () => Navigator.pop(context),
+          onTap: () => Navigator.pop(context),
         ),
         if (otherText == null)
           const SizedBox()

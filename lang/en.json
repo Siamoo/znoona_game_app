@@ -88,6 +88,8 @@
     "category": "Category",
     "players": "Players",
     "start": "Start",
-    "join": "Join"
+    "join": "Join",
+    "room": "Room",
+    "solo": "Solo"    
 
 }

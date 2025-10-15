@@ -77,10 +77,8 @@
     "change_language": "Change Language",
     "change_theme": "Change Theme",
     "university_students": "University students",
-    "choose_mode": "Choose Mode",
-    "play_solo": "Play Solo",
-    "play_with_friends": "With Friends",
-    "multi_player_mode": "Multi player Mode",
+    "choose_mode": "Choose Game Mode",
+    "multiplayer": "Multiplayer Mode",
     "create_room": "Create Room",
     "join_room": "Join Room",
     "room_name": "Room Name",
@@ -88,8 +86,7 @@
     "category": "Category",
     "players": "Players",
     "start": "Start",
-    "join": "Join",
     "room": "Room",
-    "solo": "Solo"    
-
+    "solo": "Solo"
+    
 }

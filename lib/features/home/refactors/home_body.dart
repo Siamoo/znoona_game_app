@@ -51,19 +51,13 @@ class HomeBody extends StatelessWidget {
                             langkey: LangKeys.quizGame,
                             onPressed: () => ZnoonaNavigate.pushTo(
                               context,
-                              const QuizHomeScreen(
-                              ),
+                              const QuizHomeScreen(),
                             ),
                           ),
                           GameButton(
                             image: AppImages.puzzle,
                             langkey: LangKeys.appName,
-                            onPressed: () {
-                              ZnoonaNavigate.pushTo(
-                                context,
-                                const RoomCreationScreen(),
-                              );
-                            },
+                            onPressed: () {},
                           ),
                         ],
                       ),

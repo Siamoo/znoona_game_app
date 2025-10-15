@@ -22,6 +22,8 @@ class AppImages {
   static const notGood = 'assets/images/user/not_good.png';
   static const multi = 'assets/images/user/Multi.png';
   static const solo = 'assets/images/user/Solo.png';
+  static const join = 'assets/images/user/Join.png';
+  static const create = 'assets/images/user/Create.png';
 
   //Svg
   static const mode = 'assets/svg/dark_mode.svg';

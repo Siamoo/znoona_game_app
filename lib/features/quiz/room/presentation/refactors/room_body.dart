@@ -6,12 +6,11 @@ import 'package:znoona_game_app/core/language/lang_keys.dart';
 import 'package:znoona_game_app/core/style/images/app_images.dart';
 import 'package:znoona_game_app/features/home/widgets/custom_game_button.dart';
 import 'package:znoona_game_app/features/home/widgets/custom_section_title.dart';
-import 'package:znoona_game_app/features/home/widgets/discover_button.dart';
-import 'package:znoona_game_app/features/quiz/categories/presentation/screens/categories_screen.dart';
-import 'package:znoona_game_app/features/quiz/room/presentation/screen/room_screen.dart';
+import 'package:znoona_game_app/features/quiz/room/presentation/refactors/room_creation_screen.dart';
+import 'package:znoona_game_app/features/quiz/room/presentation/refactors/room_joining_screen.dart';
 
-class QuizHomeBody extends StatelessWidget {
-  const QuizHomeBody({super.key});
+class RoomBody extends StatelessWidget {
+  const RoomBody({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -36,51 +35,35 @@ class QuizHomeBody extends StatelessWidget {
                     children: [
                       SizedBox(height: 30.h),
                       const CustomSectionTitle(
-                        langkey: LangKeys.chooseMode,
+                        langkey: LangKeys.multiplayer,
                       ),
                       SizedBox(height: 10.h),
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
                           GameButton(
-                            image: AppImages.solo,
-                            langkey: LangKeys.solo,
+                            image: AppImages.create,
+                            langkey: LangKeys.createRoom,
                             onPressed: () => ZnoonaNavigate.pushTo(
                               context,
-                              const CategoriesScreen(
-                                isRoom: false,
-                              ),
+                              const RoomCreationScreen(),
                             ),
                           ),
                           GameButton(
-                            image: AppImages.multi,
-                            langkey: LangKeys.room,
+                            image: AppImages.join,
+                            langkey: LangKeys.joinRoom,
                             onPressed: () {
                               ZnoonaNavigate.pushTo(
                                 context,
-                                const RoomScreen(),
+                                const RoomJoiningScreen(),
                               );
                             },
                           ),
                         ],
                       ),
-                      SizedBox(height: 30.h),
-                      const CustomSectionTitle(
-                        langkey: LangKeys.letsDiscover,
-                      ),
-                      SizedBox(height: 10.h),
-                      const DiscoverButton(),
-                      SizedBox(height: 30.h),
-                      const CustomSectionTitle(
-                        langkey: LangKeys.universityStudents,
-                      ),
-                      SizedBox(height: 10.h),
-                      const DiscoverButton(),
                     ],
                   ),
                 ),
-
-                SizedBox(height: 20.h),
               ],
             ),
           ),

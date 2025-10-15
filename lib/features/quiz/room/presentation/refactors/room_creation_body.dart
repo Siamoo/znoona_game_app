@@ -35,7 +35,6 @@ class RoomCreationBody extends StatelessWidget {
             },
           );
         },
-
         child: SafeArea(
           child: Padding(
             padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 16.h),

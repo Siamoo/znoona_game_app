@@ -1,17 +1,22 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:znoona_game_app/core/common/widgets/custom_app_bar.dart';
 import 'package:znoona_game_app/core/helpers/znoona_navigate.dart';
+import 'package:znoona_game_app/core/helpers/znoona_texts.dart';
+import 'package:znoona_game_app/core/language/lang_keys.dart';
+import 'package:znoona_game_app/core/style/images/app_images.dart';
 import 'package:znoona_game_app/features/quiz/room/presentation/cubit/room_cubit.dart';
 import 'package:znoona_game_app/features/quiz/room/presentation/refactors/room_lobby_screen.dart';
 
-class RoomJoiningScreen extends StatefulWidget {
-  const RoomJoiningScreen({super.key});
+class RoomJoiningBody extends StatefulWidget {
+  const RoomJoiningBody({super.key});
 
   @override
-  State<RoomJoiningScreen> createState() => _RoomJoiningScreenState();
+  State<RoomJoiningBody> createState() => _RoomJoiningBodyState();
 }
 
-class _RoomJoiningScreenState extends State<RoomJoiningScreen> {
+class _RoomJoiningBodyState extends State<RoomJoiningBody> {
   final TextEditingController _codeController = TextEditingController();
   final _formKey = GlobalKey<FormState>();
 
@@ -24,18 +29,10 @@ class _RoomJoiningScreenState extends State<RoomJoiningScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('Join Room'),
-        leading: IconButton(
-          icon: const Icon(Icons.arrow_back),
-          onPressed: () => Navigator.pop(context),
-        ),
-      ),
       body: BlocListener<RoomCubit, RoomState>(
         listener: (context, state) {
           state.whenOrNull(
             joined: (room) {
-              // Navigate to room lobby when successfully joined
               ZnoonaNavigate.pushReplacementTo(
                 context,
                 RoomLobbyPage(room: room),
@@ -51,20 +48,21 @@ class _RoomJoiningScreenState extends State<RoomJoiningScreen> {
             },
           );
         },
-        child: Padding(
-          padding: const EdgeInsets.all(24.0),
-          child: Column(
-            children: [
-              // Header Illustration
-              Expanded(
-                flex: 2,
-                child: Column(
+        child: SafeArea(
+          child: Padding(
+            padding: EdgeInsets.symmetric(
+              horizontal: 24.w,
+            ),
+            child: Column(
+              children: [
+                CustomAppBar(title: ZnoonaTexts.tr(context, LangKeys.joinRoom)),
+                Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    Icon(
-                      Icons.group_add,
-                      size: 100,
-                      color: Theme.of(context).primaryColor,
+                    Image.asset(
+                      AppImages.join,
+                      height: 250.h,
+                      width: 250.w,
                     ),
                     const SizedBox(height: 24),
                     const Text(
@@ -86,12 +84,8 @@ class _RoomJoiningScreenState extends State<RoomJoiningScreen> {
                     ),
                   ],
                 ),
-              ),
 
-              // Join Form
-              Expanded(
-                flex: 1,
-                child: Form(
+                Form(
                   key: _formKey,
                   child: Column(
                     children: [
@@ -124,7 +118,6 @@ class _RoomJoiningScreenState extends State<RoomJoiningScreen> {
                           return null;
                         },
                         onChanged: (value) {
-                          // Auto-uppercase and limit to 6 characters
                           if (value.length > 6) {
                             _codeController.text = value.substring(0, 6);
                             _codeController.selection =
@@ -137,14 +130,12 @@ class _RoomJoiningScreenState extends State<RoomJoiningScreen> {
                       ),
                       const SizedBox(height: 24),
 
-                      // Join Button
                       BlocBuilder<RoomCubit, RoomState>(
                         builder: (context, state) {
                           final isLoading = state.maybeMap(
                             loading: (_) => true,
                             orElse: () => false,
                           );
-
                           return SizedBox(
                             width: double.infinity,
                             child: ElevatedButton(
@@ -153,9 +144,7 @@ class _RoomJoiningScreenState extends State<RoomJoiningScreen> {
                                   : () {
                                       if (_formKey.currentState!.validate()) {
                                         context.read<RoomCubit>().joinRoom(
-                                          code: _codeController.text
-                                              .trim()
-                                              .toUpperCase(),
+                                          code: _codeController.text.trim(),
                                         );
                                       }
                                     },
@@ -193,14 +182,11 @@ class _RoomJoiningScreenState extends State<RoomJoiningScreen> {
                       ),
 
                       const SizedBox(height: 16),
-
-                      // Quick Actions
                       Row(
                         children: [
                           Expanded(
                             child: OutlinedButton.icon(
                               onPressed: () {
-                                // Navigate back to room creation
                                 Navigator.pop(context);
                               },
                               icon: const Icon(Icons.add),
@@ -219,7 +205,6 @@ class _RoomJoiningScreenState extends State<RoomJoiningScreen> {
                           Expanded(
                             child: OutlinedButton.icon(
                               onPressed: () {
-                                // Scan QR code functionality
                                 _showQRScannerDialog(context);
                               },
                               icon: const Icon(Icons.qr_code_scanner),
@@ -239,8 +224,8 @@ class _RoomJoiningScreenState extends State<RoomJoiningScreen> {
                     ],
                   ),
                 ),
-              ),
-            ],
+              ],
+            ),
           ),
         ),
       ),

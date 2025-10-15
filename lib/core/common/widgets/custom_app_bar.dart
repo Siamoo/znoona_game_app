@@ -11,11 +11,13 @@ class CustomAppBar extends StatelessWidget {
     super.key,
     this.otherText,
     this.icon,
+    this.onTap,
   });
 
   final String title;
   final String? otherText;
   final IconData? icon;
+  final void Function()? onTap;
 
   @override
   Widget build(BuildContext context) {
@@ -23,12 +25,12 @@ class CustomAppBar extends StatelessWidget {
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
         InkWell(
+          onTap: onTap ?? () => Navigator.pop(context),
           child: Icon(
             icon ?? Icons.arrow_back_ios_new,
             color: ZnoonaColors.text(context),
             size: 24.sp,
           ),
-          onTap: () => Navigator.pop(context),
         ),
         if (otherText == null)
           const SizedBox()

@@ -1,26 +1,27 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
+import 'package:znoona_game_app/core/common/widgets/custom_app_bar.dart';
+import 'package:znoona_game_app/core/helpers/znoona.colors.dart';
 import 'package:znoona_game_app/core/helpers/znoona_navigate.dart';
+import 'package:znoona_game_app/core/language/lang_keys.dart';
 import 'package:znoona_game_app/features/quiz/room/domain/entities/room.dart';
 import 'package:znoona_game_app/features/quiz/room/domain/entities/room_player.dart';
 import 'package:znoona_game_app/features/quiz/room/presentation/cubit/room_cubit.dart';
 import 'package:znoona_game_app/features/quiz/room/presentation/refactors/game_playing_screen.dart';
 
-class RoomLobbyPage extends StatefulWidget {
+class RoomLobbyBody extends StatefulWidget {
+  const RoomLobbyBody({required this.room, super.key});
   final Room room;
 
-  const RoomLobbyPage({super.key, required this.room});
-
   @override
-  State<RoomLobbyPage> createState() => _RoomLobbyPageState();
+  State<RoomLobbyBody> createState() => _RoomLobbyBodyState();
 }
 
-class _RoomLobbyPageState extends State<RoomLobbyPage> {
+class _RoomLobbyBodyState extends State<RoomLobbyBody> {
   @override
   void initState() {
     super.initState();
-    // Start watching room and players for real-time updates
     _startWatching();
   }
 
@@ -32,28 +33,14 @@ class _RoomLobbyPageState extends State<RoomLobbyPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('Room Lobby'),
-        actions: [
-          IconButton(
-            icon: const Icon(Icons.exit_to_app),
-            onPressed: () => _showLeaveDialog(context),
-            tooltip: 'Leave Room',
-          ),
-        ],
-      ),
       body: BlocConsumer<RoomCubit, RoomState>(
         listener: (context, state) {
           state.whenOrNull(
             gameStarted: () {
-              print('🚀 Game started detected - navigating to game screen');
               _navigateToGameScreen();
             },
             roomUpdated: (room) {
               if (room != null && room.status == 'playing') {
-                print(
-                  '🎮 Room status changed to playing - navigating to game screen',
-                );
                 _navigateToGameScreen();
               }
             },
@@ -73,7 +60,7 @@ class _RoomLobbyPageState extends State<RoomLobbyPage> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
-                // Room Info Card - show current status
+                const CustomAppBar(title: LangKeys.room),
                 _RoomInfoCard(room: _getCurrentRoom(state) ?? widget.room),
 
                 const SizedBox(height: 24),
@@ -116,42 +103,17 @@ class _RoomLobbyPageState extends State<RoomLobbyPage> {
     });
   }
 
-  void _showLeaveDialog(BuildContext context) {
-    showDialog(
-      context: context,
-      builder: (context) => AlertDialog(
-        title: const Text('Leave Room?'),
-        content: const Text('Are you sure you want to leave this room?'),
-        actions: [
-          TextButton(
-            onPressed: () => Navigator.pop(context),
-            child: const Text('Cancel'),
-          ),
-          TextButton(
-            onPressed: () {
-              Navigator.pop(context);
-              context.read<RoomCubit>().leaveRoom(roomId: widget.room.id);
-            },
-            style: TextButton.styleFrom(foregroundColor: Colors.red),
-            child: const Text('Leave'),
-          ),
-        ],
-      ),
-    );
-  }
 }
 
-// Room Info Card
-// Room Info Card - Add host information
 class _RoomInfoCard extends StatelessWidget {
-  final Room room;
-
   const _RoomInfoCard({required this.room});
+  final Room room;
 
   @override
   Widget build(BuildContext context) {
     return Card(
       elevation: 4,
+      color: ZnoonaColors.bluePinkDark(context),
       child: Padding(
         padding: const EdgeInsets.all(16.0),
         child: Column(
@@ -161,7 +123,7 @@ class _RoomInfoCard extends StatelessWidget {
               children: [
                 const Text(
                   'Room Code',
-                  style: TextStyle(fontSize: 16, color: Colors.grey),
+                  style: TextStyle(fontSize: 16, color: Colors.white),
                 ),
                 Container(
                   padding: const EdgeInsets.symmetric(
@@ -169,16 +131,15 @@ class _RoomInfoCard extends StatelessWidget {
                     vertical: 6,
                   ),
                   decoration: BoxDecoration(
-                    color: Theme.of(context).primaryColor.withOpacity(0.1),
                     borderRadius: BorderRadius.circular(20),
-                    border: Border.all(color: Theme.of(context).primaryColor),
+                    border: Border.all(color: Colors.white),
                   ),
                   child: Text(
                     room.code,
-                    style: TextStyle(
+                    style: const TextStyle(
                       fontSize: 18,
                       fontWeight: FontWeight.bold,
-                      color: Theme.of(context).primaryColor,
+                      color: Colors.white,
                       letterSpacing: 2,
                     ),
                   ),
@@ -191,7 +152,7 @@ class _RoomInfoCard extends StatelessWidget {
               children: [
                 const Text(
                   'Status',
-                  style: TextStyle(fontSize: 16, color: Colors.grey),
+                  style: TextStyle(fontSize: 16, color: Colors.white),
                 ),
                 BlocBuilder<RoomCubit, RoomState>(
                   builder: (context, state) {
@@ -224,7 +185,7 @@ class _RoomInfoCard extends StatelessWidget {
               children: [
                 const Text(
                   'Players',
-                  style: TextStyle(fontSize: 16, color: Colors.grey),
+                  style: TextStyle(fontSize: 16, color: Colors.white),
                 ),
                 BlocBuilder<RoomCubit, RoomState>(
                   builder: (context, state) {
@@ -272,11 +233,9 @@ class _RoomInfoCard extends StatelessWidget {
   }
 }
 
-// Players List
 class _PlayersList extends StatelessWidget {
-  final String roomId;
-
   const _PlayersList({required this.roomId});
+  final String roomId;
 
   @override
   Widget build(BuildContext context) {
@@ -317,11 +276,9 @@ class _PlayersList extends StatelessWidget {
   }
 }
 
-// Player List Item// Player List Item - Update to better show host
 class _PlayerListItem extends StatelessWidget {
-  final RoomPlayer player;
-
   const _PlayerListItem({required this.player});
+  final RoomPlayer player;
 
   @override
   Widget build(BuildContext context) {
@@ -389,13 +346,14 @@ class _PlayerListItem extends StatelessWidget {
         subtitle: Text(
           player.isHost ? 'Room Host' : 'Player',
           style: TextStyle(
-            color: player.isHost ? Theme.of(context).primaryColor : Colors.grey,
+            color: player.isHost
+                ? ZnoonaColors.main(context).withAlpha(150)
+                : ZnoonaColors.main(context).withAlpha(150),
           ),
         ),
         trailing: Row(
           mainAxisSize: MainAxisSize.min,
           children: [
-            // Connection status
             Container(
               padding: const EdgeInsets.all(4),
               decoration: BoxDecoration(
@@ -423,18 +381,15 @@ class _PlayerListItem extends StatelessWidget {
   }
 }
 
-// Start Game Button_StartGameButton
 class _StartGameButton extends StatelessWidget {
-  final Room room;
-
   const _StartGameButton({required this.room});
+  final Room room;
 
   @override
   Widget build(BuildContext context) {
     final currentUserId = _getCurrentUserId();
     final isHost = room.hostId == currentUserId;
 
-    // If room is already playing, show different message
     if (room.status == 'playing') {
       return Container(
         padding: const EdgeInsets.all(16),
@@ -458,8 +413,10 @@ class _StartGameButton extends StatelessWidget {
             const SizedBox(height: 8),
             ElevatedButton(
               onPressed: () {
-                // Navigate to game screen
-                ZnoonaNavigate.pushReplacementTo(context, GamePlayingScreen(room: room));
+                ZnoonaNavigate.pushReplacementTo(
+                  context,
+                  GamePlayingScreen(room: room),
+                );
               },
               style: ElevatedButton.styleFrom(
                 backgroundColor: Colors.green,
@@ -499,7 +456,8 @@ class _StartGameButton extends StatelessWidget {
         );
 
         final canStart =
-            players.length >= 1; // At least 1 player (host) to start
+            players.length >= 1 &&
+            players.length <= 8; // At least 1 player (host) to start
 
         return Column(
           children: [
@@ -548,7 +506,7 @@ class _StartGameButton extends StatelessWidget {
                   Text(
                     canStart
                         ? 'Start Game (${players.length} player${players.length > 1 ? 's' : ''})'
-                        : 'Need at least 1 player to start',
+                        : 'Need at least 2 player to start',
                     style: const TextStyle(
                       fontSize: 18,
                       fontWeight: FontWeight.bold,
@@ -570,7 +528,7 @@ class _StartGameButton extends StatelessWidget {
   }
 
   void _showStartGameDialog(BuildContext context, int playerCount) {
-    showDialog(
+    showDialog<dynamic>(
       context: context,
       builder: (context) => AlertDialog(
         title: const Text('Start Game?'),

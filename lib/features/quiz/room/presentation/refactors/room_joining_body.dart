@@ -7,7 +7,7 @@ import 'package:znoona_game_app/core/helpers/znoona_texts.dart';
 import 'package:znoona_game_app/core/language/lang_keys.dart';
 import 'package:znoona_game_app/core/style/images/app_images.dart';
 import 'package:znoona_game_app/features/quiz/room/presentation/cubit/room_cubit.dart';
-import 'package:znoona_game_app/features/quiz/room/presentation/refactors/room_lobby_screen.dart';
+import 'package:znoona_game_app/features/quiz/room/presentation/screen/room_lobby_screen.dart';
 
 class RoomJoiningBody extends StatefulWidget {
   const RoomJoiningBody({super.key});
@@ -35,7 +35,7 @@ class _RoomJoiningBodyState extends State<RoomJoiningBody> {
             joined: (room) {
               ZnoonaNavigate.pushReplacementTo(
                 context,
-                RoomLobbyPage(room: room),
+                RoomLobbyScreen(room: room),
               );
             },
             error: (message) {
@@ -232,8 +232,8 @@ class _RoomJoiningBodyState extends State<RoomJoiningBody> {
     );
   }
 
-  void _showQRScannerDialog(BuildContext context) {
-    showDialog(
+  Future<void> _showQRScannerDialog(BuildContext context) async {
+    await showDialog<dynamic>(
       context: context,
       builder: (context) => AlertDialog(
         title: const Text('Scan QR Code'),

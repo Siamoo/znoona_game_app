@@ -5,7 +5,7 @@ import 'package:znoona_game_app/core/common/widgets/custom_app_bar.dart';
 import 'package:znoona_game_app/core/common/widgets/custom_linear_button.dart';
 import 'package:znoona_game_app/core/helpers/znoona_navigate.dart';
 import 'package:znoona_game_app/features/quiz/room/presentation/cubit/room_cubit.dart';
-import 'package:znoona_game_app/features/quiz/room/presentation/refactors/room_lobby_screen.dart';
+import 'package:znoona_game_app/features/quiz/room/presentation/screen/room_lobby_screen.dart';
 
 class RoomCreationBody extends StatelessWidget {
   const RoomCreationBody({
@@ -25,7 +25,7 @@ class RoomCreationBody extends StatelessWidget {
             roomLoaded: (room) {
               ZnoonaNavigate.pushReplacementTo(
                 context,
-                RoomLobbyPage(room: room),
+                RoomLobbyScreen(room: room),
               );
             },
             error: (message) {

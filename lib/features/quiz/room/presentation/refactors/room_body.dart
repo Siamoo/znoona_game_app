@@ -6,7 +6,7 @@ import 'package:znoona_game_app/core/language/lang_keys.dart';
 import 'package:znoona_game_app/core/style/images/app_images.dart';
 import 'package:znoona_game_app/features/home/widgets/custom_game_button.dart';
 import 'package:znoona_game_app/features/home/widgets/custom_section_title.dart';
-import 'package:znoona_game_app/features/quiz/room/presentation/refactors/room_creation_screen.dart';
+import 'package:znoona_game_app/features/quiz/categories/presentation/screens/categories_screen.dart';
 import 'package:znoona_game_app/features/quiz/room/presentation/refactors/room_joining_screen.dart';
 
 class RoomBody extends StatelessWidget {
@@ -46,7 +46,7 @@ class RoomBody extends StatelessWidget {
                             langkey: LangKeys.createRoom,
                             onPressed: () => ZnoonaNavigate.pushTo(
                               context,
-                              const RoomCreationScreen(),
+                              const CategoriesScreen(isRoom: true),
                             ),
                           ),
                           GameButton(

@@ -3,8 +3,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:znoona_game_app/features/quiz/room/data/models/player_result.dart';
 import 'package:znoona_game_app/features/quiz/room/presentation/cubit/room_cubit.dart';
 
-class ProgressiveResultsScreen extends StatelessWidget {
-  const ProgressiveResultsScreen({required this.roomId, super.key});
+class RoomResultsBody extends StatelessWidget {
+  const RoomResultsBody({required this.roomId, super.key});
   final String roomId;
 
   @override
@@ -100,7 +100,7 @@ class ProgressiveResultsScreen extends StatelessWidget {
   }
 
   void _showAllFinishedCelebration(BuildContext context) {
-    showDialog(
+    showDialog<dynamic>(
       context: context,
       barrierDismissible: false,
       builder: (context) => AlertDialog(
@@ -774,7 +774,7 @@ class _ProgressiveResultsBody extends StatelessWidget {
   }
 
   void _showLeaveConfirmationDialog(BuildContext context) {
-    showDialog(
+    showDialog<dynamic>(
       context: context,
       builder: (context) => AlertDialog(
         title: const Text('Leave Room?'),
@@ -799,7 +799,7 @@ class _ProgressiveResultsBody extends StatelessWidget {
   }
 
   void _showPlayAgainDialog(BuildContext context) {
-    showDialog(
+    showDialog<dynamic>(
       context: context,
       builder: (context) => AlertDialog(
         title: const Text('Play Again?'),

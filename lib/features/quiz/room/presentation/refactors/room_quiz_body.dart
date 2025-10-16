@@ -12,7 +12,7 @@ import 'package:znoona_game_app/core/language/lang_keys.dart';
 import 'package:znoona_game_app/features/quiz/room/domain/entities/room.dart';
 import 'package:znoona_game_app/features/quiz/room/domain/entities/room_player.dart';
 import 'package:znoona_game_app/features/quiz/room/presentation/cubit/room_cubit.dart';
-import 'package:znoona_game_app/features/quiz/room/presentation/refactors/progressive_results_screen.dart';
+import 'package:znoona_game_app/features/quiz/room/presentation/screen/room_results_screen.dart';
 import 'package:znoona_game_app/features/quiz/single/domain/entities/question.dart';
 import 'package:znoona_game_app/features/quiz/single/presentation/widgets/option_button.dart';
 
@@ -169,7 +169,7 @@ class _RoomQuizBodyState extends State<RoomQuizBody> {
       if (mounted) {
         ZnoonaNavigate.pushReplacementTo(
           context,
-          ProgressiveResultsScreen(roomId: widget.room.id),
+          RoomResultsScreen(roomId: widget.room.id),
         );
       }
     });

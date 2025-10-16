@@ -6,6 +6,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 import 'package:znoona_game_app/core/common/widgets/custom_app_bar.dart';
 import 'package:znoona_game_app/core/helpers/znoona.colors.dart';
+import 'package:znoona_game_app/core/helpers/znoona_navigate.dart';
 import 'package:znoona_game_app/core/helpers/znoona_texts.dart';
 import 'package:znoona_game_app/core/language/lang_keys.dart';
 import 'package:znoona_game_app/features/quiz/room/domain/entities/room.dart';
@@ -66,7 +67,6 @@ class _RoomQuizBodyState extends State<RoomQuizBody> {
     final currentUserId = _getCurrentUserId();
     final currentQuestion = _currentQuestions[_currentQuestionIndex];
 
-    // Prevent double answering
     if (_currentPlayerAnswers.containsKey(currentUserId) &&
         _currentPlayerAnswers[currentUserId] != null) {
       return;
@@ -167,12 +167,9 @@ class _RoomQuizBodyState extends State<RoomQuizBody> {
 
     Future.delayed(const Duration(milliseconds: 500), () {
       if (mounted) {
-        Navigator.pushReplacement(
+        ZnoonaNavigate.pushReplacementTo(
           context,
-          MaterialPageRoute(
-            builder: (context) =>
-                ProgressiveResultsScreen(roomId: widget.room.id),
-          ),
+          ProgressiveResultsScreen(roomId: widget.room.id),
         );
       }
     });
@@ -285,11 +282,6 @@ class _RoomQuizBodyState extends State<RoomQuizBody> {
     int correctCount,
     int totalQuestions,
   ) {
-    final currentUserId = _getCurrentUserId();
-    final hasAnswered =
-        playerAnswers.containsKey(currentUserId) &&
-        playerAnswers[currentUserId] != null;
-
     final connectedPlayers = players.where((p) => p.isConnected).toList();
     final answeredPlayers = connectedPlayers
         .where(

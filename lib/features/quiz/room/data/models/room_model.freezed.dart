@@ -21,6 +21,7 @@ mixin _$RoomModel {
   String get code => throw _privateConstructorUsedError;
   String get hostId => throw _privateConstructorUsedError;
   String get status => throw _privateConstructorUsedError;
+  int get timerDuration => throw _privateConstructorUsedError;
   String? get categoryId => throw _privateConstructorUsedError;
   String? get title => throw _privateConstructorUsedError;
   Map<String, dynamic>? get state => throw _privateConstructorUsedError;
@@ -45,6 +46,7 @@ abstract class $RoomModelCopyWith<$Res> {
     String code,
     String hostId,
     String status,
+    int timerDuration,
     String? categoryId,
     String? title,
     Map<String, dynamic>? state,
@@ -73,6 +75,7 @@ class _$RoomModelCopyWithImpl<$Res, $Val extends RoomModel>
     Object? code = null,
     Object? hostId = null,
     Object? status = null,
+    Object? timerDuration = null,
     Object? categoryId = freezed,
     Object? title = freezed,
     Object? state = freezed,
@@ -98,6 +101,10 @@ class _$RoomModelCopyWithImpl<$Res, $Val extends RoomModel>
                 ? _value.status
                 : status // ignore: cast_nullable_to_non_nullable
                       as String,
+            timerDuration: null == timerDuration
+                ? _value.timerDuration
+                : timerDuration // ignore: cast_nullable_to_non_nullable
+                      as int,
             categoryId: freezed == categoryId
                 ? _value.categoryId
                 : categoryId // ignore: cast_nullable_to_non_nullable
@@ -142,6 +149,7 @@ abstract class _$$RoomModelImplCopyWith<$Res>
     String code,
     String hostId,
     String status,
+    int timerDuration,
     String? categoryId,
     String? title,
     Map<String, dynamic>? state,
@@ -169,6 +177,7 @@ class __$$RoomModelImplCopyWithImpl<$Res>
     Object? code = null,
     Object? hostId = null,
     Object? status = null,
+    Object? timerDuration = null,
     Object? categoryId = freezed,
     Object? title = freezed,
     Object? state = freezed,
@@ -194,6 +203,10 @@ class __$$RoomModelImplCopyWithImpl<$Res>
             ? _value.status
             : status // ignore: cast_nullable_to_non_nullable
                   as String,
+        timerDuration: null == timerDuration
+            ? _value.timerDuration
+            : timerDuration // ignore: cast_nullable_to_non_nullable
+                  as int,
         categoryId: freezed == categoryId
             ? _value.categoryId
             : categoryId // ignore: cast_nullable_to_non_nullable
@@ -231,6 +244,7 @@ class _$RoomModelImpl implements _RoomModel {
     required this.code,
     required this.hostId,
     required this.status,
+    required this.timerDuration,
     this.categoryId,
     this.title,
     final Map<String, dynamic>? state,
@@ -249,6 +263,8 @@ class _$RoomModelImpl implements _RoomModel {
   final String hostId;
   @override
   final String status;
+  @override
+  final int timerDuration;
   @override
   final String? categoryId;
   @override
@@ -287,7 +303,7 @@ class _$RoomModelImpl implements _RoomModel {
 
   @override
   String toString() {
-    return 'RoomModel(id: $id, code: $code, hostId: $hostId, status: $status, categoryId: $categoryId, title: $title, state: $state, createdAt: $createdAt, players: $players, questions: $questions)';
+    return 'RoomModel(id: $id, code: $code, hostId: $hostId, status: $status, timerDuration: $timerDuration, categoryId: $categoryId, title: $title, state: $state, createdAt: $createdAt, players: $players, questions: $questions)';
   }
 
   @override
@@ -299,6 +315,8 @@ class _$RoomModelImpl implements _RoomModel {
             (identical(other.code, code) || other.code == code) &&
             (identical(other.hostId, hostId) || other.hostId == hostId) &&
             (identical(other.status, status) || other.status == status) &&
+            (identical(other.timerDuration, timerDuration) ||
+                other.timerDuration == timerDuration) &&
             (identical(other.categoryId, categoryId) ||
                 other.categoryId == categoryId) &&
             (identical(other.title, title) || other.title == title) &&
@@ -319,6 +337,7 @@ class _$RoomModelImpl implements _RoomModel {
     code,
     hostId,
     status,
+    timerDuration,
     categoryId,
     title,
     const DeepCollectionEquality().hash(_state),
@@ -342,6 +361,7 @@ abstract class _RoomModel implements RoomModel {
     required final String code,
     required final String hostId,
     required final String status,
+    required final int timerDuration,
     final String? categoryId,
     final String? title,
     final Map<String, dynamic>? state,
@@ -358,6 +378,8 @@ abstract class _RoomModel implements RoomModel {
   String get hostId;
   @override
   String get status;
+  @override
+  int get timerDuration;
   @override
   String? get categoryId;
   @override

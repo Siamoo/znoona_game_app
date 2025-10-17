@@ -23,6 +23,7 @@ _$RoomImpl _$$RoomImplFromJson(Map<String, dynamic> json) => _$RoomImpl(
   questions: (json['questions'] as List<dynamic>?)
       ?.map((e) => RoomQuestion.fromJson(e as Map<String, dynamic>))
       .toList(),
+  timerDuration: (json['timerDuration'] as num).toInt(),
 );
 
 Map<String, dynamic> _$$RoomImplToJson(_$RoomImpl instance) =>
@@ -37,4 +38,5 @@ Map<String, dynamic> _$$RoomImplToJson(_$RoomImpl instance) =>
       'createdAt': instance.createdAt?.toIso8601String(),
       'players': instance.players,
       'questions': instance.questions,
+      'timerDuration': instance.timerDuration,
     };

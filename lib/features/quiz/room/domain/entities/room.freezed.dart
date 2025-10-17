@@ -32,6 +32,7 @@ mixin _$Room {
   DateTime? get createdAt => throw _privateConstructorUsedError;
   List<RoomPlayer>? get players => throw _privateConstructorUsedError;
   List<RoomQuestion>? get questions => throw _privateConstructorUsedError;
+  int get timerDuration => throw _privateConstructorUsedError;
 
   /// Serializes this Room to a JSON map.
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
@@ -58,6 +59,7 @@ abstract class $RoomCopyWith<$Res> {
     DateTime? createdAt,
     List<RoomPlayer>? players,
     List<RoomQuestion>? questions,
+    int timerDuration,
   });
 }
 
@@ -86,6 +88,7 @@ class _$RoomCopyWithImpl<$Res, $Val extends Room>
     Object? createdAt = freezed,
     Object? players = freezed,
     Object? questions = freezed,
+    Object? timerDuration = null,
   }) {
     return _then(
       _value.copyWith(
@@ -129,6 +132,10 @@ class _$RoomCopyWithImpl<$Res, $Val extends Room>
                 ? _value.questions
                 : questions // ignore: cast_nullable_to_non_nullable
                       as List<RoomQuestion>?,
+            timerDuration: null == timerDuration
+                ? _value.timerDuration
+                : timerDuration // ignore: cast_nullable_to_non_nullable
+                      as int,
           )
           as $Val,
     );
@@ -154,6 +161,7 @@ abstract class _$$RoomImplCopyWith<$Res> implements $RoomCopyWith<$Res> {
     DateTime? createdAt,
     List<RoomPlayer>? players,
     List<RoomQuestion>? questions,
+    int timerDuration,
   });
 }
 
@@ -179,6 +187,7 @@ class __$$RoomImplCopyWithImpl<$Res>
     Object? createdAt = freezed,
     Object? players = freezed,
     Object? questions = freezed,
+    Object? timerDuration = null,
   }) {
     return _then(
       _$RoomImpl(
@@ -222,6 +231,10 @@ class __$$RoomImplCopyWithImpl<$Res>
             ? _value._questions
             : questions // ignore: cast_nullable_to_non_nullable
                   as List<RoomQuestion>?,
+        timerDuration: null == timerDuration
+            ? _value.timerDuration
+            : timerDuration // ignore: cast_nullable_to_non_nullable
+                  as int,
       ),
     );
   }
@@ -241,6 +254,7 @@ class _$RoomImpl implements _Room {
     this.createdAt,
     final List<RoomPlayer>? players,
     final List<RoomQuestion>? questions,
+    required this.timerDuration,
   }) : _state = state,
        _players = players,
        _questions = questions;
@@ -294,8 +308,11 @@ class _$RoomImpl implements _Room {
   }
 
   @override
+  final int timerDuration;
+
+  @override
   String toString() {
-    return 'Room(id: $id, code: $code, hostId: $hostId, status: $status, categoryId: $categoryId, state: $state, title: $title, createdAt: $createdAt, players: $players, questions: $questions)';
+    return 'Room(id: $id, code: $code, hostId: $hostId, status: $status, categoryId: $categoryId, state: $state, title: $title, createdAt: $createdAt, players: $players, questions: $questions, timerDuration: $timerDuration)';
   }
 
   @override
@@ -317,7 +334,9 @@ class _$RoomImpl implements _Room {
             const DeepCollectionEquality().equals(
               other._questions,
               _questions,
-            ));
+            ) &&
+            (identical(other.timerDuration, timerDuration) ||
+                other.timerDuration == timerDuration));
   }
 
   @JsonKey(includeFromJson: false, includeToJson: false)
@@ -334,6 +353,7 @@ class _$RoomImpl implements _Room {
     createdAt,
     const DeepCollectionEquality().hash(_players),
     const DeepCollectionEquality().hash(_questions),
+    timerDuration,
   );
 
   /// Create a copy of Room
@@ -362,6 +382,7 @@ abstract class _Room implements Room {
     final DateTime? createdAt,
     final List<RoomPlayer>? players,
     final List<RoomQuestion>? questions,
+    required final int timerDuration,
   }) = _$RoomImpl;
 
   factory _Room.fromJson(Map<String, dynamic> json) = _$RoomImpl.fromJson;
@@ -386,6 +407,8 @@ abstract class _Room implements Room {
   List<RoomPlayer>? get players;
   @override
   List<RoomQuestion>? get questions;
+  @override
+  int get timerDuration;
 
   /// Create a copy of Room
   /// with the given fields replaced by the non-null parameter values.

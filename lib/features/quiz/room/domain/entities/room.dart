@@ -18,6 +18,7 @@ class Room with _$Room {
     DateTime? createdAt,
     List<RoomPlayer>? players,
     List<RoomQuestion>? questions,
+    required int timerDuration,
   }) = _Room;
 
   factory Room.fromJson(Map<String, dynamic> json) => _$RoomFromJson(json);

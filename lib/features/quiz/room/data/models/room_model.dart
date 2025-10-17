@@ -13,12 +13,14 @@ class RoomModel with _$RoomModel {
     required String code,
     required String hostId,
     required String status,
+    required int timerDuration,
     String? categoryId,
     String? title,
     Map<String, dynamic>? state,
     DateTime? createdAt,
     List<RoomPlayer>? players,
     List<RoomQuestion>? questions,
+    
   }) = _RoomModel;
 
   factory RoomModel.fromJson(Map<String, dynamic> json) {
@@ -41,6 +43,9 @@ class RoomModel with _$RoomModel {
               ?.map((e) => RoomQuestion.fromJson(e as Map<String, dynamic>))
               .toList() ??
           [],
+          timerDuration: (json['timer_duration'] is int) 
+          ? json['timer_duration'] as int
+          : int.tryParse(json['timer_duration']?.toString() ?? '15') ?? 15,
     );
   }
 
@@ -54,7 +59,7 @@ class RoomModel with _$RoomModel {
         title: room.title,
         createdAt: room.createdAt,
         players: room.players,
-        questions: room.questions,
+        questions: room.questions, timerDuration: room.timerDuration,
       );
 }
 
@@ -69,6 +74,6 @@ extension RoomModelX on RoomModel {
         title: title,
         createdAt: createdAt,
         players: players,
-        questions: questions,
+        questions: questions, timerDuration: timerDuration,
       );
 }

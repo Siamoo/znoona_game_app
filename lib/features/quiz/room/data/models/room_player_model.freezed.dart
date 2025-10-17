@@ -24,8 +24,8 @@ mixin _$RoomPlayerModel {
   bool get isHost => throw _privateConstructorUsedError;
   bool get isConnected => throw _privateConstructorUsedError;
   int get score => throw _privateConstructorUsedError;
-  bool get finishedQuiz => throw _privateConstructorUsedError; // NEW
-  DateTime? get finishedAt => throw _privateConstructorUsedError; // NEW
+  bool get finishedQuiz => throw _privateConstructorUsedError;
+  DateTime? get finishedAt => throw _privateConstructorUsedError;
   DateTime? get joinedAt => throw _privateConstructorUsedError;
   String? get selectedAnswer => throw _privateConstructorUsedError;
   bool? get isCorrect => throw _privateConstructorUsedError;
@@ -313,10 +313,8 @@ class _$RoomPlayerModelImpl implements _RoomPlayerModel {
   final int score;
   @override
   final bool finishedQuiz;
-  // NEW
   @override
   final DateTime? finishedAt;
-  // NEW
   @override
   final DateTime? joinedAt;
   @override
@@ -426,9 +424,9 @@ abstract class _RoomPlayerModel implements RoomPlayerModel {
   @override
   int get score;
   @override
-  bool get finishedQuiz; // NEW
+  bool get finishedQuiz;
   @override
-  DateTime? get finishedAt; // NEW
+  DateTime? get finishedAt;
   @override
   DateTime? get joinedAt;
   @override

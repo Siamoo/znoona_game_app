@@ -91,5 +91,6 @@
     "room_about": "The Room About ",
     "enter_code_or_scan": "Enter Code Or Scan QR To Join Room",
     "enter_room_code": "Enter Room Code",
-    "room_code_copied": "Room Code Copied"
+    "room_code_copied": "Room Code Copied",
+    "scan_qr": "Scan QR"
 }

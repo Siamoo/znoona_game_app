@@ -62,23 +62,30 @@ class _RoomJoiningBodyState extends State<RoomJoiningBody> {
             child: Column(
               children: [
                 CustomAppBar(title: ZnoonaTexts.tr(context, LangKeys.joinRoom)),
+                SizedBox(height: 50.h),
                 Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    Image.asset(
-                      AppImages.join,
-                      height: 250.h,
-                      width: 250.w,
+                    CustomFadeInDown(
+                      duration: 700,
+                      child: Image.asset(
+                        AppImages.join,
+                        height: 250.h,
+                        width: 250.w,
+                      ),
                     ),
                     const SizedBox(height: 24),
-                    TextApp(
-                      text: ZnoonaTexts.tr(context, LangKeys.enterCodeOrScan),
-                      textStyle: GoogleFonts.beiruti(
-                        fontSize: 24.sp,
-                        fontWeight: FontWeight.bold,
-                        color: ZnoonaColors.text(context),
+                    CustomFadeInRight(
+                      duration: 450,
+                      child: TextApp(
+                        text: ZnoonaTexts.tr(context, LangKeys.enterCodeOrScan),
+                        textStyle: GoogleFonts.beiruti(
+                          fontSize: 24.sp,
+                          fontWeight: FontWeight.bold,
+                          color: ZnoonaColors.text(context),
+                        ),
+                        textAlign: TextAlign.center,
                       ),
-                      textAlign: TextAlign.center,
                     ),
                   ],
                 ),
@@ -88,7 +95,7 @@ class _RoomJoiningBodyState extends State<RoomJoiningBody> {
                   child: Column(
                     children: [
                       CustomFadeInRight(
-                        duration: 450,
+                        duration: 550,
                         child: CustomTextField(
                           controller: _codeController,
                           hintText: ZnoonaTexts.tr(
@@ -108,7 +115,7 @@ class _RoomJoiningBodyState extends State<RoomJoiningBody> {
                           suffixIcon: const Icon(Icons.key),
                         ),
                       ),
-                      SizedBox(height: 20.h),
+                      SizedBox(height: 10.h),
                       BlocBuilder<RoomCubit, RoomState>(
                         builder: (context, state) {
                           final isLoading = state.maybeMap(
@@ -117,65 +124,79 @@ class _RoomJoiningBodyState extends State<RoomJoiningBody> {
                           );
                           return SizedBox(
                             width: double.infinity,
-                            child: CustomLinearButton(
-                              onPressed: isLoading
-                                  ? null
-                                  : () {
-                                      if (_formKey.currentState!.validate()) {
-                                        context.read<RoomCubit>().joinRoom(
-                                          code: _codeController.text.trim(),
-                                        );
-                                      }
-                                    },
+                            child: CustomFadeInRight(
+                              duration: 650,
+                              child: CustomLinearButton(
+                                height: 50.h,
+                                onPressed: isLoading
+                                    ? null
+                                    : () {
+                                        if (_formKey.currentState!.validate()) {
+                                          context.read<RoomCubit>().joinRoom(
+                                            code: _codeController.text.trim(),
+                                          );
+                                        }
+                                      },
 
-                              child: isLoading
-                                  ? const SizedBox(
-                                      height: 20,
-                                      width: 20,
-                                      child: CircularProgressIndicator(
-                                        strokeWidth: 2,
-                                        valueColor: AlwaysStoppedAnimation(
-                                          Colors.white,
+                                child: isLoading
+                                    ? const SizedBox(
+                                        height: 20,
+                                        width: 20,
+                                        child: CircularProgressIndicator(
+                                          strokeWidth: 2,
+                                          valueColor: AlwaysStoppedAnimation(
+                                            Colors.white,
+                                          ),
+                                        ),
+                                      )
+                                    : Text(
+                                        ZnoonaTexts.tr(
+                                          context,
+                                          LangKeys.joinRoom,
+                                        ),
+                                        style: const TextStyle(
+                                          fontSize: 18,
+                                          fontWeight: FontWeight.bold,
+                                          color: Colors.white,
                                         ),
                                       ),
-                                    )
-                                  : Text(
-                                      ZnoonaTexts.tr(
-                                        context,
-                                        LangKeys.joinRoom,
-                                      ),
-                                      style: const TextStyle(
-                                        fontSize: 18,
-                                        fontWeight: FontWeight.bold,
-                                        color: Colors.white,
-                                      ),
-                                    ),
+                              ),
                             ),
                           );
                         },
                       ),
 
-                      const SizedBox(height: 16),
-                      Row(
-                        children: [
-                          Expanded(
-                            child: OutlinedButton.icon(
-                              onPressed: () {
-                                _showQRScannerDialog(context);
-                              },
-                              icon: const Icon(Icons.qr_code_scanner),
-                              label: const Text('Scan QR'),
-                              style: OutlinedButton.styleFrom(
-                                padding: const EdgeInsets.symmetric(
-                                  vertical: 12,
+                      SizedBox(height: 10.h),
+                      CustomFadeInRight(
+                        duration: 750,
+                        child: CustomLinearButton(
+                          height: 50.h,
+                          width: double.infinity,
+                          onPressed: () async {
+                            await _showQRScannerDialog(context);
+                          },
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Icon(
+                                Icons.qr_code_scanner,
+                                color: ZnoonaColors.text(context),
+                              ),
+                              SizedBox(width: 10.w),
+                              Text(
+                                ZnoonaTexts.tr(
+                                  context,
+                                  LangKeys.scanQr,
                                 ),
-                                shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(12),
+                                style: TextStyle(
+                                  fontSize: 18,
+                                  fontWeight: FontWeight.bold,
+                                  color: ZnoonaColors.text(context),
                                 ),
                               ),
-                            ),
+                            ],
                           ),
-                        ],
+                        ),
                       ),
                     ],
                   ),

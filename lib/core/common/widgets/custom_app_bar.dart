@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:znoona_game_app/core/common/animations/animate_do.dart';
 import 'package:znoona_game_app/core/common/widgets/text_app.dart';
 import 'package:znoona_game_app/core/helpers/znoona.colors.dart';
 import 'package:znoona_game_app/core/helpers/znoona_texts.dart';
@@ -24,12 +25,15 @@ class CustomAppBar extends StatelessWidget {
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
-        InkWell(
-          onTap: onTap ?? () => Navigator.pop(context),
-          child: Icon(
-            icon ?? Icons.arrow_back_ios_new,
-            color: ZnoonaColors.text(context),
-            size: 24.sp,
+        CustomFadeInRight(
+          duration: 500,
+          child: InkWell(
+            onTap: onTap ?? () => Navigator.pop(context),
+            child: Icon(
+              icon ?? Icons.arrow_back_ios_new,
+              color: ZnoonaColors.text(context),
+              size: 24.sp,
+            ),
           ),
         ),
         if (otherText == null)
@@ -46,15 +50,18 @@ class CustomAppBar extends StatelessWidget {
               color: ZnoonaColors.text(context),
             ),
           ),
-        TextApp(
-          text: ZnoonaTexts.tr(
-            context,
-            title,
-          ),
-          textStyle: GoogleFonts.beiruti(
-            fontSize: 26.sp,
-            fontWeight: FontWeight.w800,
-            color: ZnoonaColors.text(context),
+        CustomFadeInLeft(
+          duration: 500,
+          child: TextApp(
+            text: ZnoonaTexts.tr(
+              context,
+              title,
+            ),
+            textStyle: GoogleFonts.beiruti(
+              fontSize: 26.sp,
+              fontWeight: FontWeight.w800,
+              color: ZnoonaColors.text(context),
+            ),
           ),
         ),
       ],

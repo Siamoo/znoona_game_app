@@ -5,6 +5,7 @@ class RoomJoiningScreen extends StatelessWidget {
   const RoomJoiningScreen({super.key});
 
   @override
+
   Widget build(BuildContext context) {
     return const RoomJoiningBody();
   }

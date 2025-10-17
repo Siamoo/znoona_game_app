@@ -1,5 +1,4 @@
 class PlayerResult {
-
   PlayerResult({
     required this.userId,
     required this.username,

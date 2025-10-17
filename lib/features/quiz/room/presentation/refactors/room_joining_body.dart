@@ -1,7 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:google_fonts/google_fonts.dart';
+import 'package:znoona_game_app/core/common/animations/animate_do.dart';
 import 'package:znoona_game_app/core/common/widgets/custom_app_bar.dart';
+import 'package:znoona_game_app/core/common/widgets/custom_linear_button.dart';
+import 'package:znoona_game_app/core/common/widgets/custom_text_filed.dart';
+import 'package:znoona_game_app/core/common/widgets/text_app.dart';
+import 'package:znoona_game_app/core/helpers/znoona.colors.dart';
 import 'package:znoona_game_app/core/helpers/znoona_navigate.dart';
 import 'package:znoona_game_app/core/helpers/znoona_texts.dart';
 import 'package:znoona_game_app/core/language/lang_keys.dart';
@@ -30,10 +36,10 @@ class _RoomJoiningBodyState extends State<RoomJoiningBody> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: BlocListener<RoomCubit, RoomState>(
-        listener: (context, state) {
-          state.whenOrNull(
-            joined: (room) {
-              ZnoonaNavigate.pushReplacementTo(
+        listener: (context, state) async {
+          await state.whenOrNull(
+            joined: (room) async {
+              await ZnoonaNavigate.pushReplacementTo(
                 context,
                 RoomLobbyScreen(room: room),
               );
@@ -65,71 +71,44 @@ class _RoomJoiningBodyState extends State<RoomJoiningBody> {
                       width: 250.w,
                     ),
                     const SizedBox(height: 24),
-                    const Text(
-                      'Join a Game Room',
-                      style: TextStyle(
-                        fontSize: 28,
+                    TextApp(
+                      text: ZnoonaTexts.tr(context, LangKeys.enterCodeOrScan),
+                      textStyle: GoogleFonts.beiruti(
+                        fontSize: 24.sp,
                         fontWeight: FontWeight.bold,
-                      ),
-                      textAlign: TextAlign.center,
-                    ),
-                    const SizedBox(height: 12),
-                    const Text(
-                      'Enter the room code provided by your friend to join their game',
-                      style: TextStyle(
-                        fontSize: 16,
-                        color: Colors.grey,
+                        color: ZnoonaColors.text(context),
                       ),
                       textAlign: TextAlign.center,
                     ),
                   ],
                 ),
-
+                SizedBox(height: 20.h),
                 Form(
                   key: _formKey,
                   child: Column(
                     children: [
-                      TextFormField(
-                        controller: _codeController,
-                        decoration: InputDecoration(
-                          labelText: 'Room Code',
-                          hintText: 'Enter 6-digit code',
-                          prefixIcon: const Icon(Icons.vpn_key),
-                          border: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(12),
+                      CustomFadeInRight(
+                        duration: 450,
+                        child: CustomTextField(
+                          controller: _codeController,
+                          hintText: ZnoonaTexts.tr(
+                            context,
+                            LangKeys.enterRoomCode,
                           ),
-                          filled: true,
-                          fillColor: Colors.grey.shade50,
+                          keyboardType: TextInputType.number,
+                          validator: (value) {
+                            if (value == null || value.isEmpty) {
+                              return 'Please enter room code';
+                            }
+                            if (value.length != 6) {
+                              return 'Room code must be 6 characters';
+                            }
+                            return null;
+                          },
+                          suffixIcon: const Icon(Icons.key),
                         ),
-                        textInputAction: TextInputAction.done,
-                        textCapitalization: TextCapitalization.characters,
-                        style: const TextStyle(
-                          fontSize: 18,
-                          letterSpacing: 2,
-                          fontWeight: FontWeight.w600,
-                        ),
-                        validator: (value) {
-                          if (value == null || value.isEmpty) {
-                            return 'Please enter room code';
-                          }
-                          if (value.length != 6) {
-                            return 'Room code must be 6 characters';
-                          }
-                          return null;
-                        },
-                        onChanged: (value) {
-                          if (value.length > 6) {
-                            _codeController.text = value.substring(0, 6);
-                            _codeController.selection =
-                                const TextSelection.collapsed(
-                                  offset: 6,
-                                );
-                          }
-                          _codeController.text = value.toUpperCase();
-                        },
                       ),
-                      const SizedBox(height: 24),
-
+                      SizedBox(height: 20.h),
                       BlocBuilder<RoomCubit, RoomState>(
                         builder: (context, state) {
                           final isLoading = state.maybeMap(
@@ -138,7 +117,7 @@ class _RoomJoiningBodyState extends State<RoomJoiningBody> {
                           );
                           return SizedBox(
                             width: double.infinity,
-                            child: ElevatedButton(
+                            child: CustomLinearButton(
                               onPressed: isLoading
                                   ? null
                                   : () {
@@ -148,15 +127,7 @@ class _RoomJoiningBodyState extends State<RoomJoiningBody> {
                                         );
                                       }
                                     },
-                              style: ElevatedButton.styleFrom(
-                                padding: const EdgeInsets.symmetric(
-                                  vertical: 16,
-                                ),
-                                backgroundColor: Theme.of(context).primaryColor,
-                                shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(12),
-                                ),
-                              ),
+
                               child: isLoading
                                   ? const SizedBox(
                                       height: 20,
@@ -168,9 +139,12 @@ class _RoomJoiningBodyState extends State<RoomJoiningBody> {
                                         ),
                                       ),
                                     )
-                                  : const Text(
-                                      'Join Room',
-                                      style: TextStyle(
+                                  : Text(
+                                      ZnoonaTexts.tr(
+                                        context,
+                                        LangKeys.joinRoom,
+                                      ),
+                                      style: const TextStyle(
                                         fontSize: 18,
                                         fontWeight: FontWeight.bold,
                                         color: Colors.white,
@@ -184,24 +158,6 @@ class _RoomJoiningBodyState extends State<RoomJoiningBody> {
                       const SizedBox(height: 16),
                       Row(
                         children: [
-                          Expanded(
-                            child: OutlinedButton.icon(
-                              onPressed: () {
-                                Navigator.pop(context);
-                              },
-                              icon: const Icon(Icons.add),
-                              label: const Text('Create Room'),
-                              style: OutlinedButton.styleFrom(
-                                padding: const EdgeInsets.symmetric(
-                                  vertical: 12,
-                                ),
-                                shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(12),
-                                ),
-                              ),
-                            ),
-                          ),
-                          const SizedBox(width: 12),
                           Expanded(
                             child: OutlinedButton.icon(
                               onPressed: () {

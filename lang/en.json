@@ -87,6 +87,9 @@
     "players": "Players",
     "start": "Start",
     "room": "Room",
-    "solo": "Solo"
-    
+    "solo": "Solo",
+    "room_about": "The Room About ",
+    "enter_code_or_scan": "Enter Code Or Scan QR To Join Room",
+    "enter_room_code": "Enter Room Code",
+    "room_code_copied": "Room Code Copied"
 }

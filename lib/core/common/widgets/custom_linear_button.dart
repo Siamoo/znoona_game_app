@@ -12,7 +12,7 @@ class CustomLinearButton extends StatelessWidget {
     this.colors,
     this.borderRadiusNum,
   });
-  final VoidCallback onPressed;
+  final VoidCallback? onPressed;
   final Widget child;
   final double? height;
   final double? width;

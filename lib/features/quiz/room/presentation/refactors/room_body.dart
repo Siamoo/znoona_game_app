@@ -52,8 +52,8 @@ class RoomBody extends StatelessWidget {
                           GameButton(
                             image: AppImages.join,
                             langkey: LangKeys.joinRoom,
-                            onPressed: () {
-                              ZnoonaNavigate.pushTo(
+                            onPressed: () async {
+                              await ZnoonaNavigate.pushTo(
                                 context,
                                 const RoomJoiningScreen(),
                               );

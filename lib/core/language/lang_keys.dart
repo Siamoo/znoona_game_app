@@ -86,4 +86,7 @@ class LangKeys {
   static const String start = 'start';
   static const String room = 'room';
   static const String solo = 'solo';
+  static const String roomAbout = 'room_about';
+  static const String enterCodeOrScan = 'enter_code_or_scan';
+  static const String enterRoomCode = 'enter_room_code';
 }

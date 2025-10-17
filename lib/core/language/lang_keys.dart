@@ -90,4 +90,6 @@ class LangKeys {
   static const String enterCodeOrScan = 'enter_code_or_scan';
   static const String enterRoomCode = 'enter_room_code';
   static const String scanQr = 'scan_qr';
+  static const String questionTimer = 'question_timer';
+  static const String selectTimerDuration = 'select_timer_duration';
 }

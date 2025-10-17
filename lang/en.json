@@ -92,5 +92,8 @@
     "enter_code_or_scan": "Enter Code Or Scan QR To Join Room",
     "enter_room_code": "Enter Room Code",
     "room_code_copied": "Room Code Copied",
-    "scan_qr": "Scan QR"
+    "scan_qr": "Scan QR",
+    "question_timer": "Question Timer",
+    "select_timer_duration": " Select Timer Duration By Seconds"
+
 }

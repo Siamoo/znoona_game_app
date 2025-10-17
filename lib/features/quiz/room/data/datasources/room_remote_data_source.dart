@@ -11,6 +11,7 @@ class RoomRemoteDataSource {
 
   Future<RoomModel> createRoom({
     required String categoryId,
+    required int timerDuration,
   }) async {
     final user = supabase.auth.currentUser;
     if (user == null) throw Exception('User not logged in');
@@ -26,6 +27,7 @@ class RoomRemoteDataSource {
         'p_host_id': user.id,
         'p_username': userNameMeta,
         'p_num_questions': 10,
+        'p_timer_duration': timerDuration,
       },
     );
 

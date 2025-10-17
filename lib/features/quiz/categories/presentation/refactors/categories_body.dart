@@ -54,6 +54,9 @@ class CategoriesBody extends StatelessWidget {
                                           categoryName: getCategoryLangKeys(
                                             category.name,
                                           ),
+                                          imageUrl: getCategoryImages(
+                                            category.name,
+                                          ),
                                         )
                                       : QuizScreen(
                                           categoryId: category.id,

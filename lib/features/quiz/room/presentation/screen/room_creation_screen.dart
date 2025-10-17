@@ -5,17 +5,19 @@ class RoomCreationScreen extends StatelessWidget {
   const RoomCreationScreen({
     required this.categoryId,
     required this.categoryName,
-    super.key,
+    required this.imageUrl, super.key,
   });
 
   final String categoryId;
   final String categoryName;
+    final String imageUrl;
+
 
   @override
   Widget build(BuildContext context) {
     return RoomCreationBody(
       categoryId: categoryId,
-      categoryName: categoryName,
+      categoryName: categoryName, imageUrl: imageUrl,
     );
   }
 }

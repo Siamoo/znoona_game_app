@@ -16,10 +16,12 @@ class RoomRepositoryImpl implements RoomRepository {
   @override
   Future<Either<String, Room>> createRoom({
     required String categoryId,
+    required int timerDuration,
   }) async {
     try {
       final roomModel = await remote.createRoom(
         categoryId: categoryId,
+        timerDuration: timerDuration,
       );
       return Right(roomModel.toEntity());
     } on Exception catch (e) {

@@ -9,10 +9,12 @@ class CreateRoomUseCase {
 
   Future<Either<String, Room>> call({
     required String categoryId,
+    required int timerDuration,
 
   }) {
     return repository.createRoom(
       categoryId: categoryId,
+      timerDuration: timerDuration,
 
     );
   }

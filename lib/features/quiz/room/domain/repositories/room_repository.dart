@@ -7,6 +7,7 @@ import 'package:znoona_game_app/features/quiz/single/domain/entities/question.da
 abstract class RoomRepository {
   Future<Either<String, Room>> createRoom({
     required String categoryId,
+    required int timerDuration,
   });
 
   Future<Either<String, RoomPlayer>> joinRoom({

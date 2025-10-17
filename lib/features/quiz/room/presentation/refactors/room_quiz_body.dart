@@ -417,23 +417,47 @@ class _RoomQuizBodyState extends State<RoomQuizBody> {
         ),
         SizedBox(height: 8.sp),
 
-        // Players list
         Wrap(
           spacing: 8.sp,
           children: players.where((p) => p.isConnected).map((player) {
-            final hasAnswered =
-                playerAnswers.containsKey(player.userId) &&
-                playerAnswers[player.userId] != null;
-            return Chip(
-              label: Text(player.username),
-              backgroundColor: hasAnswered ? Colors.green : Colors.orange,
-              labelStyle: TextStyle(
-                color: Colors.white,
-                fontSize: 12.sp,
+            final hasAnswered = player.selectedAnswer != null;
+            final isCorrect = player.isCorrect ?? false;
+
+            Color backgroundColor;
+            IconData icon;
+            var tooltipText = '';
+
+            if (!hasAnswered) {
+              backgroundColor = ZnoonaColors.main(context);
+              icon = Icons.person;
+              tooltipText = '${player.username} - Not answered';
+            } else if (isCorrect) {
+              backgroundColor = Colors.green;
+              icon = Icons.check;
+              tooltipText = '${player.username} - Correct!';
+            } else {
+              backgroundColor = Colors.red;
+              icon = Icons.close;
+              tooltipText = '${player.username} - Wrong answer';
+            }
+            return Tooltip(
+              message: tooltipText,
+              child: Chip(
+                label: Text(
+                  player.username,
+                  style: TextStyle(
+                    color: Colors.white,
+                    fontSize: 12.sp,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+                backgroundColor: backgroundColor,
+                avatar: Icon(
+                  icon,
+                  size: 16.sp,
+                  color: Colors.white,
+                ),
               ),
-              avatar: hasAnswered
-                  ? Icon(Icons.check, size: 16.sp, color: Colors.white)
-                  : Icon(Icons.person, size: 16.sp, color: Colors.white),
             );
           }).toList(),
         ),

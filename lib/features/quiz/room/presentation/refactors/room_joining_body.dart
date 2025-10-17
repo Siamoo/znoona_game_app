@@ -63,31 +63,36 @@ class _RoomJoiningBodyState extends State<RoomJoiningBody> {
               children: [
                 CustomAppBar(title: ZnoonaTexts.tr(context, LangKeys.joinRoom)),
                 SizedBox(height: 50.h),
-                Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    CustomFadeInDown(
-                      duration: 700,
-                      child: Image.asset(
-                        AppImages.join,
-                        height: 250.h,
-                        width: 250.w,
-                      ),
-                    ),
-                    const SizedBox(height: 24),
-                    CustomFadeInRight(
-                      duration: 450,
-                      child: TextApp(
-                        text: ZnoonaTexts.tr(context, LangKeys.enterCodeOrScan),
-                        textStyle: GoogleFonts.beiruti(
-                          fontSize: 24.sp,
-                          fontWeight: FontWeight.bold,
-                          color: ZnoonaColors.text(context),
+                SingleChildScrollView(
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      CustomFadeInDown(
+                        duration: 700,
+                        child: Image.asset(
+                          AppImages.join,
+                          height: 250.h,
+                          width: 250.w,
                         ),
-                        textAlign: TextAlign.center,
                       ),
-                    ),
-                  ],
+                      const SizedBox(height: 24),
+                      CustomFadeInRight(
+                        duration: 450,
+                        child: TextApp(
+                          text: ZnoonaTexts.tr(
+                            context,
+                            LangKeys.enterCodeOrScan,
+                          ),
+                          textStyle: GoogleFonts.beiruti(
+                            fontSize: 24.sp,
+                            fontWeight: FontWeight.bold,
+                            color: ZnoonaColors.text(context),
+                          ),
+                          textAlign: TextAlign.center,
+                        ),
+                      ),
+                    ],
+                  ),
                 ),
                 SizedBox(height: 20.h),
                 Form(
@@ -105,6 +110,7 @@ class _RoomJoiningBodyState extends State<RoomJoiningBody> {
                           keyboardType: TextInputType.number,
                           validator: (value) {
                             if (value == null || value.isEmpty) {
+                              //todo : localization , and handle when open keyboard 
                               return 'Please enter room code';
                             }
                             if (value.length != 6) {

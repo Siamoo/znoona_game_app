@@ -30,10 +30,8 @@ class RoomQuizBody extends StatefulWidget {
 }
 
 class _RoomQuizBodyState extends State<RoomQuizBody> {
-  Timer? _timer;
   List<Question> _currentQuestions = [];
   int _currentQuestionIndex = 0;
-  int _currentRemainingTime = 15;
   Map<String, String?> _currentPlayerAnswers = {};
   String? _currentSelectedAnswer;
   int _currentCorrectCount = 0;
@@ -43,36 +41,19 @@ class _RoomQuizBodyState extends State<RoomQuizBody> {
   void initState() {
     super.initState();
     _currentQuestions = widget.questions;
+    // Start with initial state using the passed questions
+    _currentPlayers = [];
     context.read<RoomCubit>().startQuiz(widget.questions);
     context.read<RoomCubit>().watchPlayerAnswers(widget.room.id);
-  }
-
-  void _startTimer() {
-    _timer?.cancel();
-    _currentRemainingTime = 15;
-
-    _timer = Timer.periodic(const Duration(seconds: 1), (t) {
-      if (_currentRemainingTime > 0) {
-        setState(() {
-          _currentRemainingTime--;
-        });
-      } else {
-        t.cancel();
-        print('⏰ Time up in UI');
-      }
-    });
   }
 
   void _selectAnswer(String answer) {
     final currentUserId = _getCurrentUserId();
     final currentQuestion = _currentQuestions[_currentQuestionIndex];
 
+    // Check if user already answered
     if (_currentPlayerAnswers.containsKey(currentUserId) &&
         _currentPlayerAnswers[currentUserId] != null) {
-      return;
-    }
-
-    if (_currentRemainingTime <= 0) {
       return;
     }
 
@@ -89,12 +70,6 @@ class _RoomQuizBodyState extends State<RoomQuizBody> {
 
     // Submit answer to database
     context.read<RoomCubit>().selectAnswer(answer);
-  }
-
-  @override
-  void dispose() {
-    _timer?.cancel();
-    super.dispose();
   }
 
   @override
@@ -117,7 +92,7 @@ class _RoomQuizBodyState extends State<RoomQuizBody> {
               ) {
                 print(
                   '🔄 Updating quiz state - Question: ${currentQuestionIndex + 1}, '
-                  'Time: $remainingTime',
+                  'Time: $remainingTime (from cubit)',
                 );
 
                 final mutablePlayerAnswers = Map<String, String?>.from(
@@ -127,37 +102,55 @@ class _RoomQuizBodyState extends State<RoomQuizBody> {
                 setState(() {
                   _currentQuestions = questions;
                   _currentQuestionIndex = currentQuestionIndex;
-                  _currentRemainingTime = remainingTime;
                   _currentPlayerAnswers = mutablePlayerAnswers;
                   _currentSelectedAnswer = selectedAnswer;
                   _currentCorrectCount = correctCount;
                   _currentPlayers = players;
                 });
-
-                // Start timer if not already running and time is > 0
-                if ((_timer == null || !_timer!.isActive) &&
-                    remainingTime > 0) {
-                  _startTimer();
-                }
               },
 
           quizFinished: (totalQuestions, correctAnswers, players) {
             print('🏁 Quiz finished - navigating to results');
-            _timer?.cancel();
             _navigateToResultsScreen();
           },
         );
       },
-      child: _buildQuizContent(
-        questions: _currentQuestions.isNotEmpty
-            ? _currentQuestions
-            : widget.questions,
-        currentQuestionIndex: _currentQuestionIndex,
-        remainingTime: _currentRemainingTime,
-        playerAnswers: _currentPlayerAnswers,
-        selectedAnswer: _currentSelectedAnswer,
-        correctCount: _currentCorrectCount,
-        players: _currentPlayers,
+      child: BlocBuilder<RoomCubit, RoomState>(
+        builder: (context, state) {
+          return state.maybeWhen(
+            quizStarted:
+                (
+                  questions,
+                  currentQuestionIndex,
+                  remainingTime,
+                  playerAnswers,
+                  selectedAnswer,
+                  correctCount,
+                  isWaitingForPlayers,
+                  players,
+                ) {
+                  return _buildQuizContent(
+                    questions: questions,
+                    currentQuestionIndex: currentQuestionIndex,
+                    remainingTime: remainingTime,
+                    playerAnswers: playerAnswers,
+                    selectedAnswer: selectedAnswer,
+                    correctCount: correctCount,
+                    players: players,
+                  );
+                },
+            orElse: () => _buildQuizContent(
+              // Fallback to initial state if cubit hasn't emitted yet
+              questions: _currentQuestions,
+              currentQuestionIndex: _currentQuestionIndex,
+              remainingTime: widget.room.timerDuration, // Use room's timer
+              playerAnswers: _currentPlayerAnswers,
+              selectedAnswer: _currentSelectedAnswer,
+              correctCount: _currentCorrectCount,
+              players: _currentPlayers,
+            ),
+          );
+        },
       ),
     );
   }
@@ -223,7 +216,7 @@ class _RoomQuizBodyState extends State<RoomQuizBody> {
           child: Column(
             children: [
               CustomAppBar(
-                title: 'Room ${widget.room.code}',
+                title: 'Room',
                 icon: Icons.close,
                 otherText:
                     '${currentQuestionIndex + 1}  ${ZnoonaTexts.tr(context, LangKeys.from)}  ${questions.length}  ${ZnoonaTexts.tr(context, LangKeys.question)}',
@@ -303,21 +296,13 @@ class _RoomQuizBodyState extends State<RoomQuizBody> {
             Column(
               children: [
                 Text(
-                  '⏳ $remainingTime',
+                  '$remainingTime',
                   style: GoogleFonts.beiruti(
                     fontSize: 18.sp,
                     fontWeight: FontWeight.bold,
                     color: ZnoonaColors.text(context),
                   ),
                 ),
-                if (remainingTime <= 5)
-                  Text(
-                    'Time running out!',
-                    style: TextStyle(
-                      fontSize: 10.sp,
-                      color: Colors.red,
-                    ),
-                  ),
               ],
             ),
             Text(
@@ -331,36 +316,6 @@ class _RoomQuizBodyState extends State<RoomQuizBody> {
           ],
         ),
         SizedBox(height: 16.sp),
-
-        // Time running out warning
-        if (remainingTime <= 5)
-          Container(
-            padding: EdgeInsets.all(8.sp),
-            decoration: BoxDecoration(
-              color: Colors.orange.withOpacity(0.1),
-              borderRadius: BorderRadius.circular(8),
-              border: Border.all(color: Colors.orange),
-            ),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Icon(Icons.timer, color: Colors.orange, size: 16.sp),
-                SizedBox(width: 8.sp),
-                Text(
-                  'Time running out! Answer quickly!',
-                  style: TextStyle(
-                    fontSize: 14.sp,
-                    color: Colors.orange,
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
-              ],
-            ),
-          )
-        else
-          SizedBox(height: 50.sp),
-
-        SizedBox(height: 8.sp),
 
         // Players Status with progress
         _buildPlayersStatus(
@@ -476,8 +431,12 @@ class _RoomQuizBodyState extends State<RoomQuizBody> {
   }
 
   Color _getProgressColor(double progress) {
-    if (progress < 0.5) return Colors.orange;
-    if (progress < 1.0) return Colors.blue;
-    return Colors.green;
+    if (progress < 0.5) {
+      return ZnoonaColors.bluePinkLight(context).withAlpha(100);
+    }
+    if (progress < 1.0) {
+      return ZnoonaColors.bluePinkLight(context).withAlpha(150);
+    }
+    return ZnoonaColors.bluePinkLight(context);
   }
 }

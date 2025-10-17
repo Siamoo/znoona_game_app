@@ -18,6 +18,7 @@ class RoomRemoteDataSource {
     final metadata = user.userMetadata ?? {};
     final userNameMeta = metadata['full_name'] ?? 'Host';
 
+    // Call the updated function
     final result = await supabase.rpc<dynamic>(
       'create_room_with_questions',
       params: {
@@ -28,19 +29,26 @@ class RoomRemoteDataSource {
       },
     );
 
-    if (result == null) {
-      throw Exception('Failed to create room: result is null');
+    print('RPC result: $result'); // Debug log
+
+    // Handle the table return type properly
+    if (result == null || (result as List).isEmpty) {
+      throw Exception('Failed to create room: empty result');
     }
 
-    final dynamic roomEntry = (result is List && result.isNotEmpty)
-        ? result.first
-        : result;
+    // The function now returns a list of records, take the first one
+    final roomData = result.first as Map<String, dynamic>;
 
-    final roomId = roomEntry?['room_id'];
-    if (roomId == null || roomId is! String) {
-      throw Exception('Invalid room_id returned: $roomId');
+    final roomId = roomData['room_id'] as String?;
+    final roomCode = roomData['room_code'] as String?;
+
+    if (roomId == null || roomCode == null) {
+      throw Exception('Invalid room data returned: $roomData');
     }
 
+    print('Created room - ID: $roomId, Code: $roomCode');
+
+    // Fetch the complete room data
     final data = await supabase
         .from('rooms')
         .select()
@@ -397,7 +405,6 @@ class RoomRemoteDataSource {
           throw Exception('Stream error: $error');
         });
   }
-
 
   Future<List<RoomPlayerModel>> getRoomPlayers(String roomId) async {
     final data = await supabase

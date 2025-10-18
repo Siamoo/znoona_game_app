@@ -68,7 +68,7 @@ class _RoomJoiningBodyState extends State<RoomJoiningBody> {
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       CustomFadeInDown(
-                        duration: 700,
+                        duration: 850,
                         child: Image.asset(
                           AppImages.join,
                           height: 250.h,
@@ -76,8 +76,8 @@ class _RoomJoiningBodyState extends State<RoomJoiningBody> {
                         ),
                       ),
                       const SizedBox(height: 24),
-                      CustomFadeInRight(
-                        duration: 450,
+                      CustomFadeInDown(
+                        duration: 700,
                         child: TextApp(
                           text: ZnoonaTexts.tr(
                             context,
@@ -99,8 +99,8 @@ class _RoomJoiningBodyState extends State<RoomJoiningBody> {
                   key: _formKey,
                   child: Column(
                     children: [
-                      CustomFadeInRight(
-                        duration: 550,
+                      CustomFadeInDown(
+                        duration: 600,
                         child: CustomTextField(
                           controller: _codeController,
                           hintText: ZnoonaTexts.tr(
@@ -110,7 +110,7 @@ class _RoomJoiningBodyState extends State<RoomJoiningBody> {
                           keyboardType: TextInputType.number,
                           validator: (value) {
                             if (value == null || value.isEmpty) {
-                              //todo : localization , and handle when open keyboard 
+                              //todo : localization , and handle when open keyboard
                               return 'Please enter room code';
                             }
                             if (value.length != 6) {
@@ -130,8 +130,8 @@ class _RoomJoiningBodyState extends State<RoomJoiningBody> {
                           );
                           return SizedBox(
                             width: double.infinity,
-                            child: CustomFadeInRight(
-                              duration: 650,
+                            child: CustomFadeInDown(
+                              duration: 500,
                               child: CustomLinearButton(
                                 height: 50.h,
                                 onPressed: isLoading
@@ -173,8 +173,8 @@ class _RoomJoiningBodyState extends State<RoomJoiningBody> {
                       ),
 
                       SizedBox(height: 10.h),
-                      CustomFadeInRight(
-                        duration: 750,
+                      CustomFadeInDown(
+                        duration: 400,
                         child: CustomLinearButton(
                           height: 50.h,
                           width: double.infinity,

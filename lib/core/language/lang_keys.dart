@@ -92,4 +92,16 @@ class LangKeys {
   static const String scanQr = 'scan_qr';
   static const String questionTimer = 'question_timer';
   static const String selectTimerDuration = 'select_timer_duration';
+  static const String pleaseEnterRoomCode = 'please_enter_room_code';
+  static const String roomCodeMustBe6 = 'room_code_must_be_6_characters';
+  static const String  roomCode = 'room_code';
+  static const String status = 'status';
+  static const String startGame = 'start_game';
+  static const String waitingForHost = 'waiting_for_host_to_start';
+  static const String waitingPlayers = 'waiting_players';
+  static const String mustHaveTwoPlayers = 'must_have_at_least_two_players';
+  static const String ok = 'ok';
+  static const String host = 'host';
+  static const String roomHost = 'room_host';
+  static const String player = 'player';
 }

@@ -1,5 +1,12 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android">
 
+    <!-- Add Camera Permission -->
+    <uses-permission android:name="android.permission.CAMERA" />
+    
+    <!-- Optional: Add these if you want to handle QR codes from images -->
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+
     <application
         android:label="znoona_game_app"
         android:name="${applicationName}"
@@ -34,6 +41,18 @@
                 <data android:scheme="com.znoona" android:host="login-callback"/>
             </intent-filter>
 
+        </activity>
+
+        <!-- Add this activity for QR code scanning -->
+        <activity
+            android:name="com.journeyapps.barcodescanner.CaptureActivity"
+            android:exported="false"
+            android:screenOrientation="fullSensor"
+            android:stateNotNeeded="true"
+            android:theme="@style/Theme.AppCompat.NoActionBar">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.journeyapps.barcodescanner.CaptureActivity" />
         </activity>
 
         <!-- Don't delete: used by Flutter tool -->

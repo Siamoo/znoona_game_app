@@ -94,5 +94,17 @@
     "room_code_copied": "تم نسخ كود الغرفة",
     "scan_qr": "مسح رمز الاستجابة السريعة",
     "question_timer": "توقيت السؤال",
-    "select_timer_duration": "  اختر توقيت السؤال بالثواني"
+    "select_timer_duration": "  اختر توقيت السؤال بالثواني",
+    "please_enter_room_code": "الرجاء ادخال كود الغرفة",
+    "room_code_must_be_6_characters": "كود الغرفة يجب ان يكون 6 ارقام",
+    "room_code" : "كود الغرفة",
+    "status" : "الحالة",
+    "start_game": "بدء اللعب",
+    "waiting_for_host_to_start": "انتظار المضيف لبدء اللعبة...",
+    "waiting_players": "انتظار انضمام اللاعبين...",
+    "must_have_at_least_two_players": "يجب ان يكون هناك لاعبين على الاقل لبدء اللعبة.",
+    "ok": "تمام",
+    "host": "المضيف",
+    "room_host": "مضيف الغرفة",
+    "player": "لاعب"
 }

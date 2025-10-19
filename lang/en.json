@@ -94,6 +94,18 @@
     "room_code_copied": "Room Code Copied",
     "scan_qr": "Scan QR",
     "question_timer": "Question Timer",
-    "select_timer_duration": " Select Timer Duration By Seconds"
+    "select_timer_duration": " Select Timer Duration By Seconds",
+    "please_enter_room_code": "Please Enter Room Code",
+    "room_code_must_be_6_characters": "Room Code Must Be 6 Numbers",
+    "room_code" : "Room Code",
+    "status" : "Status",
+    "start_game": "Start Game",
+    "waiting_for_host_to_start": "Waiting for host to start the game...",
+    "waiting_players": "Waiting Players To Join...",
+    "must_have_at_least_two_players": "You must have at least two players to start the game.",
+    "ok": "OK",
+    "host": "HOST",
+    "room_host": "Room Host",
+    "player": "Player"
 
 }

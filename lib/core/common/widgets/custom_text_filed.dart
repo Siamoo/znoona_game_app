@@ -21,6 +21,7 @@ class CustomTextField extends StatelessWidget {
     this.onChanged,
     this.maxLength,
     this.maxLines = 1,
+    this.onTap,
   });
 
   final String? Function(String?)? validator;
@@ -38,6 +39,7 @@ class CustomTextField extends StatelessWidget {
   final TextStyle? hintStyle;
   final int? maxLength;
   final int? maxLines;
+  final VoidCallback? onTap;
 
   @override
   Widget build(BuildContext context) {
@@ -53,6 +55,7 @@ class CustomTextField extends StatelessWidget {
         return validator!(value);
       },
       onChanged: onChanged,
+      onTap: onTap,
       keyboardType: keyboardType,
       obscureText: obscureText,
       maxLines: maxLines,

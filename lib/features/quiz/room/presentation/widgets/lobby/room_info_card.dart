@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -8,7 +9,6 @@ import 'package:znoona_game_app/core/helpers/znoona_texts.dart';
 import 'package:znoona_game_app/core/language/lang_keys.dart';
 import 'package:znoona_game_app/features/quiz/room/domain/entities/room.dart';
 import 'package:znoona_game_app/features/quiz/room/presentation/cubit/room_cubit.dart';
-import 'package:flutter/services.dart';
 
 class RoomInfoCard extends StatelessWidget {
   const RoomInfoCard({required this.room, super.key});

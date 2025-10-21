@@ -6,7 +6,7 @@ import 'package:znoona_game_app/core/helpers/znoona_navigate.dart';
 import 'package:znoona_game_app/core/language/lang_keys.dart';
 import 'package:znoona_game_app/features/quiz/room/domain/entities/room.dart';
 import 'package:znoona_game_app/features/quiz/room/presentation/cubit/room_cubit.dart';
-import 'package:znoona_game_app/features/quiz/room/presentation/refactors/game_playing_body.dart';
+import 'package:znoona_game_app/features/quiz/room/presentation/refactors/room_load_questions_body.dart';
 import 'package:znoona_game_app/features/quiz/room/presentation/widgets/lobby/players_list.dart';
 import 'package:znoona_game_app/features/quiz/room/presentation/widgets/lobby/room_info_card.dart';
 import 'package:znoona_game_app/features/quiz/room/presentation/widgets/lobby/start_game_button.dart';

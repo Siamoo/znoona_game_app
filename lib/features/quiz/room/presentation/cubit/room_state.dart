@@ -18,7 +18,6 @@ class RoomState with _$RoomState {
   const factory RoomState.left() = _Left;
   const factory RoomState.gameStarted() = _GameStarted;
 
-  const factory RoomState.questionLoaded(Question question) = _QuestionLoaded;
   const factory RoomState.questionsListLoaded(List<Question> questions) =
       _QuestionsListLoaded;
 

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:znoona_game_app/core/common/widgets/custom_app_bar.dart';
 import 'package:znoona_game_app/features/quiz/room/domain/entities/room.dart';
 import 'package:znoona_game_app/features/quiz/room/domain/entities/room_question.dart';
 import 'package:znoona_game_app/features/quiz/room/presentation/cubit/room_cubit.dart';
@@ -20,15 +21,14 @@ class _GamePlayingBodyState extends State<GamePlayingBody> {
   String? _errorMessage;
 
   @override
-  void initState() {
+  Future<void> initState() async {
     super.initState();
-    _loadRoomQuestions();
+    await _loadRoomQuestions();
   }
 
   Future<void> _loadRoomQuestions() async {
     if (_isLoadingQuestions) return;
 
-    // Check mounted before setState
     if (!mounted) return;
     setState(() {
       _isLoadingQuestions = true;
@@ -40,10 +40,8 @@ class _GamePlayingBodyState extends State<GamePlayingBody> {
         widget.room.id,
       );
 
-      // Check mounted before processing result
       if (!mounted) return;
-
-      result.fold(
+     await result.fold(
         (String failure) {
           if (!mounted) return;
           setState(() {
@@ -51,13 +49,11 @@ class _GamePlayingBodyState extends State<GamePlayingBody> {
             _isLoadingQuestions = false;
           });
         },
-        (List<RoomQuestion> roomQuestions) {
-          final List<String> questionIds = roomQuestions
-              .map((rq) => rq.questionId)
-              .toList();
+        (List<RoomQuestion> roomQuestions) async {
+          final questionIds = roomQuestions.map((rq) => rq.questionId).toList();
 
           if (questionIds.isNotEmpty) {
-            context.read<RoomCubit>().getQuestions(questionIds);
+            await context.read<RoomCubit>().getQuestions(questionIds);
           } else {
             if (!mounted) return;
             setState(() {
@@ -67,7 +63,7 @@ class _GamePlayingBodyState extends State<GamePlayingBody> {
           }
         },
       );
-    } catch (e) {
+    }on Exception catch (e) {
       if (!mounted) return;
       setState(() {
         _errorMessage = 'Failed to load questions: $e';
@@ -77,7 +73,6 @@ class _GamePlayingBodyState extends State<GamePlayingBody> {
   }
 
   void _loadQuestions(List<Question> questions) {
-    // Check mounted before setState
     if (!mounted) return;
     setState(() {
       _questions = questions;
@@ -98,7 +93,6 @@ class _GamePlayingBodyState extends State<GamePlayingBody> {
           },
           error: (String message) {
             if (_isLoadingQuestions) {
-              // Check mounted before setState
               if (!mounted) return;
               setState(() {
                 _errorMessage = message;
@@ -122,11 +116,11 @@ class _GamePlayingBodyState extends State<GamePlayingBody> {
 
     if (_errorMessage != null) {
       return Scaffold(
-        appBar: AppBar(title: const Text('Game')),
         body: Center(
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
+              const CustomAppBar(title: 'Game'),
               const Icon(Icons.error, size: 64, color: Colors.red),
               const SizedBox(height: 16),
               const Text('Failed to load questions'),

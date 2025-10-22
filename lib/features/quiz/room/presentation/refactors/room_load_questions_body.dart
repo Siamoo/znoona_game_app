@@ -7,23 +7,23 @@ import 'package:znoona_game_app/features/quiz/room/presentation/cubit/room_cubit
 import 'package:znoona_game_app/features/quiz/room/presentation/screen/room_quiz_screen.dart';
 import 'package:znoona_game_app/features/quiz/single/domain/entities/question.dart';
 
-class GamePlayingBody extends StatefulWidget {
-  const GamePlayingBody({required this.room, super.key});
+class RoomLoadQuestionsBody extends StatefulWidget {
+  const RoomLoadQuestionsBody({required this.room, super.key});
   final Room room;
 
   @override
-  State<GamePlayingBody> createState() => _GamePlayingBodyState();
+  State<RoomLoadQuestionsBody> createState() => _RoomLoadQuestionsBodyState();
 }
 
-class _GamePlayingBodyState extends State<GamePlayingBody> {
+class _RoomLoadQuestionsBodyState extends State<RoomLoadQuestionsBody> {
   List<Question> _questions = [];
   bool _isLoadingQuestions = false;
   String? _errorMessage;
 
   @override
-  Future<void> initState() async {
+  void initState() {
     super.initState();
-    await _loadRoomQuestions();
+    _loadRoomQuestions();
   }
 
   Future<void> _loadRoomQuestions() async {
@@ -41,7 +41,7 @@ class _GamePlayingBodyState extends State<GamePlayingBody> {
       );
 
       if (!mounted) return;
-     await result.fold(
+      await result.fold(
         (String failure) {
           if (!mounted) return;
           setState(() {
@@ -63,7 +63,7 @@ class _GamePlayingBodyState extends State<GamePlayingBody> {
           }
         },
       );
-    }on Exception catch (e) {
+    } on Exception catch (e) {
       if (!mounted) return;
       setState(() {
         _errorMessage = 'Failed to load questions: $e';

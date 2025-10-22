@@ -95,7 +95,7 @@ class _RoomLobbyBodyState extends State<RoomLobbyBody> {
       if (mounted) {
         await ZnoonaNavigate.pushReplacementTo(
           context,
-          GamePlayingBody(room: widget.room),
+          RoomLoadQuestionsBody(room: widget.room),
         );
       }
     });

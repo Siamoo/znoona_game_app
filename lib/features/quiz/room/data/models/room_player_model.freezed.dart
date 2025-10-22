@@ -31,6 +31,7 @@ mixin _$RoomPlayerModel {
   bool? get isCorrect => throw _privateConstructorUsedError;
   DateTime? get answeredAt => throw _privateConstructorUsedError;
   bool? get isReady => throw _privateConstructorUsedError;
+  String? get avatarUrl => throw _privateConstructorUsedError;
 
   /// Create a copy of RoomPlayerModel
   /// with the given fields replaced by the non-null parameter values.
@@ -61,6 +62,7 @@ abstract class $RoomPlayerModelCopyWith<$Res> {
     bool? isCorrect,
     DateTime? answeredAt,
     bool? isReady,
+    String? avatarUrl,
   });
 }
 
@@ -93,6 +95,7 @@ class _$RoomPlayerModelCopyWithImpl<$Res, $Val extends RoomPlayerModel>
     Object? isCorrect = freezed,
     Object? answeredAt = freezed,
     Object? isReady = freezed,
+    Object? avatarUrl = freezed,
   }) {
     return _then(
       _value.copyWith(
@@ -152,6 +155,10 @@ class _$RoomPlayerModelCopyWithImpl<$Res, $Val extends RoomPlayerModel>
                 ? _value.isReady
                 : isReady // ignore: cast_nullable_to_non_nullable
                       as bool?,
+            avatarUrl: freezed == avatarUrl
+                ? _value.avatarUrl
+                : avatarUrl // ignore: cast_nullable_to_non_nullable
+                      as String?,
           )
           as $Val,
     );
@@ -182,6 +189,7 @@ abstract class _$$RoomPlayerModelImplCopyWith<$Res>
     bool? isCorrect,
     DateTime? answeredAt,
     bool? isReady,
+    String? avatarUrl,
   });
 }
 
@@ -213,6 +221,7 @@ class __$$RoomPlayerModelImplCopyWithImpl<$Res>
     Object? isCorrect = freezed,
     Object? answeredAt = freezed,
     Object? isReady = freezed,
+    Object? avatarUrl = freezed,
   }) {
     return _then(
       _$RoomPlayerModelImpl(
@@ -272,6 +281,10 @@ class __$$RoomPlayerModelImplCopyWithImpl<$Res>
             ? _value.isReady
             : isReady // ignore: cast_nullable_to_non_nullable
                   as bool?,
+        avatarUrl: freezed == avatarUrl
+            ? _value.avatarUrl
+            : avatarUrl // ignore: cast_nullable_to_non_nullable
+                  as String?,
       ),
     );
   }
@@ -295,6 +308,7 @@ class _$RoomPlayerModelImpl implements _RoomPlayerModel {
     this.isCorrect,
     this.answeredAt,
     this.isReady,
+    this.avatarUrl,
   });
 
   @override
@@ -325,10 +339,12 @@ class _$RoomPlayerModelImpl implements _RoomPlayerModel {
   final DateTime? answeredAt;
   @override
   final bool? isReady;
+  @override
+  final String? avatarUrl;
 
   @override
   String toString() {
-    return 'RoomPlayerModel(id: $id, roomId: $roomId, userId: $userId, username: $username, isHost: $isHost, isConnected: $isConnected, score: $score, finishedQuiz: $finishedQuiz, finishedAt: $finishedAt, joinedAt: $joinedAt, selectedAnswer: $selectedAnswer, isCorrect: $isCorrect, answeredAt: $answeredAt, isReady: $isReady)';
+    return 'RoomPlayerModel(id: $id, roomId: $roomId, userId: $userId, username: $username, isHost: $isHost, isConnected: $isConnected, score: $score, finishedQuiz: $finishedQuiz, finishedAt: $finishedAt, joinedAt: $joinedAt, selectedAnswer: $selectedAnswer, isCorrect: $isCorrect, answeredAt: $answeredAt, isReady: $isReady, avatarUrl: $avatarUrl)';
   }
 
   @override
@@ -357,7 +373,9 @@ class _$RoomPlayerModelImpl implements _RoomPlayerModel {
                 other.isCorrect == isCorrect) &&
             (identical(other.answeredAt, answeredAt) ||
                 other.answeredAt == answeredAt) &&
-            (identical(other.isReady, isReady) || other.isReady == isReady));
+            (identical(other.isReady, isReady) || other.isReady == isReady) &&
+            (identical(other.avatarUrl, avatarUrl) ||
+                other.avatarUrl == avatarUrl));
   }
 
   @override
@@ -377,6 +395,7 @@ class _$RoomPlayerModelImpl implements _RoomPlayerModel {
     isCorrect,
     answeredAt,
     isReady,
+    avatarUrl,
   );
 
   /// Create a copy of RoomPlayerModel
@@ -407,6 +426,7 @@ abstract class _RoomPlayerModel implements RoomPlayerModel {
     final bool? isCorrect,
     final DateTime? answeredAt,
     final bool? isReady,
+    final String? avatarUrl,
   }) = _$RoomPlayerModelImpl;
 
   @override
@@ -437,6 +457,8 @@ abstract class _RoomPlayerModel implements RoomPlayerModel {
   DateTime? get answeredAt;
   @override
   bool? get isReady;
+  @override
+  String? get avatarUrl;
 
   /// Create a copy of RoomPlayerModel
   /// with the given fields replaced by the non-null parameter values.

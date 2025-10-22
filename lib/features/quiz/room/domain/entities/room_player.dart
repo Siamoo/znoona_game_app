@@ -20,6 +20,7 @@ class RoomPlayer with _$RoomPlayer {
     bool? isCorrect,
     DateTime? answeredAt,
     bool? isReady,
+    String? avatarUrl, 
   }) = _RoomPlayer;
 
   factory RoomPlayer.fromJson(Map<String, dynamic> json) =>

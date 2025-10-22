@@ -28,6 +28,7 @@ _$RoomPlayerImpl _$$RoomPlayerImplFromJson(Map<String, dynamic> json) =>
           ? null
           : DateTime.parse(json['answeredAt'] as String),
       isReady: json['isReady'] as bool?,
+      avatarUrl: json['avatarUrl'] as String?,
     );
 
 Map<String, dynamic> _$$RoomPlayerImplToJson(_$RoomPlayerImpl instance) =>
@@ -46,4 +47,5 @@ Map<String, dynamic> _$$RoomPlayerImplToJson(_$RoomPlayerImpl instance) =>
       'isCorrect': instance.isCorrect,
       'answeredAt': instance.answeredAt?.toIso8601String(),
       'isReady': instance.isReady,
+      'avatarUrl': instance.avatarUrl,
     };

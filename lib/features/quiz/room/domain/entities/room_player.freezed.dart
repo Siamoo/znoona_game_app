@@ -35,6 +35,7 @@ mixin _$RoomPlayer {
   bool? get isCorrect => throw _privateConstructorUsedError;
   DateTime? get answeredAt => throw _privateConstructorUsedError;
   bool? get isReady => throw _privateConstructorUsedError;
+  String? get avatarUrl => throw _privateConstructorUsedError;
 
   /// Serializes this RoomPlayer to a JSON map.
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
@@ -68,6 +69,7 @@ abstract class $RoomPlayerCopyWith<$Res> {
     bool? isCorrect,
     DateTime? answeredAt,
     bool? isReady,
+    String? avatarUrl,
   });
 }
 
@@ -100,6 +102,7 @@ class _$RoomPlayerCopyWithImpl<$Res, $Val extends RoomPlayer>
     Object? isCorrect = freezed,
     Object? answeredAt = freezed,
     Object? isReady = freezed,
+    Object? avatarUrl = freezed,
   }) {
     return _then(
       _value.copyWith(
@@ -159,6 +162,10 @@ class _$RoomPlayerCopyWithImpl<$Res, $Val extends RoomPlayer>
                 ? _value.isReady
                 : isReady // ignore: cast_nullable_to_non_nullable
                       as bool?,
+            avatarUrl: freezed == avatarUrl
+                ? _value.avatarUrl
+                : avatarUrl // ignore: cast_nullable_to_non_nullable
+                      as String?,
           )
           as $Val,
     );
@@ -189,6 +196,7 @@ abstract class _$$RoomPlayerImplCopyWith<$Res>
     bool? isCorrect,
     DateTime? answeredAt,
     bool? isReady,
+    String? avatarUrl,
   });
 }
 
@@ -220,6 +228,7 @@ class __$$RoomPlayerImplCopyWithImpl<$Res>
     Object? isCorrect = freezed,
     Object? answeredAt = freezed,
     Object? isReady = freezed,
+    Object? avatarUrl = freezed,
   }) {
     return _then(
       _$RoomPlayerImpl(
@@ -279,6 +288,10 @@ class __$$RoomPlayerImplCopyWithImpl<$Res>
             ? _value.isReady
             : isReady // ignore: cast_nullable_to_non_nullable
                   as bool?,
+        avatarUrl: freezed == avatarUrl
+            ? _value.avatarUrl
+            : avatarUrl // ignore: cast_nullable_to_non_nullable
+                  as String?,
       ),
     );
   }
@@ -302,6 +315,7 @@ class _$RoomPlayerImpl implements _RoomPlayer {
     this.isCorrect,
     this.answeredAt,
     this.isReady,
+    this.avatarUrl,
   });
 
   factory _$RoomPlayerImpl.fromJson(Map<String, dynamic> json) =>
@@ -335,10 +349,12 @@ class _$RoomPlayerImpl implements _RoomPlayer {
   final DateTime? answeredAt;
   @override
   final bool? isReady;
+  @override
+  final String? avatarUrl;
 
   @override
   String toString() {
-    return 'RoomPlayer(id: $id, roomId: $roomId, userId: $userId, username: $username, isHost: $isHost, isConnected: $isConnected, score: $score, finishedQuiz: $finishedQuiz, finishedAt: $finishedAt, joinedAt: $joinedAt, selectedAnswer: $selectedAnswer, isCorrect: $isCorrect, answeredAt: $answeredAt, isReady: $isReady)';
+    return 'RoomPlayer(id: $id, roomId: $roomId, userId: $userId, username: $username, isHost: $isHost, isConnected: $isConnected, score: $score, finishedQuiz: $finishedQuiz, finishedAt: $finishedAt, joinedAt: $joinedAt, selectedAnswer: $selectedAnswer, isCorrect: $isCorrect, answeredAt: $answeredAt, isReady: $isReady, avatarUrl: $avatarUrl)';
   }
 
   @override
@@ -367,7 +383,9 @@ class _$RoomPlayerImpl implements _RoomPlayer {
                 other.isCorrect == isCorrect) &&
             (identical(other.answeredAt, answeredAt) ||
                 other.answeredAt == answeredAt) &&
-            (identical(other.isReady, isReady) || other.isReady == isReady));
+            (identical(other.isReady, isReady) || other.isReady == isReady) &&
+            (identical(other.avatarUrl, avatarUrl) ||
+                other.avatarUrl == avatarUrl));
   }
 
   @JsonKey(includeFromJson: false, includeToJson: false)
@@ -388,6 +406,7 @@ class _$RoomPlayerImpl implements _RoomPlayer {
     isCorrect,
     answeredAt,
     isReady,
+    avatarUrl,
   );
 
   /// Create a copy of RoomPlayer
@@ -420,6 +439,7 @@ abstract class _RoomPlayer implements RoomPlayer {
     final bool? isCorrect,
     final DateTime? answeredAt,
     final bool? isReady,
+    final String? avatarUrl,
   }) = _$RoomPlayerImpl;
 
   factory _RoomPlayer.fromJson(Map<String, dynamic> json) =
@@ -453,6 +473,8 @@ abstract class _RoomPlayer implements RoomPlayer {
   DateTime? get answeredAt;
   @override
   bool? get isReady;
+  @override
+  String? get avatarUrl;
 
   /// Create a copy of RoomPlayer
   /// with the given fields replaced by the non-null parameter values.

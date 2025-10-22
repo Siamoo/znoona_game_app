@@ -2,6 +2,7 @@ import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:znoona_game_app/features/quiz/room/domain/entities/room_player.dart';
 
 part 'room_player_model.freezed.dart';
+
 @freezed
 class RoomPlayerModel with _$RoomPlayerModel {
   const factory RoomPlayerModel({
@@ -19,6 +20,7 @@ class RoomPlayerModel with _$RoomPlayerModel {
     bool? isCorrect,
     DateTime? answeredAt,
     bool? isReady,
+    String? avatarUrl, // NEW: Add avatar URL
   }) = _RoomPlayerModel;
 
   factory RoomPlayerModel.fromJson(Map<String, dynamic> json) {
@@ -35,7 +37,7 @@ class RoomPlayerModel with _$RoomPlayerModel {
       finishedQuiz: json['finished_quiz'] == true, 
       finishedAt: json['finished_at'] != null
           ? DateTime.tryParse(json['finished_at'].toString())
-          : null, // NEW
+          : null,
       joinedAt: json['joined_at'] != null
           ? DateTime.tryParse(json['joined_at'].toString())
           : null,
@@ -45,6 +47,7 @@ class RoomPlayerModel with _$RoomPlayerModel {
           ? DateTime.tryParse(json['answered_at'].toString())
           : null,
       isReady: json['is_ready'] as bool? ?? false,
+      avatarUrl: json['avatar_url']?.toString(), 
     );
   }
 
@@ -63,6 +66,7 @@ class RoomPlayerModel with _$RoomPlayerModel {
         isCorrect: player.isCorrect,
         answeredAt: player.answeredAt,
         isReady: player.isReady ?? false,
+        avatarUrl: player.avatarUrl, // NEW: Add avatar URL
       );
 }
 
@@ -82,5 +86,6 @@ extension RoomPlayerModelX on RoomPlayerModel {
         isCorrect: isCorrect,
         answeredAt: answeredAt,
         isReady: isReady,
+        avatarUrl: avatarUrl, // NEW: Add avatar URL
       );
 }

@@ -19,7 +19,6 @@ class RoomRemoteDataSource {
     final metadata = user.userMetadata ?? {};
     final userNameMeta = metadata['full_name'] ?? 'Host';
 
-    // Call the updated function
     final result = await supabase.rpc<dynamic>(
       'create_room_with_questions',
       params: {
@@ -31,7 +30,7 @@ class RoomRemoteDataSource {
       },
     );
 
-    print('RPC result: $result'); // Debug log
+    print('RPC result: $result'); 
 
     // Handle the table return type properly
     if (result == null || (result as List).isEmpty) {
@@ -74,6 +73,15 @@ class RoomRemoteDataSource {
     final metadata = user.userMetadata ?? {};
     final userNameMeta = metadata['full_name'] ?? 'player';
 
+    // Get user's avatar URL from profiles table first
+    final profileData = await supabase
+        .from('profiles')
+        .select('avatar_url')
+        .eq('id', user.id)
+        .maybeSingle();
+
+    final avatarUrl = profileData?['avatar_url']?.toString();
+
     final roomData = await supabase
         .from('rooms')
         .select()
@@ -82,11 +90,9 @@ class RoomRemoteDataSource {
 
     if (roomData == null) throw Exception('Room not found with code $code');
 
-    final roomId = roomData['id'];
-    if (roomId == null || roomId is! String) {
-      throw Exception('Invalid room ID in roomData: $roomData');
-    }
+    final roomId = roomData['id'] as String;
 
+    // Insert player with avatar URL
     final playerData = await supabase
         .from('room_players')
         .insert({
@@ -96,6 +102,7 @@ class RoomRemoteDataSource {
           'is_host': false,
           'is_connected': true,
           'score': 0,
+          'avatar_url': avatarUrl, // NEW: Include avatar URL
         })
         .select()
         .maybeSingle();
@@ -318,7 +325,8 @@ class RoomRemoteDataSource {
         final updatedPlayer = result.first;
         print(
           '🔍 Updated player - finished_quiz: ${updatedPlayer['finished_quiz']}, '
-          'finished_at: ${updatedPlayer['finished_at']}',
+          'finished_at: ${updatedPlayer['finished_at']}, '
+          'avatar_url: ${updatedPlayer['avatar_url']}', // NEW: Log avatar URL
         );
       }
     } catch (e) {
@@ -342,7 +350,8 @@ class RoomRemoteDataSource {
       print(
         '🔧 Checking player state: '
         'finished_quiz: ${currentData['finished_quiz']}, '
-        'finished_at: ${currentData['finished_at']}',
+        'finished_at: ${currentData['finished_at']}, '
+        'avatar_url: ${currentData['avatar_url']}', // NEW: Log avatar URL
       );
 
       if (currentData['finished_quiz'] == true &&
@@ -375,13 +384,12 @@ class RoomRemoteDataSource {
         .asyncMap((rows) async {
           print('📨 Stream received ${rows.length} players');
 
-          // Add a small delay to ensure all updates are captured
           await Future.delayed(const Duration(milliseconds: 100));
 
-          // Debug: Check each player's finished_at
           for (final row in rows) {
             print(
               '👤 Player: ${row['username']}, '
+              'avatar: ${row['avatar_url']}, ' 
               'finished_quiz: ${row['finished_quiz']}, '
               'finished_at: ${row['finished_at']}',
             );
@@ -417,5 +425,24 @@ class RoomRemoteDataSource {
     return (data as List)
         .map((e) => RoomPlayerModel.fromJson(e as Map<String, dynamic>))
         .toList();
+  }
+
+  Future<List<RoomPlayerModel>> getRoomPlayersWithAvatars(String roomId) async {
+    final data = await supabase
+        .rpc('get_room_players_with_avatars', params: {'p_room_id': roomId});
+
+    return (data as List)
+        .map((e) => RoomPlayerModel.fromJson(e as Map<String, dynamic>))
+        .toList();
+  }
+
+  Future<void> updatePlayerAvatar({
+    required String userId,
+    required String? avatarUrl,
+  }) async {
+    await supabase
+        .from('room_players')
+        .update({'avatar_url': avatarUrl})
+        .eq('user_id', userId);
   }
 }

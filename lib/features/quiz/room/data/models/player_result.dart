@@ -9,6 +9,7 @@ class PlayerResult {
     required this.isCurrentUser,
     required this.finishedQuiz,
     this.finishedAt,
+    this.avatarUrl, 
   });
   final String userId;
   final String username;
@@ -19,9 +20,10 @@ class PlayerResult {
   final bool isCurrentUser;
   final bool finishedQuiz;
   final DateTime? finishedAt;
+  final String? avatarUrl; 
 
   @override
   String toString() {
-    return 'PlayerResult{username: $username, score: $score, rank: $rank, finished: $finishedQuiz}';
+    return 'PlayerResult{username: $username, score: $score, rank: $rank, finished: $finishedQuiz, avatar: $avatarUrl}';
   }
 }

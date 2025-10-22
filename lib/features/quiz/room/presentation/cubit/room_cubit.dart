@@ -839,6 +839,7 @@ void _startQuestionTimer() {
       isCurrentUser: player.userId == currentUserId,
       finishedQuiz: player.finishedQuiz,
       finishedAt: player.finishedAt,
+      avatarUrl: player.avatarUrl,
     );
   }
 

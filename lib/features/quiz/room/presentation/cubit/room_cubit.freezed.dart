@@ -30,7 +30,6 @@ mixin _$RoomState {
     required TResult Function(Room room) joined,
     required TResult Function() left,
     required TResult Function() gameStarted,
-    required TResult Function(Question question) questionLoaded,
     required TResult Function(List<Question> questions) questionsListLoaded,
     required TResult Function(
       List<Question> questions,
@@ -78,7 +77,6 @@ mixin _$RoomState {
     TResult? Function(Room room)? joined,
     TResult? Function()? left,
     TResult? Function()? gameStarted,
-    TResult? Function(Question question)? questionLoaded,
     TResult? Function(List<Question> questions)? questionsListLoaded,
     TResult? Function(
       List<Question> questions,
@@ -126,7 +124,6 @@ mixin _$RoomState {
     TResult Function(Room room)? joined,
     TResult Function()? left,
     TResult Function()? gameStarted,
-    TResult Function(Question question)? questionLoaded,
     TResult Function(List<Question> questions)? questionsListLoaded,
     TResult Function(
       List<Question> questions,
@@ -175,7 +172,6 @@ mixin _$RoomState {
     required TResult Function(_Joined value) joined,
     required TResult Function(_Left value) left,
     required TResult Function(_GameStarted value) gameStarted,
-    required TResult Function(_QuestionLoaded value) questionLoaded,
     required TResult Function(_QuestionsListLoaded value) questionsListLoaded,
     required TResult Function(_QuizStarted value) quizStarted,
     required TResult Function(_PlayerFinished value) playerFinished,
@@ -196,7 +192,6 @@ mixin _$RoomState {
     TResult? Function(_Joined value)? joined,
     TResult? Function(_Left value)? left,
     TResult? Function(_GameStarted value)? gameStarted,
-    TResult? Function(_QuestionLoaded value)? questionLoaded,
     TResult? Function(_QuestionsListLoaded value)? questionsListLoaded,
     TResult? Function(_QuizStarted value)? quizStarted,
     TResult? Function(_PlayerFinished value)? playerFinished,
@@ -217,7 +212,6 @@ mixin _$RoomState {
     TResult Function(_Joined value)? joined,
     TResult Function(_Left value)? left,
     TResult Function(_GameStarted value)? gameStarted,
-    TResult Function(_QuestionLoaded value)? questionLoaded,
     TResult Function(_QuestionsListLoaded value)? questionsListLoaded,
     TResult Function(_QuizStarted value)? quizStarted,
     TResult Function(_PlayerFinished value)? playerFinished,
@@ -302,7 +296,6 @@ class _$InitialImpl implements _Initial {
     required TResult Function(Room room) joined,
     required TResult Function() left,
     required TResult Function() gameStarted,
-    required TResult Function(Question question) questionLoaded,
     required TResult Function(List<Question> questions) questionsListLoaded,
     required TResult Function(
       List<Question> questions,
@@ -354,7 +347,6 @@ class _$InitialImpl implements _Initial {
     TResult? Function(Room room)? joined,
     TResult? Function()? left,
     TResult? Function()? gameStarted,
-    TResult? Function(Question question)? questionLoaded,
     TResult? Function(List<Question> questions)? questionsListLoaded,
     TResult? Function(
       List<Question> questions,
@@ -406,7 +398,6 @@ class _$InitialImpl implements _Initial {
     TResult Function(Room room)? joined,
     TResult Function()? left,
     TResult Function()? gameStarted,
-    TResult Function(Question question)? questionLoaded,
     TResult Function(List<Question> questions)? questionsListLoaded,
     TResult Function(
       List<Question> questions,
@@ -462,7 +453,6 @@ class _$InitialImpl implements _Initial {
     required TResult Function(_Joined value) joined,
     required TResult Function(_Left value) left,
     required TResult Function(_GameStarted value) gameStarted,
-    required TResult Function(_QuestionLoaded value) questionLoaded,
     required TResult Function(_QuestionsListLoaded value) questionsListLoaded,
     required TResult Function(_QuizStarted value) quizStarted,
     required TResult Function(_PlayerFinished value) playerFinished,
@@ -487,7 +477,6 @@ class _$InitialImpl implements _Initial {
     TResult? Function(_Joined value)? joined,
     TResult? Function(_Left value)? left,
     TResult? Function(_GameStarted value)? gameStarted,
-    TResult? Function(_QuestionLoaded value)? questionLoaded,
     TResult? Function(_QuestionsListLoaded value)? questionsListLoaded,
     TResult? Function(_QuizStarted value)? quizStarted,
     TResult? Function(_PlayerFinished value)? playerFinished,
@@ -512,7 +501,6 @@ class _$InitialImpl implements _Initial {
     TResult Function(_Joined value)? joined,
     TResult Function(_Left value)? left,
     TResult Function(_GameStarted value)? gameStarted,
-    TResult Function(_QuestionLoaded value)? questionLoaded,
     TResult Function(_QuestionsListLoaded value)? questionsListLoaded,
     TResult Function(_QuizStarted value)? quizStarted,
     TResult Function(_PlayerFinished value)? playerFinished,
@@ -586,7 +574,6 @@ class _$LoadingImpl implements _Loading {
     required TResult Function(Room room) joined,
     required TResult Function() left,
     required TResult Function() gameStarted,
-    required TResult Function(Question question) questionLoaded,
     required TResult Function(List<Question> questions) questionsListLoaded,
     required TResult Function(
       List<Question> questions,
@@ -638,7 +625,6 @@ class _$LoadingImpl implements _Loading {
     TResult? Function(Room room)? joined,
     TResult? Function()? left,
     TResult? Function()? gameStarted,
-    TResult? Function(Question question)? questionLoaded,
     TResult? Function(List<Question> questions)? questionsListLoaded,
     TResult? Function(
       List<Question> questions,
@@ -690,7 +676,6 @@ class _$LoadingImpl implements _Loading {
     TResult Function(Room room)? joined,
     TResult Function()? left,
     TResult Function()? gameStarted,
-    TResult Function(Question question)? questionLoaded,
     TResult Function(List<Question> questions)? questionsListLoaded,
     TResult Function(
       List<Question> questions,
@@ -746,7 +731,6 @@ class _$LoadingImpl implements _Loading {
     required TResult Function(_Joined value) joined,
     required TResult Function(_Left value) left,
     required TResult Function(_GameStarted value) gameStarted,
-    required TResult Function(_QuestionLoaded value) questionLoaded,
     required TResult Function(_QuestionsListLoaded value) questionsListLoaded,
     required TResult Function(_QuizStarted value) quizStarted,
     required TResult Function(_PlayerFinished value) playerFinished,
@@ -771,7 +755,6 @@ class _$LoadingImpl implements _Loading {
     TResult? Function(_Joined value)? joined,
     TResult? Function(_Left value)? left,
     TResult? Function(_GameStarted value)? gameStarted,
-    TResult? Function(_QuestionLoaded value)? questionLoaded,
     TResult? Function(_QuestionsListLoaded value)? questionsListLoaded,
     TResult? Function(_QuizStarted value)? quizStarted,
     TResult? Function(_PlayerFinished value)? playerFinished,
@@ -796,7 +779,6 @@ class _$LoadingImpl implements _Loading {
     TResult Function(_Joined value)? joined,
     TResult Function(_Left value)? left,
     TResult Function(_GameStarted value)? gameStarted,
-    TResult Function(_QuestionLoaded value)? questionLoaded,
     TResult Function(_QuestionsListLoaded value)? questionsListLoaded,
     TResult Function(_QuizStarted value)? quizStarted,
     TResult Function(_PlayerFinished value)? playerFinished,
@@ -897,7 +879,6 @@ class _$ErrorImpl implements _Error {
     required TResult Function(Room room) joined,
     required TResult Function() left,
     required TResult Function() gameStarted,
-    required TResult Function(Question question) questionLoaded,
     required TResult Function(List<Question> questions) questionsListLoaded,
     required TResult Function(
       List<Question> questions,
@@ -949,7 +930,6 @@ class _$ErrorImpl implements _Error {
     TResult? Function(Room room)? joined,
     TResult? Function()? left,
     TResult? Function()? gameStarted,
-    TResult? Function(Question question)? questionLoaded,
     TResult? Function(List<Question> questions)? questionsListLoaded,
     TResult? Function(
       List<Question> questions,
@@ -1001,7 +981,6 @@ class _$ErrorImpl implements _Error {
     TResult Function(Room room)? joined,
     TResult Function()? left,
     TResult Function()? gameStarted,
-    TResult Function(Question question)? questionLoaded,
     TResult Function(List<Question> questions)? questionsListLoaded,
     TResult Function(
       List<Question> questions,
@@ -1057,7 +1036,6 @@ class _$ErrorImpl implements _Error {
     required TResult Function(_Joined value) joined,
     required TResult Function(_Left value) left,
     required TResult Function(_GameStarted value) gameStarted,
-    required TResult Function(_QuestionLoaded value) questionLoaded,
     required TResult Function(_QuestionsListLoaded value) questionsListLoaded,
     required TResult Function(_QuizStarted value) quizStarted,
     required TResult Function(_PlayerFinished value) playerFinished,
@@ -1082,7 +1060,6 @@ class _$ErrorImpl implements _Error {
     TResult? Function(_Joined value)? joined,
     TResult? Function(_Left value)? left,
     TResult? Function(_GameStarted value)? gameStarted,
-    TResult? Function(_QuestionLoaded value)? questionLoaded,
     TResult? Function(_QuestionsListLoaded value)? questionsListLoaded,
     TResult? Function(_QuizStarted value)? quizStarted,
     TResult? Function(_PlayerFinished value)? playerFinished,
@@ -1107,7 +1084,6 @@ class _$ErrorImpl implements _Error {
     TResult Function(_Joined value)? joined,
     TResult Function(_Left value)? left,
     TResult Function(_GameStarted value)? gameStarted,
-    TResult Function(_QuestionLoaded value)? questionLoaded,
     TResult Function(_QuestionsListLoaded value)? questionsListLoaded,
     TResult Function(_QuizStarted value)? quizStarted,
     TResult Function(_PlayerFinished value)? playerFinished,
@@ -1228,7 +1204,6 @@ class _$RoomLoadedImpl implements _RoomLoaded {
     required TResult Function(Room room) joined,
     required TResult Function() left,
     required TResult Function() gameStarted,
-    required TResult Function(Question question) questionLoaded,
     required TResult Function(List<Question> questions) questionsListLoaded,
     required TResult Function(
       List<Question> questions,
@@ -1280,7 +1255,6 @@ class _$RoomLoadedImpl implements _RoomLoaded {
     TResult? Function(Room room)? joined,
     TResult? Function()? left,
     TResult? Function()? gameStarted,
-    TResult? Function(Question question)? questionLoaded,
     TResult? Function(List<Question> questions)? questionsListLoaded,
     TResult? Function(
       List<Question> questions,
@@ -1332,7 +1306,6 @@ class _$RoomLoadedImpl implements _RoomLoaded {
     TResult Function(Room room)? joined,
     TResult Function()? left,
     TResult Function()? gameStarted,
-    TResult Function(Question question)? questionLoaded,
     TResult Function(List<Question> questions)? questionsListLoaded,
     TResult Function(
       List<Question> questions,
@@ -1388,7 +1361,6 @@ class _$RoomLoadedImpl implements _RoomLoaded {
     required TResult Function(_Joined value) joined,
     required TResult Function(_Left value) left,
     required TResult Function(_GameStarted value) gameStarted,
-    required TResult Function(_QuestionLoaded value) questionLoaded,
     required TResult Function(_QuestionsListLoaded value) questionsListLoaded,
     required TResult Function(_QuizStarted value) quizStarted,
     required TResult Function(_PlayerFinished value) playerFinished,
@@ -1413,7 +1385,6 @@ class _$RoomLoadedImpl implements _RoomLoaded {
     TResult? Function(_Joined value)? joined,
     TResult? Function(_Left value)? left,
     TResult? Function(_GameStarted value)? gameStarted,
-    TResult? Function(_QuestionLoaded value)? questionLoaded,
     TResult? Function(_QuestionsListLoaded value)? questionsListLoaded,
     TResult? Function(_QuizStarted value)? quizStarted,
     TResult? Function(_PlayerFinished value)? playerFinished,
@@ -1438,7 +1409,6 @@ class _$RoomLoadedImpl implements _RoomLoaded {
     TResult Function(_Joined value)? joined,
     TResult Function(_Left value)? left,
     TResult Function(_GameStarted value)? gameStarted,
-    TResult Function(_QuestionLoaded value)? questionLoaded,
     TResult Function(_QuestionsListLoaded value)? questionsListLoaded,
     TResult Function(_QuizStarted value)? quizStarted,
     TResult Function(_PlayerFinished value)? playerFinished,
@@ -1553,7 +1523,6 @@ class _$RoomsUpdatedImpl implements _RoomsUpdated {
     required TResult Function(Room room) joined,
     required TResult Function() left,
     required TResult Function() gameStarted,
-    required TResult Function(Question question) questionLoaded,
     required TResult Function(List<Question> questions) questionsListLoaded,
     required TResult Function(
       List<Question> questions,
@@ -1605,7 +1574,6 @@ class _$RoomsUpdatedImpl implements _RoomsUpdated {
     TResult? Function(Room room)? joined,
     TResult? Function()? left,
     TResult? Function()? gameStarted,
-    TResult? Function(Question question)? questionLoaded,
     TResult? Function(List<Question> questions)? questionsListLoaded,
     TResult? Function(
       List<Question> questions,
@@ -1657,7 +1625,6 @@ class _$RoomsUpdatedImpl implements _RoomsUpdated {
     TResult Function(Room room)? joined,
     TResult Function()? left,
     TResult Function()? gameStarted,
-    TResult Function(Question question)? questionLoaded,
     TResult Function(List<Question> questions)? questionsListLoaded,
     TResult Function(
       List<Question> questions,
@@ -1713,7 +1680,6 @@ class _$RoomsUpdatedImpl implements _RoomsUpdated {
     required TResult Function(_Joined value) joined,
     required TResult Function(_Left value) left,
     required TResult Function(_GameStarted value) gameStarted,
-    required TResult Function(_QuestionLoaded value) questionLoaded,
     required TResult Function(_QuestionsListLoaded value) questionsListLoaded,
     required TResult Function(_QuizStarted value) quizStarted,
     required TResult Function(_PlayerFinished value) playerFinished,
@@ -1738,7 +1704,6 @@ class _$RoomsUpdatedImpl implements _RoomsUpdated {
     TResult? Function(_Joined value)? joined,
     TResult? Function(_Left value)? left,
     TResult? Function(_GameStarted value)? gameStarted,
-    TResult? Function(_QuestionLoaded value)? questionLoaded,
     TResult? Function(_QuestionsListLoaded value)? questionsListLoaded,
     TResult? Function(_QuizStarted value)? quizStarted,
     TResult? Function(_PlayerFinished value)? playerFinished,
@@ -1763,7 +1728,6 @@ class _$RoomsUpdatedImpl implements _RoomsUpdated {
     TResult Function(_Joined value)? joined,
     TResult Function(_Left value)? left,
     TResult Function(_GameStarted value)? gameStarted,
-    TResult Function(_QuestionLoaded value)? questionLoaded,
     TResult Function(_QuestionsListLoaded value)? questionsListLoaded,
     TResult Function(_QuizStarted value)? quizStarted,
     TResult Function(_PlayerFinished value)? playerFinished,
@@ -1882,7 +1846,6 @@ class _$PlayersUpdatedImpl implements _PlayersUpdated {
     required TResult Function(Room room) joined,
     required TResult Function() left,
     required TResult Function() gameStarted,
-    required TResult Function(Question question) questionLoaded,
     required TResult Function(List<Question> questions) questionsListLoaded,
     required TResult Function(
       List<Question> questions,
@@ -1934,7 +1897,6 @@ class _$PlayersUpdatedImpl implements _PlayersUpdated {
     TResult? Function(Room room)? joined,
     TResult? Function()? left,
     TResult? Function()? gameStarted,
-    TResult? Function(Question question)? questionLoaded,
     TResult? Function(List<Question> questions)? questionsListLoaded,
     TResult? Function(
       List<Question> questions,
@@ -1986,7 +1948,6 @@ class _$PlayersUpdatedImpl implements _PlayersUpdated {
     TResult Function(Room room)? joined,
     TResult Function()? left,
     TResult Function()? gameStarted,
-    TResult Function(Question question)? questionLoaded,
     TResult Function(List<Question> questions)? questionsListLoaded,
     TResult Function(
       List<Question> questions,
@@ -2042,7 +2003,6 @@ class _$PlayersUpdatedImpl implements _PlayersUpdated {
     required TResult Function(_Joined value) joined,
     required TResult Function(_Left value) left,
     required TResult Function(_GameStarted value) gameStarted,
-    required TResult Function(_QuestionLoaded value) questionLoaded,
     required TResult Function(_QuestionsListLoaded value) questionsListLoaded,
     required TResult Function(_QuizStarted value) quizStarted,
     required TResult Function(_PlayerFinished value) playerFinished,
@@ -2067,7 +2027,6 @@ class _$PlayersUpdatedImpl implements _PlayersUpdated {
     TResult? Function(_Joined value)? joined,
     TResult? Function(_Left value)? left,
     TResult? Function(_GameStarted value)? gameStarted,
-    TResult? Function(_QuestionLoaded value)? questionLoaded,
     TResult? Function(_QuestionsListLoaded value)? questionsListLoaded,
     TResult? Function(_QuizStarted value)? quizStarted,
     TResult? Function(_PlayerFinished value)? playerFinished,
@@ -2092,7 +2051,6 @@ class _$PlayersUpdatedImpl implements _PlayersUpdated {
     TResult Function(_Joined value)? joined,
     TResult Function(_Left value)? left,
     TResult Function(_GameStarted value)? gameStarted,
-    TResult Function(_QuestionLoaded value)? questionLoaded,
     TResult Function(_QuestionsListLoaded value)? questionsListLoaded,
     TResult Function(_QuizStarted value)? quizStarted,
     TResult Function(_PlayerFinished value)? playerFinished,
@@ -2218,7 +2176,6 @@ class _$RoomUpdatedImpl implements _RoomUpdated {
     required TResult Function(Room room) joined,
     required TResult Function() left,
     required TResult Function() gameStarted,
-    required TResult Function(Question question) questionLoaded,
     required TResult Function(List<Question> questions) questionsListLoaded,
     required TResult Function(
       List<Question> questions,
@@ -2270,7 +2227,6 @@ class _$RoomUpdatedImpl implements _RoomUpdated {
     TResult? Function(Room room)? joined,
     TResult? Function()? left,
     TResult? Function()? gameStarted,
-    TResult? Function(Question question)? questionLoaded,
     TResult? Function(List<Question> questions)? questionsListLoaded,
     TResult? Function(
       List<Question> questions,
@@ -2322,7 +2278,6 @@ class _$RoomUpdatedImpl implements _RoomUpdated {
     TResult Function(Room room)? joined,
     TResult Function()? left,
     TResult Function()? gameStarted,
-    TResult Function(Question question)? questionLoaded,
     TResult Function(List<Question> questions)? questionsListLoaded,
     TResult Function(
       List<Question> questions,
@@ -2378,7 +2333,6 @@ class _$RoomUpdatedImpl implements _RoomUpdated {
     required TResult Function(_Joined value) joined,
     required TResult Function(_Left value) left,
     required TResult Function(_GameStarted value) gameStarted,
-    required TResult Function(_QuestionLoaded value) questionLoaded,
     required TResult Function(_QuestionsListLoaded value) questionsListLoaded,
     required TResult Function(_QuizStarted value) quizStarted,
     required TResult Function(_PlayerFinished value) playerFinished,
@@ -2403,7 +2357,6 @@ class _$RoomUpdatedImpl implements _RoomUpdated {
     TResult? Function(_Joined value)? joined,
     TResult? Function(_Left value)? left,
     TResult? Function(_GameStarted value)? gameStarted,
-    TResult? Function(_QuestionLoaded value)? questionLoaded,
     TResult? Function(_QuestionsListLoaded value)? questionsListLoaded,
     TResult? Function(_QuizStarted value)? quizStarted,
     TResult? Function(_PlayerFinished value)? playerFinished,
@@ -2428,7 +2381,6 @@ class _$RoomUpdatedImpl implements _RoomUpdated {
     TResult Function(_Joined value)? joined,
     TResult Function(_Left value)? left,
     TResult Function(_GameStarted value)? gameStarted,
-    TResult Function(_QuestionLoaded value)? questionLoaded,
     TResult Function(_QuestionsListLoaded value)? questionsListLoaded,
     TResult Function(_QuizStarted value)? quizStarted,
     TResult Function(_PlayerFinished value)? playerFinished,
@@ -2550,7 +2502,6 @@ class _$QuestionsLoadedImpl implements _QuestionsLoaded {
     required TResult Function(Room room) joined,
     required TResult Function() left,
     required TResult Function() gameStarted,
-    required TResult Function(Question question) questionLoaded,
     required TResult Function(List<Question> questions) questionsListLoaded,
     required TResult Function(
       List<Question> questions,
@@ -2602,7 +2553,6 @@ class _$QuestionsLoadedImpl implements _QuestionsLoaded {
     TResult? Function(Room room)? joined,
     TResult? Function()? left,
     TResult? Function()? gameStarted,
-    TResult? Function(Question question)? questionLoaded,
     TResult? Function(List<Question> questions)? questionsListLoaded,
     TResult? Function(
       List<Question> questions,
@@ -2654,7 +2604,6 @@ class _$QuestionsLoadedImpl implements _QuestionsLoaded {
     TResult Function(Room room)? joined,
     TResult Function()? left,
     TResult Function()? gameStarted,
-    TResult Function(Question question)? questionLoaded,
     TResult Function(List<Question> questions)? questionsListLoaded,
     TResult Function(
       List<Question> questions,
@@ -2710,7 +2659,6 @@ class _$QuestionsLoadedImpl implements _QuestionsLoaded {
     required TResult Function(_Joined value) joined,
     required TResult Function(_Left value) left,
     required TResult Function(_GameStarted value) gameStarted,
-    required TResult Function(_QuestionLoaded value) questionLoaded,
     required TResult Function(_QuestionsListLoaded value) questionsListLoaded,
     required TResult Function(_QuizStarted value) quizStarted,
     required TResult Function(_PlayerFinished value) playerFinished,
@@ -2735,7 +2683,6 @@ class _$QuestionsLoadedImpl implements _QuestionsLoaded {
     TResult? Function(_Joined value)? joined,
     TResult? Function(_Left value)? left,
     TResult? Function(_GameStarted value)? gameStarted,
-    TResult? Function(_QuestionLoaded value)? questionLoaded,
     TResult? Function(_QuestionsListLoaded value)? questionsListLoaded,
     TResult? Function(_QuizStarted value)? quizStarted,
     TResult? Function(_PlayerFinished value)? playerFinished,
@@ -2760,7 +2707,6 @@ class _$QuestionsLoadedImpl implements _QuestionsLoaded {
     TResult Function(_Joined value)? joined,
     TResult Function(_Left value)? left,
     TResult Function(_GameStarted value)? gameStarted,
-    TResult Function(_QuestionLoaded value)? questionLoaded,
     TResult Function(_QuestionsListLoaded value)? questionsListLoaded,
     TResult Function(_QuizStarted value)? quizStarted,
     TResult Function(_PlayerFinished value)? playerFinished,
@@ -2882,7 +2828,6 @@ class _$JoinedImpl implements _Joined {
     required TResult Function(Room room) joined,
     required TResult Function() left,
     required TResult Function() gameStarted,
-    required TResult Function(Question question) questionLoaded,
     required TResult Function(List<Question> questions) questionsListLoaded,
     required TResult Function(
       List<Question> questions,
@@ -2934,7 +2879,6 @@ class _$JoinedImpl implements _Joined {
     TResult? Function(Room room)? joined,
     TResult? Function()? left,
     TResult? Function()? gameStarted,
-    TResult? Function(Question question)? questionLoaded,
     TResult? Function(List<Question> questions)? questionsListLoaded,
     TResult? Function(
       List<Question> questions,
@@ -2986,7 +2930,6 @@ class _$JoinedImpl implements _Joined {
     TResult Function(Room room)? joined,
     TResult Function()? left,
     TResult Function()? gameStarted,
-    TResult Function(Question question)? questionLoaded,
     TResult Function(List<Question> questions)? questionsListLoaded,
     TResult Function(
       List<Question> questions,
@@ -3042,7 +2985,6 @@ class _$JoinedImpl implements _Joined {
     required TResult Function(_Joined value) joined,
     required TResult Function(_Left value) left,
     required TResult Function(_GameStarted value) gameStarted,
-    required TResult Function(_QuestionLoaded value) questionLoaded,
     required TResult Function(_QuestionsListLoaded value) questionsListLoaded,
     required TResult Function(_QuizStarted value) quizStarted,
     required TResult Function(_PlayerFinished value) playerFinished,
@@ -3067,7 +3009,6 @@ class _$JoinedImpl implements _Joined {
     TResult? Function(_Joined value)? joined,
     TResult? Function(_Left value)? left,
     TResult? Function(_GameStarted value)? gameStarted,
-    TResult? Function(_QuestionLoaded value)? questionLoaded,
     TResult? Function(_QuestionsListLoaded value)? questionsListLoaded,
     TResult? Function(_QuizStarted value)? quizStarted,
     TResult? Function(_PlayerFinished value)? playerFinished,
@@ -3092,7 +3033,6 @@ class _$JoinedImpl implements _Joined {
     TResult Function(_Joined value)? joined,
     TResult Function(_Left value)? left,
     TResult Function(_GameStarted value)? gameStarted,
-    TResult Function(_QuestionLoaded value)? questionLoaded,
     TResult Function(_QuestionsListLoaded value)? questionsListLoaded,
     TResult Function(_QuizStarted value)? quizStarted,
     TResult Function(_PlayerFinished value)? playerFinished,
@@ -3172,7 +3112,6 @@ class _$LeftImpl implements _Left {
     required TResult Function(Room room) joined,
     required TResult Function() left,
     required TResult Function() gameStarted,
-    required TResult Function(Question question) questionLoaded,
     required TResult Function(List<Question> questions) questionsListLoaded,
     required TResult Function(
       List<Question> questions,
@@ -3224,7 +3163,6 @@ class _$LeftImpl implements _Left {
     TResult? Function(Room room)? joined,
     TResult? Function()? left,
     TResult? Function()? gameStarted,
-    TResult? Function(Question question)? questionLoaded,
     TResult? Function(List<Question> questions)? questionsListLoaded,
     TResult? Function(
       List<Question> questions,
@@ -3276,7 +3214,6 @@ class _$LeftImpl implements _Left {
     TResult Function(Room room)? joined,
     TResult Function()? left,
     TResult Function()? gameStarted,
-    TResult Function(Question question)? questionLoaded,
     TResult Function(List<Question> questions)? questionsListLoaded,
     TResult Function(
       List<Question> questions,
@@ -3332,7 +3269,6 @@ class _$LeftImpl implements _Left {
     required TResult Function(_Joined value) joined,
     required TResult Function(_Left value) left,
     required TResult Function(_GameStarted value) gameStarted,
-    required TResult Function(_QuestionLoaded value) questionLoaded,
     required TResult Function(_QuestionsListLoaded value) questionsListLoaded,
     required TResult Function(_QuizStarted value) quizStarted,
     required TResult Function(_PlayerFinished value) playerFinished,
@@ -3357,7 +3293,6 @@ class _$LeftImpl implements _Left {
     TResult? Function(_Joined value)? joined,
     TResult? Function(_Left value)? left,
     TResult? Function(_GameStarted value)? gameStarted,
-    TResult? Function(_QuestionLoaded value)? questionLoaded,
     TResult? Function(_QuestionsListLoaded value)? questionsListLoaded,
     TResult? Function(_QuizStarted value)? quizStarted,
     TResult? Function(_PlayerFinished value)? playerFinished,
@@ -3382,7 +3317,6 @@ class _$LeftImpl implements _Left {
     TResult Function(_Joined value)? joined,
     TResult Function(_Left value)? left,
     TResult Function(_GameStarted value)? gameStarted,
-    TResult Function(_QuestionLoaded value)? questionLoaded,
     TResult Function(_QuestionsListLoaded value)? questionsListLoaded,
     TResult Function(_QuizStarted value)? quizStarted,
     TResult Function(_PlayerFinished value)? playerFinished,
@@ -3456,7 +3390,6 @@ class _$GameStartedImpl implements _GameStarted {
     required TResult Function(Room room) joined,
     required TResult Function() left,
     required TResult Function() gameStarted,
-    required TResult Function(Question question) questionLoaded,
     required TResult Function(List<Question> questions) questionsListLoaded,
     required TResult Function(
       List<Question> questions,
@@ -3508,7 +3441,6 @@ class _$GameStartedImpl implements _GameStarted {
     TResult? Function(Room room)? joined,
     TResult? Function()? left,
     TResult? Function()? gameStarted,
-    TResult? Function(Question question)? questionLoaded,
     TResult? Function(List<Question> questions)? questionsListLoaded,
     TResult? Function(
       List<Question> questions,
@@ -3560,7 +3492,6 @@ class _$GameStartedImpl implements _GameStarted {
     TResult Function(Room room)? joined,
     TResult Function()? left,
     TResult Function()? gameStarted,
-    TResult Function(Question question)? questionLoaded,
     TResult Function(List<Question> questions)? questionsListLoaded,
     TResult Function(
       List<Question> questions,
@@ -3616,7 +3547,6 @@ class _$GameStartedImpl implements _GameStarted {
     required TResult Function(_Joined value) joined,
     required TResult Function(_Left value) left,
     required TResult Function(_GameStarted value) gameStarted,
-    required TResult Function(_QuestionLoaded value) questionLoaded,
     required TResult Function(_QuestionsListLoaded value) questionsListLoaded,
     required TResult Function(_QuizStarted value) quizStarted,
     required TResult Function(_PlayerFinished value) playerFinished,
@@ -3641,7 +3571,6 @@ class _$GameStartedImpl implements _GameStarted {
     TResult? Function(_Joined value)? joined,
     TResult? Function(_Left value)? left,
     TResult? Function(_GameStarted value)? gameStarted,
-    TResult? Function(_QuestionLoaded value)? questionLoaded,
     TResult? Function(_QuestionsListLoaded value)? questionsListLoaded,
     TResult? Function(_QuizStarted value)? quizStarted,
     TResult? Function(_PlayerFinished value)? playerFinished,
@@ -3666,7 +3595,6 @@ class _$GameStartedImpl implements _GameStarted {
     TResult Function(_Joined value)? joined,
     TResult Function(_Left value)? left,
     TResult Function(_GameStarted value)? gameStarted,
-    TResult Function(_QuestionLoaded value)? questionLoaded,
     TResult Function(_QuestionsListLoaded value)? questionsListLoaded,
     TResult Function(_QuizStarted value)? quizStarted,
     TResult Function(_PlayerFinished value)? playerFinished,
@@ -3684,341 +3612,6 @@ class _$GameStartedImpl implements _GameStarted {
 
 abstract class _GameStarted implements RoomState {
   const factory _GameStarted() = _$GameStartedImpl;
-}
-
-/// @nodoc
-abstract class _$$QuestionLoadedImplCopyWith<$Res> {
-  factory _$$QuestionLoadedImplCopyWith(
-    _$QuestionLoadedImpl value,
-    $Res Function(_$QuestionLoadedImpl) then,
-  ) = __$$QuestionLoadedImplCopyWithImpl<$Res>;
-  @useResult
-  $Res call({Question question});
-
-  $QuestionCopyWith<$Res> get question;
-}
-
-/// @nodoc
-class __$$QuestionLoadedImplCopyWithImpl<$Res>
-    extends _$RoomStateCopyWithImpl<$Res, _$QuestionLoadedImpl>
-    implements _$$QuestionLoadedImplCopyWith<$Res> {
-  __$$QuestionLoadedImplCopyWithImpl(
-    _$QuestionLoadedImpl _value,
-    $Res Function(_$QuestionLoadedImpl) _then,
-  ) : super(_value, _then);
-
-  /// Create a copy of RoomState
-  /// with the given fields replaced by the non-null parameter values.
-  @pragma('vm:prefer-inline')
-  @override
-  $Res call({Object? question = null}) {
-    return _then(
-      _$QuestionLoadedImpl(
-        null == question
-            ? _value.question
-            : question // ignore: cast_nullable_to_non_nullable
-                  as Question,
-      ),
-    );
-  }
-
-  /// Create a copy of RoomState
-  /// with the given fields replaced by the non-null parameter values.
-  @override
-  @pragma('vm:prefer-inline')
-  $QuestionCopyWith<$Res> get question {
-    return $QuestionCopyWith<$Res>(_value.question, (value) {
-      return _then(_value.copyWith(question: value));
-    });
-  }
-}
-
-/// @nodoc
-
-class _$QuestionLoadedImpl implements _QuestionLoaded {
-  const _$QuestionLoadedImpl(this.question);
-
-  @override
-  final Question question;
-
-  @override
-  String toString() {
-    return 'RoomState.questionLoaded(question: $question)';
-  }
-
-  @override
-  bool operator ==(Object other) {
-    return identical(this, other) ||
-        (other.runtimeType == runtimeType &&
-            other is _$QuestionLoadedImpl &&
-            (identical(other.question, question) ||
-                other.question == question));
-  }
-
-  @override
-  int get hashCode => Object.hash(runtimeType, question);
-
-  /// Create a copy of RoomState
-  /// with the given fields replaced by the non-null parameter values.
-  @JsonKey(includeFromJson: false, includeToJson: false)
-  @override
-  @pragma('vm:prefer-inline')
-  _$$QuestionLoadedImplCopyWith<_$QuestionLoadedImpl> get copyWith =>
-      __$$QuestionLoadedImplCopyWithImpl<_$QuestionLoadedImpl>(
-        this,
-        _$identity,
-      );
-
-  @override
-  @optionalTypeArgs
-  TResult when<TResult extends Object?>({
-    required TResult Function() initial,
-    required TResult Function() loading,
-    required TResult Function(String message) error,
-    required TResult Function(Room room) roomLoaded,
-    required TResult Function(List<Room> rooms) roomsUpdated,
-    required TResult Function(List<RoomPlayer> players) playersUpdated,
-    required TResult Function(Room? room) roomUpdated,
-    required TResult Function(List<RoomQuestion> questions) questionsLoaded,
-    required TResult Function(Room room) joined,
-    required TResult Function() left,
-    required TResult Function() gameStarted,
-    required TResult Function(Question question) questionLoaded,
-    required TResult Function(List<Question> questions) questionsListLoaded,
-    required TResult Function(
-      List<Question> questions,
-      int currentQuestionIndex,
-      int remainingTime,
-      Map<String, String?> playerAnswers,
-      String? selectedAnswer,
-      int correctCount,
-      bool isWaitingForPlayers,
-      List<RoomPlayer> players,
-    )
-    quizStarted,
-    required TResult Function(
-      int totalQuestions,
-      int correctAnswers,
-      int totalPlayers,
-      int finishedPlayers,
-    )
-    playerFinished,
-    required TResult Function(
-      List<PlayerResult> results,
-      int finishedPlayers,
-      int totalPlayers,
-      bool allPlayersFinished,
-      int userRank,
-    )
-    showingProgressiveResults,
-    required TResult Function(
-      int totalQuestions,
-      int correctAnswers,
-      List<RoomPlayer> players,
-    )
-    quizFinished,
-  }) {
-    return questionLoaded(question);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function()? initial,
-    TResult? Function()? loading,
-    TResult? Function(String message)? error,
-    TResult? Function(Room room)? roomLoaded,
-    TResult? Function(List<Room> rooms)? roomsUpdated,
-    TResult? Function(List<RoomPlayer> players)? playersUpdated,
-    TResult? Function(Room? room)? roomUpdated,
-    TResult? Function(List<RoomQuestion> questions)? questionsLoaded,
-    TResult? Function(Room room)? joined,
-    TResult? Function()? left,
-    TResult? Function()? gameStarted,
-    TResult? Function(Question question)? questionLoaded,
-    TResult? Function(List<Question> questions)? questionsListLoaded,
-    TResult? Function(
-      List<Question> questions,
-      int currentQuestionIndex,
-      int remainingTime,
-      Map<String, String?> playerAnswers,
-      String? selectedAnswer,
-      int correctCount,
-      bool isWaitingForPlayers,
-      List<RoomPlayer> players,
-    )?
-    quizStarted,
-    TResult? Function(
-      int totalQuestions,
-      int correctAnswers,
-      int totalPlayers,
-      int finishedPlayers,
-    )?
-    playerFinished,
-    TResult? Function(
-      List<PlayerResult> results,
-      int finishedPlayers,
-      int totalPlayers,
-      bool allPlayersFinished,
-      int userRank,
-    )?
-    showingProgressiveResults,
-    TResult? Function(
-      int totalQuestions,
-      int correctAnswers,
-      List<RoomPlayer> players,
-    )?
-    quizFinished,
-  }) {
-    return questionLoaded?.call(question);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult maybeWhen<TResult extends Object?>({
-    TResult Function()? initial,
-    TResult Function()? loading,
-    TResult Function(String message)? error,
-    TResult Function(Room room)? roomLoaded,
-    TResult Function(List<Room> rooms)? roomsUpdated,
-    TResult Function(List<RoomPlayer> players)? playersUpdated,
-    TResult Function(Room? room)? roomUpdated,
-    TResult Function(List<RoomQuestion> questions)? questionsLoaded,
-    TResult Function(Room room)? joined,
-    TResult Function()? left,
-    TResult Function()? gameStarted,
-    TResult Function(Question question)? questionLoaded,
-    TResult Function(List<Question> questions)? questionsListLoaded,
-    TResult Function(
-      List<Question> questions,
-      int currentQuestionIndex,
-      int remainingTime,
-      Map<String, String?> playerAnswers,
-      String? selectedAnswer,
-      int correctCount,
-      bool isWaitingForPlayers,
-      List<RoomPlayer> players,
-    )?
-    quizStarted,
-    TResult Function(
-      int totalQuestions,
-      int correctAnswers,
-      int totalPlayers,
-      int finishedPlayers,
-    )?
-    playerFinished,
-    TResult Function(
-      List<PlayerResult> results,
-      int finishedPlayers,
-      int totalPlayers,
-      bool allPlayersFinished,
-      int userRank,
-    )?
-    showingProgressiveResults,
-    TResult Function(
-      int totalQuestions,
-      int correctAnswers,
-      List<RoomPlayer> players,
-    )?
-    quizFinished,
-    required TResult orElse(),
-  }) {
-    if (questionLoaded != null) {
-      return questionLoaded(question);
-    }
-    return orElse();
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult map<TResult extends Object?>({
-    required TResult Function(_Initial value) initial,
-    required TResult Function(_Loading value) loading,
-    required TResult Function(_Error value) error,
-    required TResult Function(_RoomLoaded value) roomLoaded,
-    required TResult Function(_RoomsUpdated value) roomsUpdated,
-    required TResult Function(_PlayersUpdated value) playersUpdated,
-    required TResult Function(_RoomUpdated value) roomUpdated,
-    required TResult Function(_QuestionsLoaded value) questionsLoaded,
-    required TResult Function(_Joined value) joined,
-    required TResult Function(_Left value) left,
-    required TResult Function(_GameStarted value) gameStarted,
-    required TResult Function(_QuestionLoaded value) questionLoaded,
-    required TResult Function(_QuestionsListLoaded value) questionsListLoaded,
-    required TResult Function(_QuizStarted value) quizStarted,
-    required TResult Function(_PlayerFinished value) playerFinished,
-    required TResult Function(_ShowingProgressiveResults value)
-    showingProgressiveResults,
-    required TResult Function(_QuizFinished value) quizFinished,
-  }) {
-    return questionLoaded(this);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult? mapOrNull<TResult extends Object?>({
-    TResult? Function(_Initial value)? initial,
-    TResult? Function(_Loading value)? loading,
-    TResult? Function(_Error value)? error,
-    TResult? Function(_RoomLoaded value)? roomLoaded,
-    TResult? Function(_RoomsUpdated value)? roomsUpdated,
-    TResult? Function(_PlayersUpdated value)? playersUpdated,
-    TResult? Function(_RoomUpdated value)? roomUpdated,
-    TResult? Function(_QuestionsLoaded value)? questionsLoaded,
-    TResult? Function(_Joined value)? joined,
-    TResult? Function(_Left value)? left,
-    TResult? Function(_GameStarted value)? gameStarted,
-    TResult? Function(_QuestionLoaded value)? questionLoaded,
-    TResult? Function(_QuestionsListLoaded value)? questionsListLoaded,
-    TResult? Function(_QuizStarted value)? quizStarted,
-    TResult? Function(_PlayerFinished value)? playerFinished,
-    TResult? Function(_ShowingProgressiveResults value)?
-    showingProgressiveResults,
-    TResult? Function(_QuizFinished value)? quizFinished,
-  }) {
-    return questionLoaded?.call(this);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult maybeMap<TResult extends Object?>({
-    TResult Function(_Initial value)? initial,
-    TResult Function(_Loading value)? loading,
-    TResult Function(_Error value)? error,
-    TResult Function(_RoomLoaded value)? roomLoaded,
-    TResult Function(_RoomsUpdated value)? roomsUpdated,
-    TResult Function(_PlayersUpdated value)? playersUpdated,
-    TResult Function(_RoomUpdated value)? roomUpdated,
-    TResult Function(_QuestionsLoaded value)? questionsLoaded,
-    TResult Function(_Joined value)? joined,
-    TResult Function(_Left value)? left,
-    TResult Function(_GameStarted value)? gameStarted,
-    TResult Function(_QuestionLoaded value)? questionLoaded,
-    TResult Function(_QuestionsListLoaded value)? questionsListLoaded,
-    TResult Function(_QuizStarted value)? quizStarted,
-    TResult Function(_PlayerFinished value)? playerFinished,
-    TResult Function(_ShowingProgressiveResults value)?
-    showingProgressiveResults,
-    TResult Function(_QuizFinished value)? quizFinished,
-    required TResult orElse(),
-  }) {
-    if (questionLoaded != null) {
-      return questionLoaded(this);
-    }
-    return orElse();
-  }
-}
-
-abstract class _QuestionLoaded implements RoomState {
-  const factory _QuestionLoaded(final Question question) = _$QuestionLoadedImpl;
-
-  Question get question;
-
-  /// Create a copy of RoomState
-  /// with the given fields replaced by the non-null parameter values.
-  @JsonKey(includeFromJson: false, includeToJson: false)
-  _$$QuestionLoadedImplCopyWith<_$QuestionLoadedImpl> get copyWith =>
-      throw _privateConstructorUsedError;
 }
 
 /// @nodoc
@@ -4115,7 +3708,6 @@ class _$QuestionsListLoadedImpl implements _QuestionsListLoaded {
     required TResult Function(Room room) joined,
     required TResult Function() left,
     required TResult Function() gameStarted,
-    required TResult Function(Question question) questionLoaded,
     required TResult Function(List<Question> questions) questionsListLoaded,
     required TResult Function(
       List<Question> questions,
@@ -4167,7 +3759,6 @@ class _$QuestionsListLoadedImpl implements _QuestionsListLoaded {
     TResult? Function(Room room)? joined,
     TResult? Function()? left,
     TResult? Function()? gameStarted,
-    TResult? Function(Question question)? questionLoaded,
     TResult? Function(List<Question> questions)? questionsListLoaded,
     TResult? Function(
       List<Question> questions,
@@ -4219,7 +3810,6 @@ class _$QuestionsListLoadedImpl implements _QuestionsListLoaded {
     TResult Function(Room room)? joined,
     TResult Function()? left,
     TResult Function()? gameStarted,
-    TResult Function(Question question)? questionLoaded,
     TResult Function(List<Question> questions)? questionsListLoaded,
     TResult Function(
       List<Question> questions,
@@ -4275,7 +3865,6 @@ class _$QuestionsListLoadedImpl implements _QuestionsListLoaded {
     required TResult Function(_Joined value) joined,
     required TResult Function(_Left value) left,
     required TResult Function(_GameStarted value) gameStarted,
-    required TResult Function(_QuestionLoaded value) questionLoaded,
     required TResult Function(_QuestionsListLoaded value) questionsListLoaded,
     required TResult Function(_QuizStarted value) quizStarted,
     required TResult Function(_PlayerFinished value) playerFinished,
@@ -4300,7 +3889,6 @@ class _$QuestionsListLoadedImpl implements _QuestionsListLoaded {
     TResult? Function(_Joined value)? joined,
     TResult? Function(_Left value)? left,
     TResult? Function(_GameStarted value)? gameStarted,
-    TResult? Function(_QuestionLoaded value)? questionLoaded,
     TResult? Function(_QuestionsListLoaded value)? questionsListLoaded,
     TResult? Function(_QuizStarted value)? quizStarted,
     TResult? Function(_PlayerFinished value)? playerFinished,
@@ -4325,7 +3913,6 @@ class _$QuestionsListLoadedImpl implements _QuestionsListLoaded {
     TResult Function(_Joined value)? joined,
     TResult Function(_Left value)? left,
     TResult Function(_GameStarted value)? gameStarted,
-    TResult Function(_QuestionLoaded value)? questionLoaded,
     TResult Function(_QuestionsListLoaded value)? questionsListLoaded,
     TResult Function(_QuizStarted value)? quizStarted,
     TResult Function(_PlayerFinished value)? playerFinished,
@@ -4551,7 +4138,6 @@ class _$QuizStartedImpl implements _QuizStarted {
     required TResult Function(Room room) joined,
     required TResult Function() left,
     required TResult Function() gameStarted,
-    required TResult Function(Question question) questionLoaded,
     required TResult Function(List<Question> questions) questionsListLoaded,
     required TResult Function(
       List<Question> questions,
@@ -4612,7 +4198,6 @@ class _$QuizStartedImpl implements _QuizStarted {
     TResult? Function(Room room)? joined,
     TResult? Function()? left,
     TResult? Function()? gameStarted,
-    TResult? Function(Question question)? questionLoaded,
     TResult? Function(List<Question> questions)? questionsListLoaded,
     TResult? Function(
       List<Question> questions,
@@ -4673,7 +4258,6 @@ class _$QuizStartedImpl implements _QuizStarted {
     TResult Function(Room room)? joined,
     TResult Function()? left,
     TResult Function()? gameStarted,
-    TResult Function(Question question)? questionLoaded,
     TResult Function(List<Question> questions)? questionsListLoaded,
     TResult Function(
       List<Question> questions,
@@ -4738,7 +4322,6 @@ class _$QuizStartedImpl implements _QuizStarted {
     required TResult Function(_Joined value) joined,
     required TResult Function(_Left value) left,
     required TResult Function(_GameStarted value) gameStarted,
-    required TResult Function(_QuestionLoaded value) questionLoaded,
     required TResult Function(_QuestionsListLoaded value) questionsListLoaded,
     required TResult Function(_QuizStarted value) quizStarted,
     required TResult Function(_PlayerFinished value) playerFinished,
@@ -4763,7 +4346,6 @@ class _$QuizStartedImpl implements _QuizStarted {
     TResult? Function(_Joined value)? joined,
     TResult? Function(_Left value)? left,
     TResult? Function(_GameStarted value)? gameStarted,
-    TResult? Function(_QuestionLoaded value)? questionLoaded,
     TResult? Function(_QuestionsListLoaded value)? questionsListLoaded,
     TResult? Function(_QuizStarted value)? quizStarted,
     TResult? Function(_PlayerFinished value)? playerFinished,
@@ -4788,7 +4370,6 @@ class _$QuizStartedImpl implements _QuizStarted {
     TResult Function(_Joined value)? joined,
     TResult Function(_Left value)? left,
     TResult Function(_GameStarted value)? gameStarted,
-    TResult Function(_QuestionLoaded value)? questionLoaded,
     TResult Function(_QuestionsListLoaded value)? questionsListLoaded,
     TResult Function(_QuizStarted value)? quizStarted,
     TResult Function(_PlayerFinished value)? playerFinished,
@@ -4962,7 +4543,6 @@ class _$PlayerFinishedImpl implements _PlayerFinished {
     required TResult Function(Room room) joined,
     required TResult Function() left,
     required TResult Function() gameStarted,
-    required TResult Function(Question question) questionLoaded,
     required TResult Function(List<Question> questions) questionsListLoaded,
     required TResult Function(
       List<Question> questions,
@@ -5019,7 +4599,6 @@ class _$PlayerFinishedImpl implements _PlayerFinished {
     TResult? Function(Room room)? joined,
     TResult? Function()? left,
     TResult? Function()? gameStarted,
-    TResult? Function(Question question)? questionLoaded,
     TResult? Function(List<Question> questions)? questionsListLoaded,
     TResult? Function(
       List<Question> questions,
@@ -5076,7 +4655,6 @@ class _$PlayerFinishedImpl implements _PlayerFinished {
     TResult Function(Room room)? joined,
     TResult Function()? left,
     TResult Function()? gameStarted,
-    TResult Function(Question question)? questionLoaded,
     TResult Function(List<Question> questions)? questionsListLoaded,
     TResult Function(
       List<Question> questions,
@@ -5137,7 +4715,6 @@ class _$PlayerFinishedImpl implements _PlayerFinished {
     required TResult Function(_Joined value) joined,
     required TResult Function(_Left value) left,
     required TResult Function(_GameStarted value) gameStarted,
-    required TResult Function(_QuestionLoaded value) questionLoaded,
     required TResult Function(_QuestionsListLoaded value) questionsListLoaded,
     required TResult Function(_QuizStarted value) quizStarted,
     required TResult Function(_PlayerFinished value) playerFinished,
@@ -5162,7 +4739,6 @@ class _$PlayerFinishedImpl implements _PlayerFinished {
     TResult? Function(_Joined value)? joined,
     TResult? Function(_Left value)? left,
     TResult? Function(_GameStarted value)? gameStarted,
-    TResult? Function(_QuestionLoaded value)? questionLoaded,
     TResult? Function(_QuestionsListLoaded value)? questionsListLoaded,
     TResult? Function(_QuizStarted value)? quizStarted,
     TResult? Function(_PlayerFinished value)? playerFinished,
@@ -5187,7 +4763,6 @@ class _$PlayerFinishedImpl implements _PlayerFinished {
     TResult Function(_Joined value)? joined,
     TResult Function(_Left value)? left,
     TResult Function(_GameStarted value)? gameStarted,
-    TResult Function(_QuestionLoaded value)? questionLoaded,
     TResult Function(_QuestionsListLoaded value)? questionsListLoaded,
     TResult Function(_QuizStarted value)? quizStarted,
     TResult Function(_PlayerFinished value)? playerFinished,
@@ -5370,7 +4945,6 @@ class _$ShowingProgressiveResultsImpl implements _ShowingProgressiveResults {
     required TResult Function(Room room) joined,
     required TResult Function() left,
     required TResult Function() gameStarted,
-    required TResult Function(Question question) questionLoaded,
     required TResult Function(List<Question> questions) questionsListLoaded,
     required TResult Function(
       List<Question> questions,
@@ -5428,7 +5002,6 @@ class _$ShowingProgressiveResultsImpl implements _ShowingProgressiveResults {
     TResult? Function(Room room)? joined,
     TResult? Function()? left,
     TResult? Function()? gameStarted,
-    TResult? Function(Question question)? questionLoaded,
     TResult? Function(List<Question> questions)? questionsListLoaded,
     TResult? Function(
       List<Question> questions,
@@ -5486,7 +5059,6 @@ class _$ShowingProgressiveResultsImpl implements _ShowingProgressiveResults {
     TResult Function(Room room)? joined,
     TResult Function()? left,
     TResult Function()? gameStarted,
-    TResult Function(Question question)? questionLoaded,
     TResult Function(List<Question> questions)? questionsListLoaded,
     TResult Function(
       List<Question> questions,
@@ -5548,7 +5120,6 @@ class _$ShowingProgressiveResultsImpl implements _ShowingProgressiveResults {
     required TResult Function(_Joined value) joined,
     required TResult Function(_Left value) left,
     required TResult Function(_GameStarted value) gameStarted,
-    required TResult Function(_QuestionLoaded value) questionLoaded,
     required TResult Function(_QuestionsListLoaded value) questionsListLoaded,
     required TResult Function(_QuizStarted value) quizStarted,
     required TResult Function(_PlayerFinished value) playerFinished,
@@ -5573,7 +5144,6 @@ class _$ShowingProgressiveResultsImpl implements _ShowingProgressiveResults {
     TResult? Function(_Joined value)? joined,
     TResult? Function(_Left value)? left,
     TResult? Function(_GameStarted value)? gameStarted,
-    TResult? Function(_QuestionLoaded value)? questionLoaded,
     TResult? Function(_QuestionsListLoaded value)? questionsListLoaded,
     TResult? Function(_QuizStarted value)? quizStarted,
     TResult? Function(_PlayerFinished value)? playerFinished,
@@ -5598,7 +5168,6 @@ class _$ShowingProgressiveResultsImpl implements _ShowingProgressiveResults {
     TResult Function(_Joined value)? joined,
     TResult Function(_Left value)? left,
     TResult Function(_GameStarted value)? gameStarted,
-    TResult Function(_QuestionLoaded value)? questionLoaded,
     TResult Function(_QuestionsListLoaded value)? questionsListLoaded,
     TResult Function(_QuizStarted value)? quizStarted,
     TResult Function(_PlayerFinished value)? playerFinished,
@@ -5751,7 +5320,6 @@ class _$QuizFinishedImpl implements _QuizFinished {
     required TResult Function(Room room) joined,
     required TResult Function() left,
     required TResult Function() gameStarted,
-    required TResult Function(Question question) questionLoaded,
     required TResult Function(List<Question> questions) questionsListLoaded,
     required TResult Function(
       List<Question> questions,
@@ -5803,7 +5371,6 @@ class _$QuizFinishedImpl implements _QuizFinished {
     TResult? Function(Room room)? joined,
     TResult? Function()? left,
     TResult? Function()? gameStarted,
-    TResult? Function(Question question)? questionLoaded,
     TResult? Function(List<Question> questions)? questionsListLoaded,
     TResult? Function(
       List<Question> questions,
@@ -5855,7 +5422,6 @@ class _$QuizFinishedImpl implements _QuizFinished {
     TResult Function(Room room)? joined,
     TResult Function()? left,
     TResult Function()? gameStarted,
-    TResult Function(Question question)? questionLoaded,
     TResult Function(List<Question> questions)? questionsListLoaded,
     TResult Function(
       List<Question> questions,
@@ -5911,7 +5477,6 @@ class _$QuizFinishedImpl implements _QuizFinished {
     required TResult Function(_Joined value) joined,
     required TResult Function(_Left value) left,
     required TResult Function(_GameStarted value) gameStarted,
-    required TResult Function(_QuestionLoaded value) questionLoaded,
     required TResult Function(_QuestionsListLoaded value) questionsListLoaded,
     required TResult Function(_QuizStarted value) quizStarted,
     required TResult Function(_PlayerFinished value) playerFinished,
@@ -5936,7 +5501,6 @@ class _$QuizFinishedImpl implements _QuizFinished {
     TResult? Function(_Joined value)? joined,
     TResult? Function(_Left value)? left,
     TResult? Function(_GameStarted value)? gameStarted,
-    TResult? Function(_QuestionLoaded value)? questionLoaded,
     TResult? Function(_QuestionsListLoaded value)? questionsListLoaded,
     TResult? Function(_QuizStarted value)? quizStarted,
     TResult? Function(_PlayerFinished value)? playerFinished,
@@ -5961,7 +5525,6 @@ class _$QuizFinishedImpl implements _QuizFinished {
     TResult Function(_Joined value)? joined,
     TResult Function(_Left value)? left,
     TResult Function(_GameStarted value)? gameStarted,
-    TResult Function(_QuestionLoaded value)? questionLoaded,
     TResult Function(_QuestionsListLoaded value)? questionsListLoaded,
     TResult Function(_QuizStarted value)? quizStarted,
     TResult Function(_PlayerFinished value)? playerFinished,

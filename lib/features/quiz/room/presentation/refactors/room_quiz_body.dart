@@ -72,6 +72,22 @@ class _RoomQuizBodyState extends State<RoomQuizBody> {
     context.read<RoomCubit>().selectAnswer(answer);
   }
 
+  RoomPlayer? _getTopPlayer(List<RoomPlayer> players) {
+    if (players.isEmpty) return null;
+    
+    // Sort players by score (descending) and then by joined time (ascending) for tie-breaker
+    final sortedPlayers = List<RoomPlayer>.from(players)
+      ..sort((a, b) {
+        if (b.score != a.score) {
+          return b.score.compareTo(a.score); // Higher score first
+        }
+        // If scores are equal, use join time (earlier join wins)
+        return (a.joinedAt ?? DateTime.now()).compareTo(b.joinedAt ?? DateTime.now());
+      });
+    
+    return sortedPlayers.first;
+  }
+
   @override
   Widget build(BuildContext context) {
     return BlocListener<RoomCubit, RoomState>(
@@ -140,10 +156,9 @@ class _RoomQuizBodyState extends State<RoomQuizBody> {
                   );
                 },
             orElse: () => _buildQuizContent(
-              // Fallback to initial state if cubit hasn't emitted yet
               questions: _currentQuestions,
               currentQuestionIndex: _currentQuestionIndex,
-              remainingTime: widget.room.timerDuration, // Use room's timer
+              remainingTime: widget.room.timerDuration, 
               playerAnswers: _currentPlayerAnswers,
               selectedAnswer: _currentSelectedAnswer,
               correctCount: _currentCorrectCount,
@@ -288,8 +303,14 @@ class _RoomQuizBodyState extends State<RoomQuizBody> {
         ? answeredPlayers / totalConnected
         : 0.0;
 
+    final topPlayer = _getTopPlayer(connectedPlayers);
+
     return Column(
       children: [
+        // Top Player Section
+        if (topPlayer != null) _buildTopPlayerSection(topPlayer),
+        SizedBox(height: 16.sp),
+
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
@@ -326,6 +347,122 @@ class _RoomQuizBodyState extends State<RoomQuizBody> {
           totalConnected,
         ),
       ],
+    );
+  }
+
+  Widget _buildTopPlayerSection(RoomPlayer topPlayer) {
+    final currentUserId = _getCurrentUserId();
+    final isCurrentUser = topPlayer.userId == currentUserId;
+
+    return Container(
+      width: double.infinity,
+      padding: EdgeInsets.all(12.sp),
+      decoration: BoxDecoration(
+        color: ZnoonaColors.bluePinkLight(context).withOpacity(0.1),
+        borderRadius: BorderRadius.circular(12.sp),
+        border: Border.all(
+          color: ZnoonaColors.bluePinkLight(context).withOpacity(0.3),
+          width: 1.sp,
+        ),
+      ),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          // Top Player Info
+          Row(
+            children: [
+              // Crown Icon
+              Icon(
+                Icons.emoji_events,
+                color: Colors.amber,
+                size: 24.sp,
+              ),
+              SizedBox(width: 8.sp),
+              
+              // Avatar
+              Container(
+                width: 40.sp,
+                height: 40.sp,
+                decoration: BoxDecoration(
+                  shape: BoxShape.circle,
+                  border: Border.all(
+                    color: ZnoonaColors.bluePinkLight(context),
+                    width: 2.sp,
+                  ),
+                ),
+                child: ClipOval(
+                  child: topPlayer.avatarUrl != null && topPlayer.avatarUrl!.isNotEmpty
+                      ? Image.network(
+                          topPlayer.avatarUrl!,
+                          fit: BoxFit.cover,
+                          errorBuilder: (context, error, stackTrace) {
+                            return Icon(
+                              Icons.person,
+                              size: 20.sp,
+                              color: ZnoonaColors.bluePinkLight(context),
+                            );
+                          },
+                        )
+                      : Icon(
+                          Icons.person,
+                          size: 20.sp,
+                          color: ZnoonaColors.bluePinkLight(context),
+                        ),
+                ),
+              ),
+              SizedBox(width: 12.sp),
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    '🎯 Top Player',
+                    style: GoogleFonts.beiruti(
+                      fontSize: 12.sp,
+                      fontWeight: FontWeight.bold,
+                      color: ZnoonaColors.bluePinkLight(context),
+                    ),
+                  ),
+                  Text(
+                    isCurrentUser ? 'You!' : topPlayer.username,
+                    style: GoogleFonts.beiruti(
+                      fontSize: 14.sp,
+                      fontWeight: FontWeight.bold,
+                      color: ZnoonaColors.text(context),
+                    ),
+                  ),
+                ],
+              ),
+            ],
+          ),
+
+          // Score
+          Container(
+            padding: EdgeInsets.symmetric(horizontal: 12.sp, vertical: 6.sp),
+            decoration: BoxDecoration(
+              color: ZnoonaColors.bluePinkLight(context),
+              borderRadius: BorderRadius.circular(20.sp),
+            ),
+            child: Row(
+              children: [
+                Icon(
+                  Icons.star,
+                  color: Colors.white,
+                  size: 16.sp,
+                ),
+                SizedBox(width: 4.sp),
+                Text(
+                  '${topPlayer.score}',
+                  style: GoogleFonts.beiruti(
+                    fontSize: 14.sp,
+                    fontWeight: FontWeight.bold,
+                    color: Colors.white,
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ],
+      ),
     );
   }
 
@@ -432,10 +569,10 @@ class _RoomQuizBodyState extends State<RoomQuizBody> {
 
   Color _getProgressColor(double progress) {
     if (progress < 0.5) {
-      return ZnoonaColors.bluePinkLight(context).withAlpha(100);
+      return ZnoonaColors.bluePinkLight(context).withAlpha(150);
     }
     if (progress < 1.0) {
-      return ZnoonaColors.bluePinkLight(context).withAlpha(150);
+      return ZnoonaColors.bluePinkLight(context).withAlpha(190);
     }
     return ZnoonaColors.bluePinkLight(context);
   }

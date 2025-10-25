@@ -14,9 +14,7 @@ abstract class RoomRepository {
     required String code,
   });
 
-  Future<Either<String, void>> leaveRoom({
-    required String roomId,
-  });
+  Future<Either<String, void>> leaveRoom();
 
   Stream<Either<String, List<Room>>> getRoomsStream();
 

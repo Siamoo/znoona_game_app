@@ -19,6 +19,7 @@ class RoomRepositoryImpl implements RoomRepository {
     required int timerDuration,
   }) async {
     try {
+      leaveRoom();
       final roomModel = await remote.createRoom(
         categoryId: categoryId,
         timerDuration: timerDuration,
@@ -34,6 +35,7 @@ class RoomRepositoryImpl implements RoomRepository {
     required String code,
   }) async {
     try {
+      leaveRoom();
       final playerModel = await remote.joinRoom(
         code: code,
       );
@@ -44,13 +46,9 @@ class RoomRepositoryImpl implements RoomRepository {
   }
 
   @override
-  Future<Either<String, void>> leaveRoom({
-    required String roomId,
-  }) async {
+  Future<Either<String, void>> leaveRoom() async {
     try {
-      await remote.leaveRoom(
-        roomId: roomId,
-      );
+      await remote.leaveRoom();
       return const Right(null);
     } on Exception catch (e) {
       return Left(e.toString());
@@ -190,42 +188,47 @@ class RoomRepositoryImpl implements RoomRepository {
       yield Left('Error watching player answers: $e');
     }
   }
+
   @override
-Future<Either<String, void>> markPlayerFinished({
-  required String roomId,
-  required String userId,
-  required int finalScore,
-}) async {
-  try {
-    await remote.markPlayerFinished(
-      roomId: roomId,
-      userId: userId,
-      finalScore: finalScore,
-    );
-    return const Right(null);
-  } on Exception catch (e) {
-    return Left(e.toString());
-  }
-}
-
-@override
-Stream<Either<String, List<RoomPlayer>>> getRoomPlayersStreamForResults(String roomId) async* {
-  try {
-    await for (final players in remote.getRoomPlayersStreamForResults(roomId)) {
-      yield Right(players.map((p) => p.toEntity()).toList());
+  Future<Either<String, void>> markPlayerFinished({
+    required String roomId,
+    required String userId,
+    required int finalScore,
+  }) async {
+    try {
+      await remote.markPlayerFinished(
+        roomId: roomId,
+        userId: userId,
+        finalScore: finalScore,
+      );
+      return const Right(null);
+    } on Exception catch (e) {
+      return Left(e.toString());
     }
-  } on Exception catch (e) {
-    yield Left(e.toString());
   }
-}
 
-@override
-Future<Either<String, List<RoomPlayer>>> getRoomPlayers(String roomId) async {
-  try {
-    final players = await remote.getRoomPlayers(roomId);
-    return Right(players.map((p) => p.toEntity()).toList());
-  } on Exception catch (e) {
-    return Left(e.toString());
+  @override
+  Stream<Either<String, List<RoomPlayer>>> getRoomPlayersStreamForResults(
+    String roomId,
+  ) async* {
+    try {
+      await for (final players in remote.getRoomPlayersStreamForResults(
+        roomId,
+      )) {
+        yield Right(players.map((p) => p.toEntity()).toList());
+      }
+    } on Exception catch (e) {
+      yield Left(e.toString());
+    }
   }
-}
+
+  @override
+  Future<Either<String, List<RoomPlayer>>> getRoomPlayers(String roomId) async {
+    try {
+      final players = await remote.getRoomPlayers(roomId);
+      return Right(players.map((p) => p.toEntity()).toList());
+    } on Exception catch (e) {
+      return Left(e.toString());
+    }
+  }
 }

@@ -64,7 +64,15 @@ class _RoomLobbyBodyState extends State<RoomLobbyBody> {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: [
-                  const CustomAppBar(title: LangKeys.room),
+                  CustomAppBar(
+                    title: LangKeys.room,
+                    icon: Icons.close,
+                    onTap: () {
+                      print('🟥 leaveRoom user removed from UI');
+                      context.read<RoomCubit>().leaveRoom();
+                      print('🟥🟥 leaveRoom user removed from UI');
+                    },
+                  ),
                   RoomInfoCard(room: _getCurrentRoom(state) ?? widget.room),
                   SizedBox(height: 24.h),
                   PlayersList(roomId: widget.room.id),

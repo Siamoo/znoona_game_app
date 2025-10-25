@@ -30,7 +30,7 @@ class RoomRemoteDataSource {
       },
     );
 
-    print('RPC result: $result'); 
+    print('RPC result: $result');
 
     // Handle the table return type properly
     if (result == null || (result as List).isEmpty) {
@@ -112,18 +112,34 @@ class RoomRemoteDataSource {
     return RoomPlayerModel.fromJson(playerData);
   }
 
-  Future<void> leaveRoom({
-    required String roomId,
-  }) async {
-    final user = supabase.auth.currentUser;
-    if (user == null) throw Exception('User not logged in');
+Future<void> leaveRoom() async {
+  final user = supabase.auth.currentUser;
+  if (user == null) throw Exception('User not logged in');
+  
+  print('🟥 leaveRoom - Removing user from ALL rooms: $user');
 
-    await supabase.from('room_players').delete().match({
-      'room_id': roomId,
-      'user_id': user.id,
+  try {
+    await supabase.rpc('leave_all_rooms', params: {
+      'p_user_id': user.id
     });
-    print('🔚leaveRoom user-- playerData: $user');
+    
+    print('✅ User successfully removed from all rooms via function');
+    
+  } catch (e) {
+    print('❌ Function not available, using disconnect method: $e');
+    
+    // marking the user disconnected
+    await supabase
+        .from('room_players')
+        .update({
+          'is_connected': false,
+          'is_host': false,
+        })
+        .eq('user_id', user.id);
+    
+    print('✅ User marked as disconnected (fallback)');
   }
+}
 
   Stream<List<RoomModel>> getRoomsStream() {
     print('getRoomsStream');
@@ -389,7 +405,7 @@ class RoomRemoteDataSource {
           for (final row in rows) {
             print(
               '👤 Player: ${row['username']}, '
-              'avatar: ${row['avatar_url']}, ' 
+              'avatar: ${row['avatar_url']}, '
               'finished_quiz: ${row['finished_quiz']}, '
               'finished_at: ${row['finished_at']}',
             );
@@ -428,8 +444,10 @@ class RoomRemoteDataSource {
   }
 
   Future<List<RoomPlayerModel>> getRoomPlayersWithAvatars(String roomId) async {
-    final data = await supabase
-        .rpc('get_room_players_with_avatars', params: {'p_room_id': roomId});
+    final data = await supabase.rpc(
+      'get_room_players_with_avatars',
+      params: {'p_room_id': roomId},
+    );
 
     return (data as List)
         .map((e) => RoomPlayerModel.fromJson(e as Map<String, dynamic>))

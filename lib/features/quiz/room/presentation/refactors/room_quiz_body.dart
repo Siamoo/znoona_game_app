@@ -9,6 +9,7 @@ import 'package:znoona_game_app/core/helpers/znoona.colors.dart';
 import 'package:znoona_game_app/core/helpers/znoona_navigate.dart';
 import 'package:znoona_game_app/core/helpers/znoona_texts.dart';
 import 'package:znoona_game_app/core/language/lang_keys.dart';
+import 'package:znoona_game_app/features/home/screens/home_screen.dart';
 import 'package:znoona_game_app/features/quiz/room/domain/entities/room.dart';
 import 'package:znoona_game_app/features/quiz/room/domain/entities/room_player.dart';
 import 'package:znoona_game_app/features/quiz/room/presentation/cubit/room_cubit.dart';
@@ -148,9 +149,9 @@ class _RoomQuizBodyState extends State<RoomQuizBody> {
   }
 
   void _navigateToResultsScreen() {
-    Future.delayed(const Duration(milliseconds: 500), () {
+    Future.delayed(const Duration(milliseconds: 500), () async {
       if (mounted) {
-        ZnoonaNavigate.pushReplacementTo(
+        await ZnoonaNavigate.pushReplacementTo(
           context,
           RoomResultsScreen(roomId: widget.room.id),
         );
@@ -195,8 +196,12 @@ class _RoomQuizBodyState extends State<RoomQuizBody> {
           child: Column(
             children: [
               CustomAppBar(
-                title: 'Room',
+                title: LangKeys.room,
                 icon: Icons.close,
+                onTap: () {
+                  ZnoonaNavigate.pop(context);
+                  context.read<RoomCubit>().leaveRoom();
+                },
                 otherText:
                     '${currentQuestionIndex + 1}  ${ZnoonaTexts.tr(context, LangKeys.from)}  ${questions.length}  ${ZnoonaTexts.tr(context, LangKeys.question)}',
               ),
@@ -208,7 +213,7 @@ class _RoomQuizBodyState extends State<RoomQuizBody> {
                 players: players,
                 correctCount: correctCount,
                 totalQuestions: questions.length,
-                 currentUserId: currentUserId,
+                currentUserId: currentUserId,
               ),
               SizedBox(height: 40.sp),
               Column(

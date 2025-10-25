@@ -5,11 +5,10 @@ class LeaveRoomUseCase {
   LeaveRoomUseCase(this.repository);
   final RoomRepository repository;
 
-  Future<Either<String, void>> call({
-    required String roomId,
-  }) {
+  Future<Either<String, void>> call() {
+      print('🟥🟥 leaveRoom user removed from USECASE');
     return repository.leaveRoom(
-      roomId: roomId,
+      
     );
   }
 }

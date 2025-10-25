@@ -80,73 +80,72 @@ class RoomCubit extends Cubit<RoomState> {
   String? _currentRoomId;
   Room? _currentRoom;
 
-
   void watchPlayerAnswers(String roomId) {
     _watchPlayerAnswers(roomId);
   }
 
-Future<void> createRoom({
-  required String categoryId,
-  required int timerDuration,
-}) async {
-  emit(const RoomState.loading());
+  Future<void> createRoom({
+    required String categoryId,
+    required int timerDuration,
+  }) async {
+    emit(const RoomState.loading());
 
-  final result = await createRoomUseCase(
-    categoryId: categoryId,
-    timerDuration: timerDuration,
-  );
+    final result = await createRoomUseCase(
+      categoryId: categoryId,
+      timerDuration: timerDuration,
+    );
 
-  result.fold(
-    (failure) {
-      emit(RoomState.error(failure));
-      print('Create room failed: $failure');
-    },
-    (room) async {
-      _currentRoomId = room.id;
-      _currentRoom = room; // NEW: Set the current room
+    result.fold(
+      (failure) {
+        emit(RoomState.error(failure));
+        print('Create room failed: $failure');
+      },
+      (room) async {
+        _currentRoomId = room.id;
+        _currentRoom = room; // NEW: Set the current room
 
-      watchRoom(room.id);
-      watchRoomPlayers(room.id);
+        watchRoom(room.id);
+        watchRoomPlayers(room.id);
 
-      emit(RoomState.roomLoaded(room));
-    },
-  );
-}
+        emit(RoomState.roomLoaded(room));
+      },
+    );
+  }
 
-Future<void> joinRoom({required String code}) async {
-  emit(const RoomState.loading());
+  Future<void> joinRoom({required String code}) async {
+    emit(const RoomState.loading());
 
-  final result = await joinRoomUseCase(code: code);
+    final result = await joinRoomUseCase(code: code);
 
-  result.fold(
-    (failure) => emit(RoomState.error(failure)),
-    (_) {
-      _roomsSubscription?.cancel();
+    result.fold(
+      (failure) => emit(RoomState.error(failure)),
+      (_) {
+        _roomsSubscription?.cancel();
 
-      _roomsSubscription = getRoomsStreamUseCase().listen((either) {
-        if (isClosed) return;
+        _roomsSubscription = getRoomsStreamUseCase().listen((either) {
+          if (isClosed) return;
 
-        either.fold(
-          (failure) => emit(RoomState.error(failure)),
-          (rooms) {
-            try {
-              final room = rooms.firstWhere((r) => r.code == code);
-              _currentRoomId = room.id;
-              _currentRoom = room; // NEW: Set the current room
+          either.fold(
+            (failure) => emit(RoomState.error(failure)),
+            (rooms) {
+              try {
+                final room = rooms.firstWhere((r) => r.code == code);
+                _currentRoomId = room.id;
+                _currentRoom = room; // NEW: Set the current room
 
-              watchRoom(room.id);
-              watchRoomPlayers(room.id);
+                watchRoom(room.id);
+                watchRoomPlayers(room.id);
 
-              emit(RoomState.joined(room));
-            } on Exception catch (_) {
-              emit(const RoomState.error('Room not found!'));
-            }
-          },
-        );
-      });
-    },
-  );
-}
+                emit(RoomState.joined(room));
+              } on Exception catch (_) {
+                emit(const RoomState.error('Room not found!'));
+              }
+            },
+          );
+        });
+      },
+    );
+  }
 
   String _getCurrentRoomId() {
     if (_currentRoomId == null) {
@@ -155,57 +154,54 @@ Future<void> joinRoom({required String code}) async {
     return _currentRoomId!;
   }
 
-Future<void> leaveRoom({
-  required String roomId,
-}) async {
-  await _roomsSubscription?.cancel();
-  await _roomsSub?.cancel();
-  await _playersSub?.cancel();
-  await _roomWatcher?.cancel();
-  _questionTimer?.cancel();
-  _answersSub?.cancel();
+  Future<void> leaveRoom() async {
+    final result = await leaveRoomUseCase();
 
-  _roomsSubscription = null;
-  _roomsSub = null;
-  _playersSub = null;
-  _roomWatcher = null;
-  _answersSub = null;
-  
-  _currentRoomId = null;
-  _currentRoom = null;
-
-  final result = await leaveRoomUseCase(roomId: roomId);
-
-  if (isClosed) return;
-
-  result.fold(
-    (failure) => emit(RoomState.error(failure)),
-    (_) {
-      emit(const RoomState.left());
-    },
-  );
-}
-
-void watchRoom(String roomId) {
-  _roomWatcher?.cancel();
-  _roomWatcher = watchRoomUseCase(roomId).listen((either) {
-    if (isClosed) return;
-    either.fold(
+    result.fold(
       (failure) => emit(RoomState.error(failure)),
-      (room) {
-        if (room == null) return;
-        
-        _currentRoom = room; // NEW: Keep current room updated
-        
-        if (room.status == 'started') {
-          emit(const RoomState.gameStarted());
-        } else {
-          emit(RoomState.roomUpdated(room));
-        }
+      (_) {
+        emit(const RoomState.left());
       },
     );
-  });
-}
+    await _roomsSubscription?.cancel();
+    await _roomsSub?.cancel();
+    await _playersSub?.cancel();
+    await _roomWatcher?.cancel();
+    _questionTimer?.cancel();
+    _answersSub?.cancel();
+
+    _roomsSubscription = null;
+    _roomsSub = null;
+    _playersSub = null;
+    _roomWatcher = null;
+    _answersSub = null;
+
+    _currentRoomId = null;
+    _currentRoom = null;
+
+    if (isClosed) return;
+  }
+
+  void watchRoom(String roomId) {
+    _roomWatcher?.cancel();
+    _roomWatcher = watchRoomUseCase(roomId).listen((either) {
+      if (isClosed) return;
+      either.fold(
+        (failure) => emit(RoomState.error(failure)),
+        (room) {
+          if (room == null) return;
+
+          _currentRoom = room; // NEW: Keep current room updated
+
+          if (room.status == 'started') {
+            emit(const RoomState.gameStarted());
+          } else {
+            emit(RoomState.roomUpdated(room));
+          }
+        },
+      );
+    });
+  }
 
   void watchRoomPlayers(String roomId) {
     _playersSub?.cancel();
@@ -221,60 +217,58 @@ void watchRoom(String roomId) {
     });
   }
 
+  Future<void> startGame(String roomId) async {
+    emit(const RoomState.loading());
 
+    try {
+      final startResult = await startGameUseCase(roomId);
 
-Future<void> startGame(String roomId) async {
-  emit(const RoomState.loading());
+      if (isClosed) return;
 
-  try {
-    final startResult = await startGameUseCase(roomId);
+      startResult.fold(
+        (failure) => emit(RoomState.error(failure)),
+        (_) async {
+          final questionsResult = await getRoomQuestions(roomId);
 
-    if (isClosed) return;
+          if (isClosed) return;
 
-    startResult.fold(
-      (failure) => emit(RoomState.error(failure)),
-      (_) async {
-        final questionsResult = await getRoomQuestions(roomId);
+          questionsResult.fold(
+            (failure) => emit(RoomState.error(failure)),
+            (roomQuestions) async {
+              final questionIds = roomQuestions
+                  .map((rq) => rq.questionId)
+                  .toList();
 
-        if (isClosed) return;
+              if (questionIds.isEmpty) {
+                emit(const RoomState.error('No questions found for this room'));
+                return;
+              }
 
-        questionsResult.fold(
-          (failure) => emit(RoomState.error(failure)),
-          (roomQuestions) async {
-            final questionIds = roomQuestions
-                .map((rq) => rq.questionId)
-                .toList();
+              final actualQuestionsResult = await getQuestionsUseCase(
+                questionIds,
+              );
 
-            if (questionIds.isEmpty) {
-              emit(const RoomState.error('No questions found for this room'));
-              return;
-            }
+              if (isClosed) return;
 
-            final actualQuestionsResult = await getQuestionsUseCase(
-              questionIds,
-            );
-
-            if (isClosed) return;
-
-            actualQuestionsResult.fold(
-              (failure) => emit(RoomState.error(failure)),
-              (questions) {
-                // Pass the room's timer duration to startQuiz
-                startQuiz(
-                  questions, 
-                  timerDuration: _currentRoom?.timerDuration,
-                );
-              },
-            );
-          },
-        );
-      },
-    );
-  } on Exception catch (e) {
-    if (isClosed) return;
-    emit(RoomState.error(e.toString()));
+              actualQuestionsResult.fold(
+                (failure) => emit(RoomState.error(failure)),
+                (questions) {
+                  // Pass the room's timer duration to startQuiz
+                  startQuiz(
+                    questions,
+                    timerDuration: _currentRoom?.timerDuration,
+                  );
+                },
+              );
+            },
+          );
+        },
+      );
+    } on Exception catch (e) {
+      if (isClosed) return;
+      emit(RoomState.error(e.toString()));
+    }
   }
-}
 
   Future<Either<String, List<RoomQuestion>>> getRoomQuestions(
     String roomId,
@@ -300,33 +294,33 @@ Future<void> startGame(String roomId) async {
     );
   }
 
-void startQuiz(List<Question> questions, {int? timerDuration}) {
-  _questions = questions;
-  _currentQuestionIndex = 0;
-  _correctCount = 0;
-  _selectedAnswer = null;
-  _playerAnswers.clear();
-  
-  // Use provided timerDuration, or room's timer, or default to 15
-  _remainingTime = timerDuration ?? _currentRoom?.timerDuration ?? 15;
+  void startQuiz(List<Question> questions, {int? timerDuration}) {
+    _questions = questions;
+    _currentQuestionIndex = 0;
+    _correctCount = 0;
+    _selectedAnswer = null;
+    _playerAnswers.clear();
 
-  _clearExistingAnswers(_getCurrentRoomId());
-  _watchPlayerAnswers(_getCurrentRoomId());
-  _startQuestionTimer();
+    // Use provided timerDuration, or room's timer, or default to 15
+    _remainingTime = timerDuration ?? _currentRoom?.timerDuration ?? 15;
 
-  emit(
-    RoomState.quizStarted(
-      questions: _questions,
-      currentQuestionIndex: _currentQuestionIndex,
-      remainingTime: _remainingTime,
-      playerAnswers: _playerAnswers,
-      selectedAnswer: _selectedAnswer,
-      correctCount: _correctCount,
-      isWaitingForPlayers: false,
-      players: _currentPlayers,
-    ),
-  );
-}
+    _clearExistingAnswers(_getCurrentRoomId());
+    _watchPlayerAnswers(_getCurrentRoomId());
+    _startQuestionTimer();
+
+    emit(
+      RoomState.quizStarted(
+        questions: _questions,
+        currentQuestionIndex: _currentQuestionIndex,
+        remainingTime: _remainingTime,
+        playerAnswers: _playerAnswers,
+        selectedAnswer: _selectedAnswer,
+        correctCount: _correctCount,
+        isWaitingForPlayers: false,
+        players: _currentPlayers,
+      ),
+    );
+  }
 
   Future<void> _clearExistingAnswers(String roomId) async {
     final resetResult = await resetAnswersUseCase(roomId);
@@ -336,22 +330,22 @@ void startQuiz(List<Question> questions, {int? timerDuration}) {
     );
   }
 
-void _startQuestionTimer() {
-  _questionTimer?.cancel();
-  
-  _remainingTime = _currentRoom?.timerDuration ?? 15;
+  void _startQuestionTimer() {
+    _questionTimer?.cancel();
 
-  _questionTimer = Timer.periodic(const Duration(seconds: 1), (timer) {
-    if (_remainingTime > 0) {
-      _remainingTime--;
-      _emitQuizState();
-    } else {
-      timer.cancel();
-      print('⏰ Time finished - moving to next question');
-      _handleTimeUp();
-    }
-  });
-}
+    _remainingTime = _currentRoom?.timerDuration ?? 15;
+
+    _questionTimer = Timer.periodic(const Duration(seconds: 1), (timer) {
+      if (_remainingTime > 0) {
+        _remainingTime--;
+        _emitQuizState();
+      } else {
+        timer.cancel();
+        print('⏰ Time finished - moving to next question');
+        _handleTimeUp();
+      }
+    });
+  }
 
   Future<void> selectAnswer(String answer) async {
     final currentUser = _getCurrentUserId();
@@ -872,8 +866,8 @@ void _startQuestionTimer() {
     _roomWatcher = null;
     _answersSub = null;
     _resultsSub = null;
-      _currentRoomId = null;
-  _currentRoom = null;
+    _currentRoomId = null;
+    _currentRoom = null;
     return super.close();
   }
 }

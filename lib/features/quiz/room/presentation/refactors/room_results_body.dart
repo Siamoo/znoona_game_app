@@ -10,12 +10,6 @@ class RoomResultsBody extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('Quiz Results'),
-        leading: Container(),
-        backgroundColor: Colors.transparent,
-        elevation: 0,
-      ),
       body: BlocConsumer<RoomCubit, RoomState>(
         listener: (context, state) {
           state.whenOrNull(
@@ -787,7 +781,8 @@ class _ProgressiveResultsBody extends StatelessWidget {
           TextButton(
             onPressed: () {
               Navigator.pop(context);
-              context.read<RoomCubit>().leaveRoom(roomId: roomId);
+              context.read<RoomCubit>().leaveRoom();
+
               Navigator.pop(context);
             },
             style: TextButton.styleFrom(foregroundColor: Colors.red),

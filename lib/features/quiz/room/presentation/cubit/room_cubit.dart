@@ -154,19 +154,11 @@ class RoomCubit extends Cubit<RoomState> {
     return _currentRoomId!;
   }
 
-  Future<void> leaveRoom() async {
-    final result = await leaveRoomUseCase();
-
-    result.fold(
-      (failure) => emit(RoomState.error(failure)),
-      (_) {
-        emit(const RoomState.left());
-      },
-    );
-    await _roomsSubscription?.cancel();
-    await _roomsSub?.cancel();
-    await _playersSub?.cancel();
-    await _roomWatcher?.cancel();
+  Future<void> leaveFromAllRooms() async {
+    _roomsSubscription?.cancel();
+    _roomsSub?.cancel();
+    _playersSub?.cancel();
+    _roomWatcher?.cancel();
     _questionTimer?.cancel();
     _answersSub?.cancel();
 
@@ -178,6 +170,14 @@ class RoomCubit extends Cubit<RoomState> {
 
     _currentRoomId = null;
     _currentRoom = null;
+    final result = await leaveRoomUseCase();
+
+    result.fold(
+      (failure) => emit(RoomState.error(failure)),
+      (_) {
+        emit(const RoomState.left());
+      },
+    );
 
     if (isClosed) return;
   }
@@ -595,7 +595,6 @@ class RoomCubit extends Cubit<RoomState> {
     _emitInitialFinishedState(roomId, totalQuestions, correctAnswers);
   }
 
-  // NEW: Verify and start results
   Future<void> _verifyAndStartResults(
     String roomId,
     String userId,

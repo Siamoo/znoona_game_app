@@ -199,7 +199,7 @@ class _RoomQuizBodyState extends State<RoomQuizBody> {
                 icon: Icons.close,
                 onTap: () {
                   ZnoonaNavigate.pop(context);
-                  context.read<RoomCubit>().leaveRoom();
+                  context.read<RoomCubit>().leaveFromAllRooms();
                 },
                 otherText:
                     '${currentQuestionIndex + 1}  ${ZnoonaTexts.tr(context, LangKeys.from)}  ${questions.length}  ${ZnoonaTexts.tr(context, LangKeys.question)}',

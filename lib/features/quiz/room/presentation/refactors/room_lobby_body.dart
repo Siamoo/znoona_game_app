@@ -68,7 +68,7 @@ class _RoomLobbyBodyState extends State<RoomLobbyBody> {
                     title: LangKeys.room,
                     icon: Icons.close,
                     onTap: () {
-                      context.read<RoomCubit>().leaveRoom();
+                      context.read<RoomCubit>().leaveFromAllRooms();
                     },
                   ),
                   RoomInfoCard(room: _getCurrentRoom(state) ?? widget.room),

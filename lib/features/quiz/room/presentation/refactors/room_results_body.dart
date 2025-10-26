@@ -781,7 +781,7 @@ class _ProgressiveResultsBody extends StatelessWidget {
           TextButton(
             onPressed: () {
               Navigator.pop(context);
-              context.read<RoomCubit>().leaveRoom();
+              context.read<RoomCubit>().leaveFromAllRooms();
               Navigator.pop(context);
             },
             style: TextButton.styleFrom(foregroundColor: Colors.red),

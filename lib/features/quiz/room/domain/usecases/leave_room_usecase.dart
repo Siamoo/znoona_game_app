@@ -6,9 +6,7 @@ class LeaveRoomUseCase {
   final RoomRepository repository;
 
   Future<Either<String, void>> call() {
-      print('🟥🟥 leaveRoom user removed from USECASE');
-    return repository.leaveRoom(
-      
-    );
+    print('🟥🟥 leaveRoom user removed from USECASE');
+    return repository.leaveFromAllRooms();
   }
 }

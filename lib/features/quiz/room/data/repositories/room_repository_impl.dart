@@ -19,7 +19,6 @@ class RoomRepositoryImpl implements RoomRepository {
     required int timerDuration,
   }) async {
     try {
-      leaveRoom();
       final roomModel = await remote.createRoom(
         categoryId: categoryId,
         timerDuration: timerDuration,
@@ -35,7 +34,6 @@ class RoomRepositoryImpl implements RoomRepository {
     required String code,
   }) async {
     try {
-      leaveRoom();
       final playerModel = await remote.joinRoom(
         code: code,
       );
@@ -46,9 +44,9 @@ class RoomRepositoryImpl implements RoomRepository {
   }
 
   @override
-  Future<Either<String, void>> leaveRoom() async {
+  Future<Either<String, void>> leaveFromAllRooms() async {
     try {
-      await remote.leaveRoom();
+      await remote.leaveFromAllRooms();
       return const Right(null);
     } on Exception catch (e) {
       return Left(e.toString());

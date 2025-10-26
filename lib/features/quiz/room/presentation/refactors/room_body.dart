@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:znoona_game_app/core/common/widgets/custom_app_bar.dart';
 import 'package:znoona_game_app/core/helpers/znoona_navigate.dart';
@@ -7,6 +8,7 @@ import 'package:znoona_game_app/core/style/images/app_images.dart';
 import 'package:znoona_game_app/features/home/widgets/custom_game_button.dart';
 import 'package:znoona_game_app/features/home/widgets/custom_section_title.dart';
 import 'package:znoona_game_app/features/quiz/categories/presentation/screens/categories_screen.dart';
+import 'package:znoona_game_app/features/quiz/room/presentation/cubit/room_cubit.dart';
 import 'package:znoona_game_app/features/quiz/room/presentation/screen/room_joining_screen.dart';
 
 class RoomBody extends StatelessWidget {
@@ -44,15 +46,18 @@ class RoomBody extends StatelessWidget {
                           GameButton(
                             image: AppImages.create,
                             langkey: LangKeys.createRoom,
-                            onPressed: () => ZnoonaNavigate.pushTo(
-                              context,
-                              const CategoriesScreen(isRoom: true),
-                            ),
+                            onPressed: () {
+                              ZnoonaNavigate.pushTo(
+                                context,
+                                const CategoriesScreen(isRoom: true),
+                              );
+                            },
                           ),
                           GameButton(
                             image: AppImages.join,
                             langkey: LangKeys.joinRoom,
                             onPressed: () async {
+                              context.read<RoomCubit>().leaveFromAllRooms();
                               await ZnoonaNavigate.pushTo(
                                 context,
                                 const RoomJoiningScreen(),

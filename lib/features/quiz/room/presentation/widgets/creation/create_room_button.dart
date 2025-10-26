@@ -22,6 +22,7 @@ class CreateRoomButton extends StatelessWidget {
     return CustomLinearButton(
       height: 50.h,
       onPressed: () async {
+        context.read<RoomCubit>().leaveFromAllRooms();
         await context.read<RoomCubit>().createRoom(
           categoryId: categoryId,
           timerDuration: selectedTimerDuration,

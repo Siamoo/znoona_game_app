@@ -112,34 +112,30 @@ class RoomRemoteDataSource {
     return RoomPlayerModel.fromJson(playerData);
   }
 
-Future<void> leaveRoom() async {
-  final user = supabase.auth.currentUser;
-  if (user == null) throw Exception('User not logged in');
-  
-  print('🟥 leaveRoom - Removing user from ALL rooms: $user');
+  Future<void> leaveFromAllRooms() async {
+    final user = supabase.auth.currentUser;
+    if (user == null) throw Exception('User not logged in');
 
-  try {
-    await supabase.rpc('leave_all_rooms', params: {
-      'p_user_id': user.id
-    });
-    
-    print('✅ User successfully removed from all rooms via function');
-    
-  } catch (e) {
-    print('❌ Function not available, using disconnect method: $e');
-    
-    // marking the user disconnected
-    await supabase
-        .from('room_players')
-        .update({
-          'is_connected': false,
-          'is_host': false,
-        })
-        .eq('user_id', user.id);
-    
-    print('✅ User marked as disconnected (fallback)');
+
+    try {
+      await supabase.rpc('leave_all_rooms', params: {'p_user_id': user.id});
+
+      print('✅ User successfully removed from all rooms via function');
+    } catch (e) {
+      print('❌ Function not available, using disconnect method: $e');
+
+      // marking the user disconnected
+      await supabase
+          .from('room_players')
+          .update({
+            'is_connected': false,
+            'is_host': false,
+          })
+          .eq('user_id', user.id);
+
+      print('✅ User marked as disconnected (fallback)');
+    }
   }
-}
 
   Stream<List<RoomModel>> getRoomsStream() {
     print('getRoomsStream');

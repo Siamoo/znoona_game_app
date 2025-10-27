@@ -94,7 +94,7 @@ class LangKeys {
   static const String selectTimerDuration = 'select_timer_duration';
   static const String pleaseEnterRoomCode = 'please_enter_room_code';
   static const String roomCodeMustBe6 = 'room_code_must_be_6_characters';
-  static const String  roomCode = 'room_code';
+  static const String roomCode = 'room_code';
   static const String status = 'status';
   static const String startGame = 'start_game';
   static const String waitingForHost = 'waiting_for_host_to_start';
@@ -104,4 +104,16 @@ class LangKeys {
   static const String host = 'host';
   static const String roomHost = 'room_host';
   static const String player = 'player';
+  static const String yourRank = 'your_rank';
+  static const String tied = 'tied';
+  static const String tiedPlayers = 'tied_players';
+  static const String finished = 'finished';
+  static const String leaderBoard = 'leaderboard';
+  static const String gold = 'gold';
+  static const String silver = 'silver';
+  static const String bronze = 'bronze';
+  static const String unranked = 'unranked';
+  static const String you = 'you';
+  static const String leaveRoom = 'leave_room';
+
 }

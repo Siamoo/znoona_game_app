@@ -106,6 +106,16 @@
     "ok": "OK",
     "host": "HOST",
     "room_host": "Room Host",
-    "player": "Player"
-
+    "player": "Player",
+    "your_rank": "Your Rank",
+    "tied": "Tied",
+    "tied_players": "Tied with other players",
+    "leaderboard": "Leaderboard",
+    "finished": " Finished",
+    "gold": "Gold",
+    "silver": "Silver",
+    "bronze": "Bronze",
+    "unranked": "Unranked",
+    "you": "You",
+    "leave_room": "Leave Room"
 }

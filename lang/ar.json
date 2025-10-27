@@ -106,5 +106,16 @@
     "ok": "تمام",
     "host": "المضيف",
     "room_host": "مضيف الغرفة",
-    "player": "لاعب"
+    "player": "لاعب",
+    "your_rank": "المركز",
+    "tied": "مكرر",
+    "tied_players": "متعادل مع لاعبين اخرين",
+    "leaderboard": "لوحة المتصدرين",
+    "finished": "أنهي",
+    "gold": "ذهبي",
+    "silver": "فضي",
+    "bronze": "برونزي",
+    "unranked": "غير مصنف",
+    "you": "انت",
+    "leave_room": "مغادرة الغرفة"
 }

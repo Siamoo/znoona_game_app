@@ -23,8 +23,8 @@ class PlayerListItem extends StatelessWidget {
               : ZnoonaTexts.tr(context, LangKeys.player),
           style: TextStyle(
             color: player.isHost
-                ? ZnoonaColors.main(context).withAlpha(200)
-                : ZnoonaColors.main(context).withAlpha(200),
+                ? Colors.black.withAlpha(200)
+                : Colors.black.withAlpha(150),
           ),
         ),
         trailing: Row(

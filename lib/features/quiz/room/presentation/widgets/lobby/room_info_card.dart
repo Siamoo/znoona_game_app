@@ -31,7 +31,7 @@ class RoomInfoCard extends StatelessWidget {
                   style: GoogleFonts.beiruti(
                     fontSize: 18.sp,
                     fontWeight: FontWeight.bold,
-                    color: ZnoonaColors.text(context),
+                    color: Colors.white,
                   ),
                 ),
                 Row(
@@ -44,10 +44,10 @@ class RoomInfoCard extends StatelessWidget {
                           borderRadius: BorderRadius.circular(12),
                           border: Border.all(color: Colors.white),
                         ),
-                        child: Icon(
+                        child: const Icon(
                           Icons.qr_code_2,
                           size: 24,
-                          color: ZnoonaColors.text(context),
+                          color: Colors.white,
                         ),
                       ),
                     ),
@@ -87,7 +87,7 @@ class RoomInfoCard extends StatelessWidget {
                               style: GoogleFonts.beiruti(
                                 fontSize: 18.sp,
                                 fontWeight: FontWeight.bold,
-                                color: ZnoonaColors.text(context),
+                                color: Colors.white,
                               ),
                             ),
                           ],
@@ -109,7 +109,7 @@ class RoomInfoCard extends StatelessWidget {
                   style: GoogleFonts.beiruti(
                     fontSize: 18.sp,
                     fontWeight: FontWeight.bold,
-                    color: ZnoonaColors.text(context),
+                    color: Colors.white,
                   ),
                 ),
                 BlocBuilder<RoomCubit, RoomState>(
@@ -129,7 +129,7 @@ class RoomInfoCard extends StatelessWidget {
                         style: GoogleFonts.beiruti(
                           fontSize: 20.sp,
                           fontWeight: FontWeight.bold,
-                          color: ZnoonaColors.text(context),
+                          color: Colors.white,
                         ),
                       ),
                     );
@@ -146,7 +146,7 @@ class RoomInfoCard extends StatelessWidget {
                   style: GoogleFonts.beiruti(
                     fontSize: 18.sp,
                     fontWeight: FontWeight.bold,
-                    color: ZnoonaColors.text(context),
+                    color: Colors.white,
                   ),
                 ),
                 BlocBuilder<RoomCubit, RoomState>(
@@ -162,7 +162,7 @@ class RoomInfoCard extends StatelessWidget {
                         style: GoogleFonts.beiruti(
                           fontSize: 20.sp,
                           fontWeight: FontWeight.bold,
-                          color: ZnoonaColors.text(context),
+                          color: Colors.white,
                         ),
                       ),
                     );

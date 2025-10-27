@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:znoona_game_app/core/common/widgets/custom_linear_button.dart';
 import 'package:znoona_game_app/core/helpers/znoona.colors.dart';
 import 'package:znoona_game_app/core/helpers/znoona_texts.dart';
@@ -227,12 +228,12 @@ class ActionButtons extends StatelessWidget {
           padding: EdgeInsets.all(16.sp),
           child: Column(
             children: [
-             const Text(
+              Text(
                 'Game Complete',
-                style: const TextStyle(
-                  fontSize: 18,
+                style: GoogleFonts.beiruti(
+                  fontSize: 18.sp,
                   fontWeight: FontWeight.bold,
-                  color: Colors.white,
+                  color: ZnoonaColors.text(context),
                 ),
               ),
               const SizedBox(height: 12),

@@ -95,9 +95,10 @@ class ResultsList extends StatelessWidget {
                               const SizedBox(width: 8),
                               Text(
                                 _getRankText(rank, context, players.length),
-                                style: const TextStyle(
-                                  fontSize: 16,
+                                style: GoogleFonts.beiruti(
+                                  fontSize: 16.sp,
                                   fontWeight: FontWeight.bold,
+                                  color: ZnoonaColors.text(context),
                                 ),
                               ),
                             ],
@@ -114,11 +115,11 @@ class ResultsList extends StatelessWidget {
                     );
                   }),
                   if (results.any((r) => r.rank == 0)) ...[
-                    const Padding(
-                      padding: EdgeInsets.symmetric(vertical: 8.0),
+                    Padding(
+                      padding: EdgeInsets.symmetric(vertical: 8.h),
                       child: Text(
-                        'Still Playing',
-                        style: TextStyle(
+                        ZnoonaTexts.tr(context, LangKeys.unranked),
+                        style: const  TextStyle(
                           fontSize: 16,
                           fontWeight: FontWeight.bold,
                           color: Colors.orange,

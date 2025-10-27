@@ -89,7 +89,7 @@ class MyColors extends ThemeExtension<MyColors> {
     navBarbg: ColorsDark.navBarDark,
     navBarSelectedTab: ColorsDark.white,
     containerShadow1: ColorsDark.blueLight,
-    containerShadow2: ColorsDark.black2,
+    containerShadow2: ColorsDark.mainColor,
     containerLinear1: ColorsDark.black1,
     containerLinear2: ColorsDark.black2,
   );
@@ -103,7 +103,7 @@ class MyColors extends ThemeExtension<MyColors> {
     navBarbg: ColorsLight.mainColor,
     navBarSelectedTab: ColorsLight.black,
     containerShadow1: ColorsLight.redDark,
-    containerShadow2: ColorsLight.white2,
+    containerShadow2: ColorsLight.redLight,
     containerLinear1: ColorsLight.white1,
     containerLinear2: ColorsLight.white2,
   );

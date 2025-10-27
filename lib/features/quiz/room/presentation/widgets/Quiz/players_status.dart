@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:znoona_game_app/core/helpers/znoona.colors.dart';
@@ -71,7 +70,7 @@ class PlayersStatus extends StatelessWidget {
             var tooltipText = '';
 
             if (!hasAnswered) {
-              backgroundColor = ZnoonaColors.main(context);
+              backgroundColor = ZnoonaColors.containerShadow2(context);
               icon = Icons.person;
               tooltipText = '${player.username} - Not answered';
             } else if (isCorrect) {

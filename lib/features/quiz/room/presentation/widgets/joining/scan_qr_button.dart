@@ -31,10 +31,10 @@ class ScanQrButton extends StatelessWidget {
               context,
               LangKeys.scanQr,
             ),
-            style: TextStyle(
+            style: const TextStyle(
               fontSize: 18,
               fontWeight: FontWeight.bold,
-              color: ZnoonaColors.text(context),
+              color: Colors.white,
             ),
           ),
         ],

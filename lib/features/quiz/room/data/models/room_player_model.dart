@@ -13,14 +13,14 @@ class RoomPlayerModel with _$RoomPlayerModel {
     required bool isHost,
     required bool isConnected,
     required int score,
-    required bool finishedQuiz, 
-    DateTime? finishedAt,       
+    required bool finishedQuiz,
+    DateTime? finishedAt,
     DateTime? joinedAt,
     String? selectedAnswer,
     bool? isCorrect,
     DateTime? answeredAt,
     bool? isReady,
-    String? avatarUrl, // NEW: Add avatar URL
+    String? avatarUrl,
   }) = _RoomPlayerModel;
 
   factory RoomPlayerModel.fromJson(Map<String, dynamic> json) {
@@ -34,7 +34,7 @@ class RoomPlayerModel with _$RoomPlayerModel {
       score: (json['score'] is int)
           ? json['score'] as int
           : int.tryParse(json['score']?.toString() ?? '0') ?? 0,
-      finishedQuiz: json['finished_quiz'] == true, 
+      finishedQuiz: json['finished_quiz'] == true,
       finishedAt: json['finished_at'] != null
           ? DateTime.tryParse(json['finished_at'].toString())
           : null,
@@ -47,45 +47,45 @@ class RoomPlayerModel with _$RoomPlayerModel {
           ? DateTime.tryParse(json['answered_at'].toString())
           : null,
       isReady: json['is_ready'] as bool? ?? false,
-      avatarUrl: json['avatar_url']?.toString(), 
+      avatarUrl: json['avatar_url']?.toString(),
     );
   }
 
   factory RoomPlayerModel.fromEntity(RoomPlayer player) => RoomPlayerModel(
-        id: player.id,
-        roomId: player.roomId,
-        userId: player.userId,
-        username: player.username,
-        isHost: player.isHost,
-        isConnected: player.isConnected,
-        score: player.score,
-        finishedQuiz: player.finishedQuiz, 
-        finishedAt: player.finishedAt,     
-        joinedAt: player.joinedAt,
-        selectedAnswer: player.selectedAnswer,
-        isCorrect: player.isCorrect,
-        answeredAt: player.answeredAt,
-        isReady: player.isReady ?? false,
-        avatarUrl: player.avatarUrl, // NEW: Add avatar URL
-      );
+    id: player.id,
+    roomId: player.roomId,
+    userId: player.userId,
+    username: player.username,
+    isHost: player.isHost,
+    isConnected: player.isConnected,
+    score: player.score,
+    finishedQuiz: player.finishedQuiz,
+    finishedAt: player.finishedAt,
+    joinedAt: player.joinedAt,
+    selectedAnswer: player.selectedAnswer,
+    isCorrect: player.isCorrect,
+    answeredAt: player.answeredAt,
+    isReady: player.isReady ?? false,
+    avatarUrl: player.avatarUrl, // NEW: Add avatar URL
+  );
 }
 
 extension RoomPlayerModelX on RoomPlayerModel {
   RoomPlayer toEntity() => RoomPlayer(
-        id: id,
-        roomId: roomId,
-        userId: userId,
-        username: username,
-        isHost: isHost,
-        isConnected: isConnected,
-        score: score,
-        finishedQuiz: finishedQuiz, 
-        finishedAt: finishedAt,     
-        joinedAt: joinedAt,
-        selectedAnswer: selectedAnswer,
-        isCorrect: isCorrect,
-        answeredAt: answeredAt,
-        isReady: isReady,
-        avatarUrl: avatarUrl, // NEW: Add avatar URL
-      );
+    id: id,
+    roomId: roomId,
+    userId: userId,
+    username: username,
+    isHost: isHost,
+    isConnected: isConnected,
+    score: score,
+    finishedQuiz: finishedQuiz,
+    finishedAt: finishedAt,
+    joinedAt: joinedAt,
+    selectedAnswer: selectedAnswer,
+    isCorrect: isCorrect,
+    answeredAt: answeredAt,
+    isReady: isReady,
+    avatarUrl: avatarUrl,
+  );
 }

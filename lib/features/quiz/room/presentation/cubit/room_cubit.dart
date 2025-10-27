@@ -161,7 +161,6 @@ class RoomCubit extends Cubit<RoomState> {
     _roomWatcher?.cancel();
     _questionTimer?.cancel();
     _answersSub?.cancel();
-
     _roomsSubscription = null;
     _roomsSub = null;
     _playersSub = null;
@@ -732,6 +731,9 @@ class RoomCubit extends Cubit<RoomState> {
     // Sort players by score (descending) and finished status
     final sortedPlayers = List<RoomPlayer>.from(players)
       ..sort((a, b) {
+        print(
+          '🟩🟨🟩Comparing ${a.username} (score: ${a.score}, finished: ${a.finishedQuiz}, avatar: ${a.avatarUrl}) ',
+        );
         // Finished players come before unfinished
         if (a.finishedQuiz && !b.finishedQuiz) return -1;
         if (!a.finishedQuiz && b.finishedQuiz) return 1;
@@ -822,6 +824,9 @@ class RoomCubit extends Cubit<RoomState> {
     required int totalQuestions,
     required String currentUserId,
   }) {
+    print(
+      '🟩🟩Comparing  avatar: ${player.avatarUrl}) ',
+    );
     return PlayerResult(
       userId: player.userId,
       username: player.username,

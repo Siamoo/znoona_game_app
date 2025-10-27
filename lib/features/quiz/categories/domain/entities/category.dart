@@ -8,5 +8,7 @@ class Category with _$Category {
     required String id,
     required String name,
     DateTime? createdAt,
+    String? type,        
+    String? parentId,    
   }) = _Category;
 }

@@ -20,6 +20,8 @@ mixin _$Category {
   String get id => throw _privateConstructorUsedError;
   String get name => throw _privateConstructorUsedError;
   DateTime? get createdAt => throw _privateConstructorUsedError;
+  String? get type => throw _privateConstructorUsedError;
+  String? get parentId => throw _privateConstructorUsedError;
 
   /// Create a copy of Category
   /// with the given fields replaced by the non-null parameter values.
@@ -33,7 +35,13 @@ abstract class $CategoryCopyWith<$Res> {
   factory $CategoryCopyWith(Category value, $Res Function(Category) then) =
       _$CategoryCopyWithImpl<$Res, Category>;
   @useResult
-  $Res call({String id, String name, DateTime? createdAt});
+  $Res call({
+    String id,
+    String name,
+    DateTime? createdAt,
+    String? type,
+    String? parentId,
+  });
 }
 
 /// @nodoc
@@ -54,6 +62,8 @@ class _$CategoryCopyWithImpl<$Res, $Val extends Category>
     Object? id = null,
     Object? name = null,
     Object? createdAt = freezed,
+    Object? type = freezed,
+    Object? parentId = freezed,
   }) {
     return _then(
       _value.copyWith(
@@ -69,6 +79,14 @@ class _$CategoryCopyWithImpl<$Res, $Val extends Category>
                 ? _value.createdAt
                 : createdAt // ignore: cast_nullable_to_non_nullable
                       as DateTime?,
+            type: freezed == type
+                ? _value.type
+                : type // ignore: cast_nullable_to_non_nullable
+                      as String?,
+            parentId: freezed == parentId
+                ? _value.parentId
+                : parentId // ignore: cast_nullable_to_non_nullable
+                      as String?,
           )
           as $Val,
     );
@@ -84,7 +102,13 @@ abstract class _$$CategoryImplCopyWith<$Res>
   ) = __$$CategoryImplCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({String id, String name, DateTime? createdAt});
+  $Res call({
+    String id,
+    String name,
+    DateTime? createdAt,
+    String? type,
+    String? parentId,
+  });
 }
 
 /// @nodoc
@@ -104,6 +128,8 @@ class __$$CategoryImplCopyWithImpl<$Res>
     Object? id = null,
     Object? name = null,
     Object? createdAt = freezed,
+    Object? type = freezed,
+    Object? parentId = freezed,
   }) {
     return _then(
       _$CategoryImpl(
@@ -119,6 +145,14 @@ class __$$CategoryImplCopyWithImpl<$Res>
             ? _value.createdAt
             : createdAt // ignore: cast_nullable_to_non_nullable
                   as DateTime?,
+        type: freezed == type
+            ? _value.type
+            : type // ignore: cast_nullable_to_non_nullable
+                  as String?,
+        parentId: freezed == parentId
+            ? _value.parentId
+            : parentId // ignore: cast_nullable_to_non_nullable
+                  as String?,
       ),
     );
   }
@@ -127,7 +161,13 @@ class __$$CategoryImplCopyWithImpl<$Res>
 /// @nodoc
 
 class _$CategoryImpl implements _Category {
-  const _$CategoryImpl({required this.id, required this.name, this.createdAt});
+  const _$CategoryImpl({
+    required this.id,
+    required this.name,
+    this.createdAt,
+    this.type,
+    this.parentId,
+  });
 
   @override
   final String id;
@@ -135,10 +175,14 @@ class _$CategoryImpl implements _Category {
   final String name;
   @override
   final DateTime? createdAt;
+  @override
+  final String? type;
+  @override
+  final String? parentId;
 
   @override
   String toString() {
-    return 'Category(id: $id, name: $name, createdAt: $createdAt)';
+    return 'Category(id: $id, name: $name, createdAt: $createdAt, type: $type, parentId: $parentId)';
   }
 
   @override
@@ -149,11 +193,15 @@ class _$CategoryImpl implements _Category {
             (identical(other.id, id) || other.id == id) &&
             (identical(other.name, name) || other.name == name) &&
             (identical(other.createdAt, createdAt) ||
-                other.createdAt == createdAt));
+                other.createdAt == createdAt) &&
+            (identical(other.type, type) || other.type == type) &&
+            (identical(other.parentId, parentId) ||
+                other.parentId == parentId));
   }
 
   @override
-  int get hashCode => Object.hash(runtimeType, id, name, createdAt);
+  int get hashCode =>
+      Object.hash(runtimeType, id, name, createdAt, type, parentId);
 
   /// Create a copy of Category
   /// with the given fields replaced by the non-null parameter values.
@@ -169,6 +217,8 @@ abstract class _Category implements Category {
     required final String id,
     required final String name,
     final DateTime? createdAt,
+    final String? type,
+    final String? parentId,
   }) = _$CategoryImpl;
 
   @override
@@ -177,6 +227,10 @@ abstract class _Category implements Category {
   String get name;
   @override
   DateTime? get createdAt;
+  @override
+  String? get type;
+  @override
+  String? get parentId;
 
   /// Create a copy of Category
   /// with the given fields replaced by the non-null parameter values.

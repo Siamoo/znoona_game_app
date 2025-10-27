@@ -47,5 +47,4 @@ class CategoriesRemoteDataSourceImpl  implements CategoriesRemoteDataSource {
     return data.map((e) => CategoryModel.fromJson(e as Map<String, dynamic>)).toList();
   }
   
-
 }

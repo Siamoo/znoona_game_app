@@ -3,4 +3,6 @@ import 'package:znoona_game_app/features/quiz/categories/domain/entities/categor
 
 abstract class CategoriesRepository {
   Future<Either<String, List<Category>>> getCategories();
+  Future<Either<String, List<Category>>> getMainCategories();
+  Future<Either<String, List<Category>>> getSubCategories(String parentId);
 }

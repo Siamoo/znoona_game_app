@@ -11,6 +11,8 @@ class CategoryModel with _$CategoryModel {
     required String name,
     String? icon_url,
     DateTime? created_at,
+    String? type,        
+    String? parentId,    
   }) = _CategoryModel;
 
   factory CategoryModel.fromJson(Map<String, dynamic> json) =>
@@ -23,6 +25,8 @@ extension CategoryModelX on CategoryModel {
       id: id,
       name: name,
       createdAt: created_at,
+      type: type,        
+      parentId: parentId, 
     );
   }
 }

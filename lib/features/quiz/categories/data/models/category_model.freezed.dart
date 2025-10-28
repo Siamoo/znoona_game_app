@@ -25,6 +25,8 @@ mixin _$CategoryModel {
   String get name => throw _privateConstructorUsedError;
   String? get icon_url => throw _privateConstructorUsedError;
   DateTime? get created_at => throw _privateConstructorUsedError;
+  String? get type => throw _privateConstructorUsedError;
+  String? get parentId => throw _privateConstructorUsedError;
 
   /// Serializes this CategoryModel to a JSON map.
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
@@ -43,7 +45,14 @@ abstract class $CategoryModelCopyWith<$Res> {
     $Res Function(CategoryModel) then,
   ) = _$CategoryModelCopyWithImpl<$Res, CategoryModel>;
   @useResult
-  $Res call({String id, String name, String? icon_url, DateTime? created_at});
+  $Res call({
+    String id,
+    String name,
+    String? icon_url,
+    DateTime? created_at,
+    String? type,
+    String? parentId,
+  });
 }
 
 /// @nodoc
@@ -65,6 +74,8 @@ class _$CategoryModelCopyWithImpl<$Res, $Val extends CategoryModel>
     Object? name = null,
     Object? icon_url = freezed,
     Object? created_at = freezed,
+    Object? type = freezed,
+    Object? parentId = freezed,
   }) {
     return _then(
       _value.copyWith(
@@ -84,6 +95,14 @@ class _$CategoryModelCopyWithImpl<$Res, $Val extends CategoryModel>
                 ? _value.created_at
                 : created_at // ignore: cast_nullable_to_non_nullable
                       as DateTime?,
+            type: freezed == type
+                ? _value.type
+                : type // ignore: cast_nullable_to_non_nullable
+                      as String?,
+            parentId: freezed == parentId
+                ? _value.parentId
+                : parentId // ignore: cast_nullable_to_non_nullable
+                      as String?,
           )
           as $Val,
     );
@@ -99,7 +118,14 @@ abstract class _$$CategoryModelImplCopyWith<$Res>
   ) = __$$CategoryModelImplCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({String id, String name, String? icon_url, DateTime? created_at});
+  $Res call({
+    String id,
+    String name,
+    String? icon_url,
+    DateTime? created_at,
+    String? type,
+    String? parentId,
+  });
 }
 
 /// @nodoc
@@ -120,6 +146,8 @@ class __$$CategoryModelImplCopyWithImpl<$Res>
     Object? name = null,
     Object? icon_url = freezed,
     Object? created_at = freezed,
+    Object? type = freezed,
+    Object? parentId = freezed,
   }) {
     return _then(
       _$CategoryModelImpl(
@@ -139,6 +167,14 @@ class __$$CategoryModelImplCopyWithImpl<$Res>
             ? _value.created_at
             : created_at // ignore: cast_nullable_to_non_nullable
                   as DateTime?,
+        type: freezed == type
+            ? _value.type
+            : type // ignore: cast_nullable_to_non_nullable
+                  as String?,
+        parentId: freezed == parentId
+            ? _value.parentId
+            : parentId // ignore: cast_nullable_to_non_nullable
+                  as String?,
       ),
     );
   }
@@ -152,6 +188,8 @@ class _$CategoryModelImpl implements _CategoryModel {
     required this.name,
     this.icon_url,
     this.created_at,
+    this.type,
+    this.parentId,
   });
 
   factory _$CategoryModelImpl.fromJson(Map<String, dynamic> json) =>
@@ -165,10 +203,14 @@ class _$CategoryModelImpl implements _CategoryModel {
   final String? icon_url;
   @override
   final DateTime? created_at;
+  @override
+  final String? type;
+  @override
+  final String? parentId;
 
   @override
   String toString() {
-    return 'CategoryModel(id: $id, name: $name, icon_url: $icon_url, created_at: $created_at)';
+    return 'CategoryModel(id: $id, name: $name, icon_url: $icon_url, created_at: $created_at, type: $type, parentId: $parentId)';
   }
 
   @override
@@ -181,12 +223,16 @@ class _$CategoryModelImpl implements _CategoryModel {
             (identical(other.icon_url, icon_url) ||
                 other.icon_url == icon_url) &&
             (identical(other.created_at, created_at) ||
-                other.created_at == created_at));
+                other.created_at == created_at) &&
+            (identical(other.type, type) || other.type == type) &&
+            (identical(other.parentId, parentId) ||
+                other.parentId == parentId));
   }
 
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override
-  int get hashCode => Object.hash(runtimeType, id, name, icon_url, created_at);
+  int get hashCode =>
+      Object.hash(runtimeType, id, name, icon_url, created_at, type, parentId);
 
   /// Create a copy of CategoryModel
   /// with the given fields replaced by the non-null parameter values.
@@ -208,6 +254,8 @@ abstract class _CategoryModel implements CategoryModel {
     required final String name,
     final String? icon_url,
     final DateTime? created_at,
+    final String? type,
+    final String? parentId,
   }) = _$CategoryModelImpl;
 
   factory _CategoryModel.fromJson(Map<String, dynamic> json) =
@@ -221,6 +269,10 @@ abstract class _CategoryModel implements CategoryModel {
   String? get icon_url;
   @override
   DateTime? get created_at;
+  @override
+  String? get type;
+  @override
+  String? get parentId;
 
   /// Create a copy of CategoryModel
   /// with the given fields replaced by the non-null parameter values.

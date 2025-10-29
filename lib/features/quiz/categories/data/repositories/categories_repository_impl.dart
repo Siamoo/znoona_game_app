@@ -11,9 +11,9 @@ class CategoriesRepositoryImpl implements CategoriesRepository {
   @override
   Future<Either<String, List<Category>>> getCategories() async {
     try {
-      final  result = await remoteDataSource.getCategories();
+      final result = await remoteDataSource.getCategories();
       return Right(result.map((model) => model.toEntity()).toList());
-    }on Exception catch (e) {
+    } on Exception catch (e) {
       return Left(e.toString());
     }
   }
@@ -21,12 +21,22 @@ class CategoriesRepositoryImpl implements CategoriesRepository {
   @override
   Future<Either<String, List<Category>>> getMainCategories() async {
     try {
-      final  result = await remoteDataSource.getMainCategories();
+      final result = await remoteDataSource.getMainCategories();
       return Right(result.map((model) => model.toEntity()).toList());
-    }on Exception catch (e) {
+    } on Exception catch (e) {
       return Left(e.toString());
     }
   }
 
-
+  @override
+  Future<Either<String, List<Category>>> getSubCategories(
+    String parentId,
+  ) async {
+    try {
+      final result = await remoteDataSource.getSubCategories(parentId);
+      return Right(result.map((model) => model.toEntity()).toList());
+    } on Exception catch (e) {
+      return Left(e.toString());
+    }
+  }
 }

@@ -1,6 +1,54 @@
 import 'package:znoona_game_app/core/language/lang_keys.dart';
 import 'package:znoona_game_app/core/style/images/app_images.dart';
 
+// Keep your existing functions and add new ones for the hierarchy
+
+String getCategoryImageForType(String type, String name) {
+  switch (type) {
+    case 'main_type':
+      return _getMainTypeImage(name);
+    case 'faculty':
+      return _getFacultyImage(name);
+    case 'year':
+      return AppImages.history;
+    case 'subject':
+      return AppImages.history;
+    case 'unit':
+      return AppImages.history;
+    case 'lesson':
+      return AppImages.history;
+    default:
+      return AppImages.science;
+  }
+}
+
+String _getMainTypeImage(String name) {
+  switch (name.toLowerCase()) {
+    case 'public':
+      return AppImages.history;
+    case 'university':
+      return AppImages.history;
+    case 'secondary':
+      return AppImages.history;
+    case 'preparatory':
+      return AppImages.history;
+    case 'primary':
+      return AppImages.history;
+    default:
+      return AppImages.science;
+  }
+}
+
+String _getFacultyImage(String name) {
+  if (name.toLowerCase().contains('هندسة')) return AppImages.history;
+  if (name.toLowerCase().contains('حاسبات')) return AppImages.history;
+  if (name.toLowerCase().contains('طب')) return AppImages.history;
+  if (name.toLowerCase().contains('علوم')) return AppImages.science;
+  if (name.toLowerCase().contains('آداب')) return AppImages.history;
+  return AppImages.history;
+}
+
+// Your existing functions for the old categories system
 String getCategoryImages(String name) {
   switch (name.toLowerCase()) {
     case 'science':
@@ -18,7 +66,7 @@ String getCategoryImages(String name) {
     case 'technology':
       return AppImages.technology;
     default:
-      return AppImages.random;
+      return AppImages.science;
   }
 }
 

@@ -3,6 +3,7 @@ import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:znoona_game_app/features/quiz/categories/domain/entities/category.dart';
 import 'package:znoona_game_app/features/quiz/categories/domain/usecases/get_categories_usecase.dart';
 import 'package:znoona_game_app/features/quiz/categories/domain/usecases/get_main_categories_usecase.dart';
+import 'package:znoona_game_app/features/quiz/categories/domain/usecases/get_sub_categories_usecase.dart';
 
 part 'categories_state.dart';
 part 'categories_cubit.freezed.dart';
@@ -11,10 +12,12 @@ class CategoriesCubit extends Cubit<CategoriesState> {
   CategoriesCubit({
     required this.getCategoriesUseCase,
     required this.getMainCategoriesUseCase,
+    required this.getSubCategoriesUseCase,
   }) : super(const CategoriesState.initial());
 
   final GetCategoriesUseCase getCategoriesUseCase;
   final GetMainCategoriesUseCase getMainCategoriesUseCase;
+  final GetSubCategoriesUseCase getSubCategoriesUseCase;
 
   // Load all categories (original function)
   Future<void> loadCategories() async {
@@ -33,6 +36,18 @@ class CategoriesCubit extends Cubit<CategoriesState> {
     emit(const CategoriesState.loading());
     
     final result = await getMainCategoriesUseCase();
+    
+    result.fold(
+      (error) => emit(CategoriesState.error(error)),
+      (categories) => emit(CategoriesState.loaded(categories)),
+    );
+  }
+
+  // Load subcategories by parent ID
+  Future<void> loadSubCategories(String parentId) async {
+    emit(const CategoriesState.loading());
+    
+    final result = await getSubCategoriesUseCase(parentId);
     
     result.fold(
       (error) => emit(CategoriesState.error(error)),

@@ -7,22 +7,29 @@ part 'categories_state.dart';
 part 'categories_cubit.freezed.dart';
 
 class CategoriesCubit extends Cubit<CategoriesState> {
-  CategoriesCubit(this.getCategoriesUseCase)
-    : super(const CategoriesState.initial());
+  CategoriesCubit({
+    required this.getCategoriesUseCase,
+  }) : super(const CategoriesState.initial());
 
   final GetCategoriesUseCase getCategoriesUseCase;
 
+
+  // Load all categories (original function)
   Future<void> loadCategories() async {
     emit(const CategoriesState.loading());
-
+    
     final result = await getCategoriesUseCase();
-
+    
     result.fold(
       (error) => emit(CategoriesState.error(error)),
-      (categories) {
-        emit(CategoriesState.loaded(categories));
-        print(categories.first.id);
-      },
+      (categories) => emit(CategoriesState.loaded(categories)),
     );
+  }
+
+
+
+  // Reset to initial state
+  void reset() {
+    emit(const CategoriesState.initial());
   }
 }

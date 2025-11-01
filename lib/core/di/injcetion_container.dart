@@ -3,6 +3,8 @@ import 'package:supabase_flutter/supabase_flutter.dart';
 
 // App Core
 import 'package:znoona_game_app/core/app/app_cubit/app_cubit.dart';
+import 'package:znoona_game_app/features/quiz/categories/domain/usecases/get_main_categories_usecase.dart';
+import 'package:znoona_game_app/features/quiz/categories/domain/usecases/get_sub_categories_usecase.dart';
 import 'package:znoona_game_app/features/quiz/room/data/datasources/room_remote_data_source.dart';
 import 'package:znoona_game_app/features/quiz/room/data/repositories/room_repository_impl.dart';
 import 'package:znoona_game_app/features/quiz/room/domain/repositories/room_repository.dart';
@@ -84,8 +86,17 @@ Future<void> setupInjector() async {
     )
     /// Usecases
     ..registerLazySingleton(() => GetCategoriesUseCase(sl()))
+    ..registerLazySingleton(() => GetMainCategoriesUseCase(sl()))
+    ..registerLazySingleton(() => GetSubCategoriesUseCase(sl()))
+    
     /// Cubits
-    ..registerFactory(() => CategoriesCubit(sl()))
+    ..registerFactory(
+      () => CategoriesCubit(
+        getCategoriesUseCase: sl(),
+        getMainCategoriesUseCase: sl(),
+        getSubCategoriesUseCase: sl(),
+      ),
+    )
     // ---------------- QUESTIONS (Single Player) ----------------
     /// Datasources
     ..registerLazySingleton<QuestionsRemoteDataSource>(
@@ -124,7 +135,6 @@ Future<void> setupInjector() async {
     ..registerLazySingleton(() => MarkPlayerFinishedUseCase(sl()))
     ..registerLazySingleton(() => GetRoomPlayersStreamResultsUseCase(sl()))
     ..registerLazySingleton(() => GetRoomPlayersUseCase(sl()))
-    
     /// Cubits
     ..registerFactory(
       () => RoomCubit(

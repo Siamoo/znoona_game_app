@@ -1,7 +1,6 @@
 import 'package:znoona_game_app/core/language/lang_keys.dart';
 import 'package:znoona_game_app/core/style/images/app_images.dart';
 
-// Keep your existing functions and add new ones for the hierarchy
 
 String getCategoryImageForType(String type, String name) {
   switch (type) {
@@ -48,7 +47,6 @@ String _getFacultyImage(String name) {
   return AppImages.history;
 }
 
-// Your existing functions for the old categories system
 String getCategoryImages(String name) {
   switch (name.toLowerCase()) {
     case 'science':

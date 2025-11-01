@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:znoona_game_app/features/quiz/categories/presentation/refactors/categories_body.dart';
+import 'package:znoona_game_app/features/quiz/categories/presentation/refactors/category_hierarchy_body.dart';
 
 class CategoriesScreen extends StatelessWidget {
   const CategoriesScreen({required this.isRoom, super.key});
@@ -8,7 +8,7 @@ class CategoriesScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return CategoriesBody(
+    return CategoryHierarchyScreen(
       isRoom: isRoom,
     );
   }

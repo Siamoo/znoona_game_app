@@ -21,7 +21,6 @@ class CategoryItem extends StatelessWidget {
   final VoidCallback onPressed;
 
   String _getImageForLevel(LevelType type, String categoryName) {
-    // Use getCategoryImageForType instead of getCategoryImages
     return getCategoryImageForType(_levelTypeToString(type), categoryName);
   }
 
@@ -62,8 +61,6 @@ class CategoryItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final isLeaf = levelType == LevelType.lesson;
-
     return CustomLinearButton(
       borderRadiusNum: 20,
       colors: [
@@ -78,7 +75,8 @@ class CategoryItem extends StatelessWidget {
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            Expanded(
+            CustomFadeInRight(
+              duration: 700,
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -86,7 +84,7 @@ class CategoryItem extends StatelessWidget {
                   TextApp(
                     text: category.name,
                     textStyle: TextStyle(
-                      fontSize: 22.sp,
+                      fontSize: 26.sp,
                       fontWeight: FontWeight.w800,
                       color: ZnoonaColors.text(context),
                     ),
@@ -94,12 +92,15 @@ class CategoryItem extends StatelessWidget {
                     // overflow: TextOverflow.ellipsis,
                   ),
                   SizedBox(height: 4.h),
-                  TextApp(
-                    text: _getDescription(levelType),
-                    textStyle: TextStyle(
-                      fontSize: 14.sp,
-                      fontWeight: FontWeight.w500,
-                      color: ZnoonaColors.text(context).withAlpha(200),
+                  SizedBox(
+                    width: 220.w,
+                    child: TextApp(
+                      text: _getDescription(levelType),
+                      textStyle: TextStyle(
+                        fontSize: 17.sp,
+                        fontWeight: FontWeight.w500,
+                        color: ZnoonaColors.text(context).withAlpha(200),
+                      ),
                     ),
                   ),
                 ],
@@ -107,32 +108,10 @@ class CategoryItem extends StatelessWidget {
             ),
             CustomFadeInLeft(
               duration: 700,
-              child: Stack(
-                children: [
-                  Image.asset(
-                    _getImageForLevel(levelType, category.name),
-                    height: 70.h,
-                    width: 70.w,
-                    fit: BoxFit.contain,
-                  ),
-                  if (isLeaf)
-                    Positioned(
-                      right: 0,
-                      bottom: 0,
-                      child: Container(
-                        padding: EdgeInsets.all(4.w),
-                        decoration: const BoxDecoration(
-                          color: Colors.green,
-                          shape: BoxShape.circle,
-                        ),
-                        child: Icon(
-                          Icons.play_arrow,
-                          color: Colors.white,
-                          size: 16.w,
-                        ),
-                      ),
-                    ),
-                ],
+              child: Image.asset(
+                _getImageForLevel(levelType, category.name),
+                height: 90.h,
+                width: 90.w,
               ),
             ),
           ],

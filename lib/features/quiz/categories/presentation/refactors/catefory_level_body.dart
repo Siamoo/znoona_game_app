@@ -81,7 +81,7 @@ class CategoryLevelView extends StatelessWidget {
         itemBuilder: (context, index) {
           final category = categories[index];
           return CustomFadeInDown(
-            duration: 400 + (index * 100),
+            duration: 400 + (index * 120),
             child: CategoryItem(
               category: category,
               levelType: levelType,

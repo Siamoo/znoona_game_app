@@ -7,20 +7,19 @@ import 'package:znoona_game_app/core/language/lang_keys.dart';
 import 'package:znoona_game_app/core/style/images/app_images.dart';
 import 'package:znoona_game_app/features/quiz/categories/domain/entities/category.dart';
 import 'package:znoona_game_app/features/quiz/categories/presentation/cubit/categories_cubit.dart';
-import 'package:znoona_game_app/features/quiz/categories/presentation/refactors/catefory_level_body.dart';
+import 'package:znoona_game_app/features/quiz/categories/presentation/refactors/category_level_body.dart';
 import 'package:znoona_game_app/features/quiz/room/presentation/screen/room_creation_screen.dart';
 import 'package:znoona_game_app/features/quiz/single/presentation/screen/quiz_screen.dart';
 
-class CategoryHierarchyScreen extends StatefulWidget {
-  const CategoryHierarchyScreen({required this.isRoom, super.key});
+class CategoryHierarchyBody extends StatefulWidget {
+  const CategoryHierarchyBody({required this.isRoom, super.key});
   final bool isRoom;
 
   @override
-  State<CategoryHierarchyScreen> createState() =>
-      _CategoryHierarchyScreenState();
+  State<CategoryHierarchyBody> createState() => _CategoryHierarchyBodyState();
 }
 
-class _CategoryHierarchyScreenState extends State<CategoryHierarchyScreen> {
+class _CategoryHierarchyBodyState extends State<CategoryHierarchyBody> {
   final List<CategoryLevel> _navigationStack = [];
 
   @override
@@ -144,7 +143,7 @@ class _CategoryHierarchyScreenState extends State<CategoryHierarchyScreen> {
             Expanded(
               child: BlocBuilder<CategoriesCubit, CategoriesState>(
                 builder: (context, state) {
-                  return CategoryLevelView(
+                  return CategoryLevelBody(
                     state: state,
                     onCategorySelected: (category) {
                       _onCategorySelected(category, category.name);

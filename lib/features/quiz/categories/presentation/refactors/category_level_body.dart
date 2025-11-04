@@ -8,8 +8,8 @@ import 'package:znoona_game_app/features/quiz/categories/presentation/cubit/cate
 import 'package:znoona_game_app/features/quiz/categories/presentation/refactors/category_hierarchy_body.dart';
 import 'package:znoona_game_app/features/quiz/categories/presentation/widgets/category_item.dart';
 
-class CategoryLevelView extends StatelessWidget {
-  const CategoryLevelView({
+class CategoryLevelBody extends StatelessWidget {
+  const CategoryLevelBody({
     required this.state,
     required this.onCategorySelected,
     required this.levelType,

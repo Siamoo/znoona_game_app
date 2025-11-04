@@ -7,7 +7,7 @@ import 'package:znoona_game_app/core/language/lang_keys.dart';
 import 'package:znoona_game_app/core/style/images/app_images.dart';
 import 'package:znoona_game_app/features/home/widgets/custom_game_button.dart';
 import 'package:znoona_game_app/features/home/widgets/custom_section_title.dart';
-import 'package:znoona_game_app/features/quiz/categories/presentation/screens/categories_screen.dart';
+import 'package:znoona_game_app/features/quiz/categories/presentation/screens/categories_leavel_screen.dart';
 import 'package:znoona_game_app/features/quiz/room/presentation/cubit/room_cubit.dart';
 import 'package:znoona_game_app/features/quiz/room/presentation/screen/room_joining_screen.dart';
 

@@ -8,7 +8,7 @@ import 'package:znoona_game_app/core/style/images/app_images.dart';
 import 'package:znoona_game_app/features/quiz/categories/domain/entities/category.dart';
 import 'package:znoona_game_app/features/quiz/categories/presentation/cubit/categories_cubit.dart';
 import 'package:znoona_game_app/features/quiz/categories/presentation/refactors/category_level_body.dart';
-import 'package:znoona_game_app/features/quiz/categories/presentation/widgets/category_level&level_type.dart';
+import 'package:znoona_game_app/features/quiz/categories/presentation/widgets/category_level_class.dart';
 import 'package:znoona_game_app/features/quiz/room/presentation/screen/room_creation_screen.dart';
 import 'package:znoona_game_app/features/quiz/single/presentation/screen/quiz_screen.dart';
 
@@ -35,11 +35,11 @@ class _CategoryHierarchyBodyState extends State<CategoryHierarchyBody> {
     _navigationStack
       ..clear()
       ..add(
-        CategoryLevel(type: LevelType.main, title: LangKeys.categories),
+        CategoryLevel(title: LangKeys.categories),
       );
   }
 
-  Future<void> _onCategorySelected(Category category, String levelTitle) async {
+  Future<void> _onCategorySelected(Category category) async {
     if (_isLeafLevel(category)) {
       // Last level - start quiz
       _startQuiz(category);
@@ -48,8 +48,7 @@ class _CategoryHierarchyBodyState extends State<CategoryHierarchyBody> {
       await context.read<CategoriesCubit>().loadSubCategories(category.id);
       _navigationStack.add(
         CategoryLevel(
-          type: _getLevelType(category),
-          title: levelTitle,
+          title: category.name,
           parentId: category.id,
         ),
       );
@@ -80,25 +79,6 @@ class _CategoryHierarchyBodyState extends State<CategoryHierarchyBody> {
     return category.type == 'lesson' ||
         category.type == 'unit' ||
         category.type == 'subject';
-  }
-
-  LevelType _getLevelType(Category category) {
-    switch (category.type) {
-      case 'main_type':
-        return LevelType.main;
-      case 'faculty':
-        return LevelType.faculty;
-      case 'year':
-        return LevelType.year;
-      case 'subject':
-        return LevelType.subject;
-      case 'unit':
-        return LevelType.unit;
-      case 'lesson':
-        return LevelType.lesson;
-      default:
-        return LevelType.main;
-    }
   }
 
   void _startQuiz(Category category) {
@@ -134,9 +114,10 @@ class _CategoryHierarchyBodyState extends State<CategoryHierarchyBody> {
                   return CategoryLevelBody(
                     state: state,
                     onCategorySelected: (category) {
-                      _onCategorySelected(category, category.name);
+                      _onCategorySelected(
+                        category,
+                      );
                     },
-                    levelType: _navigationStack.last.type,
                   );
                 },
               ),

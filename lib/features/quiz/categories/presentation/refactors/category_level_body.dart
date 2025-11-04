@@ -6,19 +6,16 @@ import 'package:znoona_game_app/core/common/widgets/text_app.dart';
 import 'package:znoona_game_app/features/quiz/categories/domain/entities/category.dart';
 import 'package:znoona_game_app/features/quiz/categories/presentation/cubit/categories_cubit.dart';
 import 'package:znoona_game_app/features/quiz/categories/presentation/widgets/category_item.dart';
-import 'package:znoona_game_app/features/quiz/categories/presentation/widgets/category_level&level_type.dart';
 
 class CategoryLevelBody extends StatelessWidget {
   const CategoryLevelBody({
     required this.state,
     required this.onCategorySelected,
-    required this.levelType,
     super.key,
   });
 
   final CategoriesState state;
   final dynamic Function(Category) onCategorySelected;
-  final LevelType levelType;
 
   @override
   Widget build(BuildContext context) {

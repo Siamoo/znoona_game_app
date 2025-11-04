@@ -8,6 +8,7 @@ import 'package:znoona_game_app/core/style/images/app_images.dart';
 import 'package:znoona_game_app/features/quiz/categories/domain/entities/category.dart';
 import 'package:znoona_game_app/features/quiz/categories/presentation/cubit/categories_cubit.dart';
 import 'package:znoona_game_app/features/quiz/categories/presentation/refactors/category_level_body.dart';
+import 'package:znoona_game_app/features/quiz/categories/presentation/widgets/category_level&level_type.dart';
 import 'package:znoona_game_app/features/quiz/room/presentation/screen/room_creation_screen.dart';
 import 'package:znoona_game_app/features/quiz/single/presentation/screen/quiz_screen.dart';
 
@@ -106,27 +107,14 @@ class _CategoryHierarchyBodyState extends State<CategoryHierarchyBody> {
       widget.isRoom
           ? RoomCreationScreen(
               categoryId: category.id,
-              categoryName: _getCategoryDisplayName(category.name),
+              categoryName: category.name,
               imageUrl: AppImages.football,
             )
           : QuizScreen(
               categoryId: category.id,
-              categoryName: _getCategoryDisplayName(category.name),
+              categoryName: category.name,
             ),
     );
-  }
-
-  String _getCategoryDisplayName(String name) {
-    // You can customize how category names are displayed
-    return name;
-  }
-
-  String _getAppBarTitle() {
-    return _navigationStack.last.title;
-  }
-
-  bool _canGoBack() {
-    return _navigationStack.length > 1;
   }
 
   @override
@@ -136,8 +124,8 @@ class _CategoryHierarchyBodyState extends State<CategoryHierarchyBody> {
         child: Column(
           children: [
             CustomAppBar(
-              title: _getAppBarTitle(),
-              onTap: _canGoBack() ? _onBackPressed : null,
+              title: _navigationStack.last.title,
+              onTap: _onBackPressed,
             ),
             SizedBox(height: 12.h),
             Expanded(
@@ -158,24 +146,4 @@ class _CategoryHierarchyBodyState extends State<CategoryHierarchyBody> {
       ),
     );
   }
-}
-
-class CategoryLevel {
-  CategoryLevel({
-    required this.type,
-    required this.title,
-    this.parentId,
-  });
-  final LevelType type;
-  final String title;
-  final String? parentId;
-}
-
-enum LevelType {
-  main,
-  faculty,
-  year,
-  subject,
-  unit,
-  lesson,
 }

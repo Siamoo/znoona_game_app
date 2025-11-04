@@ -7,7 +7,7 @@ import 'package:znoona_game_app/core/style/images/app_images.dart';
 import 'package:znoona_game_app/features/home/widgets/custom_game_button.dart';
 import 'package:znoona_game_app/features/home/widgets/custom_section_title.dart';
 import 'package:znoona_game_app/features/home/widgets/discover_button.dart';
-import 'package:znoona_game_app/features/quiz/categories/presentation/screens/categories_leavel_screen.dart';
+import 'package:znoona_game_app/features/quiz/categories/presentation/refactors/category_hierarchy_body.dart';
 import 'package:znoona_game_app/features/quiz/room/presentation/screen/room_screen.dart';
 
 class QuizHomeBody extends StatelessWidget {
@@ -47,7 +47,7 @@ class QuizHomeBody extends StatelessWidget {
                             langkey: LangKeys.solo,
                             onPressed: () => ZnoonaNavigate.pushTo(
                               context,
-                              const CategoriesScreen(
+                              const CategoryHierarchyBody(
                                 isRoom: false,
                               ),
                             ),

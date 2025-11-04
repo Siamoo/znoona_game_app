@@ -501,7 +501,7 @@ class RoomCubit extends Cubit<RoomState> {
           },
         );
       },
-      onError: (error) => print('Real-time stream onError: $error'),
+      onError: (dynamic error) => print('Real-time stream onError: $error'),
       cancelOnError: true,
     );
   }
@@ -691,7 +691,7 @@ class RoomCubit extends Cubit<RoomState> {
           },
         );
       },
-      onError: (error) {
+      onError: (dynamic error) {
         print('Results stream onError: $error');
       },
     );

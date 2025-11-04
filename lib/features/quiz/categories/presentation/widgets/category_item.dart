@@ -6,7 +6,7 @@ import 'package:znoona_game_app/core/common/widgets/text_app.dart';
 import 'package:znoona_game_app/core/helpers/categores_helper.dart';
 import 'package:znoona_game_app/core/helpers/znoona.colors.dart';
 import 'package:znoona_game_app/features/quiz/categories/domain/entities/category.dart';
-import 'package:znoona_game_app/features/quiz/categories/presentation/refactors/category_hierarchy_body.dart';
+import 'package:znoona_game_app/features/quiz/categories/presentation/widgets/category_level&level_type.dart';
 
 class CategoryItem extends StatelessWidget {
   const CategoryItem({
@@ -21,7 +21,7 @@ class CategoryItem extends StatelessWidget {
   final VoidCallback onPressed;
 
   String _getImageForLevel(LevelType type, String categoryName) {
-    return getCategoryImageForType(_levelTypeToString(type), categoryName);
+    return getCategoryImages(categoryName);
   }
 
   // Helper method to convert LevelType to string for the helper function

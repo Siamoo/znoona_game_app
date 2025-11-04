@@ -5,8 +5,8 @@ import 'package:znoona_game_app/core/common/animations/animate_do.dart';
 import 'package:znoona_game_app/core/common/widgets/text_app.dart';
 import 'package:znoona_game_app/features/quiz/categories/domain/entities/category.dart';
 import 'package:znoona_game_app/features/quiz/categories/presentation/cubit/categories_cubit.dart';
-import 'package:znoona_game_app/features/quiz/categories/presentation/refactors/category_hierarchy_body.dart';
 import 'package:znoona_game_app/features/quiz/categories/presentation/widgets/category_item.dart';
+import 'package:znoona_game_app/features/quiz/categories/presentation/widgets/category_level&level_type.dart';
 
 class CategoryLevelBody extends StatelessWidget {
   const CategoryLevelBody({
@@ -81,7 +81,7 @@ class CategoryLevelBody extends StatelessWidget {
         itemBuilder: (context, index) {
           final category = categories[index];
           return CustomFadeInDown(
-            duration: 400 + (index * 120),
+            duration: 600 + (index * 10),
             child: CategoryItem(
               category: category,
               levelType: levelType,

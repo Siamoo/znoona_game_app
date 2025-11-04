@@ -84,7 +84,6 @@ class CategoryLevelBody extends StatelessWidget {
             duration: 600 + (index * 10),
             child: CategoryItem(
               category: category,
-              levelType: levelType,
               onPressed: () => onCategorySelected(category),
             ),
           );

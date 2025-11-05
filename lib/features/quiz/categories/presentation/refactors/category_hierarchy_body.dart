@@ -76,9 +76,7 @@ class _CategoryHierarchyBodyState extends State<CategoryHierarchyBody> {
 
   bool _isLeafLevel(Category category) {
     // Define which levels are leaf nodes (have lessons/quizzes)
-    return category.type == 'lesson' ||
-        category.type == 'unit' ||
-        category.type == 'subject';
+    return category.type == 'lesson';
   }
 
   void _startQuiz(Category category) {

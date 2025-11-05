@@ -37,7 +37,7 @@ class ZnoonaGameApp extends StatelessWidget {
             BlocProvider(create: (_) => sl<AuthCubit>()..getCurrentUser()),
             BlocProvider(create: (_) => sl<RoomCubit>()),
             BlocProvider(
-              create: (_) => sl<CategoriesCubit>()..loadCategories(),
+              create: (_) => sl<CategoriesCubit>()..loadMainCategories(),
             ),
           ],
           child: ScreenUtilInit(

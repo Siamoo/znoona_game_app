@@ -23,7 +23,9 @@ CategoryModel _$CategoryModelFromJson(Map<String, dynamic> json) {
 mixin _$CategoryModel {
   String get id => throw _privateConstructorUsedError;
   String get name => throw _privateConstructorUsedError;
-  String? get icon_url => throw _privateConstructorUsedError;
+  String get arabic_name => throw _privateConstructorUsedError;
+  String get discription => throw _privateConstructorUsedError;
+  String? get image => throw _privateConstructorUsedError;
   DateTime? get created_at => throw _privateConstructorUsedError;
   String? get type => throw _privateConstructorUsedError;
   String? get parentId => throw _privateConstructorUsedError;
@@ -48,7 +50,9 @@ abstract class $CategoryModelCopyWith<$Res> {
   $Res call({
     String id,
     String name,
-    String? icon_url,
+    String arabic_name,
+    String discription,
+    String? image,
     DateTime? created_at,
     String? type,
     String? parentId,
@@ -72,7 +76,9 @@ class _$CategoryModelCopyWithImpl<$Res, $Val extends CategoryModel>
   $Res call({
     Object? id = null,
     Object? name = null,
-    Object? icon_url = freezed,
+    Object? arabic_name = null,
+    Object? discription = null,
+    Object? image = freezed,
     Object? created_at = freezed,
     Object? type = freezed,
     Object? parentId = freezed,
@@ -87,9 +93,17 @@ class _$CategoryModelCopyWithImpl<$Res, $Val extends CategoryModel>
                 ? _value.name
                 : name // ignore: cast_nullable_to_non_nullable
                       as String,
-            icon_url: freezed == icon_url
-                ? _value.icon_url
-                : icon_url // ignore: cast_nullable_to_non_nullable
+            arabic_name: null == arabic_name
+                ? _value.arabic_name
+                : arabic_name // ignore: cast_nullable_to_non_nullable
+                      as String,
+            discription: null == discription
+                ? _value.discription
+                : discription // ignore: cast_nullable_to_non_nullable
+                      as String,
+            image: freezed == image
+                ? _value.image
+                : image // ignore: cast_nullable_to_non_nullable
                       as String?,
             created_at: freezed == created_at
                 ? _value.created_at
@@ -121,7 +135,9 @@ abstract class _$$CategoryModelImplCopyWith<$Res>
   $Res call({
     String id,
     String name,
-    String? icon_url,
+    String arabic_name,
+    String discription,
+    String? image,
     DateTime? created_at,
     String? type,
     String? parentId,
@@ -144,7 +160,9 @@ class __$$CategoryModelImplCopyWithImpl<$Res>
   $Res call({
     Object? id = null,
     Object? name = null,
-    Object? icon_url = freezed,
+    Object? arabic_name = null,
+    Object? discription = null,
+    Object? image = freezed,
     Object? created_at = freezed,
     Object? type = freezed,
     Object? parentId = freezed,
@@ -159,9 +177,17 @@ class __$$CategoryModelImplCopyWithImpl<$Res>
             ? _value.name
             : name // ignore: cast_nullable_to_non_nullable
                   as String,
-        icon_url: freezed == icon_url
-            ? _value.icon_url
-            : icon_url // ignore: cast_nullable_to_non_nullable
+        arabic_name: null == arabic_name
+            ? _value.arabic_name
+            : arabic_name // ignore: cast_nullable_to_non_nullable
+                  as String,
+        discription: null == discription
+            ? _value.discription
+            : discription // ignore: cast_nullable_to_non_nullable
+                  as String,
+        image: freezed == image
+            ? _value.image
+            : image // ignore: cast_nullable_to_non_nullable
                   as String?,
         created_at: freezed == created_at
             ? _value.created_at
@@ -186,7 +212,9 @@ class _$CategoryModelImpl implements _CategoryModel {
   const _$CategoryModelImpl({
     required this.id,
     required this.name,
-    this.icon_url,
+    required this.arabic_name,
+    required this.discription,
+    this.image,
     this.created_at,
     this.type,
     this.parentId,
@@ -200,7 +228,11 @@ class _$CategoryModelImpl implements _CategoryModel {
   @override
   final String name;
   @override
-  final String? icon_url;
+  final String arabic_name;
+  @override
+  final String discription;
+  @override
+  final String? image;
   @override
   final DateTime? created_at;
   @override
@@ -210,7 +242,7 @@ class _$CategoryModelImpl implements _CategoryModel {
 
   @override
   String toString() {
-    return 'CategoryModel(id: $id, name: $name, icon_url: $icon_url, created_at: $created_at, type: $type, parentId: $parentId)';
+    return 'CategoryModel(id: $id, name: $name, arabic_name: $arabic_name, discription: $discription, image: $image, created_at: $created_at, type: $type, parentId: $parentId)';
   }
 
   @override
@@ -220,8 +252,11 @@ class _$CategoryModelImpl implements _CategoryModel {
             other is _$CategoryModelImpl &&
             (identical(other.id, id) || other.id == id) &&
             (identical(other.name, name) || other.name == name) &&
-            (identical(other.icon_url, icon_url) ||
-                other.icon_url == icon_url) &&
+            (identical(other.arabic_name, arabic_name) ||
+                other.arabic_name == arabic_name) &&
+            (identical(other.discription, discription) ||
+                other.discription == discription) &&
+            (identical(other.image, image) || other.image == image) &&
             (identical(other.created_at, created_at) ||
                 other.created_at == created_at) &&
             (identical(other.type, type) || other.type == type) &&
@@ -231,8 +266,17 @@ class _$CategoryModelImpl implements _CategoryModel {
 
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override
-  int get hashCode =>
-      Object.hash(runtimeType, id, name, icon_url, created_at, type, parentId);
+  int get hashCode => Object.hash(
+    runtimeType,
+    id,
+    name,
+    arabic_name,
+    discription,
+    image,
+    created_at,
+    type,
+    parentId,
+  );
 
   /// Create a copy of CategoryModel
   /// with the given fields replaced by the non-null parameter values.
@@ -252,7 +296,9 @@ abstract class _CategoryModel implements CategoryModel {
   const factory _CategoryModel({
     required final String id,
     required final String name,
-    final String? icon_url,
+    required final String arabic_name,
+    required final String discription,
+    final String? image,
     final DateTime? created_at,
     final String? type,
     final String? parentId,
@@ -266,7 +312,11 @@ abstract class _CategoryModel implements CategoryModel {
   @override
   String get name;
   @override
-  String? get icon_url;
+  String get arabic_name;
+  @override
+  String get discription;
+  @override
+  String? get image;
   @override
   DateTime? get created_at;
   @override

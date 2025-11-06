@@ -9,10 +9,12 @@ class CategoryModel with _$CategoryModel {
   const factory CategoryModel({
     required String id,
     required String name,
-    String? icon_url,
+    required String arabic_name,
+    required String discription,
+    String? image,
     DateTime? created_at,
-    String? type,        
-    String? parentId,    
+    String? type,
+    String? parentId,
   }) = _CategoryModel;
 
   factory CategoryModel.fromJson(Map<String, dynamic> json) =>
@@ -24,9 +26,12 @@ extension CategoryModelX on CategoryModel {
     return Category(
       id: id,
       name: name,
+      arabicName: arabic_name,
+      discription: discription,
+      image: image,
       createdAt: created_at,
-      type: type,        
-      parentId: parentId, 
+      type: type,
+      parentId: parentId,
     );
   }
 }

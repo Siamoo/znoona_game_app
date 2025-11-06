@@ -15,7 +15,7 @@ class CategoriesRemoteDataSourceImpl implements CategoriesRemoteDataSource {
     final response = await client
         .from('categories')
         .select()
-        .order('created_at', ascending: true);
+        .order('sort_by', ascending: true);
 
     final data = response as List<dynamic>;
     return data
@@ -28,7 +28,7 @@ class CategoriesRemoteDataSourceImpl implements CategoriesRemoteDataSource {
         .from('categories')
         .select()
         .filter('parent_id', 'is', null)
-        .order('created_at', ascending: true);
+        .order('sort_by', ascending: true);
 
     final data = response as List<dynamic>;
     return data
@@ -41,7 +41,7 @@ class CategoriesRemoteDataSourceImpl implements CategoriesRemoteDataSource {
         .from('categories')
         .select()
         .eq('parent_id', parentId)
-        .order('created_at', ascending: true);
+        .order('sort_by', ascending: true);
 
     final data = response as List<dynamic>;
     return data

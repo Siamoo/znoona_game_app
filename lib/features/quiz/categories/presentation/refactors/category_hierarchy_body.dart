@@ -85,12 +85,12 @@ class _CategoryHierarchyBodyState extends State<CategoryHierarchyBody> {
       widget.isRoom
           ? RoomCreationScreen(
               categoryId: category.id,
-              categoryName: category.name,
+              categoryName: category.arabicName,
               imageUrl: AppImages.football,
             )
           : QuizScreen(
               categoryId: category.id,
-              categoryName: category.name,
+              categoryName: category.arabicName,
             ),
     );
   }

@@ -5,7 +5,6 @@ import 'package:znoona_game_app/core/common/widgets/custom_linear_button.dart';
 import 'package:znoona_game_app/core/common/widgets/text_app.dart';
 import 'package:znoona_game_app/core/helpers/categores_helper.dart';
 import 'package:znoona_game_app/core/helpers/znoona.colors.dart';
-import 'package:znoona_game_app/core/helpers/znoona_texts.dart';
 import 'package:znoona_game_app/features/quiz/categories/domain/entities/category.dart';
 
 class CategoryItem extends StatelessWidget {
@@ -41,10 +40,7 @@ class CategoryItem extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   TextApp(
-                    text: ZnoonaTexts.tr(
-                      context,
-                      getCategoryLangKeys(category.name),
-                    ),
+                    text: category.arabicName,
                     textStyle: TextStyle(
                       fontSize: 26.sp,
                       fontWeight: FontWeight.w800,
@@ -57,10 +53,7 @@ class CategoryItem extends StatelessWidget {
                   SizedBox(
                     width: 220.w,
                     child: TextApp(
-                      text: ZnoonaTexts.tr(
-                        context,
-                        getCategoryDiscription(category.name),
-                      ),
+                      text: category.discription,
                       textStyle: TextStyle(
                         fontSize: 17.sp,
                         fontWeight: FontWeight.w500,

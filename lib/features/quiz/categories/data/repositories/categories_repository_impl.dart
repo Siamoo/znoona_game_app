@@ -8,15 +8,6 @@ class CategoriesRepositoryImpl implements CategoriesRepository {
   CategoriesRepositoryImpl(this.remoteDataSource);
   final CategoriesRemoteDataSource remoteDataSource;
 
-  @override
-  Future<Either<String, List<Category>>> getCategories() async {
-    try {
-      final result = await remoteDataSource.getCategories();
-      return Right(result.map((model) => model.toEntity()).toList());
-    } on Exception catch (e) {
-      return Left(e.toString());
-    }
-  }
 
   @override
   Future<Either<String, List<Category>>> getMainCategories() async {

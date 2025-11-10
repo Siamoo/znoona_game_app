@@ -47,7 +47,6 @@ import 'package:znoona_game_app/features/user/auth/presentation/cubit/auth_cubit
 import 'package:znoona_game_app/features/quiz/categories/data/datasources/categories_remote_data_source.dart';
 import 'package:znoona_game_app/features/quiz/categories/data/repositories/categories_repository_impl.dart';
 import 'package:znoona_game_app/features/quiz/categories/domain/repositories/categories_repository.dart';
-import 'package:znoona_game_app/features/quiz/categories/domain/usecases/get_categories_usecase.dart';
 import 'package:znoona_game_app/features/quiz/categories/presentation/cubit/categories_cubit.dart';
 
 // ---------------- MULTIPLAYER ROOM ----------------
@@ -85,14 +84,12 @@ Future<void> setupInjector() async {
       () => CategoriesRepositoryImpl(sl()),
     )
     /// Usecases
-    ..registerLazySingleton(() => GetCategoriesUseCase(sl()))
     ..registerLazySingleton(() => GetMainCategoriesUseCase(sl()))
     ..registerLazySingleton(() => GetSubCategoriesUseCase(sl()))
     
     /// Cubits
     ..registerFactory(
       () => CategoriesCubit(
-        getCategoriesUseCase: sl(),
         getMainCategoriesUseCase: sl(),
         getSubCategoriesUseCase: sl(),
       ),

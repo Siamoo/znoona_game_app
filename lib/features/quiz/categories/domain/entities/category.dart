@@ -9,7 +9,7 @@ class Category with _$Category {
     required String name,
     required String  arabicName,
     required String discription,
-    String? image,
+    required String image,
     DateTime? createdAt,
     String? type,        
     String? parentId,    

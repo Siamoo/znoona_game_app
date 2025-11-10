@@ -21,7 +21,7 @@ mixin _$Category {
   String get name => throw _privateConstructorUsedError;
   String get arabicName => throw _privateConstructorUsedError;
   String get discription => throw _privateConstructorUsedError;
-  String? get image => throw _privateConstructorUsedError;
+  String get image => throw _privateConstructorUsedError;
   DateTime? get createdAt => throw _privateConstructorUsedError;
   String? get type => throw _privateConstructorUsedError;
   String? get parentId => throw _privateConstructorUsedError;
@@ -43,7 +43,7 @@ abstract class $CategoryCopyWith<$Res> {
     String name,
     String arabicName,
     String discription,
-    String? image,
+    String image,
     DateTime? createdAt,
     String? type,
     String? parentId,
@@ -69,7 +69,7 @@ class _$CategoryCopyWithImpl<$Res, $Val extends Category>
     Object? name = null,
     Object? arabicName = null,
     Object? discription = null,
-    Object? image = freezed,
+    Object? image = null,
     Object? createdAt = freezed,
     Object? type = freezed,
     Object? parentId = freezed,
@@ -92,10 +92,10 @@ class _$CategoryCopyWithImpl<$Res, $Val extends Category>
                 ? _value.discription
                 : discription // ignore: cast_nullable_to_non_nullable
                       as String,
-            image: freezed == image
+            image: null == image
                 ? _value.image
                 : image // ignore: cast_nullable_to_non_nullable
-                      as String?,
+                      as String,
             createdAt: freezed == createdAt
                 ? _value.createdAt
                 : createdAt // ignore: cast_nullable_to_non_nullable
@@ -128,7 +128,7 @@ abstract class _$$CategoryImplCopyWith<$Res>
     String name,
     String arabicName,
     String discription,
-    String? image,
+    String image,
     DateTime? createdAt,
     String? type,
     String? parentId,
@@ -153,7 +153,7 @@ class __$$CategoryImplCopyWithImpl<$Res>
     Object? name = null,
     Object? arabicName = null,
     Object? discription = null,
-    Object? image = freezed,
+    Object? image = null,
     Object? createdAt = freezed,
     Object? type = freezed,
     Object? parentId = freezed,
@@ -176,10 +176,10 @@ class __$$CategoryImplCopyWithImpl<$Res>
             ? _value.discription
             : discription // ignore: cast_nullable_to_non_nullable
                   as String,
-        image: freezed == image
+        image: null == image
             ? _value.image
             : image // ignore: cast_nullable_to_non_nullable
-                  as String?,
+                  as String,
         createdAt: freezed == createdAt
             ? _value.createdAt
             : createdAt // ignore: cast_nullable_to_non_nullable
@@ -205,7 +205,7 @@ class _$CategoryImpl implements _Category {
     required this.name,
     required this.arabicName,
     required this.discription,
-    this.image,
+    required this.image,
     this.createdAt,
     this.type,
     this.parentId,
@@ -220,7 +220,7 @@ class _$CategoryImpl implements _Category {
   @override
   final String discription;
   @override
-  final String? image;
+  final String image;
   @override
   final DateTime? createdAt;
   @override
@@ -280,7 +280,7 @@ abstract class _Category implements Category {
     required final String name,
     required final String arabicName,
     required final String discription,
-    final String? image,
+    required final String image,
     final DateTime? createdAt,
     final String? type,
     final String? parentId,
@@ -295,7 +295,7 @@ abstract class _Category implements Category {
   @override
   String get discription;
   @override
-  String? get image;
+  String get image;
   @override
   DateTime? get createdAt;
   @override

@@ -11,7 +11,7 @@ class CategoryModel with _$CategoryModel {
     required String name,
     required String arabic_name,
     required String discription,
-    String? image,
+    required String image,
     DateTime? created_at,
     String? type,
     String? parentId,

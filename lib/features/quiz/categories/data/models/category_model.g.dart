@@ -12,7 +12,7 @@ _$CategoryModelImpl _$$CategoryModelImplFromJson(Map<String, dynamic> json) =>
       name: json['name'] as String,
       arabic_name: json['arabic_name'] as String,
       discription: json['discription'] as String,
-      image: json['image'] as String?,
+      image: json['image'] as String,
       created_at: json['created_at'] == null
           ? null
           : DateTime.parse(json['created_at'] as String),

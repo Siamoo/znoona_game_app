@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -6,6 +7,7 @@ import 'package:znoona_game_app/core/common/widgets/custom_app_bar.dart';
 import 'package:znoona_game_app/core/helpers/znoona_navigate.dart';
 import 'package:znoona_game_app/core/helpers/znoona_texts.dart';
 import 'package:znoona_game_app/core/language/lang_keys.dart';
+import 'package:znoona_game_app/core/style/images/app_images.dart';
 import 'package:znoona_game_app/features/quiz/room/presentation/cubit/room_cubit.dart';
 import 'package:znoona_game_app/features/quiz/room/presentation/screen/room_lobby_screen.dart';
 import 'package:znoona_game_app/features/quiz/room/presentation/widgets/creation/build_timer_selection_section.dart';
@@ -65,8 +67,13 @@ class _RoomCreationBodyState extends State<RoomCreationBody> {
                     // Category Info
                     CustomFadeInDown(
                       duration: 850,
-                      child: Image.asset(
-                        widget.imageUrl,
+                      child: CachedNetworkImage(
+                        imageUrl: widget.imageUrl,
+                        placeholder: (context, url) =>
+                            const CircularProgressIndicator(),
+                        errorWidget: (context, url, error) => Image.asset(
+                          AppImages.random,
+                        ),
                         height: 150.h,
                         width: 150.w,
                       ),

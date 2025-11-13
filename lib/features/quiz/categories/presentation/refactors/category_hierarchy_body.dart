@@ -4,7 +4,6 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:znoona_game_app/core/common/widgets/custom_app_bar.dart';
 import 'package:znoona_game_app/core/helpers/znoona_navigate.dart';
 import 'package:znoona_game_app/core/language/lang_keys.dart';
-import 'package:znoona_game_app/core/style/images/app_images.dart';
 import 'package:znoona_game_app/features/quiz/categories/domain/entities/category.dart';
 import 'package:znoona_game_app/features/quiz/categories/presentation/cubit/categories_cubit.dart';
 import 'package:znoona_game_app/features/quiz/categories/presentation/refactors/category_level_body.dart';
@@ -86,7 +85,7 @@ class _CategoryHierarchyBodyState extends State<CategoryHierarchyBody> {
           ? RoomCreationScreen(
               categoryId: category.id,
               categoryName: category.arabicName,
-              imageUrl: AppImages.football,
+              imageUrl: category.image,
             )
           : QuizScreen(
               categoryId: category.id,

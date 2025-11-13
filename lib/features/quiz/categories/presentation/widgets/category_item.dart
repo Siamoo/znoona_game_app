@@ -1,9 +1,9 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:znoona_game_app/core/common/animations/animate_do.dart';
 import 'package:znoona_game_app/core/common/widgets/custom_linear_button.dart';
 import 'package:znoona_game_app/core/common/widgets/text_app.dart';
-import 'package:znoona_game_app/core/helpers/categores_helper.dart';
 import 'package:znoona_game_app/core/helpers/znoona.colors.dart';
 import 'package:znoona_game_app/features/quiz/categories/domain/entities/category.dart';
 
@@ -66,10 +66,12 @@ class CategoryItem extends StatelessWidget {
             ),
             CustomFadeInLeft(
               duration: 700,
-              child: Image.asset(
-                getCategoryImages(category.name),
-                height: 90.h,
+              child: CachedNetworkImage(
+                imageUrl: category.image,
+                placeholder: (context, url) => CircularProgressIndicator(),
+                errorWidget: (context, url, error) => Icon(Icons.error),
                 width: 90.w,
+                height: 90.h,
               ),
             ),
           ],

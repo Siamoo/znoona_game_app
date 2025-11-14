@@ -117,5 +117,8 @@
     "bronze": "Bronze",
     "unranked": "Unranked",
     "you": "You",
-    "leave_room": "Leave Room"
+    "leave_room": "Leave Room",
+    "waiting": "Waiting",
+    "playing": "Playing"
+
 }

@@ -97,10 +97,10 @@ Future<void> showCanNotStartGameDialog(
           context,
           LangKeys.mustHaveTwoPlayers,
         ),
-        style: TextStyle(
+        style:const TextStyle(
           fontSize: 18,
           fontWeight: FontWeight.bold,
-          color: ZnoonaColors.text(context),
+          color: Colors.white,
         ),
         textAlign: TextAlign.center,
       ),
@@ -116,10 +116,10 @@ Future<void> showCanNotStartGameDialog(
                 context,
                 LangKeys.ok,
               ),
-              style: TextStyle(
+              style:const TextStyle(
                 fontSize: 18,
                 fontWeight: FontWeight.bold,
-                color: ZnoonaColors.text(context),
+                color: Colors.white,
               ),
               textAlign: TextAlign.center,
             ),

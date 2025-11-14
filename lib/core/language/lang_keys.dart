@@ -115,5 +115,7 @@ class LangKeys {
   static const String unranked = 'unranked';
   static const String you = 'you';
   static const String leaveRoom = 'leave_room';
+  static const String waiting = 'waiting';
+  static const String playing = 'playing';
 
 }

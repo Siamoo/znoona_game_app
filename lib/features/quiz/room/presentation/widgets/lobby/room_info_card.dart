@@ -125,7 +125,10 @@ class RoomInfoCard extends StatelessWidget {
                         borderRadius: BorderRadius.circular(12),
                       ),
                       child: Text(
-                        currentRoom.status.toUpperCase(),
+                        ZnoonaTexts.tr(
+                          context,
+                          currentRoom.status,
+                        ).toUpperCase(),
                         style: GoogleFonts.beiruti(
                           fontSize: 20.sp,
                           fontWeight: FontWeight.bold,

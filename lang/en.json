@@ -119,6 +119,15 @@
     "you": "You",
     "leave_room": "Leave Room",
     "waiting": "Waiting",
-    "playing": "Playing"
+    "playing": "Playing",
+  "scan_room_qr": "Scan Room QR Code",
+  "align_qr_in_frame": "Align the QR code within the frame",
+  "camera_permission": "Camera Permission",
+  "camera_permission_required": "Camera permission is required to scan QR codes",
+  "camera_permission_denied": "Camera Permission Denied",
+  "enable_camera_to_scan": "Please enable camera access to scan QR codes",
+  "invalid_qr_code": "Invalid QR Code. Please scan a valid room QR code.",
+  "retry": "Retry",
+  "open_settings": "Open Settings"
 
 }

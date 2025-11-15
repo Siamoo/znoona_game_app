@@ -117,5 +117,15 @@ class LangKeys {
   static const String leaveRoom = 'leave_room';
   static const String waiting = 'waiting';
   static const String playing = 'playing';
+  static const String cameraPermission = 'camera_permission';
+  static const String cameraPermissionRequired = 'camera_permission_required';
+  static const String settings = 'settings';
+  static const String invalidQrCode = 'invalid_qr_code';
+  static const String scanRoomQr = 'scan_room_qr';
+  static const String alignQrInFrame = 'align_qr_in_frame';
+  static const String cameraPermissionDenied = 'camera_permission_denied';
+  static const String enableCameraToScan = 'enable_camera_to_scan';
+  static const String retry = 'retry';
+  static const String openSettings = 'open_settings';
 
 }

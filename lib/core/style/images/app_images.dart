@@ -24,6 +24,8 @@ class AppImages {
   static const solo = 'assets/images/user/Solo.png';
   static const join = 'assets/images/user/Join.png';
   static const create = 'assets/images/user/Create.png';
+  static const qrScanner = 'assets/images/user/qr_scanner.png';
+  static const permission = 'assets/images/user/permission.png';
 
   //Svg
   static const mode = 'assets/svg/dark_mode.svg';

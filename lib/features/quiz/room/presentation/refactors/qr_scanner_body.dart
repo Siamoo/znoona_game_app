@@ -1,10 +1,15 @@
 // features/quiz/room/presentation/screen/qr_scanner_screen.dart
+import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:mobile_scanner/mobile_scanner.dart';
 import 'package:permission_handler/permission_handler.dart';
+import 'package:znoona_game_app/core/helpers/znoona.colors.dart';
+import 'package:znoona_game_app/core/helpers/znoona_navigate.dart';
 import 'package:znoona_game_app/core/helpers/znoona_texts.dart';
 import 'package:znoona_game_app/core/language/lang_keys.dart';
+import 'package:znoona_game_app/core/style/images/app_images.dart';
 import 'package:znoona_game_app/features/quiz/room/presentation/cubit/room_cubit.dart';
 
 class QRScannerBody extends StatefulWidget {
@@ -19,16 +24,31 @@ class _QRScannerBodyState extends State<QRScannerBody> {
   bool _isScanning = true;
   bool _hasPermission = false;
   bool _isCheckingPermission = false;
+  bool _isFlashOn = false;
+  double _scanLinePosition = 0.0;
+  Timer? _scanLineTimer;
 
   @override
   void initState() {
     super.initState();
     _checkCameraPermission();
+    _startScanLineAnimation();
+  }
+
+  void _startScanLineAnimation() {
+    _scanLineTimer = Timer.periodic(const Duration(milliseconds: 20), (timer) {
+      if (mounted) {
+        setState(() {
+          _scanLinePosition = (_scanLinePosition + 0.01) % 1.0;
+        });
+      }
+    });
   }
 
   @override
   void dispose() {
     cameraController.dispose();
+    _scanLineTimer?.cancel();
     super.dispose();
   }
 
@@ -67,21 +87,54 @@ class _QRScannerBodyState extends State<QRScannerBody> {
     showDialog(
       context: context,
       builder: (context) => AlertDialog(
-        title: Text(ZnoonaTexts.tr(context, LangKeys.cameraPermission)),
+        backgroundColor: ZnoonaColors.bluePinkDark(context),
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(20),
+        ),
+        title: Text(
+          ZnoonaTexts.tr(context, LangKeys.cameraPermission),
+          style: TextStyle(
+            color: Colors.white,
+            fontSize: 20.sp,
+            fontWeight: FontWeight.bold,
+          ),
+        ),
         content: Text(
           ZnoonaTexts.tr(context, LangKeys.cameraPermissionRequired),
+          style: TextStyle(
+            color: Colors.white70,
+            fontSize: 16.sp,
+          ),
         ),
         actions: [
           TextButton(
             onPressed: () => Navigator.pop(context),
-            child: Text(ZnoonaTexts.tr(context, LangKeys.cancel)),
+            child: Text(
+              ZnoonaTexts.tr(context, LangKeys.cancel),
+              style: TextStyle(
+                color: Colors.grey[400],
+                fontSize: 16.sp,
+              ),
+            ),
           ),
-          TextButton(
+          ElevatedButton(
             onPressed: () async {
               Navigator.pop(context);
               await openAppSettings();
             },
-            child: Text(ZnoonaTexts.tr(context, LangKeys.settings)),
+            style: ElevatedButton.styleFrom(
+              backgroundColor: ZnoonaColors.main(context),
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(12),
+              ),
+            ),
+            child: Text(
+              ZnoonaTexts.tr(context, LangKeys.settings),
+              style: TextStyle(
+                color: Colors.white,
+                fontSize: 16.sp,
+              ),
+            ),
           ),
         ],
       ),
@@ -97,54 +150,201 @@ class _QRScannerBodyState extends State<QRScannerBody> {
 
     // Validate the code (should be 6 digits)
     if (code.length == 6 && int.tryParse(code) != null) {
+      // Show success feedback
+      _showScanSuccessFeedback();
+      
       // Join room with the scanned code
-      context
-          .read<RoomCubit>()
-          .joinRoom(code: code)
-          .then((_) {
-            // Navigator will be handled by the bloc listener
-          })
-          .catchError((error) {
-            ScaffoldMessenger.of(context).showSnackBar(
-              SnackBar(
-                content: Text(
-                  ZnoonaTexts.tr(context, LangKeys.invalidQrCode),
-                ),
-                backgroundColor: Colors.red,
-              ),
-            );
-            setState(() {
-              _isScanning = true;
-            });
-          });
-    } else {
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(
-          content: Text(
-            ZnoonaTexts.tr(context, LangKeys.invalidQrCode),
-          ),
-          backgroundColor: Colors.red,
-        ),
-      );
-      setState(() {
-        _isScanning = true;
+      context.read<RoomCubit>().joinRoom(code: code).catchError((error) {
+        _showErrorFeedback();
       });
+    } else {
+      _showErrorFeedback();
     }
+  }
+
+  void _showScanSuccessFeedback() {
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(
+        content: Row(
+          children: [
+            const Icon(Icons.check_circle, color: Colors.white),
+            SizedBox(width: 10.w),
+            Expanded(
+              child: Text(
+                'Room code scanned successfully!',
+                style: TextStyle(
+                  fontSize: 16.sp,
+                  fontWeight: FontWeight.w500,
+                ),
+              ),
+            ),
+          ],
+        ),
+        backgroundColor: Colors.green,
+        behavior: SnackBarBehavior.floating,
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(12),
+        ),
+      ),
+    );
+  }
+
+  void _showErrorFeedback() {
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(
+        content: Row(
+          children: [
+            const Icon(Icons.error, color: Colors.white),
+            SizedBox(width: 10.w),
+            Expanded(
+              child: Text(
+                ZnoonaTexts.tr(context, LangKeys.invalidQrCode),
+                style: TextStyle(
+                  fontSize: 16.sp,
+                  fontWeight: FontWeight.w500,
+                ),
+              ),
+            ),
+          ],
+        ),
+        backgroundColor: Colors.red,
+        behavior: SnackBarBehavior.floating,
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(12),
+        ),
+      ),
+    );
+    setState(() {
+      _isScanning = true;
+    });
+  }
+
+  void _toggleFlash() {
+    setState(() {
+      _isFlashOn = !_isFlashOn;
+    });
+    cameraController.toggleTorch();
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      // appBar: CustomAppBar(
-      //   title: ZnoonaTexts.tr(context, LangKeys.scanQr),
-      //   showBackButton: true,
-      //   onBackPressed: () => ZnoonaNavigate.pop(context),
-      // ),
-      body: _isCheckingPermission
-          ? const Center(child: CircularProgressIndicator())
-          : !_hasPermission
-          ? _buildPermissionDeniedView()
-          : _buildScannerView(),
+      extendBodyBehindAppBar: true,
+      appBar: AppBar(
+        backgroundColor: Colors.transparent,
+        elevation: 0,
+        leading: IconButton(
+          icon: Container(
+            padding: EdgeInsets.all(8.w),
+            decoration: BoxDecoration(
+              color: Colors.black.withOpacity(0.5),
+              shape: BoxShape.circle,
+            ),
+            child: Icon(
+              Icons.arrow_back_ios_new_rounded,
+              color: Colors.white,
+              size: 20.w,
+            ),
+          ),
+          onPressed: () => ZnoonaNavigate.pop(context),
+        ),
+        centerTitle: true,
+        title: Text(
+          ZnoonaTexts.tr(context, LangKeys.scanQr),
+          style: TextStyle(
+            color: Colors.white,
+            fontSize: 22.sp,
+            fontWeight: FontWeight.bold,
+            shadows: [
+              Shadow(
+                color: Colors.black.withOpacity(0.3),
+                blurRadius: 4,
+                offset: const Offset(0, 2),
+              ),
+            ],
+          ),
+        ),
+        actions: [
+          if (_hasPermission)
+            IconButton(
+              onPressed: _toggleFlash,
+              icon: Container(
+                padding: EdgeInsets.all(8.w),
+                decoration: BoxDecoration(
+                  color: Colors.black.withOpacity(0.5),
+                  shape: BoxShape.circle,
+                ),
+                child: Icon(
+                  _isFlashOn ? Icons.flash_on : Icons.flash_off,
+                  color: _isFlashOn ? Colors.yellow : Colors.white,
+                  size: 22.w,
+                ),
+              ),
+            ),
+        ],
+      ),
+      body: _buildBody(),
+    );
+  }
+
+  Widget _buildBody() {
+    return Stack(
+      children: [
+        // Background
+        Container(
+          decoration: BoxDecoration(
+            gradient: LinearGradient(
+              begin: Alignment.topCenter,
+              end: Alignment.bottomCenter,
+              colors: [
+                Colors.black.withOpacity(0.9),
+                Colors.black.withOpacity(0.95),
+                Colors.black,
+              ],
+            ),
+          ),
+        ),
+
+        // Main Content
+        _isCheckingPermission
+            ? _buildLoadingView()
+            : !_hasPermission
+                ? _buildPermissionDeniedView()
+                : _buildScannerView(),
+
+        // Bottom Instructions
+        if (_hasPermission) _buildBottomInstructions(),
+      ],
+    );
+  }
+
+  Widget _buildLoadingView() {
+    return Center(
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Image.asset(
+            AppImages.qrScanner,
+            height: 120.h,
+            width: 120.w,
+            color: Colors.white,
+          ),
+          SizedBox(height: 20.h),
+          Text(
+            'Setting up scanner...',
+            style: TextStyle(
+              color: Colors.white,
+              fontSize: 18.sp,
+              fontWeight: FontWeight.w500,
+            ),
+          ),
+          SizedBox(height: 20.h),
+          const CircularProgressIndicator(
+            valueColor: AlwaysStoppedAnimation(Colors.white),
+            strokeWidth: 2,
+          ),
+        ],
+      ),
     );
   }
 
@@ -165,75 +365,259 @@ class _QRScannerBodyState extends State<QRScannerBody> {
           },
         );
       },
-      child: Column(
+      child: Stack(
         children: [
-          Expanded(
-            child: Stack(
-              children: [
-                MobileScanner(
-                  controller: cameraController,
-                  onDetect: (capture) {
-                    final List<Barcode> barcodes = capture.barcodes;
-                    for (final barcode in barcodes) {
-                      if (barcode.rawValue != null) {
-                        _onQRCodeDetect(barcode.rawValue!);
-                        break;
-                      }
-                    }
-                  },
-                ),
-                _buildScannerOverlay(),
-              ],
-            ),
+          // Camera Preview
+          MobileScanner(
+            controller: cameraController,
+            onDetect: (capture) {
+              final List<Barcode> barcodes = capture.barcodes;
+              for (final barcode in barcodes) {
+                if (barcode.rawValue != null) {
+                  _onQRCodeDetect(barcode.rawValue!);
+                  break;
+                }
+              }
+            },
           ),
-          _buildInstructions(),
+
+          // Scanner Overlay
+          _buildScannerOverlay(),
+
+          // Corner Decorations
+          _buildScannerCorners(),
         ],
       ),
     );
   }
 
   Widget _buildScannerOverlay() {
-    return Center(
-      child: Container(
-        width: 250,
-        height: 250,
-        decoration: BoxDecoration(
-          border: Border.all(
-            color: Colors.green,
-            width: 2,
+    return Container(
+      decoration: BoxDecoration(
+        gradient: RadialGradient(
+          center: Alignment.center,
+          radius: 1.0,
+          colors: [
+            Colors.transparent,
+            Colors.black.withOpacity(0.7),
+          ],
+          stops: const [0.4, 1.0],
+        ),
+      ),
+      child: Center(
+        child: Container(
+          width: 280.w,
+          height: 280.w,
+          decoration: BoxDecoration(
+            border: Border.all(
+              color: ZnoonaColors.main(context).withOpacity(0.8),
+              width: 2.5,
+            ),
+            borderRadius: BorderRadius.circular(20),
+            boxShadow: [
+              BoxShadow(
+                color: ZnoonaColors.main(context).withOpacity(0.3),
+                blurRadius: 20,
+                spreadRadius: 5,
+              ),
+            ],
           ),
-          borderRadius: BorderRadius.circular(12),
+          child: Stack(
+            children: [
+              // Scan Line
+              AnimatedPositioned(
+                duration: const Duration(milliseconds: 20),
+                top: _scanLinePosition * 280.w,
+                left: 0,
+                right: 0,
+                child: Container(
+                  height: 3,
+                  decoration: BoxDecoration(
+                    gradient: LinearGradient(
+                      colors: [
+                        Colors.transparent,
+                        ZnoonaColors.main(context),
+                        Colors.transparent,
+                      ],
+                      stops: const [0.0, 0.5, 1.0],
+                    ),
+                    boxShadow: [
+                      BoxShadow(
+                        color: ZnoonaColors.main(context).withOpacity(0.8),
+                        blurRadius: 8,
+                        spreadRadius: 2,
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+
+              // Corner Paints
+              _buildCorner(
+                top: 0,
+                left: 0,
+                isTopLeft: true,
+              ),
+              _buildCorner(
+                top: 0,
+                right: 0,
+                isTopRight: true, isTopLeft: false,
+              ),
+              _buildCorner(
+                bottom: 0,
+                left: 0,
+                isBottomLeft: true, isTopLeft: false,
+              ),
+              _buildCorner(
+                bottom: 0,
+                right: 0,
+                isBottomRight: true, isTopLeft: false,
+              ),
+            ],
+          ),
         ),
       ),
     );
   }
 
-  Widget _buildInstructions() {
-    return Container(
-      padding: const EdgeInsets.all(20),
-      color: Colors.black.withOpacity(0.7),
-      child: Column(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          Text(
-            ZnoonaTexts.tr(context, LangKeys.scanRoomQr),
-            style: const TextStyle(
-              color: Colors.white,
-              fontSize: 16,
-              fontWeight: FontWeight.bold,
-            ),
-            textAlign: TextAlign.center,
+  Widget _buildCorner({
+    double? top,
+    double? bottom,
+    double? left,
+    double? right,
+    required bool isTopLeft,
+    bool isTopRight = false,
+    bool isBottomLeft = false,
+    bool isBottomRight = false,
+  }) {
+    return Positioned(
+      top: top,
+      bottom: bottom,
+      left: left,
+      right: right,
+      child: Container(
+        width: 25.w,
+        height: 25.w,
+        child: CustomPaint(
+          painter: _CornerPainter(
+            color: ZnoonaColors.main(context),
+            isTopLeft: isTopLeft,
+            isTopRight: isTopRight,
+            isBottomLeft: isBottomLeft,
+            isBottomRight: isBottomRight,
           ),
-          const SizedBox(height: 8),
-          Text(
-            ZnoonaTexts.tr(context, LangKeys.alignQrInFrame),
-            style: const TextStyle(
-              color: Colors.white70,
-              fontSize: 14,
-            ),
-            textAlign: TextAlign.center,
+        ),
+      ),
+    );
+  }
+
+  Widget _buildScannerCorners() {
+    return Positioned.fill(
+      child: IgnorePointer(
+        child: Container(
+          padding: EdgeInsets.all(20.w),
+          child: Column(
+            children: [
+              SizedBox(height: 100.h),
+              Expanded(
+                child: Row(
+                  children: [
+                    _buildCornerIcon(Icons.qr_code_2),
+                    const Spacer(),
+                    _buildCornerIcon(Icons.qr_code_scanner),
+                  ],
+                ),
+              ),
+              SizedBox(height: 280.w),
+              Expanded(
+                child: Row(
+                  children: [
+                    _buildCornerIcon(Icons.radio_button_checked),
+                    const Spacer(),
+                    _buildCornerIcon(Icons.verified),
+                  ],
+                ),
+              ),
+            ],
           ),
-        ],
+        ),
+      ),
+    );
+  }
+
+  Widget _buildCornerIcon(IconData icon) {
+    return Icon(
+      icon,
+      color: Colors.white.withOpacity(0.2),
+      size: 30.w,
+    );
+  }
+
+  Widget _buildBottomInstructions() {
+    return Positioned(
+      bottom: 0,
+      left: 0,
+      right: 0,
+      child: SafeArea(
+        child: Padding(
+          padding: EdgeInsets.all(20.w),
+          child: Column(
+            children: [
+              Text(
+                ZnoonaTexts.tr(context, LangKeys.scanRoomQr),
+                style: TextStyle(
+                  color: Colors.white,
+                  fontSize: 18.sp,
+                  fontWeight: FontWeight.w600,
+                  letterSpacing: 0.5,
+                ),
+                textAlign: TextAlign.center,
+              ),
+              SizedBox(height: 8.h),
+              Text(
+                ZnoonaTexts.tr(context, LangKeys.alignQrInFrame),
+                style: TextStyle(
+                  color: Colors.white70,
+                  fontSize: 14.sp,
+                  fontWeight: FontWeight.w400,
+                ),
+                textAlign: TextAlign.center,
+              ),
+              SizedBox(height: 20.h),
+              Container(
+                padding: EdgeInsets.symmetric(
+                  horizontal: 20.w,
+                  vertical: 10.h,
+                ),
+                decoration: BoxDecoration(
+                  color: Colors.white.withOpacity(0.1),
+                  borderRadius: BorderRadius.circular(20),
+                  border: Border.all(
+                    color: Colors.white.withOpacity(0.2),
+                  ),
+                ),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Icon(
+                      Icons.info_outline,
+                      color: Colors.white.withOpacity(0.7),
+                      size: 16.w,
+                    ),
+                    SizedBox(width: 8.w),
+                    Text(
+                      'Scan only valid 6-digit room codes',
+                      style: TextStyle(
+                        color: Colors.white.withOpacity(0.7),
+                        fontSize: 12.sp,
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ],
+          ),
+        ),
       ),
     );
   }
@@ -241,48 +625,150 @@ class _QRScannerBodyState extends State<QRScannerBody> {
   Widget _buildPermissionDeniedView() {
     return Center(
       child: Padding(
-        padding: const EdgeInsets.all(20),
+        padding: EdgeInsets.all(24.w),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            const Icon(
-              Icons.camera_alt_outlined,
-              size: 80,
-              color: Colors.grey,
+            Image.asset(
+              AppImages.permission,
+              height: 150.h,
+              width: 150.w,
+              color: Colors.white70,
             ),
-            const SizedBox(height: 20),
+            SizedBox(height: 30.h),
             Text(
               ZnoonaTexts.tr(context, LangKeys.cameraPermissionDenied),
-              style: const TextStyle(
-                fontSize: 18,
+              style: TextStyle(
+                fontSize: 22.sp,
                 fontWeight: FontWeight.bold,
+                color: Colors.white,
               ),
               textAlign: TextAlign.center,
             ),
-            const SizedBox(height: 10),
+            SizedBox(height: 16.h),
             Text(
               ZnoonaTexts.tr(context, LangKeys.enableCameraToScan),
-              style: const TextStyle(
-                fontSize: 16,
-                color: Colors.grey,
+              style: TextStyle(
+                fontSize: 16.sp,
+                color: Colors.white70,
+                height: 1.5,
               ),
               textAlign: TextAlign.center,
             ),
-            const SizedBox(height: 30),
-            ElevatedButton(
-              onPressed: _checkCameraPermission,
-              child: Text(ZnoonaTexts.tr(context, LangKeys.retry)),
-            ),
-            const SizedBox(height: 10),
-            TextButton(
-              onPressed: () async {
-                await openAppSettings();
-              },
-              child: Text(ZnoonaTexts.tr(context, LangKeys.openSettings)),
+            SizedBox(height: 40.h),
+            Column(
+              children: [
+                ElevatedButton(
+                  onPressed: _checkCameraPermission,
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: ZnoonaColors.main(context),
+                    foregroundColor: Colors.white,
+                    minimumSize: Size(double.infinity, 56.h),
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(16),
+                    ),
+                    elevation: 4,
+                  ),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      const Icon(Icons.refresh),
+                      SizedBox(width: 10.w),
+                      Text(
+                        ZnoonaTexts.tr(context, LangKeys.retry),
+                        style: TextStyle(
+                          fontSize: 16.sp,
+                          fontWeight: FontWeight.w600,
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+                SizedBox(height: 16.h),
+                OutlinedButton(
+                  onPressed: () async {
+                    await openAppSettings();
+                  },
+                  style: OutlinedButton.styleFrom(
+                    foregroundColor: Colors.white,
+                    minimumSize: Size(double.infinity, 56.h),
+                    side: BorderSide(
+                      color: Colors.white.withOpacity(0.3),
+                    ),
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(16),
+                    ),
+                  ),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      const Icon(Icons.settings),
+                      SizedBox(width: 10.w),
+                      Text(
+                        ZnoonaTexts.tr(context, LangKeys.openSettings),
+                        style: TextStyle(
+                          fontSize: 16.sp,
+                          fontWeight: FontWeight.w600,
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ],
             ),
           ],
         ),
       ),
     );
   }
+}
+
+class _CornerPainter extends CustomPainter {
+  final Color color;
+  final bool isTopLeft;
+  final bool isTopRight;
+  final bool isBottomLeft;
+  final bool isBottomRight;
+
+  _CornerPainter({
+    required this.color,
+    this.isTopLeft = false,
+    this.isTopRight = false,
+    this.isBottomLeft = false,
+    this.isBottomRight = false,
+  });
+
+  @override
+  void paint(Canvas canvas, Size size) {
+    final paint = Paint()
+      ..color = color
+      ..strokeWidth = 4
+      ..strokeCap = StrokeCap.round
+      ..style = PaintingStyle.stroke;
+
+    final path = Path();
+
+    if (isTopLeft) {
+      path.moveTo(0, size.height * 0.5);
+      path.lineTo(0, 0);
+      path.lineTo(size.width * 0.5, 0);
+    } else if (isTopRight) {
+      path.moveTo(size.width * 0.5, 0);
+      path.lineTo(size.width, 0);
+      path.lineTo(size.width, size.height * 0.5);
+    } else if (isBottomLeft) {
+      path.moveTo(0, size.height * 0.5);
+      path.lineTo(0, size.height);
+      path.lineTo(size.width * 0.5, size.height);
+    } else if (isBottomRight) {
+      path.moveTo(size.width * 0.5, size.height);
+      path.lineTo(size.width, size.height);
+      path.lineTo(size.width, size.height * 0.5);
+    }
+
+    canvas.drawPath(path, paint);
+  }
+
+  @override
+  bool shouldRepaint(covariant CustomPainter oldDelegate) => false;
 }

@@ -128,6 +128,8 @@
   "enable_camera_to_scan": "Please enable camera access to scan QR codes",
   "invalid_qr_code": "Invalid QR Code. Please scan a valid room QR code.",
   "retry": "Retry",
-  "open_settings": "Open Settings"
+  "open_settings": "Open Settings",
+  "room_qr_code": "Room QR Code",
+  "scan_to_join_room": "Scan this QR code to join the room"
 
 }

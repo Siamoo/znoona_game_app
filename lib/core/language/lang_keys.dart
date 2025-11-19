@@ -127,5 +127,6 @@ class LangKeys {
   static const String enableCameraToScan = 'enable_camera_to_scan';
   static const String retry = 'retry';
   static const String openSettings = 'open_settings';
-
+  static const String roomQrCode = 'room_qr_code';
+  static const String scanToJoinRoom = 'scan_to_join_room';
 }

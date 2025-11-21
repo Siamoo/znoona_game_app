@@ -21,9 +21,8 @@ mixin _$AuthState {
   TResult when<TResult extends Object?>({
     required TResult Function() initial,
     required TResult Function() loading,
-    required TResult Function() googleloading,
-    required TResult Function(Profile profile) authenticated,
-    required TResult Function(Profile profile) googleauthenticated,
+    required TResult Function(Profile profile, AuthMethod authMethod)
+    authenticated,
     required TResult Function() unauthenticated,
     required TResult Function(String message) error,
   }) => throw _privateConstructorUsedError;
@@ -31,9 +30,7 @@ mixin _$AuthState {
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? initial,
     TResult? Function()? loading,
-    TResult? Function()? googleloading,
-    TResult? Function(Profile profile)? authenticated,
-    TResult? Function(Profile profile)? googleauthenticated,
+    TResult? Function(Profile profile, AuthMethod authMethod)? authenticated,
     TResult? Function()? unauthenticated,
     TResult? Function(String message)? error,
   }) => throw _privateConstructorUsedError;
@@ -41,9 +38,7 @@ mixin _$AuthState {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? initial,
     TResult Function()? loading,
-    TResult Function()? googleloading,
-    TResult Function(Profile profile)? authenticated,
-    TResult Function(Profile profile)? googleauthenticated,
+    TResult Function(Profile profile, AuthMethod authMethod)? authenticated,
     TResult Function()? unauthenticated,
     TResult Function(String message)? error,
     required TResult orElse(),
@@ -52,9 +47,7 @@ mixin _$AuthState {
   TResult map<TResult extends Object?>({
     required TResult Function(_Initial value) initial,
     required TResult Function(_Loading value) loading,
-    required TResult Function(_GoogleLoading value) googleloading,
     required TResult Function(_Authenticated value) authenticated,
-    required TResult Function(_GoogleAuthenticated value) googleauthenticated,
     required TResult Function(_Unauthenticated value) unauthenticated,
     required TResult Function(_Error value) error,
   }) => throw _privateConstructorUsedError;
@@ -62,9 +55,7 @@ mixin _$AuthState {
   TResult? mapOrNull<TResult extends Object?>({
     TResult? Function(_Initial value)? initial,
     TResult? Function(_Loading value)? loading,
-    TResult? Function(_GoogleLoading value)? googleloading,
     TResult? Function(_Authenticated value)? authenticated,
-    TResult? Function(_GoogleAuthenticated value)? googleauthenticated,
     TResult? Function(_Unauthenticated value)? unauthenticated,
     TResult? Function(_Error value)? error,
   }) => throw _privateConstructorUsedError;
@@ -72,9 +63,7 @@ mixin _$AuthState {
   TResult maybeMap<TResult extends Object?>({
     TResult Function(_Initial value)? initial,
     TResult Function(_Loading value)? loading,
-    TResult Function(_GoogleLoading value)? googleloading,
     TResult Function(_Authenticated value)? authenticated,
-    TResult Function(_GoogleAuthenticated value)? googleauthenticated,
     TResult Function(_Unauthenticated value)? unauthenticated,
     TResult Function(_Error value)? error,
     required TResult orElse(),
@@ -146,9 +135,8 @@ class _$InitialImpl implements _Initial {
   TResult when<TResult extends Object?>({
     required TResult Function() initial,
     required TResult Function() loading,
-    required TResult Function() googleloading,
-    required TResult Function(Profile profile) authenticated,
-    required TResult Function(Profile profile) googleauthenticated,
+    required TResult Function(Profile profile, AuthMethod authMethod)
+    authenticated,
     required TResult Function() unauthenticated,
     required TResult Function(String message) error,
   }) {
@@ -160,9 +148,7 @@ class _$InitialImpl implements _Initial {
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? initial,
     TResult? Function()? loading,
-    TResult? Function()? googleloading,
-    TResult? Function(Profile profile)? authenticated,
-    TResult? Function(Profile profile)? googleauthenticated,
+    TResult? Function(Profile profile, AuthMethod authMethod)? authenticated,
     TResult? Function()? unauthenticated,
     TResult? Function(String message)? error,
   }) {
@@ -174,9 +160,7 @@ class _$InitialImpl implements _Initial {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? initial,
     TResult Function()? loading,
-    TResult Function()? googleloading,
-    TResult Function(Profile profile)? authenticated,
-    TResult Function(Profile profile)? googleauthenticated,
+    TResult Function(Profile profile, AuthMethod authMethod)? authenticated,
     TResult Function()? unauthenticated,
     TResult Function(String message)? error,
     required TResult orElse(),
@@ -192,9 +176,7 @@ class _$InitialImpl implements _Initial {
   TResult map<TResult extends Object?>({
     required TResult Function(_Initial value) initial,
     required TResult Function(_Loading value) loading,
-    required TResult Function(_GoogleLoading value) googleloading,
     required TResult Function(_Authenticated value) authenticated,
-    required TResult Function(_GoogleAuthenticated value) googleauthenticated,
     required TResult Function(_Unauthenticated value) unauthenticated,
     required TResult Function(_Error value) error,
   }) {
@@ -206,9 +188,7 @@ class _$InitialImpl implements _Initial {
   TResult? mapOrNull<TResult extends Object?>({
     TResult? Function(_Initial value)? initial,
     TResult? Function(_Loading value)? loading,
-    TResult? Function(_GoogleLoading value)? googleloading,
     TResult? Function(_Authenticated value)? authenticated,
-    TResult? Function(_GoogleAuthenticated value)? googleauthenticated,
     TResult? Function(_Unauthenticated value)? unauthenticated,
     TResult? Function(_Error value)? error,
   }) {
@@ -220,9 +200,7 @@ class _$InitialImpl implements _Initial {
   TResult maybeMap<TResult extends Object?>({
     TResult Function(_Initial value)? initial,
     TResult Function(_Loading value)? loading,
-    TResult Function(_GoogleLoading value)? googleloading,
     TResult Function(_Authenticated value)? authenticated,
-    TResult Function(_GoogleAuthenticated value)? googleauthenticated,
     TResult Function(_Unauthenticated value)? unauthenticated,
     TResult Function(_Error value)? error,
     required TResult orElse(),
@@ -283,9 +261,8 @@ class _$LoadingImpl implements _Loading {
   TResult when<TResult extends Object?>({
     required TResult Function() initial,
     required TResult Function() loading,
-    required TResult Function() googleloading,
-    required TResult Function(Profile profile) authenticated,
-    required TResult Function(Profile profile) googleauthenticated,
+    required TResult Function(Profile profile, AuthMethod authMethod)
+    authenticated,
     required TResult Function() unauthenticated,
     required TResult Function(String message) error,
   }) {
@@ -297,9 +274,7 @@ class _$LoadingImpl implements _Loading {
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? initial,
     TResult? Function()? loading,
-    TResult? Function()? googleloading,
-    TResult? Function(Profile profile)? authenticated,
-    TResult? Function(Profile profile)? googleauthenticated,
+    TResult? Function(Profile profile, AuthMethod authMethod)? authenticated,
     TResult? Function()? unauthenticated,
     TResult? Function(String message)? error,
   }) {
@@ -311,9 +286,7 @@ class _$LoadingImpl implements _Loading {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? initial,
     TResult Function()? loading,
-    TResult Function()? googleloading,
-    TResult Function(Profile profile)? authenticated,
-    TResult Function(Profile profile)? googleauthenticated,
+    TResult Function(Profile profile, AuthMethod authMethod)? authenticated,
     TResult Function()? unauthenticated,
     TResult Function(String message)? error,
     required TResult orElse(),
@@ -329,9 +302,7 @@ class _$LoadingImpl implements _Loading {
   TResult map<TResult extends Object?>({
     required TResult Function(_Initial value) initial,
     required TResult Function(_Loading value) loading,
-    required TResult Function(_GoogleLoading value) googleloading,
     required TResult Function(_Authenticated value) authenticated,
-    required TResult Function(_GoogleAuthenticated value) googleauthenticated,
     required TResult Function(_Unauthenticated value) unauthenticated,
     required TResult Function(_Error value) error,
   }) {
@@ -343,9 +314,7 @@ class _$LoadingImpl implements _Loading {
   TResult? mapOrNull<TResult extends Object?>({
     TResult? Function(_Initial value)? initial,
     TResult? Function(_Loading value)? loading,
-    TResult? Function(_GoogleLoading value)? googleloading,
     TResult? Function(_Authenticated value)? authenticated,
-    TResult? Function(_GoogleAuthenticated value)? googleauthenticated,
     TResult? Function(_Unauthenticated value)? unauthenticated,
     TResult? Function(_Error value)? error,
   }) {
@@ -357,9 +326,7 @@ class _$LoadingImpl implements _Loading {
   TResult maybeMap<TResult extends Object?>({
     TResult Function(_Initial value)? initial,
     TResult Function(_Loading value)? loading,
-    TResult Function(_GoogleLoading value)? googleloading,
     TResult Function(_Authenticated value)? authenticated,
-    TResult Function(_GoogleAuthenticated value)? googleauthenticated,
     TResult Function(_Unauthenticated value)? unauthenticated,
     TResult Function(_Error value)? error,
     required TResult orElse(),
@@ -376,150 +343,13 @@ abstract class _Loading implements AuthState {
 }
 
 /// @nodoc
-abstract class _$$GoogleLoadingImplCopyWith<$Res> {
-  factory _$$GoogleLoadingImplCopyWith(
-    _$GoogleLoadingImpl value,
-    $Res Function(_$GoogleLoadingImpl) then,
-  ) = __$$GoogleLoadingImplCopyWithImpl<$Res>;
-}
-
-/// @nodoc
-class __$$GoogleLoadingImplCopyWithImpl<$Res>
-    extends _$AuthStateCopyWithImpl<$Res, _$GoogleLoadingImpl>
-    implements _$$GoogleLoadingImplCopyWith<$Res> {
-  __$$GoogleLoadingImplCopyWithImpl(
-    _$GoogleLoadingImpl _value,
-    $Res Function(_$GoogleLoadingImpl) _then,
-  ) : super(_value, _then);
-
-  /// Create a copy of AuthState
-  /// with the given fields replaced by the non-null parameter values.
-}
-
-/// @nodoc
-
-class _$GoogleLoadingImpl implements _GoogleLoading {
-  const _$GoogleLoadingImpl();
-
-  @override
-  String toString() {
-    return 'AuthState.googleloading()';
-  }
-
-  @override
-  bool operator ==(Object other) {
-    return identical(this, other) ||
-        (other.runtimeType == runtimeType && other is _$GoogleLoadingImpl);
-  }
-
-  @override
-  int get hashCode => runtimeType.hashCode;
-
-  @override
-  @optionalTypeArgs
-  TResult when<TResult extends Object?>({
-    required TResult Function() initial,
-    required TResult Function() loading,
-    required TResult Function() googleloading,
-    required TResult Function(Profile profile) authenticated,
-    required TResult Function(Profile profile) googleauthenticated,
-    required TResult Function() unauthenticated,
-    required TResult Function(String message) error,
-  }) {
-    return googleloading();
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function()? initial,
-    TResult? Function()? loading,
-    TResult? Function()? googleloading,
-    TResult? Function(Profile profile)? authenticated,
-    TResult? Function(Profile profile)? googleauthenticated,
-    TResult? Function()? unauthenticated,
-    TResult? Function(String message)? error,
-  }) {
-    return googleloading?.call();
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult maybeWhen<TResult extends Object?>({
-    TResult Function()? initial,
-    TResult Function()? loading,
-    TResult Function()? googleloading,
-    TResult Function(Profile profile)? authenticated,
-    TResult Function(Profile profile)? googleauthenticated,
-    TResult Function()? unauthenticated,
-    TResult Function(String message)? error,
-    required TResult orElse(),
-  }) {
-    if (googleloading != null) {
-      return googleloading();
-    }
-    return orElse();
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult map<TResult extends Object?>({
-    required TResult Function(_Initial value) initial,
-    required TResult Function(_Loading value) loading,
-    required TResult Function(_GoogleLoading value) googleloading,
-    required TResult Function(_Authenticated value) authenticated,
-    required TResult Function(_GoogleAuthenticated value) googleauthenticated,
-    required TResult Function(_Unauthenticated value) unauthenticated,
-    required TResult Function(_Error value) error,
-  }) {
-    return googleloading(this);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult? mapOrNull<TResult extends Object?>({
-    TResult? Function(_Initial value)? initial,
-    TResult? Function(_Loading value)? loading,
-    TResult? Function(_GoogleLoading value)? googleloading,
-    TResult? Function(_Authenticated value)? authenticated,
-    TResult? Function(_GoogleAuthenticated value)? googleauthenticated,
-    TResult? Function(_Unauthenticated value)? unauthenticated,
-    TResult? Function(_Error value)? error,
-  }) {
-    return googleloading?.call(this);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult maybeMap<TResult extends Object?>({
-    TResult Function(_Initial value)? initial,
-    TResult Function(_Loading value)? loading,
-    TResult Function(_GoogleLoading value)? googleloading,
-    TResult Function(_Authenticated value)? authenticated,
-    TResult Function(_GoogleAuthenticated value)? googleauthenticated,
-    TResult Function(_Unauthenticated value)? unauthenticated,
-    TResult Function(_Error value)? error,
-    required TResult orElse(),
-  }) {
-    if (googleloading != null) {
-      return googleloading(this);
-    }
-    return orElse();
-  }
-}
-
-abstract class _GoogleLoading implements AuthState {
-  const factory _GoogleLoading() = _$GoogleLoadingImpl;
-}
-
-/// @nodoc
 abstract class _$$AuthenticatedImplCopyWith<$Res> {
   factory _$$AuthenticatedImplCopyWith(
     _$AuthenticatedImpl value,
     $Res Function(_$AuthenticatedImpl) then,
   ) = __$$AuthenticatedImplCopyWithImpl<$Res>;
   @useResult
-  $Res call({Profile profile});
+  $Res call({Profile profile, AuthMethod authMethod});
 
   $ProfileCopyWith<$Res> get profile;
 }
@@ -537,13 +367,17 @@ class __$$AuthenticatedImplCopyWithImpl<$Res>
   /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
-  $Res call({Object? profile = null}) {
+  $Res call({Object? profile = null, Object? authMethod = freezed}) {
     return _then(
       _$AuthenticatedImpl(
-        null == profile
+        profile: null == profile
             ? _value.profile
             : profile // ignore: cast_nullable_to_non_nullable
                   as Profile,
+        authMethod: freezed == authMethod
+            ? _value.authMethod
+            : authMethod // ignore: cast_nullable_to_non_nullable
+                  as AuthMethod,
       ),
     );
   }
@@ -562,14 +396,16 @@ class __$$AuthenticatedImplCopyWithImpl<$Res>
 /// @nodoc
 
 class _$AuthenticatedImpl implements _Authenticated {
-  const _$AuthenticatedImpl(this.profile);
+  const _$AuthenticatedImpl({required this.profile, required this.authMethod});
 
   @override
   final Profile profile;
+  @override
+  final AuthMethod authMethod;
 
   @override
   String toString() {
-    return 'AuthState.authenticated(profile: $profile)';
+    return 'AuthState.authenticated(profile: $profile, authMethod: $authMethod)';
   }
 
   @override
@@ -577,11 +413,19 @@ class _$AuthenticatedImpl implements _Authenticated {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$AuthenticatedImpl &&
-            (identical(other.profile, profile) || other.profile == profile));
+            (identical(other.profile, profile) || other.profile == profile) &&
+            const DeepCollectionEquality().equals(
+              other.authMethod,
+              authMethod,
+            ));
   }
 
   @override
-  int get hashCode => Object.hash(runtimeType, profile);
+  int get hashCode => Object.hash(
+    runtimeType,
+    profile,
+    const DeepCollectionEquality().hash(authMethod),
+  );
 
   /// Create a copy of AuthState
   /// with the given fields replaced by the non-null parameter values.
@@ -596,13 +440,12 @@ class _$AuthenticatedImpl implements _Authenticated {
   TResult when<TResult extends Object?>({
     required TResult Function() initial,
     required TResult Function() loading,
-    required TResult Function() googleloading,
-    required TResult Function(Profile profile) authenticated,
-    required TResult Function(Profile profile) googleauthenticated,
+    required TResult Function(Profile profile, AuthMethod authMethod)
+    authenticated,
     required TResult Function() unauthenticated,
     required TResult Function(String message) error,
   }) {
-    return authenticated(profile);
+    return authenticated(profile, authMethod);
   }
 
   @override
@@ -610,13 +453,11 @@ class _$AuthenticatedImpl implements _Authenticated {
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? initial,
     TResult? Function()? loading,
-    TResult? Function()? googleloading,
-    TResult? Function(Profile profile)? authenticated,
-    TResult? Function(Profile profile)? googleauthenticated,
+    TResult? Function(Profile profile, AuthMethod authMethod)? authenticated,
     TResult? Function()? unauthenticated,
     TResult? Function(String message)? error,
   }) {
-    return authenticated?.call(profile);
+    return authenticated?.call(profile, authMethod);
   }
 
   @override
@@ -624,15 +465,13 @@ class _$AuthenticatedImpl implements _Authenticated {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? initial,
     TResult Function()? loading,
-    TResult Function()? googleloading,
-    TResult Function(Profile profile)? authenticated,
-    TResult Function(Profile profile)? googleauthenticated,
+    TResult Function(Profile profile, AuthMethod authMethod)? authenticated,
     TResult Function()? unauthenticated,
     TResult Function(String message)? error,
     required TResult orElse(),
   }) {
     if (authenticated != null) {
-      return authenticated(profile);
+      return authenticated(profile, authMethod);
     }
     return orElse();
   }
@@ -642,9 +481,7 @@ class _$AuthenticatedImpl implements _Authenticated {
   TResult map<TResult extends Object?>({
     required TResult Function(_Initial value) initial,
     required TResult Function(_Loading value) loading,
-    required TResult Function(_GoogleLoading value) googleloading,
     required TResult Function(_Authenticated value) authenticated,
-    required TResult Function(_GoogleAuthenticated value) googleauthenticated,
     required TResult Function(_Unauthenticated value) unauthenticated,
     required TResult Function(_Error value) error,
   }) {
@@ -656,9 +493,7 @@ class _$AuthenticatedImpl implements _Authenticated {
   TResult? mapOrNull<TResult extends Object?>({
     TResult? Function(_Initial value)? initial,
     TResult? Function(_Loading value)? loading,
-    TResult? Function(_GoogleLoading value)? googleloading,
     TResult? Function(_Authenticated value)? authenticated,
-    TResult? Function(_GoogleAuthenticated value)? googleauthenticated,
     TResult? Function(_Unauthenticated value)? unauthenticated,
     TResult? Function(_Error value)? error,
   }) {
@@ -670,9 +505,7 @@ class _$AuthenticatedImpl implements _Authenticated {
   TResult maybeMap<TResult extends Object?>({
     TResult Function(_Initial value)? initial,
     TResult Function(_Loading value)? loading,
-    TResult Function(_GoogleLoading value)? googleloading,
     TResult Function(_Authenticated value)? authenticated,
-    TResult Function(_GoogleAuthenticated value)? googleauthenticated,
     TResult Function(_Unauthenticated value)? unauthenticated,
     TResult Function(_Error value)? error,
     required TResult orElse(),
@@ -685,202 +518,18 @@ class _$AuthenticatedImpl implements _Authenticated {
 }
 
 abstract class _Authenticated implements AuthState {
-  const factory _Authenticated(final Profile profile) = _$AuthenticatedImpl;
+  const factory _Authenticated({
+    required final Profile profile,
+    required final AuthMethod authMethod,
+  }) = _$AuthenticatedImpl;
 
   Profile get profile;
+  AuthMethod get authMethod;
 
   /// Create a copy of AuthState
   /// with the given fields replaced by the non-null parameter values.
   @JsonKey(includeFromJson: false, includeToJson: false)
   _$$AuthenticatedImplCopyWith<_$AuthenticatedImpl> get copyWith =>
-      throw _privateConstructorUsedError;
-}
-
-/// @nodoc
-abstract class _$$GoogleAuthenticatedImplCopyWith<$Res> {
-  factory _$$GoogleAuthenticatedImplCopyWith(
-    _$GoogleAuthenticatedImpl value,
-    $Res Function(_$GoogleAuthenticatedImpl) then,
-  ) = __$$GoogleAuthenticatedImplCopyWithImpl<$Res>;
-  @useResult
-  $Res call({Profile profile});
-
-  $ProfileCopyWith<$Res> get profile;
-}
-
-/// @nodoc
-class __$$GoogleAuthenticatedImplCopyWithImpl<$Res>
-    extends _$AuthStateCopyWithImpl<$Res, _$GoogleAuthenticatedImpl>
-    implements _$$GoogleAuthenticatedImplCopyWith<$Res> {
-  __$$GoogleAuthenticatedImplCopyWithImpl(
-    _$GoogleAuthenticatedImpl _value,
-    $Res Function(_$GoogleAuthenticatedImpl) _then,
-  ) : super(_value, _then);
-
-  /// Create a copy of AuthState
-  /// with the given fields replaced by the non-null parameter values.
-  @pragma('vm:prefer-inline')
-  @override
-  $Res call({Object? profile = null}) {
-    return _then(
-      _$GoogleAuthenticatedImpl(
-        null == profile
-            ? _value.profile
-            : profile // ignore: cast_nullable_to_non_nullable
-                  as Profile,
-      ),
-    );
-  }
-
-  /// Create a copy of AuthState
-  /// with the given fields replaced by the non-null parameter values.
-  @override
-  @pragma('vm:prefer-inline')
-  $ProfileCopyWith<$Res> get profile {
-    return $ProfileCopyWith<$Res>(_value.profile, (value) {
-      return _then(_value.copyWith(profile: value));
-    });
-  }
-}
-
-/// @nodoc
-
-class _$GoogleAuthenticatedImpl implements _GoogleAuthenticated {
-  const _$GoogleAuthenticatedImpl(this.profile);
-
-  @override
-  final Profile profile;
-
-  @override
-  String toString() {
-    return 'AuthState.googleauthenticated(profile: $profile)';
-  }
-
-  @override
-  bool operator ==(Object other) {
-    return identical(this, other) ||
-        (other.runtimeType == runtimeType &&
-            other is _$GoogleAuthenticatedImpl &&
-            (identical(other.profile, profile) || other.profile == profile));
-  }
-
-  @override
-  int get hashCode => Object.hash(runtimeType, profile);
-
-  /// Create a copy of AuthState
-  /// with the given fields replaced by the non-null parameter values.
-  @JsonKey(includeFromJson: false, includeToJson: false)
-  @override
-  @pragma('vm:prefer-inline')
-  _$$GoogleAuthenticatedImplCopyWith<_$GoogleAuthenticatedImpl> get copyWith =>
-      __$$GoogleAuthenticatedImplCopyWithImpl<_$GoogleAuthenticatedImpl>(
-        this,
-        _$identity,
-      );
-
-  @override
-  @optionalTypeArgs
-  TResult when<TResult extends Object?>({
-    required TResult Function() initial,
-    required TResult Function() loading,
-    required TResult Function() googleloading,
-    required TResult Function(Profile profile) authenticated,
-    required TResult Function(Profile profile) googleauthenticated,
-    required TResult Function() unauthenticated,
-    required TResult Function(String message) error,
-  }) {
-    return googleauthenticated(profile);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function()? initial,
-    TResult? Function()? loading,
-    TResult? Function()? googleloading,
-    TResult? Function(Profile profile)? authenticated,
-    TResult? Function(Profile profile)? googleauthenticated,
-    TResult? Function()? unauthenticated,
-    TResult? Function(String message)? error,
-  }) {
-    return googleauthenticated?.call(profile);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult maybeWhen<TResult extends Object?>({
-    TResult Function()? initial,
-    TResult Function()? loading,
-    TResult Function()? googleloading,
-    TResult Function(Profile profile)? authenticated,
-    TResult Function(Profile profile)? googleauthenticated,
-    TResult Function()? unauthenticated,
-    TResult Function(String message)? error,
-    required TResult orElse(),
-  }) {
-    if (googleauthenticated != null) {
-      return googleauthenticated(profile);
-    }
-    return orElse();
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult map<TResult extends Object?>({
-    required TResult Function(_Initial value) initial,
-    required TResult Function(_Loading value) loading,
-    required TResult Function(_GoogleLoading value) googleloading,
-    required TResult Function(_Authenticated value) authenticated,
-    required TResult Function(_GoogleAuthenticated value) googleauthenticated,
-    required TResult Function(_Unauthenticated value) unauthenticated,
-    required TResult Function(_Error value) error,
-  }) {
-    return googleauthenticated(this);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult? mapOrNull<TResult extends Object?>({
-    TResult? Function(_Initial value)? initial,
-    TResult? Function(_Loading value)? loading,
-    TResult? Function(_GoogleLoading value)? googleloading,
-    TResult? Function(_Authenticated value)? authenticated,
-    TResult? Function(_GoogleAuthenticated value)? googleauthenticated,
-    TResult? Function(_Unauthenticated value)? unauthenticated,
-    TResult? Function(_Error value)? error,
-  }) {
-    return googleauthenticated?.call(this);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult maybeMap<TResult extends Object?>({
-    TResult Function(_Initial value)? initial,
-    TResult Function(_Loading value)? loading,
-    TResult Function(_GoogleLoading value)? googleloading,
-    TResult Function(_Authenticated value)? authenticated,
-    TResult Function(_GoogleAuthenticated value)? googleauthenticated,
-    TResult Function(_Unauthenticated value)? unauthenticated,
-    TResult Function(_Error value)? error,
-    required TResult orElse(),
-  }) {
-    if (googleauthenticated != null) {
-      return googleauthenticated(this);
-    }
-    return orElse();
-  }
-}
-
-abstract class _GoogleAuthenticated implements AuthState {
-  const factory _GoogleAuthenticated(final Profile profile) =
-      _$GoogleAuthenticatedImpl;
-
-  Profile get profile;
-
-  /// Create a copy of AuthState
-  /// with the given fields replaced by the non-null parameter values.
-  @JsonKey(includeFromJson: false, includeToJson: false)
-  _$$GoogleAuthenticatedImplCopyWith<_$GoogleAuthenticatedImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }
 
@@ -929,9 +578,8 @@ class _$UnauthenticatedImpl implements _Unauthenticated {
   TResult when<TResult extends Object?>({
     required TResult Function() initial,
     required TResult Function() loading,
-    required TResult Function() googleloading,
-    required TResult Function(Profile profile) authenticated,
-    required TResult Function(Profile profile) googleauthenticated,
+    required TResult Function(Profile profile, AuthMethod authMethod)
+    authenticated,
     required TResult Function() unauthenticated,
     required TResult Function(String message) error,
   }) {
@@ -943,9 +591,7 @@ class _$UnauthenticatedImpl implements _Unauthenticated {
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? initial,
     TResult? Function()? loading,
-    TResult? Function()? googleloading,
-    TResult? Function(Profile profile)? authenticated,
-    TResult? Function(Profile profile)? googleauthenticated,
+    TResult? Function(Profile profile, AuthMethod authMethod)? authenticated,
     TResult? Function()? unauthenticated,
     TResult? Function(String message)? error,
   }) {
@@ -957,9 +603,7 @@ class _$UnauthenticatedImpl implements _Unauthenticated {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? initial,
     TResult Function()? loading,
-    TResult Function()? googleloading,
-    TResult Function(Profile profile)? authenticated,
-    TResult Function(Profile profile)? googleauthenticated,
+    TResult Function(Profile profile, AuthMethod authMethod)? authenticated,
     TResult Function()? unauthenticated,
     TResult Function(String message)? error,
     required TResult orElse(),
@@ -975,9 +619,7 @@ class _$UnauthenticatedImpl implements _Unauthenticated {
   TResult map<TResult extends Object?>({
     required TResult Function(_Initial value) initial,
     required TResult Function(_Loading value) loading,
-    required TResult Function(_GoogleLoading value) googleloading,
     required TResult Function(_Authenticated value) authenticated,
-    required TResult Function(_GoogleAuthenticated value) googleauthenticated,
     required TResult Function(_Unauthenticated value) unauthenticated,
     required TResult Function(_Error value) error,
   }) {
@@ -989,9 +631,7 @@ class _$UnauthenticatedImpl implements _Unauthenticated {
   TResult? mapOrNull<TResult extends Object?>({
     TResult? Function(_Initial value)? initial,
     TResult? Function(_Loading value)? loading,
-    TResult? Function(_GoogleLoading value)? googleloading,
     TResult? Function(_Authenticated value)? authenticated,
-    TResult? Function(_GoogleAuthenticated value)? googleauthenticated,
     TResult? Function(_Unauthenticated value)? unauthenticated,
     TResult? Function(_Error value)? error,
   }) {
@@ -1003,9 +643,7 @@ class _$UnauthenticatedImpl implements _Unauthenticated {
   TResult maybeMap<TResult extends Object?>({
     TResult Function(_Initial value)? initial,
     TResult Function(_Loading value)? loading,
-    TResult Function(_GoogleLoading value)? googleloading,
     TResult Function(_Authenticated value)? authenticated,
-    TResult Function(_GoogleAuthenticated value)? googleauthenticated,
     TResult Function(_Unauthenticated value)? unauthenticated,
     TResult Function(_Error value)? error,
     required TResult orElse(),
@@ -1093,9 +731,8 @@ class _$ErrorImpl implements _Error {
   TResult when<TResult extends Object?>({
     required TResult Function() initial,
     required TResult Function() loading,
-    required TResult Function() googleloading,
-    required TResult Function(Profile profile) authenticated,
-    required TResult Function(Profile profile) googleauthenticated,
+    required TResult Function(Profile profile, AuthMethod authMethod)
+    authenticated,
     required TResult Function() unauthenticated,
     required TResult Function(String message) error,
   }) {
@@ -1107,9 +744,7 @@ class _$ErrorImpl implements _Error {
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? initial,
     TResult? Function()? loading,
-    TResult? Function()? googleloading,
-    TResult? Function(Profile profile)? authenticated,
-    TResult? Function(Profile profile)? googleauthenticated,
+    TResult? Function(Profile profile, AuthMethod authMethod)? authenticated,
     TResult? Function()? unauthenticated,
     TResult? Function(String message)? error,
   }) {
@@ -1121,9 +756,7 @@ class _$ErrorImpl implements _Error {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? initial,
     TResult Function()? loading,
-    TResult Function()? googleloading,
-    TResult Function(Profile profile)? authenticated,
-    TResult Function(Profile profile)? googleauthenticated,
+    TResult Function(Profile profile, AuthMethod authMethod)? authenticated,
     TResult Function()? unauthenticated,
     TResult Function(String message)? error,
     required TResult orElse(),
@@ -1139,9 +772,7 @@ class _$ErrorImpl implements _Error {
   TResult map<TResult extends Object?>({
     required TResult Function(_Initial value) initial,
     required TResult Function(_Loading value) loading,
-    required TResult Function(_GoogleLoading value) googleloading,
     required TResult Function(_Authenticated value) authenticated,
-    required TResult Function(_GoogleAuthenticated value) googleauthenticated,
     required TResult Function(_Unauthenticated value) unauthenticated,
     required TResult Function(_Error value) error,
   }) {
@@ -1153,9 +784,7 @@ class _$ErrorImpl implements _Error {
   TResult? mapOrNull<TResult extends Object?>({
     TResult? Function(_Initial value)? initial,
     TResult? Function(_Loading value)? loading,
-    TResult? Function(_GoogleLoading value)? googleloading,
     TResult? Function(_Authenticated value)? authenticated,
-    TResult? Function(_GoogleAuthenticated value)? googleauthenticated,
     TResult? Function(_Unauthenticated value)? unauthenticated,
     TResult? Function(_Error value)? error,
   }) {
@@ -1167,9 +796,7 @@ class _$ErrorImpl implements _Error {
   TResult maybeMap<TResult extends Object?>({
     TResult Function(_Initial value)? initial,
     TResult Function(_Loading value)? loading,
-    TResult Function(_GoogleLoading value)? googleloading,
     TResult Function(_Authenticated value)? authenticated,
-    TResult Function(_GoogleAuthenticated value)? googleauthenticated,
     TResult Function(_Unauthenticated value)? unauthenticated,
     TResult Function(_Error value)? error,
     required TResult orElse(),

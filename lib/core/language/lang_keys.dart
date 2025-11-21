@@ -129,4 +129,16 @@ class LangKeys {
   static const String openSettings = 'open_settings';
   static const String roomQrCode = 'room_qr_code';
   static const String scanToJoinRoom = 'scan_to_join_room';
+  static const String level = 'level';
+  static const String totalCups = 'totalCups';
+  static const String monthlyCups = 'monthlyCups';
+  static const String gamesPlayed = 'gamesPlayed';
+  static const String winRate = 'winRate';
+  static const String averageScore = 'averageScore';
+  static const String gamesWon = 'gamesWon';
+  static const String lastPlayed = 'lastPlayed';
+  static const String monthlyReset = 'monthlyReset';
+  static const String statistics = 'statistics';
+  static const String playerInfo = 'playerInfo';
+  static const String bestCategory = 'bestCategory';
 }

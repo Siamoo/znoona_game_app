@@ -12,7 +12,6 @@ class ProfileModel with _$ProfileModel {
     required String level,
     String? avatar_url,
     required DateTime created_at,
-    // NEW FIELDS
     @Default(0) int all_cups,
     @Default(0) int cups_by_month,
     String? username,

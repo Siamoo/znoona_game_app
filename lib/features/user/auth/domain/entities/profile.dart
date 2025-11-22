@@ -10,7 +10,6 @@ class Profile with _$Profile {
     required String level,
     required DateTime createdAt,
     String? avatarUrl,
-    // NEW FIELDS
     @Default(0) int allCups,
     @Default(0) int cupsByMonth,
     String? username,

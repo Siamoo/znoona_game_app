@@ -21,7 +21,20 @@ mixin _$Profile {
   String get fullName => throw _privateConstructorUsedError;
   String get level => throw _privateConstructorUsedError;
   DateTime get createdAt => throw _privateConstructorUsedError;
-  String? get avatarUrl => throw _privateConstructorUsedError;
+  String? get avatarUrl => throw _privateConstructorUsedError; // NEW FIELDS
+  int get allCups => throw _privateConstructorUsedError;
+  int get cupsByMonth => throw _privateConstructorUsedError;
+  String? get username => throw _privateConstructorUsedError;
+  String? get email => throw _privateConstructorUsedError;
+  DateTime? get lastMonthReset => throw _privateConstructorUsedError;
+  int get gamesPlayed => throw _privateConstructorUsedError;
+  int get gamesWon => throw _privateConstructorUsedError;
+  int get totalScore => throw _privateConstructorUsedError;
+  double get averageScore => throw _privateConstructorUsedError;
+  double get winRate => throw _privateConstructorUsedError;
+  String? get bestCategory => throw _privateConstructorUsedError;
+  int get streakDays => throw _privateConstructorUsedError;
+  DateTime? get lastPlayed => throw _privateConstructorUsedError;
 
   /// Create a copy of Profile
   /// with the given fields replaced by the non-null parameter values.
@@ -40,6 +53,19 @@ abstract class $ProfileCopyWith<$Res> {
     String level,
     DateTime createdAt,
     String? avatarUrl,
+    int allCups,
+    int cupsByMonth,
+    String? username,
+    String? email,
+    DateTime? lastMonthReset,
+    int gamesPlayed,
+    int gamesWon,
+    int totalScore,
+    double averageScore,
+    double winRate,
+    String? bestCategory,
+    int streakDays,
+    DateTime? lastPlayed,
   });
 }
 
@@ -63,6 +89,19 @@ class _$ProfileCopyWithImpl<$Res, $Val extends Profile>
     Object? level = null,
     Object? createdAt = null,
     Object? avatarUrl = freezed,
+    Object? allCups = null,
+    Object? cupsByMonth = null,
+    Object? username = freezed,
+    Object? email = freezed,
+    Object? lastMonthReset = freezed,
+    Object? gamesPlayed = null,
+    Object? gamesWon = null,
+    Object? totalScore = null,
+    Object? averageScore = null,
+    Object? winRate = null,
+    Object? bestCategory = freezed,
+    Object? streakDays = null,
+    Object? lastPlayed = freezed,
   }) {
     return _then(
       _value.copyWith(
@@ -86,6 +125,58 @@ class _$ProfileCopyWithImpl<$Res, $Val extends Profile>
                 ? _value.avatarUrl
                 : avatarUrl // ignore: cast_nullable_to_non_nullable
                       as String?,
+            allCups: null == allCups
+                ? _value.allCups
+                : allCups // ignore: cast_nullable_to_non_nullable
+                      as int,
+            cupsByMonth: null == cupsByMonth
+                ? _value.cupsByMonth
+                : cupsByMonth // ignore: cast_nullable_to_non_nullable
+                      as int,
+            username: freezed == username
+                ? _value.username
+                : username // ignore: cast_nullable_to_non_nullable
+                      as String?,
+            email: freezed == email
+                ? _value.email
+                : email // ignore: cast_nullable_to_non_nullable
+                      as String?,
+            lastMonthReset: freezed == lastMonthReset
+                ? _value.lastMonthReset
+                : lastMonthReset // ignore: cast_nullable_to_non_nullable
+                      as DateTime?,
+            gamesPlayed: null == gamesPlayed
+                ? _value.gamesPlayed
+                : gamesPlayed // ignore: cast_nullable_to_non_nullable
+                      as int,
+            gamesWon: null == gamesWon
+                ? _value.gamesWon
+                : gamesWon // ignore: cast_nullable_to_non_nullable
+                      as int,
+            totalScore: null == totalScore
+                ? _value.totalScore
+                : totalScore // ignore: cast_nullable_to_non_nullable
+                      as int,
+            averageScore: null == averageScore
+                ? _value.averageScore
+                : averageScore // ignore: cast_nullable_to_non_nullable
+                      as double,
+            winRate: null == winRate
+                ? _value.winRate
+                : winRate // ignore: cast_nullable_to_non_nullable
+                      as double,
+            bestCategory: freezed == bestCategory
+                ? _value.bestCategory
+                : bestCategory // ignore: cast_nullable_to_non_nullable
+                      as String?,
+            streakDays: null == streakDays
+                ? _value.streakDays
+                : streakDays // ignore: cast_nullable_to_non_nullable
+                      as int,
+            lastPlayed: freezed == lastPlayed
+                ? _value.lastPlayed
+                : lastPlayed // ignore: cast_nullable_to_non_nullable
+                      as DateTime?,
           )
           as $Val,
     );
@@ -106,6 +197,19 @@ abstract class _$$ProfileImplCopyWith<$Res> implements $ProfileCopyWith<$Res> {
     String level,
     DateTime createdAt,
     String? avatarUrl,
+    int allCups,
+    int cupsByMonth,
+    String? username,
+    String? email,
+    DateTime? lastMonthReset,
+    int gamesPlayed,
+    int gamesWon,
+    int totalScore,
+    double averageScore,
+    double winRate,
+    String? bestCategory,
+    int streakDays,
+    DateTime? lastPlayed,
   });
 }
 
@@ -128,6 +232,19 @@ class __$$ProfileImplCopyWithImpl<$Res>
     Object? level = null,
     Object? createdAt = null,
     Object? avatarUrl = freezed,
+    Object? allCups = null,
+    Object? cupsByMonth = null,
+    Object? username = freezed,
+    Object? email = freezed,
+    Object? lastMonthReset = freezed,
+    Object? gamesPlayed = null,
+    Object? gamesWon = null,
+    Object? totalScore = null,
+    Object? averageScore = null,
+    Object? winRate = null,
+    Object? bestCategory = freezed,
+    Object? streakDays = null,
+    Object? lastPlayed = freezed,
   }) {
     return _then(
       _$ProfileImpl(
@@ -151,6 +268,58 @@ class __$$ProfileImplCopyWithImpl<$Res>
             ? _value.avatarUrl
             : avatarUrl // ignore: cast_nullable_to_non_nullable
                   as String?,
+        allCups: null == allCups
+            ? _value.allCups
+            : allCups // ignore: cast_nullable_to_non_nullable
+                  as int,
+        cupsByMonth: null == cupsByMonth
+            ? _value.cupsByMonth
+            : cupsByMonth // ignore: cast_nullable_to_non_nullable
+                  as int,
+        username: freezed == username
+            ? _value.username
+            : username // ignore: cast_nullable_to_non_nullable
+                  as String?,
+        email: freezed == email
+            ? _value.email
+            : email // ignore: cast_nullable_to_non_nullable
+                  as String?,
+        lastMonthReset: freezed == lastMonthReset
+            ? _value.lastMonthReset
+            : lastMonthReset // ignore: cast_nullable_to_non_nullable
+                  as DateTime?,
+        gamesPlayed: null == gamesPlayed
+            ? _value.gamesPlayed
+            : gamesPlayed // ignore: cast_nullable_to_non_nullable
+                  as int,
+        gamesWon: null == gamesWon
+            ? _value.gamesWon
+            : gamesWon // ignore: cast_nullable_to_non_nullable
+                  as int,
+        totalScore: null == totalScore
+            ? _value.totalScore
+            : totalScore // ignore: cast_nullable_to_non_nullable
+                  as int,
+        averageScore: null == averageScore
+            ? _value.averageScore
+            : averageScore // ignore: cast_nullable_to_non_nullable
+                  as double,
+        winRate: null == winRate
+            ? _value.winRate
+            : winRate // ignore: cast_nullable_to_non_nullable
+                  as double,
+        bestCategory: freezed == bestCategory
+            ? _value.bestCategory
+            : bestCategory // ignore: cast_nullable_to_non_nullable
+                  as String?,
+        streakDays: null == streakDays
+            ? _value.streakDays
+            : streakDays // ignore: cast_nullable_to_non_nullable
+                  as int,
+        lastPlayed: freezed == lastPlayed
+            ? _value.lastPlayed
+            : lastPlayed // ignore: cast_nullable_to_non_nullable
+                  as DateTime?,
       ),
     );
   }
@@ -165,6 +334,19 @@ class _$ProfileImpl implements _Profile {
     required this.level,
     required this.createdAt,
     this.avatarUrl,
+    this.allCups = 0,
+    this.cupsByMonth = 0,
+    this.username,
+    this.email,
+    this.lastMonthReset,
+    this.gamesPlayed = 0,
+    this.gamesWon = 0,
+    this.totalScore = 0,
+    this.averageScore = 0.0,
+    this.winRate = 0.0,
+    this.bestCategory,
+    this.streakDays = 0,
+    this.lastPlayed,
   });
 
   @override
@@ -177,10 +359,45 @@ class _$ProfileImpl implements _Profile {
   final DateTime createdAt;
   @override
   final String? avatarUrl;
+  // NEW FIELDS
+  @override
+  @JsonKey()
+  final int allCups;
+  @override
+  @JsonKey()
+  final int cupsByMonth;
+  @override
+  final String? username;
+  @override
+  final String? email;
+  @override
+  final DateTime? lastMonthReset;
+  @override
+  @JsonKey()
+  final int gamesPlayed;
+  @override
+  @JsonKey()
+  final int gamesWon;
+  @override
+  @JsonKey()
+  final int totalScore;
+  @override
+  @JsonKey()
+  final double averageScore;
+  @override
+  @JsonKey()
+  final double winRate;
+  @override
+  final String? bestCategory;
+  @override
+  @JsonKey()
+  final int streakDays;
+  @override
+  final DateTime? lastPlayed;
 
   @override
   String toString() {
-    return 'Profile(id: $id, fullName: $fullName, level: $level, createdAt: $createdAt, avatarUrl: $avatarUrl)';
+    return 'Profile(id: $id, fullName: $fullName, level: $level, createdAt: $createdAt, avatarUrl: $avatarUrl, allCups: $allCups, cupsByMonth: $cupsByMonth, username: $username, email: $email, lastMonthReset: $lastMonthReset, gamesPlayed: $gamesPlayed, gamesWon: $gamesWon, totalScore: $totalScore, averageScore: $averageScore, winRate: $winRate, bestCategory: $bestCategory, streakDays: $streakDays, lastPlayed: $lastPlayed)';
   }
 
   @override
@@ -195,12 +412,54 @@ class _$ProfileImpl implements _Profile {
             (identical(other.createdAt, createdAt) ||
                 other.createdAt == createdAt) &&
             (identical(other.avatarUrl, avatarUrl) ||
-                other.avatarUrl == avatarUrl));
+                other.avatarUrl == avatarUrl) &&
+            (identical(other.allCups, allCups) || other.allCups == allCups) &&
+            (identical(other.cupsByMonth, cupsByMonth) ||
+                other.cupsByMonth == cupsByMonth) &&
+            (identical(other.username, username) ||
+                other.username == username) &&
+            (identical(other.email, email) || other.email == email) &&
+            (identical(other.lastMonthReset, lastMonthReset) ||
+                other.lastMonthReset == lastMonthReset) &&
+            (identical(other.gamesPlayed, gamesPlayed) ||
+                other.gamesPlayed == gamesPlayed) &&
+            (identical(other.gamesWon, gamesWon) ||
+                other.gamesWon == gamesWon) &&
+            (identical(other.totalScore, totalScore) ||
+                other.totalScore == totalScore) &&
+            (identical(other.averageScore, averageScore) ||
+                other.averageScore == averageScore) &&
+            (identical(other.winRate, winRate) || other.winRate == winRate) &&
+            (identical(other.bestCategory, bestCategory) ||
+                other.bestCategory == bestCategory) &&
+            (identical(other.streakDays, streakDays) ||
+                other.streakDays == streakDays) &&
+            (identical(other.lastPlayed, lastPlayed) ||
+                other.lastPlayed == lastPlayed));
   }
 
   @override
-  int get hashCode =>
-      Object.hash(runtimeType, id, fullName, level, createdAt, avatarUrl);
+  int get hashCode => Object.hash(
+    runtimeType,
+    id,
+    fullName,
+    level,
+    createdAt,
+    avatarUrl,
+    allCups,
+    cupsByMonth,
+    username,
+    email,
+    lastMonthReset,
+    gamesPlayed,
+    gamesWon,
+    totalScore,
+    averageScore,
+    winRate,
+    bestCategory,
+    streakDays,
+    lastPlayed,
+  );
 
   /// Create a copy of Profile
   /// with the given fields replaced by the non-null parameter values.
@@ -218,6 +477,19 @@ abstract class _Profile implements Profile {
     required final String level,
     required final DateTime createdAt,
     final String? avatarUrl,
+    final int allCups,
+    final int cupsByMonth,
+    final String? username,
+    final String? email,
+    final DateTime? lastMonthReset,
+    final int gamesPlayed,
+    final int gamesWon,
+    final int totalScore,
+    final double averageScore,
+    final double winRate,
+    final String? bestCategory,
+    final int streakDays,
+    final DateTime? lastPlayed,
   }) = _$ProfileImpl;
 
   @override
@@ -229,7 +501,33 @@ abstract class _Profile implements Profile {
   @override
   DateTime get createdAt;
   @override
-  String? get avatarUrl;
+  String? get avatarUrl; // NEW FIELDS
+  @override
+  int get allCups;
+  @override
+  int get cupsByMonth;
+  @override
+  String? get username;
+  @override
+  String? get email;
+  @override
+  DateTime? get lastMonthReset;
+  @override
+  int get gamesPlayed;
+  @override
+  int get gamesWon;
+  @override
+  int get totalScore;
+  @override
+  double get averageScore;
+  @override
+  double get winRate;
+  @override
+  String? get bestCategory;
+  @override
+  int get streakDays;
+  @override
+  DateTime? get lastPlayed;
 
   /// Create a copy of Profile
   /// with the given fields replaced by the non-null parameter values.

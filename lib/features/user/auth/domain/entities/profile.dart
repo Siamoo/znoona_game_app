@@ -10,5 +10,19 @@ class Profile with _$Profile {
     required String level,
     required DateTime createdAt,
     String? avatarUrl,
+    // NEW FIELDS
+    @Default(0) int allCups,
+    @Default(0) int cupsByMonth,
+    String? username,
+    String? email,
+    DateTime? lastMonthReset,
+    @Default(0) int gamesPlayed,
+    @Default(0) int gamesWon,
+    @Default(0) int totalScore,
+    @Default(0.0) double averageScore,
+    @Default(0.0) double winRate,
+    String? bestCategory,
+    @Default(0) int streakDays,
+    DateTime? lastPlayed,
   }) = _Profile;
 }

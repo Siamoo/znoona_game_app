@@ -25,7 +25,21 @@ mixin _$ProfileModel {
   String get full_name => throw _privateConstructorUsedError;
   String get level => throw _privateConstructorUsedError;
   String? get avatar_url => throw _privateConstructorUsedError;
-  DateTime get created_at => throw _privateConstructorUsedError;
+  DateTime get created_at => throw _privateConstructorUsedError; // NEW FIELDS
+  int get all_cups => throw _privateConstructorUsedError;
+  int get cups_by_month => throw _privateConstructorUsedError;
+  String? get username => throw _privateConstructorUsedError;
+  String? get email => throw _privateConstructorUsedError;
+  @JsonKey(name: 'last_month_reset')
+  DateTime? get lastMonthReset => throw _privateConstructorUsedError;
+  int get games_played => throw _privateConstructorUsedError;
+  int get games_won => throw _privateConstructorUsedError;
+  int get total_score => throw _privateConstructorUsedError;
+  double get average_score => throw _privateConstructorUsedError;
+  double get win_rate => throw _privateConstructorUsedError;
+  String? get best_category => throw _privateConstructorUsedError;
+  int get streak_days => throw _privateConstructorUsedError;
+  DateTime? get last_played => throw _privateConstructorUsedError;
 
   /// Serializes this ProfileModel to a JSON map.
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
@@ -50,6 +64,19 @@ abstract class $ProfileModelCopyWith<$Res> {
     String level,
     String? avatar_url,
     DateTime created_at,
+    int all_cups,
+    int cups_by_month,
+    String? username,
+    String? email,
+    @JsonKey(name: 'last_month_reset') DateTime? lastMonthReset,
+    int games_played,
+    int games_won,
+    int total_score,
+    double average_score,
+    double win_rate,
+    String? best_category,
+    int streak_days,
+    DateTime? last_played,
   });
 }
 
@@ -73,6 +100,19 @@ class _$ProfileModelCopyWithImpl<$Res, $Val extends ProfileModel>
     Object? level = null,
     Object? avatar_url = freezed,
     Object? created_at = null,
+    Object? all_cups = null,
+    Object? cups_by_month = null,
+    Object? username = freezed,
+    Object? email = freezed,
+    Object? lastMonthReset = freezed,
+    Object? games_played = null,
+    Object? games_won = null,
+    Object? total_score = null,
+    Object? average_score = null,
+    Object? win_rate = null,
+    Object? best_category = freezed,
+    Object? streak_days = null,
+    Object? last_played = freezed,
   }) {
     return _then(
       _value.copyWith(
@@ -96,6 +136,58 @@ class _$ProfileModelCopyWithImpl<$Res, $Val extends ProfileModel>
                 ? _value.created_at
                 : created_at // ignore: cast_nullable_to_non_nullable
                       as DateTime,
+            all_cups: null == all_cups
+                ? _value.all_cups
+                : all_cups // ignore: cast_nullable_to_non_nullable
+                      as int,
+            cups_by_month: null == cups_by_month
+                ? _value.cups_by_month
+                : cups_by_month // ignore: cast_nullable_to_non_nullable
+                      as int,
+            username: freezed == username
+                ? _value.username
+                : username // ignore: cast_nullable_to_non_nullable
+                      as String?,
+            email: freezed == email
+                ? _value.email
+                : email // ignore: cast_nullable_to_non_nullable
+                      as String?,
+            lastMonthReset: freezed == lastMonthReset
+                ? _value.lastMonthReset
+                : lastMonthReset // ignore: cast_nullable_to_non_nullable
+                      as DateTime?,
+            games_played: null == games_played
+                ? _value.games_played
+                : games_played // ignore: cast_nullable_to_non_nullable
+                      as int,
+            games_won: null == games_won
+                ? _value.games_won
+                : games_won // ignore: cast_nullable_to_non_nullable
+                      as int,
+            total_score: null == total_score
+                ? _value.total_score
+                : total_score // ignore: cast_nullable_to_non_nullable
+                      as int,
+            average_score: null == average_score
+                ? _value.average_score
+                : average_score // ignore: cast_nullable_to_non_nullable
+                      as double,
+            win_rate: null == win_rate
+                ? _value.win_rate
+                : win_rate // ignore: cast_nullable_to_non_nullable
+                      as double,
+            best_category: freezed == best_category
+                ? _value.best_category
+                : best_category // ignore: cast_nullable_to_non_nullable
+                      as String?,
+            streak_days: null == streak_days
+                ? _value.streak_days
+                : streak_days // ignore: cast_nullable_to_non_nullable
+                      as int,
+            last_played: freezed == last_played
+                ? _value.last_played
+                : last_played // ignore: cast_nullable_to_non_nullable
+                      as DateTime?,
           )
           as $Val,
     );
@@ -117,6 +209,19 @@ abstract class _$$ProfileModelImplCopyWith<$Res>
     String level,
     String? avatar_url,
     DateTime created_at,
+    int all_cups,
+    int cups_by_month,
+    String? username,
+    String? email,
+    @JsonKey(name: 'last_month_reset') DateTime? lastMonthReset,
+    int games_played,
+    int games_won,
+    int total_score,
+    double average_score,
+    double win_rate,
+    String? best_category,
+    int streak_days,
+    DateTime? last_played,
   });
 }
 
@@ -139,6 +244,19 @@ class __$$ProfileModelImplCopyWithImpl<$Res>
     Object? level = null,
     Object? avatar_url = freezed,
     Object? created_at = null,
+    Object? all_cups = null,
+    Object? cups_by_month = null,
+    Object? username = freezed,
+    Object? email = freezed,
+    Object? lastMonthReset = freezed,
+    Object? games_played = null,
+    Object? games_won = null,
+    Object? total_score = null,
+    Object? average_score = null,
+    Object? win_rate = null,
+    Object? best_category = freezed,
+    Object? streak_days = null,
+    Object? last_played = freezed,
   }) {
     return _then(
       _$ProfileModelImpl(
@@ -162,6 +280,58 @@ class __$$ProfileModelImplCopyWithImpl<$Res>
             ? _value.created_at
             : created_at // ignore: cast_nullable_to_non_nullable
                   as DateTime,
+        all_cups: null == all_cups
+            ? _value.all_cups
+            : all_cups // ignore: cast_nullable_to_non_nullable
+                  as int,
+        cups_by_month: null == cups_by_month
+            ? _value.cups_by_month
+            : cups_by_month // ignore: cast_nullable_to_non_nullable
+                  as int,
+        username: freezed == username
+            ? _value.username
+            : username // ignore: cast_nullable_to_non_nullable
+                  as String?,
+        email: freezed == email
+            ? _value.email
+            : email // ignore: cast_nullable_to_non_nullable
+                  as String?,
+        lastMonthReset: freezed == lastMonthReset
+            ? _value.lastMonthReset
+            : lastMonthReset // ignore: cast_nullable_to_non_nullable
+                  as DateTime?,
+        games_played: null == games_played
+            ? _value.games_played
+            : games_played // ignore: cast_nullable_to_non_nullable
+                  as int,
+        games_won: null == games_won
+            ? _value.games_won
+            : games_won // ignore: cast_nullable_to_non_nullable
+                  as int,
+        total_score: null == total_score
+            ? _value.total_score
+            : total_score // ignore: cast_nullable_to_non_nullable
+                  as int,
+        average_score: null == average_score
+            ? _value.average_score
+            : average_score // ignore: cast_nullable_to_non_nullable
+                  as double,
+        win_rate: null == win_rate
+            ? _value.win_rate
+            : win_rate // ignore: cast_nullable_to_non_nullable
+                  as double,
+        best_category: freezed == best_category
+            ? _value.best_category
+            : best_category // ignore: cast_nullable_to_non_nullable
+                  as String?,
+        streak_days: null == streak_days
+            ? _value.streak_days
+            : streak_days // ignore: cast_nullable_to_non_nullable
+                  as int,
+        last_played: freezed == last_played
+            ? _value.last_played
+            : last_played // ignore: cast_nullable_to_non_nullable
+                  as DateTime?,
       ),
     );
   }
@@ -176,6 +346,19 @@ class _$ProfileModelImpl implements _ProfileModel {
     required this.level,
     this.avatar_url,
     required this.created_at,
+    this.all_cups = 0,
+    this.cups_by_month = 0,
+    this.username,
+    this.email,
+    @JsonKey(name: 'last_month_reset') this.lastMonthReset,
+    this.games_played = 0,
+    this.games_won = 0,
+    this.total_score = 0,
+    this.average_score = 0.0,
+    this.win_rate = 0.0,
+    this.best_category,
+    this.streak_days = 0,
+    this.last_played,
   });
 
   factory _$ProfileModelImpl.fromJson(Map<String, dynamic> json) =>
@@ -191,10 +374,46 @@ class _$ProfileModelImpl implements _ProfileModel {
   final String? avatar_url;
   @override
   final DateTime created_at;
+  // NEW FIELDS
+  @override
+  @JsonKey()
+  final int all_cups;
+  @override
+  @JsonKey()
+  final int cups_by_month;
+  @override
+  final String? username;
+  @override
+  final String? email;
+  @override
+  @JsonKey(name: 'last_month_reset')
+  final DateTime? lastMonthReset;
+  @override
+  @JsonKey()
+  final int games_played;
+  @override
+  @JsonKey()
+  final int games_won;
+  @override
+  @JsonKey()
+  final int total_score;
+  @override
+  @JsonKey()
+  final double average_score;
+  @override
+  @JsonKey()
+  final double win_rate;
+  @override
+  final String? best_category;
+  @override
+  @JsonKey()
+  final int streak_days;
+  @override
+  final DateTime? last_played;
 
   @override
   String toString() {
-    return 'ProfileModel(id: $id, full_name: $full_name, level: $level, avatar_url: $avatar_url, created_at: $created_at)';
+    return 'ProfileModel(id: $id, full_name: $full_name, level: $level, avatar_url: $avatar_url, created_at: $created_at, all_cups: $all_cups, cups_by_month: $cups_by_month, username: $username, email: $email, lastMonthReset: $lastMonthReset, games_played: $games_played, games_won: $games_won, total_score: $total_score, average_score: $average_score, win_rate: $win_rate, best_category: $best_category, streak_days: $streak_days, last_played: $last_played)';
   }
 
   @override
@@ -209,13 +428,57 @@ class _$ProfileModelImpl implements _ProfileModel {
             (identical(other.avatar_url, avatar_url) ||
                 other.avatar_url == avatar_url) &&
             (identical(other.created_at, created_at) ||
-                other.created_at == created_at));
+                other.created_at == created_at) &&
+            (identical(other.all_cups, all_cups) ||
+                other.all_cups == all_cups) &&
+            (identical(other.cups_by_month, cups_by_month) ||
+                other.cups_by_month == cups_by_month) &&
+            (identical(other.username, username) ||
+                other.username == username) &&
+            (identical(other.email, email) || other.email == email) &&
+            (identical(other.lastMonthReset, lastMonthReset) ||
+                other.lastMonthReset == lastMonthReset) &&
+            (identical(other.games_played, games_played) ||
+                other.games_played == games_played) &&
+            (identical(other.games_won, games_won) ||
+                other.games_won == games_won) &&
+            (identical(other.total_score, total_score) ||
+                other.total_score == total_score) &&
+            (identical(other.average_score, average_score) ||
+                other.average_score == average_score) &&
+            (identical(other.win_rate, win_rate) ||
+                other.win_rate == win_rate) &&
+            (identical(other.best_category, best_category) ||
+                other.best_category == best_category) &&
+            (identical(other.streak_days, streak_days) ||
+                other.streak_days == streak_days) &&
+            (identical(other.last_played, last_played) ||
+                other.last_played == last_played));
   }
 
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override
-  int get hashCode =>
-      Object.hash(runtimeType, id, full_name, level, avatar_url, created_at);
+  int get hashCode => Object.hash(
+    runtimeType,
+    id,
+    full_name,
+    level,
+    avatar_url,
+    created_at,
+    all_cups,
+    cups_by_month,
+    username,
+    email,
+    lastMonthReset,
+    games_played,
+    games_won,
+    total_score,
+    average_score,
+    win_rate,
+    best_category,
+    streak_days,
+    last_played,
+  );
 
   /// Create a copy of ProfileModel
   /// with the given fields replaced by the non-null parameter values.
@@ -238,6 +501,19 @@ abstract class _ProfileModel implements ProfileModel {
     required final String level,
     final String? avatar_url,
     required final DateTime created_at,
+    final int all_cups,
+    final int cups_by_month,
+    final String? username,
+    final String? email,
+    @JsonKey(name: 'last_month_reset') final DateTime? lastMonthReset,
+    final int games_played,
+    final int games_won,
+    final int total_score,
+    final double average_score,
+    final double win_rate,
+    final String? best_category,
+    final int streak_days,
+    final DateTime? last_played,
   }) = _$ProfileModelImpl;
 
   factory _ProfileModel.fromJson(Map<String, dynamic> json) =
@@ -252,7 +528,34 @@ abstract class _ProfileModel implements ProfileModel {
   @override
   String? get avatar_url;
   @override
-  DateTime get created_at;
+  DateTime get created_at; // NEW FIELDS
+  @override
+  int get all_cups;
+  @override
+  int get cups_by_month;
+  @override
+  String? get username;
+  @override
+  String? get email;
+  @override
+  @JsonKey(name: 'last_month_reset')
+  DateTime? get lastMonthReset;
+  @override
+  int get games_played;
+  @override
+  int get games_won;
+  @override
+  int get total_score;
+  @override
+  double get average_score;
+  @override
+  double get win_rate;
+  @override
+  String? get best_category;
+  @override
+  int get streak_days;
+  @override
+  DateTime? get last_played;
 
   /// Create a copy of ProfileModel
   /// with the given fields replaced by the non-null parameter values.

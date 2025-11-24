@@ -72,8 +72,15 @@ Future<void> setupInjector() async {
     ..registerLazySingleton(() => LogoutUseCase(sl()))
     ..registerLazySingleton(() => LoginWithGoogleUseCase(sl()))
     ..registerLazySingleton(() => GetCurrentUserUseCase(sl()))
-    /// Cubits
-    ..registerFactory(() => AuthCubit(sl(), sl(), sl(), sl(), sl()))
+    /// Cubits - UPDATED TO INCLUDE AUTHREPOSITORY
+    ..registerFactory(() => AuthCubit(
+      loginUseCase: sl(),
+      signUpUseCase: sl(),
+      loginWithGoogleUseCase: sl(),
+      logoutUseCase: sl(),
+      getCurrentUserUseCase: sl(),
+      authRepository: sl(), // ADD THIS
+    ))
     // ---------------- CATEGORIES ----------------
     /// Datasources
     ..registerLazySingleton<CategoriesRemoteDataSource>(

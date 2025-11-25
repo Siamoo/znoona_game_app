@@ -26,20 +26,23 @@ class SignUpBody extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocConsumer<AuthCubit, AuthState>(
       listener: (context, state) async {
-        await state.whenOrNull(
-          authenticated: (profile) async {
-            await ZnoonaNavigate.pushReplacementTo(
-              context,
-              const LoginScreen(),
-            );
+        state.whenOrNull(
+          // FIXED: Now only one authenticated state with authMethod
+          authenticated: (profile, authMethod) async {
+            if (authMethod == AuthMethod.email) {
+              // For email signup, go to login screen
+              await ZnoonaNavigate.pushReplacementTo(
+                context,
+                const LoginScreen(),
+              );
+            } else {
+              // For Google signup, go to home screen
+              await ZnoonaNavigate.pushReplacementTo(
+                context,
+                const HomeScreen(),
+              );
+            }
           },
-          googleauthenticated: (profile) async {
-            await ZnoonaNavigate.pushReplacementTo(
-              context,
-              const HomeScreen(),
-            );
-          },
-
           error: (message) {
             ScaffoldMessenger.of(context).showSnackBar(
               SnackBar(content: Text(message)),
@@ -48,14 +51,12 @@ class SignUpBody extends StatelessWidget {
         );
       },
       builder: (context, state) {
+        // FIXED: No more googleLoading state
         final isLoading = state.maybeWhen(
           loading: () => true,
           orElse: () => false,
         );
-        final isGoogleLoading = state.maybeWhen(
-          googleloading: () => true,
-          orElse: () => false,
-        );
+        
         return Padding(
           padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 20),
           child: SingleChildScrollView(
@@ -87,12 +88,11 @@ class SignUpBody extends StatelessWidget {
                     passwordController: passwordController,
                   ),
                 SizedBox(height: 10.h),
-                if (isGoogleLoading)
-                  const CircularProgressIndicator()
-                else
-                  LoginOrSignUpWithGoogle(
-                    text: ZnoonaTexts.tr(context, LangKeys.signUp),
-                  ),
+                // FIXED: No separate Google loading indicator
+                LoginOrSignUpWithGoogle(
+                  text: ZnoonaTexts.tr(context, LangKeys.signUp),
+                  isLoading: isLoading,
+                ),
                 SizedBox(height: 20.h),
                 HaveAccountOrNot(
                   text: ZnoonaTexts.tr(context, LangKeys.youHaveAccount),

@@ -159,7 +159,7 @@ class _QuizBodyState extends State<QuizBody> {
                         children: [
                           Text(
                             question.question,
-                            style: GoogleFonts.beiruti(
+                            style: GoogleFonts.scheherazadeNew(
                               fontSize: 22.sp,
                               fontWeight: FontWeight.bold,
                               color: ZnoonaColors.text(context),

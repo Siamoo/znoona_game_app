@@ -14,9 +14,11 @@ import 'package:znoona_game_app/features/user/auth/presentation/cubit/auth_cubit
 class LoginOrSignUpWithGoogle extends StatelessWidget {
   const LoginOrSignUpWithGoogle({
     required this.text,
+    this.isLoading = false,
     super.key,
   });
   final String text;
+  final bool isLoading; 
 
   @override
   Widget build(BuildContext context) {
@@ -25,10 +27,21 @@ class LoginOrSignUpWithGoogle extends StatelessWidget {
       child: CustomLinearButton(
         height: 50.h,
         width: double.infinity,
-        onPressed: () async {
+        onPressed: isLoading 
+            ? null 
+            : () async {
           await context.read<AuthCubit>().loginWithGoogle();
         },
-        child: Row(
+        child: isLoading 
+            ? SizedBox(
+                height: 24.h,
+                width: 24.w,
+                child: const CircularProgressIndicator(
+                  strokeWidth: 2,
+                  valueColor: AlwaysStoppedAnimation<Color>(Colors.white),
+                ),
+              )
+            : Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             SvgPicture.asset(

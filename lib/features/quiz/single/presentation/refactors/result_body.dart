@@ -25,9 +25,9 @@ class ResultBody extends StatelessWidget {
     return Scaffold(
       body: SafeArea(
         child: Padding(
-          padding: EdgeInsets.only(
-            left: 16.w,
-            right: 16.w,
+          padding: EdgeInsets.symmetric(
+            vertical: 10.h,
+            horizontal: 10.w,
           ),
           child: Column(
             children: [

@@ -221,7 +221,7 @@ class _RoomQuizBodyState extends State<RoomQuizBody> {
                 children: [
                   Text(
                     question.question,
-                    style: GoogleFonts.beiruti(
+                    style: GoogleFonts.scheherazadeNew(
                       fontSize: 22.sp,
                       fontWeight: FontWeight.bold,
                       color: ZnoonaColors.text(context),

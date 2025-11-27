@@ -45,7 +45,7 @@ class _RoomJoiningBodyState extends State<RoomJoiningBody> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      resizeToAvoidBottomInset: true, 
+      resizeToAvoidBottomInset: true,
       body: BlocListener<RoomCubit, RoomState>(
         listener: (context, state) async {
           await state.whenOrNull(
@@ -69,94 +69,105 @@ class _RoomJoiningBodyState extends State<RoomJoiningBody> {
           child: SingleChildScrollView(
             controller: _scrollController,
             padding: EdgeInsets.symmetric(
-              horizontal: 24.w,
+              vertical: 10.h,
+              horizontal: 10.w,
             ),
             child: Column(
               children: [
                 CustomAppBar(title: ZnoonaTexts.tr(context, LangKeys.joinRoom)),
                 SizedBox(height: 50.h),
-                Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    CustomFadeInDown(
-                      duration: 850,
-                      child: Image.asset(
-                        AppImages.join,
-                        height: 250.h,
-                        width: 250.w,
+                Padding(
+                  padding: EdgeInsets.symmetric(
+                    horizontal: 14.w,
+                  ),
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      CustomFadeInDown(
+                        duration: 850,
+                        child: Image.asset(
+                          AppImages.join,
+                          height: 250.h,
+                          width: 250.w,
+                        ),
                       ),
-                    ),
-                    const SizedBox(height: 24),
-                    const CustomFadeInDown(
-                      duration: 700,
-                      child: EnterCodeOrScan(),
-                    ),
-                  ],
+                      const SizedBox(height: 24),
+                      const CustomFadeInDown(
+                        duration: 700,
+                        child: EnterCodeOrScan(),
+                      ),
+                    ],
+                  ),
                 ),
                 SizedBox(height: 20.h),
                 Form(
                   key: _formKey,
-                  child: Column(
-                    children: [
-                      CustomFadeInDown(
-                        duration: 600,
-                        child: CustomTextField(
-                          controller: _codeController,
-                          hintText: ZnoonaTexts.tr(
-                            context,
-                            LangKeys.enterRoomCode,
-                          ),
-                          keyboardType: TextInputType.number,
-                          validator: (value) {
-                            if (value == null || value.isEmpty) {
-                              return ZnoonaTexts.tr(
-                                context,
-                                LangKeys.pleaseEnterRoomCode,
-                              );
-                            }
-                            if (value.length != 6) {
-                              return ZnoonaTexts.tr(
-                                context,
-                                LangKeys.roomCodeMustBe6,
-                              );
-                            }
-                            return null;
-                          },
-                          suffixIcon: const Icon(Icons.key),
-                          onTap: _ensureTextFieldVisible, // Add this
-                        ),
-                      ),
-                      SizedBox(height: 10.h),
-                      BlocBuilder<RoomCubit, RoomState>(
-                        builder: (context, state) {
-                          final isLoading = state.maybeMap(
-                            loading: (_) => true,
-                            orElse: () => false,
-                          );
-                          return SizedBox(
-                            width: double.infinity,
-                            child: CustomFadeInDown(
-                              duration: 500,
-                              child: JoinRoomButton(
-                                isLoading: isLoading,
-                                formKey: _formKey,
-                                codeController: _codeController,
-                              ),
+                  child: Padding(
+                    padding: EdgeInsets.symmetric(
+                      horizontal: 14.w,
+                    ),
+                    child: Column(
+                      children: [
+                        CustomFadeInDown(
+                          duration: 600,
+                          child: CustomTextField(
+                            controller: _codeController,
+                            hintText: ZnoonaTexts.tr(
+                              context,
+                              LangKeys.enterRoomCode,
                             ),
-                          );
-                        },
-                      ),
-                      SizedBox(height: 10.h),
-                      const CustomFadeInDown(
-                        duration: 400,
-                        child: ScanQrButton(),
-                      ),
-                      SizedBox(
-                        height: MediaQuery.of(context).viewInsets.bottom > 0
-                            ? 100.h
-                            : 20.h,
-                      ),
-                    ],
+                            keyboardType: TextInputType.number,
+                            validator: (value) {
+                              if (value == null || value.isEmpty) {
+                                return ZnoonaTexts.tr(
+                                  context,
+                                  LangKeys.pleaseEnterRoomCode,
+                                );
+                              }
+                              if (value.length != 6) {
+                                return ZnoonaTexts.tr(
+                                  context,
+                                  LangKeys.roomCodeMustBe6,
+                                );
+                              }
+                              return null;
+                            },
+                            suffixIcon: const Icon(Icons.key),
+                            onTap: _ensureTextFieldVisible, // Add this
+                          ),
+                        ),
+                        SizedBox(height: 10.h),
+                        BlocBuilder<RoomCubit, RoomState>(
+                          builder: (context, state) {
+                            final isLoading = state.maybeMap(
+                              loading: (_) => true,
+                              orElse: () => false,
+                            );
+                            return SizedBox(
+                              width: double.infinity,
+                              child: CustomFadeInDown(
+                                duration: 500,
+                                child: JoinRoomButton(
+                                  isLoading: isLoading,
+                                  formKey: _formKey,
+                                  codeController: _codeController,
+                                ),
+                              ),
+                            );
+                          },
+                        ),
+                        SizedBox(height: 10.h),
+                        const CustomFadeInDown(
+                          duration: 400,
+                          child: ScanQrButton(),
+                        ),
+                        SizedBox(
+                          height: MediaQuery.of(context).viewInsets.bottom > 0
+                              ? 100.h
+                              : 20.h,
+                        ),
+                      ],
+                    ),
                   ),
                 ),
               ],

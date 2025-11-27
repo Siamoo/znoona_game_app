@@ -55,7 +55,7 @@ class _RoomCreationBodyState extends State<RoomCreationBody> {
         builder: (BuildContext context, RoomState state) {
           return SafeArea(
             child: Padding(
-              padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 16.h),
+              padding: EdgeInsets.symmetric(horizontal: 10.w, vertical: 10.h),
               child: SingleChildScrollView(
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.stretch,

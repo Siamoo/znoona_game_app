@@ -100,9 +100,15 @@ class _CategoryHierarchyBodyState extends State<CategoryHierarchyBody> {
       body: SafeArea(
         child: Column(
           children: [
-            CustomAppBar(
-              title: _navigationStack.last.title,
-              onTap: _onBackPressed,
+            Padding(
+              padding: EdgeInsets.symmetric(
+                vertical: 10.h,
+                horizontal: 10.w,
+              ),
+              child: CustomAppBar(
+                title: _navigationStack.last.title,
+                onTap: _onBackPressed,
+              ),
             ),
             SizedBox(height: 12.h),
             Expanded(

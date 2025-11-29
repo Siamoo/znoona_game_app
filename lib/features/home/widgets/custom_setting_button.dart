@@ -1,10 +1,8 @@
-
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:znoona_game_app/core/common/widgets/text_app.dart';
-import 'package:znoona_game_app/core/helpers/znoona.colors.dart';
 import 'package:znoona_game_app/core/helpers/znoona_texts.dart';
 
 class CustomSettingButton extends StatelessWidget {
@@ -33,7 +31,7 @@ class CustomSettingButton extends StatelessWidget {
             textStyle: GoogleFonts.beiruti(
               fontSize: 22.sp,
               fontWeight: FontWeight.bold,
-              color: ZnoonaColors.text(context),
+              color: Colors.black,
             ),
             textAlign: TextAlign.end,
           ),
@@ -41,8 +39,8 @@ class CustomSettingButton extends StatelessWidget {
             imageUrl,
             width: 20.w,
             height: 20.h,
-            colorFilter: ColorFilter.mode(
-              ZnoonaColors.text(context),
+            colorFilter: const  ColorFilter.mode(
+              Colors.black,
               BlendMode.srcIn,
             ), // optional to colorize
           ),

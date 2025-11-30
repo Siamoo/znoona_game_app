@@ -11,8 +11,7 @@ class HomeScreen extends StatelessWidget {
     return BlocBuilder<AuthCubit, AuthState>(
       builder: (context, state) {
         return state.maybeWhen(
-          authenticated: (profile) => HomeBody(profile: profile),
-          googleauthenticated: (profile) => HomeBody(profile: profile),
+          authenticated: (profile, authMethod) => HomeBody(profile: profile), 
           orElse: () {
             return Container();
           },

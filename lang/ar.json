@@ -139,5 +139,17 @@
   "monthlyReset": "إعادة تعيين شهرية",
   "statistics": "الإحصائيات",
   "playerInfo": "معلومات اللاعب",
-  "bestCategory": "أفضل فئة"
+  "bestCategory": "أفضل فئة",
+  "username": "اسم المستخدم",
+    "editUsername": "تعديل اسم المستخدم",
+  "usernameHint": "اختر اسم مستخدم فريد (3-12 حرف)",
+  "usernameRequired": "اسم المستخدم مطلوب",
+  "usernameTooShort": "يجب أن يكون اسم المستخدم 3 أحرف على الأقل",
+  "usernameTooLong": "لا يمكن أن يتجاوز اسم المستخدم 12 حرف",
+  "usernameInvalidChars": "مسموح بالأحرف والأرقام والشرطة السفلية فقط",
+  "usernameRequirement1": "3-12 حرف",
+  "usernameRequirement2": "أحرف وأرقام وشرطة سفلية فقط",
+  "usernameRequirement3": "يجب أن يكون فريد",
+  "saveChanges": "حفظ التغييرات",
+  "usernameUpdated": "تم تحديث اسم المستخدم بنجاح!"
 }

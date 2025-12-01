@@ -139,5 +139,18 @@
   "monthlyReset": "Monthly Reset",
   "statistics": "Statistics",
   "playerInfo": "Player Info",
-  "bestCategory": "Best Category"
+  "bestCategory": "Best Category",
+  "username": "Username",
+  "editUsername": "Edit Username",
+  "usernameHint": "Choose a unique username (3-12 characters)",
+  "usernameRequired": "Username is required",
+  "usernameTooShort": "Username must be at least 3 characters",
+  "usernameTooLong": "Username cannot exceed 12 characters",
+  "usernameInvalidChars": "Only letters, numbers, and underscores allowed",
+  "usernameRequirement1": "3-12 characters",
+  "usernameRequirement2": "Letters, numbers, underscores only",
+  "usernameRequirement3": "Must be unique",
+  "saveChanges": "Save Changes",
+  "usernameUpdated": "Username updated successfully!"
+
 }

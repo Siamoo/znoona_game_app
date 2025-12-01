@@ -141,4 +141,19 @@ class LangKeys {
   static const String statistics = 'statistics';
   static const String playerInfo = 'playerInfo';
   static const String bestCategory = 'bestCategory';
+  // Add to lang_keys.dart
+
+  static const String username = 'username';
+
+  static const String editUsername = 'editUsername';
+  static const String usernameHint = 'usernameHint';
+  static const String usernameRequired = 'usernameRequired';
+  static const String usernameTooShort = 'usernameTooShort';
+  static const String usernameTooLong = 'usernameTooLong';
+  static const String usernameInvalidChars = 'usernameInvalidChars';
+  static const String usernameRequirement1 = 'usernameRequirement1';
+  static const String usernameRequirement2 = 'usernameRequirement2';
+  static const String usernameRequirement3 = 'usernameRequirement3';
+  static const String saveChanges = 'saveChanges';
+  static const String usernameUpdated = 'usernameUpdated';
 }

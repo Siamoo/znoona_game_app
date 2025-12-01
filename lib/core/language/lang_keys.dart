@@ -141,10 +141,7 @@ class LangKeys {
   static const String statistics = 'statistics';
   static const String playerInfo = 'playerInfo';
   static const String bestCategory = 'bestCategory';
-  // Add to lang_keys.dart
-
   static const String username = 'username';
-
   static const String editUsername = 'editUsername';
   static const String usernameHint = 'usernameHint';
   static const String usernameRequired = 'usernameRequired';

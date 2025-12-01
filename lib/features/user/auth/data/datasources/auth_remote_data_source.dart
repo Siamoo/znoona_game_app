@@ -60,7 +60,7 @@ class AuthRemoteDataSourceImpl implements AuthRemoteDataSource {
     if (authRes.user == null) throw Exception('Sign up failed');
 
     final userId = authRes.user!.id;
-    
+
     // Generate username if not provided
     final generatedUsername = username ?? _generateUsername(email, fullName);
 
@@ -173,6 +173,80 @@ class AuthRemoteDataSourceImpl implements AuthRemoteDataSource {
     return client.auth.signOut();
   }
 
+  @override
+  Future<void> updatePlayerStats({
+    required String userId,
+    required bool won,
+    required int score,
+    String? categoryId,
+  }) async {
+    await client.rpc(
+      'update_player_stats',
+      params: {
+        'p_user_id': userId,
+        'p_won': won,
+        'p_score': score,
+        'p_category_id': categoryId,
+      },
+    );
+  }
+
+  @override
+  Future<List<ProfileModel>> getLeaderboard({
+    required String type,
+    int limit = 50,
+  }) async {
+    final query = client
+        .from('profiles')
+        .select()
+        .order(
+          type == 'monthly' ? 'cups_by_month' : 'all_cups',
+          ascending: false,
+        )
+        .limit(limit);
+
+    final results = await query;
+    return results.map((json) => ProfileModel.fromJson(json)).toList();
+  }
+
+  String _generateUsername(String email, String fullName) {
+    // Use email prefix if available
+    String base;
+    if (email.contains('@')) {
+      base = email.split('@').first;
+    } else {
+      base = fullName.split(' ').first;
+    }
+
+    // Clean the base (remove special chars, keep only a-z, 0-9)
+    base = base.replaceAll(RegExp(r'[^a-zA-Z0-9]'), '').toLowerCase();
+
+    // Ensure minimum length of 3
+    if (base.length < 3) {
+      base = 'player';
+    }
+
+    // Limit to 10 characters (leaves room for counter)
+    if (base.length > 10) {
+      base = base.substring(0, 10);
+    }
+
+    // Add random numbers (1-999)
+    final random = DateTime.now().millisecondsSinceEpoch % 999 + 1;
+    final username = '$base$random';
+
+    // Final check: ensure max 12 characters
+    return username.length > 12 ? username.substring(0, 12) : username;
+  }
+
+  Future<void> _checkMonthlyReset(String userId) async {
+    await client.rpc(
+      'check_monthly_reset',
+      params: {
+        'p_user_id': userId,
+      },
+    );
+  }
 
   @override
   Future<ProfileModel> updateProfile({
@@ -183,21 +257,38 @@ class AuthRemoteDataSourceImpl implements AuthRemoteDataSource {
     String? level,
   }) async {
     final updateData = <String, dynamic>{};
-    
+
     if (username != null) {
+      // Validate username length (3-12 characters)
+      if (username.length < 3) {
+        throw Exception('Username must be at least 3 characters');
+      }
+      if (username.length > 12) {
+        throw Exception('Username cannot exceed 12 characters');
+      }
+
+      // Validate username format (only alphanumeric and underscores)
+      if (!RegExp(r'^[a-zA-Z0-9_]+$').hasMatch(username)) {
+        throw Exception(
+          'Username can only contain letters, numbers, and underscores',
+        );
+      }
+
+      // Check if username is unique
       final existing = await client
           .from('profiles')
           .select('id')
           .eq('username', username)
           .neq('id', id)
           .maybeSingle();
-      
+
       if (existing != null) {
         throw Exception('Username already taken');
       }
+
       updateData['username'] = username;
     }
-    
+
     if (fullName != null) updateData['full_name'] = fullName;
     if (avatarUrl != null) updateData['avatar_url'] = avatarUrl;
     if (level != null) updateData['level'] = level;
@@ -210,48 +301,5 @@ class AuthRemoteDataSourceImpl implements AuthRemoteDataSource {
         .single();
 
     return ProfileModel.fromJson(profileRes);
-  }
-
-  @override
-  Future<void> updatePlayerStats({
-    required String userId,
-    required bool won,
-    required int score,
-    String? categoryId,
-  }) async {
-    await client.rpc('update_player_stats', params: {
-      'p_user_id': userId,
-      'p_won': won,
-      'p_score': score,
-      'p_category_id': categoryId,
-    });
-  }
-
-  @override
-  Future<List<ProfileModel>> getLeaderboard({
-    required String type,
-    int limit = 50,
-  }) async {
-    final query = client
-        .from('profiles')
-        .select()
-        .order(type == 'monthly' ? 'cups_by_month' : 'all_cups', ascending: false)
-        .limit(limit);
-
-    final results = await query;
-    return results.map((json) => ProfileModel.fromJson(json)).toList();
-  }
-
-
-  String _generateUsername(String email, String fullName) {
-    final base = fullName.split(' ').first.toLowerCase();
-    final random = DateTime.now().millisecondsSinceEpoch % 10000;
-    return '$base$random';
-  }
-
-  Future<void> _checkMonthlyReset(String userId) async {
-    await client.rpc('check_monthly_reset', params: {
-      'p_user_id': userId,
-    });
   }
 }

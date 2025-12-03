@@ -11,6 +11,7 @@ import 'package:znoona_game_app/features/home/widgets/info_card.dart';
 import 'package:znoona_game_app/features/home/widgets/settings_buttons.dart';
 import 'package:znoona_game_app/features/home/widgets/stat_card.dart';
 import 'package:znoona_game_app/features/user/auth/domain/entities/profile.dart';
+import 'package:znoona_game_app/features/user/auth/presentation/refactors/username_edit_body.dart';
 
 class ProfileBody extends StatelessWidget {
   const ProfileBody({required this.profile, super.key});
@@ -250,13 +251,44 @@ class ProfileBody extends StatelessWidget {
 
                   // Username
                   if (profile.username != null && profile.username!.isNotEmpty)
-                    Text(
-                      '@${profile.username}',
-                      style: GoogleFonts.beiruti(
-                        fontSize: 14.sp,
-                        fontWeight: FontWeight.w500,
-                        color: ZnoonaColors.bluePinkDark(context),
-                      ),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Text(
+                          '@${profile.username}',
+                          style: GoogleFonts.beiruti(
+                            fontSize: 16.sp,
+                            fontWeight: FontWeight.w600,
+                            color: ZnoonaColors.bluePinkDark(context),
+                          ),
+                        ),
+                        SizedBox(width: 8.w),
+                        GestureDetector(
+                          onTap: () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) =>
+                                    const UsernameEditBody(),
+                              ),
+                            );
+                          },
+                          child: Container(
+                            padding: EdgeInsets.all(4.w),
+                            decoration: BoxDecoration(
+                              color: ZnoonaColors.main(
+                                context,
+                              )!.withOpacity(0.1),
+                              shape: BoxShape.circle,
+                            ),
+                            child: Icon(
+                              Icons.edit,
+                              size: 14.sp,
+                              color: ZnoonaColors.main(context),
+                            ),
+                          ),
+                        ),
+                      ],
                     ),
 
                   // Full Name

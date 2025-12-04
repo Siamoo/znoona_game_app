@@ -153,4 +153,10 @@ class LangKeys {
   static const String usernameRequirement3 = 'usernameRequirement3';
   static const String saveChanges = 'saveChanges';
   static const String usernameUpdated = 'usernameUpdated';
+  static const String editProfile = 'editProfile';
+  static const String fullNameHint = 'fullNameHint';
+  static const String fullNameRequired = 'fullNameRequired';
+  static const String fullNameTooShort = 'fullNameTooShort';
+  static const String fullNameTooLong = 'fullNameTooLong';
+  static const String profileUpdated = 'profileUpdated';
 }

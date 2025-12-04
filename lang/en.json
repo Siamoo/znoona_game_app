@@ -151,6 +151,13 @@
   "usernameRequirement2": "Letters, numbers, underscores only",
   "usernameRequirement3": "Must be unique",
   "saveChanges": "Save Changes",
-  "usernameUpdated": "Username updated successfully!"
+  "usernameUpdated": "Username updated successfully!",
+  "editProfile": "Edit Profile",
+  "fullNameHint": "Enter your full name",
+  "fullNameRequired": "Full name is required",
+  "fullNameTooShort": "Full name must be at least 2 characters",
+  "fullNameTooLong": "Full name cannot exceed 25 characters",
+  "profileUpdated": "Profile updated successfully!"
+
 
 }

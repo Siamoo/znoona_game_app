@@ -151,5 +151,12 @@
   "usernameRequirement2": "أحرف وأرقام وشرطة سفلية فقط",
   "usernameRequirement3": "يجب أن يكون فريد",
   "saveChanges": "حفظ التغييرات",
-  "usernameUpdated": "تم تحديث اسم المستخدم بنجاح!"
+  "usernameUpdated": "تم تحديث اسم المستخدم بنجاح!",
+  "editProfile": "تعديل الملف",
+  "fullNameHint": "أدخل اسمك الكامل",
+  "fullNameRequired": "الاسم الكامل مطلوب",
+  "fullNameTooShort": "يجب أن يكون الاسم الكامل حرفين على الأقل",
+  "fullNameTooLong": "لا يمكن أن يتجاوز الاسم الكامل 25 حرف",
+  "profileUpdated": "تم تحديث الملف الشخصي بنجاح!"
+
 }

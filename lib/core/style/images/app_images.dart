@@ -33,4 +33,6 @@ class AppImages {
   static const logout = 'assets/svg/logout.svg';
   static const backButton = 'assets/svg/arrow_back.svg';
   static const google = 'assets/svg/google.svg';
+  static const editProfile = 'assets/svg/edit_profile.svg';
+  static const language = 'assets/svg/language.svg';
 }

@@ -10,16 +10,17 @@ import 'package:znoona_game_app/core/helpers/znoona_texts.dart';
 import 'package:znoona_game_app/core/language/lang_keys.dart';
 import 'package:znoona_game_app/features/user/auth/presentation/cubit/auth_cubit.dart';
 
-class UsernameEditBody extends StatefulWidget {
-  const UsernameEditBody({super.key});
+class ProfileEditBody extends StatefulWidget {
+  const ProfileEditBody({super.key});
 
   @override
-  State<UsernameEditBody> createState() => _UsernameEditBodyState();
+  State<ProfileEditBody> createState() => _ProfileEditBodyState();
 }
 
-class _UsernameEditBodyState extends State<UsernameEditBody> {
+class _ProfileEditBodyState extends State<ProfileEditBody> {
   final _formKey = GlobalKey<FormState>();
   final _usernameController = TextEditingController();
+  final _fullNameController = TextEditingController();
   bool _isLoading = false;
   String? _errorMessage;
 
@@ -33,12 +34,14 @@ class _UsernameEditBodyState extends State<UsernameEditBody> {
 
     if (profile != null) {
       _usernameController.text = profile.username ?? '';
+      _fullNameController.text = profile.fullName;
     }
   }
 
   @override
   void dispose() {
     _usernameController.dispose();
+    _fullNameController.dispose();
     super.dispose();
   }
 
@@ -53,9 +56,61 @@ class _UsernameEditBodyState extends State<UsernameEditBody> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               CustomAppBar(
-                title: ZnoonaTexts.tr(context, LangKeys.editUsername),
+                title: ZnoonaTexts.tr(context, LangKeys.editProfile),
               ),
-              // Instructions
+              SizedBox(height: 20.h),
+
+              // Full Name Section
+              TextApp(
+                text: ZnoonaTexts.tr(context, LangKeys.fullName),
+                textStyle: TextStyle(
+                  fontSize: 16.sp,
+                  fontWeight: FontWeight.w600,
+                  color: ZnoonaColors.text(context),
+                ),
+              ),
+              SizedBox(height: 8.h),
+              TextFormField(
+                controller: _fullNameController,
+                style: TextStyle(
+                  color: ZnoonaColors.text(context),
+                ),
+                decoration: InputDecoration(
+                  labelText: ZnoonaTexts.tr(context, LangKeys.fullNameHint),
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(12),
+                  ),
+
+                  filled: true,
+                  fillColor: ZnoonaColors.main(context)?.withOpacity(0.5),
+                ),
+                keyboardType: TextInputType.name,
+                validator: (value) {
+                  if (value == null || value.isEmpty) {
+                    return ZnoonaTexts.tr(context, LangKeys.fullNameRequired);
+                  }
+                  if (value.length < 3) {
+                    return ZnoonaTexts.tr(context, LangKeys.fullNameTooShort);
+                  }
+                  if (value.length > 25) {
+                    return ZnoonaTexts.tr(context, LangKeys.fullNameTooLong);
+                  }
+                  return null;
+                },
+              ),
+
+              SizedBox(height: 24.h),
+
+              // Username Section
+              TextApp(
+                text: ZnoonaTexts.tr(context, LangKeys.username),
+                textStyle: TextStyle(
+                  fontSize: 16.sp,
+                  fontWeight: FontWeight.w600,
+                  color: ZnoonaColors.text(context),
+                ),
+              ),
+              SizedBox(height: 8.h),
               TextApp(
                 text: ZnoonaTexts.tr(context, LangKeys.usernameHint),
                 textStyle: TextStyle(
@@ -63,12 +118,14 @@ class _UsernameEditBodyState extends State<UsernameEditBody> {
                   color: ZnoonaColors.text(context)?.withOpacity(0.7),
                 ),
               ),
-              SizedBox(height: 20.h),
+              SizedBox(height: 8.h),
 
               // Username Input
               TextFormField(
                 controller: _usernameController,
-                autofocus: true,
+                style: TextStyle(
+                  color: ZnoonaColors.text(context),
+                ),
                 decoration: InputDecoration(
                   labelText: ZnoonaTexts.tr(context, LangKeys.username),
                   prefixText: '@',
@@ -102,21 +159,6 @@ class _UsernameEditBodyState extends State<UsernameEditBody> {
                   return null;
                 },
               ),
-              SizedBox(height: 10.h),
-
-              // Character Counter
-              Align(
-                alignment: Alignment.centerRight,
-                child: Text(
-                  '${_usernameController.text.length}/12',
-                  style: TextStyle(
-                    fontSize: 12.sp,
-                    color: _usernameController.text.length > 12
-                        ? Colors.red
-                        : ZnoonaColors.text(context)?.withOpacity(0.6),
-                  ),
-                ),
-              ),
 
               SizedBox(height: 20.h),
 
@@ -149,7 +191,7 @@ class _UsernameEditBodyState extends State<UsernameEditBody> {
                 CustomLinearButton(
                   height: 50.h,
                   width: double.infinity,
-                  onPressed: _saveUsername,
+                  onPressed: _saveProfile,
                   child: Text(
                     ZnoonaTexts.tr(context, LangKeys.saveChanges),
                     style: GoogleFonts.beiruti(
@@ -191,7 +233,7 @@ class _UsernameEditBodyState extends State<UsernameEditBody> {
     );
   }
 
-  Future<void> _saveUsername() async {
+  Future<void> _saveProfile() async {
     if (!_formKey.currentState!.validate()) return;
 
     setState(() {
@@ -201,13 +243,16 @@ class _UsernameEditBodyState extends State<UsernameEditBody> {
 
     try {
       final authCubit = context.read<AuthCubit>();
-      await authCubit.updateProfile(username: _usernameController.text.trim());
+      await authCubit.updateProfile(
+        username: _usernameController.text.trim(),
+        fullName: _fullNameController.text.trim(),
+      );
 
       // Show success message
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
           content: Text(
-            ZnoonaTexts.tr(context, LangKeys.usernameUpdated),
+            ZnoonaTexts.tr(context, LangKeys.profileUpdated),
             style: TextStyle(color: Colors.white),
           ),
           backgroundColor: Colors.green,

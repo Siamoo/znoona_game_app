@@ -7,6 +7,7 @@ import 'package:znoona_game_app/core/helpers/znoona_navigate.dart';
 import 'package:znoona_game_app/core/language/lang_keys.dart';
 import 'package:znoona_game_app/core/style/images/app_images.dart';
 import 'package:znoona_game_app/features/home/widgets/custom_setting_button.dart';
+import 'package:znoona_game_app/features/user/auth/presentation/refactors/profile_edit_body.dart';
 import 'package:znoona_game_app/features/user/auth/presentation/screens/login_screen.dart';
 
 class SettingsButtons extends StatelessWidget {
@@ -28,13 +29,24 @@ class SettingsButtons extends StatelessWidget {
               cubit.toEnglish();
             }
           },
-          imageUrl: AppImages.changeLang,
+          imageUrl: AppImages.language,
         ),
         SizedBox(height: 20.h),
         CustomSettingButton(
           title: LangKeys.changeTheme,
           onTap: cubit.changeAppThemeMode,
           imageUrl: AppImages.mode,
+        ),
+        SizedBox(height: 20.h),
+        CustomSettingButton(
+          title: LangKeys.editProfile,
+          onTap: () {
+            ZnoonaNavigate.pushReplacementTo(
+              context,
+              const ProfileEditBody(),
+            );
+          },
+          imageUrl: AppImages.editProfile,
         ),
         SizedBox(height: 20.h),
         CustomSettingButton(

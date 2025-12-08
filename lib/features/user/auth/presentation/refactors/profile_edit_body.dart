@@ -49,7 +49,7 @@ class _ProfileEditBodyState extends State<ProfileEditBody> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: Padding(
-        padding: EdgeInsets.all(16.w),
+        padding: EdgeInsets.symmetric(horizontal: 10.w, vertical: 30.h),
         child: Form(
           key: _formKey,
           child: Column(

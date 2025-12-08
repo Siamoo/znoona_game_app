@@ -40,8 +40,8 @@ class CustomHomeAppBar extends StatelessWidget {
             CircleAvatar(
               radius: 25,
               backgroundImage: CachedNetworkImageProvider(
-                      profile.avatarUrl!,
-                    ),
+                profile.avatarUrl!,
+              ),
               backgroundColor: Colors.transparent,
             ),
             SizedBox(width: 10.w),
@@ -82,20 +82,20 @@ class CustomHomeAppBar extends StatelessWidget {
               onPressed: () {},
               child: Row(
                 crossAxisAlignment: CrossAxisAlignment.end,
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  TextApp(
-                    text: '1',
-                    textStyle: GoogleFonts.beiruti(
-                      fontSize: 17.sp,
-                      fontWeight: FontWeight.w800,
-                      color: Colors.white,
-                    ),
-                  ),
                   Image.asset(
                     AppImages.level,
                     height: 25.h,
                     width: 25.w,
+                  ),
+                  TextApp(
+                    text: profile.level,
+                    textStyle: GoogleFonts.beiruti(
+                      fontSize: 20.sp,
+                      fontWeight: FontWeight.w800,
+                      color: Colors.white,
+                    ),
                   ),
                 ],
               ),

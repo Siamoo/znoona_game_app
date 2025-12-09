@@ -72,7 +72,7 @@ class _RoomCreationBodyState extends State<RoomCreationBody> {
                         placeholder: (context, url) =>
                             const CircularProgressIndicator(),
                         errorWidget: (context, url, error) => Image.asset(
-                          AppImages.random,
+                          AppImages.science,
                         ),
                         height: 150.h,
                         width: 150.w,

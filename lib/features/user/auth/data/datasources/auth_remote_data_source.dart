@@ -219,7 +219,7 @@ class AuthRemoteDataSourceImpl implements AuthRemoteDataSource {
     }
 
     // Clean the base (remove special chars, keep only a-z, 0-9)
-    base = base.replaceAll(RegExp(r'[^a-zA-Z0-9]'), '').toLowerCase();
+    base = base.replaceAll(RegExp('[^a-zA-Z0-9]'), '').toLowerCase();
 
     // Ensure minimum length of 3
     if (base.length < 3) {

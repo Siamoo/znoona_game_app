@@ -1,8 +1,6 @@
-// features/quiz/room/presentation/widgets/joining/scan_qr_button.dart
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:znoona_game_app/core/common/widgets/custom_linear_button.dart';
-import 'package:znoona_game_app/core/helpers/znoona.colors.dart';
 import 'package:znoona_game_app/core/helpers/znoona_navigate.dart';
 import 'package:znoona_game_app/core/helpers/znoona_texts.dart';
 import 'package:znoona_game_app/core/language/lang_keys.dart';
@@ -20,18 +18,15 @@ class ScanQrButton extends StatelessWidget {
       width: double.infinity,
       onPressed: () async {
         // Navigate to QR Scanner Screen
-        
-        ZnoonaNavigate.pushTo(
-          context,
-          const QRScannerBody()
-        );
+
+        ZnoonaNavigate.pushTo(context, const QRScannerBody());
       },
       child: Row(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          Icon(
+          const Icon(
             Icons.qr_code_scanner,
-            color: ZnoonaColors.text(context),
+            color: Colors.white,
           ),
           SizedBox(width: 10.w),
           Text(

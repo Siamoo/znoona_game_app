@@ -16,7 +16,7 @@ class ProfileModel with _$ProfileModel {
     @Default(0) int cups_by_month,
     String? username,
     String? email,
-    @JsonKey(name: 'last_month_reset') DateTime? lastMonthReset,
+    DateTime? lastMonthReset,
     @Default(0) int games_played,
     @Default(0) int games_won,
     @Default(0) int total_score,

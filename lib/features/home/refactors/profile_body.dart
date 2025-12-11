@@ -103,7 +103,7 @@ class ProfileBody extends StatelessWidget {
       child: Padding(
         padding: EdgeInsets.only(
           top: 20.h,
-          bottom: 40.h,
+          bottom: 30.h,
           left: 16.w,
           right: 16.w,
         ),
@@ -140,13 +140,13 @@ class ProfileBody extends StatelessWidget {
 
             // Profile Card
             Container(
-              padding: EdgeInsets.all(16.w),
+              padding: EdgeInsets.all(40.w),
               decoration: BoxDecoration(
                 color: theme.cardColor,
                 borderRadius: BorderRadius.circular(20),
                 boxShadow: [
                   BoxShadow(
-                    color: Colors.black.withOpacity(0.1),
+                    color: Colors.black.withOpacity(0.15),
                     blurRadius: 15,
                     offset: const Offset(0, 5),
                   ),
@@ -159,8 +159,8 @@ class ProfileBody extends StatelessWidget {
                     alignment: Alignment.center,
                     children: [
                       Container(
-                        width: 120.w,
-                        height: 120.h,
+                        width: 140.w,
+                        height: 140.h,
                         decoration: BoxDecoration(
                           shape: BoxShape.circle,
                           gradient: LinearGradient(
@@ -293,7 +293,7 @@ class ProfileBody extends StatelessWidget {
                       borderRadius: BorderRadius.circular(20),
                     ),
                     child: Text(
-                      '${ZnoonaTexts.tr(context, LangKeys.level)} ${profile.level}',
+                      '${ZnoonaTexts.tr(context, LangKeys.level)}  ${profile.level}',
                       style: GoogleFonts.beiruti(
                         fontSize: 14.sp,
                         fontWeight: FontWeight.w600,

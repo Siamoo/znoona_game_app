@@ -82,7 +82,7 @@ class _ProfileEditBodyState extends State<ProfileEditBody> {
                   ),
 
                   filled: true,
-                  fillColor: ZnoonaColors.main(context)?.withOpacity(0.5),
+                  fillColor: ZnoonaColors.main(context).withOpacity(0.5),
                 ),
                 keyboardType: TextInputType.name,
                 validator: (value) {
@@ -115,7 +115,7 @@ class _ProfileEditBodyState extends State<ProfileEditBody> {
                 text: ZnoonaTexts.tr(context, LangKeys.usernameHint),
                 textStyle: TextStyle(
                   fontSize: 14.sp,
-                  color: ZnoonaColors.text(context)?.withOpacity(0.7),
+                  color: ZnoonaColors.text(context).withOpacity(0.7),
                 ),
               ),
               SizedBox(height: 8.h),
@@ -137,7 +137,7 @@ class _ProfileEditBodyState extends State<ProfileEditBody> {
                     borderRadius: BorderRadius.circular(12),
                   ),
                   filled: true,
-                  fillColor: ZnoonaColors.main(context)?.withOpacity(0.5),
+                  fillColor: ZnoonaColors.main(context).withOpacity(0.5),
                   errorText: _errorMessage,
                 ),
                 validator: (value) {
@@ -224,7 +224,7 @@ class _ProfileEditBodyState extends State<ProfileEditBody> {
               text,
               style: TextStyle(
                 fontSize: 12.sp,
-                color: ZnoonaColors.text(context)?.withOpacity(0.7),
+                color: ZnoonaColors.text(context).withOpacity(0.7),
               ),
             ),
           ),
@@ -260,7 +260,7 @@ class _ProfileEditBodyState extends State<ProfileEditBody> {
       );
 
       // Navigate back after short delay
-      await Future.delayed(Duration(milliseconds: 500));
+      await Future.delayed(const Duration(milliseconds: 500));
       Navigator.pop(context);
     } on Exception catch (e) {
       setState(() {

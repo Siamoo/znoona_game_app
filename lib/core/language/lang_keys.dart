@@ -159,4 +159,8 @@ class LangKeys {
   static const String fullNameTooShort = 'fullNameTooShort';
   static const String fullNameTooLong = 'fullNameTooLong';
   static const String profileUpdated = 'profileUpdated';
+  static const String chooseImageSource = 'chooseImageSource';
+static const String camera = 'camera';
+static const String gallery = 'gallery';
+static const String tapToChangePhoto = 'tapToChangePhoto';
 }

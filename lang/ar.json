@@ -129,13 +129,13 @@
   "room_qr_code": "رمز QR للغرفة",
   "scan_to_join_room": "امسح هذا الرمز للانضمام إلى الغرفة",
   "level": "المستوى",
-  "totalCups": "إجمالي الكؤوس",
-  "monthlyCups": "الكؤوس الشهرية",
-  "gamesPlayed": "الألعاب الملعوبة",
+  "totalCups": "جميع الكؤوس",
+  "monthlyCups": "كؤوس الشهر",
+  "gamesPlayed": "عدد المباريات",
   "winRate": "معدل الفوز",
   "averageScore": "متوسط النقاط",
-  "gamesWon": "الألعاب الفائزة",
-  "lastPlayed": "آخر لعب",
+  "gamesWon": "غرف فائزة",
+  "lastPlayed": "آخر مباراة",
   "monthlyReset": "إعادة تعيين شهرية",
   "statistics": "الإحصائيات",
   "playerInfo": "معلومات اللاعب",
@@ -157,6 +157,10 @@
   "fullNameRequired": "الاسم الكامل مطلوب",
   "fullNameTooShort": "يجب أن يكون الاسم الكامل حرفين على الأقل",
   "fullNameTooLong": "لا يمكن أن يتجاوز الاسم الكامل 25 حرف",
-  "profileUpdated": "تم تحديث الملف الشخصي بنجاح!"
+  "profileUpdated": "تم تحديث الملف الشخصي بنجاح!",
+   "chooseImageSource": "اختر مصدر الصورة",
+  "camera": "الكاميرا",
+  "gallery": "المعرض",
+  "tapToChangePhoto": "انقر لتغيير الصورة"
 
 }

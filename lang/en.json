@@ -129,12 +129,12 @@
   "room_qr_code": "Room QR Code",
   "scan_to_join_room": "Scan this QR code to join the room",
   "level": "Level",
-  "totalCups": "Total Cups",
+  "totalCups": "All Cups",
   "monthlyCups": "Monthly Cups",
   "gamesPlayed": "Games Played",
   "winRate": "Win Rate",
   "averageScore": "Average Score",
-  "gamesWon": "Games Won",
+  "gamesWon": "Rooms Won",
   "lastPlayed": "Last Played",
   "monthlyReset": "Monthly Reset",
   "statistics": "Statistics",
@@ -157,7 +157,11 @@
   "fullNameRequired": "Full name is required",
   "fullNameTooShort": "Full name must be at least 2 characters",
   "fullNameTooLong": "Full name cannot exceed 25 characters",
-  "profileUpdated": "Profile updated successfully!"
+  "profileUpdated": "Profile updated successfully",
+      "chooseImageSource": "Choose Image Source",
+  "camera": "Camera",
+  "gallery": "Gallery",
+  "tapToChangePhoto": "Tap to change photo"
 
 
 }

@@ -61,7 +61,7 @@ class ProfileBody extends StatelessWidget {
                               BoxShadow(
                                 color: ZnoonaColors.text(
                                   context,
-                                )!.withOpacity(0.1),
+                                ).withOpacity(0.1),
                                 blurRadius: 10,
                                 offset: const Offset(0, 4),
                               ),
@@ -91,8 +91,8 @@ class ProfileBody extends StatelessWidget {
           begin: Alignment.topCenter,
           end: Alignment.bottomCenter,
           colors: [
-            ZnoonaColors.main(context)!,
-            ZnoonaColors.bluePinkDark(context)!,
+            ZnoonaColors.main(context),
+            ZnoonaColors.bluePinkDark(context),
           ],
         ),
         borderRadius: BorderRadius.only(
@@ -140,7 +140,7 @@ class ProfileBody extends StatelessWidget {
 
             // Profile Card
             Container(
-              padding: EdgeInsets.all(40.w),
+              padding: EdgeInsets.all(30.w),
               decoration: BoxDecoration(
                 color: theme.cardColor,
                 borderRadius: BorderRadius.circular(20),
@@ -165,8 +165,8 @@ class ProfileBody extends StatelessWidget {
                           shape: BoxShape.circle,
                           gradient: LinearGradient(
                             colors: [
-                              ZnoonaColors.main(context)!,
-                              ZnoonaColors.bluePinkDark(context)!,
+                              ZnoonaColors.main(context),
+                              ZnoonaColors.bluePinkDark(context),
                             ],
                           ),
                         ),
@@ -380,16 +380,6 @@ class ProfileBody extends StatelessWidget {
   Widget _buildInfoSection(BuildContext context) {
     final infoItems = <Map<String, dynamic>>[];
 
-    // Add email if available
-    if (profile.email != null && profile.email!.isNotEmpty) {
-      infoItems.add({
-        'title': ZnoonaTexts.tr(context, LangKeys.email),
-        'value': _formatEmail(profile.email!),
-        'icon': Icons.email,
-        'color': ZnoonaColors.bluePinkLight(context),
-      });
-    }
-
     // Add last played if available
     if (profile.lastPlayed != null) {
       infoItems.add({
@@ -434,7 +424,7 @@ class ProfileBody extends StatelessWidget {
             physics: const NeverScrollableScrollPhysics(),
             gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
               crossAxisCount: infoItems.length <= 2 ? 2 : 3,
-              childAspectRatio: .95,
+              childAspectRatio: 1.5,
               crossAxisSpacing: 8.w,
               mainAxisSpacing: 8.h,
             ),

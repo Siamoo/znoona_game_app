@@ -28,8 +28,8 @@ class InfoCard extends StatelessWidget {
         color.withOpacity(0.05),
         color.withOpacity(0.1),
       ],
-      height: 110.h,
-      width: double.infinity,
+      height: 10.h,
+      width: 10.w,
       onPressed: () {},
       child: Padding(
         padding: EdgeInsets.all(8.w),

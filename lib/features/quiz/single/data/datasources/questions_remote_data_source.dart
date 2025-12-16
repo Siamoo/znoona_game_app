@@ -21,9 +21,17 @@ class QuestionsRemoteDataSourceImpl implements QuestionsRemoteDataSource {
         },
       );
 
+      // DEBUG: Print the response to check if image exists
+      print('Raw response from Supabase: $response');
+      
       // Map the result to QuestionModel
       final data = response
-          .map((e) => QuestionModel.fromJson(e as Map<String, dynamic>))
+          .map((e) {
+            // DEBUG: Print each item's image field
+            final json = e as Map<String, dynamic>;
+            print('Question ${json['question']} has image: ${json['image']}');
+            return QuestionModel.fromJson(json);
+          })
           .toList();
 
       return data;

@@ -22,6 +22,8 @@ mixin _$Question {
   String get question => throw _privateConstructorUsedError;
   List<String> get options => throw _privateConstructorUsedError;
   String get correctAnswer => throw _privateConstructorUsedError;
+  String? get image => throw _privateConstructorUsedError;
+  int? get goodQuestion => throw _privateConstructorUsedError;
   DateTime? get createdAt => throw _privateConstructorUsedError;
 
   /// Create a copy of Question
@@ -42,6 +44,8 @@ abstract class $QuestionCopyWith<$Res> {
     String question,
     List<String> options,
     String correctAnswer,
+    String? image,
+    int? goodQuestion,
     DateTime? createdAt,
   });
 }
@@ -66,6 +70,8 @@ class _$QuestionCopyWithImpl<$Res, $Val extends Question>
     Object? question = null,
     Object? options = null,
     Object? correctAnswer = null,
+    Object? image = freezed,
+    Object? goodQuestion = freezed,
     Object? createdAt = freezed,
   }) {
     return _then(
@@ -90,6 +96,14 @@ class _$QuestionCopyWithImpl<$Res, $Val extends Question>
                 ? _value.correctAnswer
                 : correctAnswer // ignore: cast_nullable_to_non_nullable
                       as String,
+            image: freezed == image
+                ? _value.image
+                : image // ignore: cast_nullable_to_non_nullable
+                      as String?,
+            goodQuestion: freezed == goodQuestion
+                ? _value.goodQuestion
+                : goodQuestion // ignore: cast_nullable_to_non_nullable
+                      as int?,
             createdAt: freezed == createdAt
                 ? _value.createdAt
                 : createdAt // ignore: cast_nullable_to_non_nullable
@@ -115,6 +129,8 @@ abstract class _$$QuestionImplCopyWith<$Res>
     String question,
     List<String> options,
     String correctAnswer,
+    String? image,
+    int? goodQuestion,
     DateTime? createdAt,
   });
 }
@@ -138,6 +154,8 @@ class __$$QuestionImplCopyWithImpl<$Res>
     Object? question = null,
     Object? options = null,
     Object? correctAnswer = null,
+    Object? image = freezed,
+    Object? goodQuestion = freezed,
     Object? createdAt = freezed,
   }) {
     return _then(
@@ -162,6 +180,14 @@ class __$$QuestionImplCopyWithImpl<$Res>
             ? _value.correctAnswer
             : correctAnswer // ignore: cast_nullable_to_non_nullable
                   as String,
+        image: freezed == image
+            ? _value.image
+            : image // ignore: cast_nullable_to_non_nullable
+                  as String?,
+        goodQuestion: freezed == goodQuestion
+            ? _value.goodQuestion
+            : goodQuestion // ignore: cast_nullable_to_non_nullable
+                  as int?,
         createdAt: freezed == createdAt
             ? _value.createdAt
             : createdAt // ignore: cast_nullable_to_non_nullable
@@ -180,6 +206,8 @@ class _$QuestionImpl implements _Question {
     required this.question,
     required final List<String> options,
     required this.correctAnswer,
+    this.image,
+    this.goodQuestion,
     this.createdAt,
   }) : _options = options;
 
@@ -200,11 +228,15 @@ class _$QuestionImpl implements _Question {
   @override
   final String correctAnswer;
   @override
+  final String? image;
+  @override
+  final int? goodQuestion;
+  @override
   final DateTime? createdAt;
 
   @override
   String toString() {
-    return 'Question(id: $id, categoryId: $categoryId, question: $question, options: $options, correctAnswer: $correctAnswer, createdAt: $createdAt)';
+    return 'Question(id: $id, categoryId: $categoryId, question: $question, options: $options, correctAnswer: $correctAnswer, image: $image, goodQuestion: $goodQuestion, createdAt: $createdAt)';
   }
 
   @override
@@ -220,6 +252,9 @@ class _$QuestionImpl implements _Question {
             const DeepCollectionEquality().equals(other._options, _options) &&
             (identical(other.correctAnswer, correctAnswer) ||
                 other.correctAnswer == correctAnswer) &&
+            (identical(other.image, image) || other.image == image) &&
+            (identical(other.goodQuestion, goodQuestion) ||
+                other.goodQuestion == goodQuestion) &&
             (identical(other.createdAt, createdAt) ||
                 other.createdAt == createdAt));
   }
@@ -232,6 +267,8 @@ class _$QuestionImpl implements _Question {
     question,
     const DeepCollectionEquality().hash(_options),
     correctAnswer,
+    image,
+    goodQuestion,
     createdAt,
   );
 
@@ -251,6 +288,8 @@ abstract class _Question implements Question {
     required final String question,
     required final List<String> options,
     required final String correctAnswer,
+    final String? image,
+    final int? goodQuestion,
     final DateTime? createdAt,
   }) = _$QuestionImpl;
 
@@ -264,6 +303,10 @@ abstract class _Question implements Question {
   List<String> get options;
   @override
   String get correctAnswer;
+  @override
+  String? get image;
+  @override
+  int? get goodQuestion;
   @override
   DateTime? get createdAt;
 

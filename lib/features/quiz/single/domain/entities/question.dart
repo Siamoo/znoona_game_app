@@ -10,6 +10,8 @@ class Question with _$Question {
     required String question,
     required List<String> options,
     required String correctAnswer,
+    String? image, 
+    int? goodQuestion,
     DateTime? createdAt,
   }) = _Question;
 }

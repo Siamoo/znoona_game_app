@@ -12,6 +12,7 @@ import 'package:znoona_game_app/features/quiz/single/domain/entities/question.da
 import 'package:znoona_game_app/features/quiz/single/presentation/cubit/questions_cubit.dart';
 import 'package:znoona_game_app/features/quiz/single/presentation/screen/results_screen.dart';
 import 'package:znoona_game_app/features/quiz/single/presentation/widgets/option_button.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 
 class QuizBody extends StatefulWidget {
   const QuizBody({
@@ -88,6 +89,23 @@ class _QuizBodyState extends State<QuizBody> {
     }
   }
 
+  // Add Google Drive URL conversion function
+  String? _convertGoogleDriveUrl(String? url) {
+    if (url == null || url.isEmpty) return null;
+
+    if (url.contains('drive.google.com')) {
+      final regex = RegExp(r'/d/([a-zA-Z0-9_-]+)');
+      final match = regex.firstMatch(url);
+
+      if (match != null) {
+        final fileId = match.group(1);
+        return 'https://drive.google.com/uc?export=view&id=$fileId';
+      }
+    }
+
+    return url;
+  }
+
   @override
   void dispose() {
     timer?.cancel();
@@ -129,14 +147,14 @@ class _QuizBodyState extends State<QuizBody> {
             }
 
             final question = questions[currentQuestionIndex];
+            // Convert Google Drive URL if needed
+            final imageUrl = _convertGoogleDriveUrl(question.image);
 
             return Scaffold(
               body: SafeArea(
                 child: Padding(
-                  padding: EdgeInsets.symmetric(
-                    horizontal: 16.w,
-                  ),
-                  child: Column(
+                  padding: EdgeInsets.symmetric(horizontal: 16.w),
+                  child: ListView(
                     children: [
                       CustomAppBar(
                         title: widget.categoryName,
@@ -151,8 +169,59 @@ class _QuizBodyState extends State<QuizBody> {
                           fontWeight: FontWeight.bold,
                           color: ZnoonaColors.text(context),
                         ),
+                        textAlign: TextAlign.center,
                       ),
-                      SizedBox(height: 80.sp),
+                      SizedBox(height: 20.sp),
+
+                      // Show image if available (using converted URL)
+                      if (imageUrl != null && imageUrl.isNotEmpty)
+                        Column(
+                          children: [
+                            ClipRRect(
+                              child: CachedNetworkImage(
+                                imageUrl: imageUrl,
+                                placeholder: (context, url) => Center(
+                                  child: CircularProgressIndicator(
+                                    color: ZnoonaColors.main(context),
+                                  ),
+                                ),
+                                errorWidget: (context, url, error) {
+                                  return Container(
+                                    height: 200.h,
+                                    color: Colors.grey[200],
+                                    child: Center(
+                                      child: Column(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.center,
+                                        children: [
+                                          Icon(
+                                            Icons.broken_image,
+                                            size: 50.sp,
+                                            color: ZnoonaColors.text(
+                                              context,
+                                            ).withOpacity(0.5),
+                                          ),
+                                          SizedBox(height: 10.h),
+                                          Text(
+                                            'Failed to load image',
+                                            style: TextStyle(
+                                              fontSize: 12.sp,
+                                              color: ZnoonaColors.text(
+                                                context,
+                                              ).withOpacity(0.5),
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                  );
+                                },
+                              ),
+                            ),
+                            SizedBox(height: 20.sp),
+                          ],
+                        ),
+
                       Column(
                         mainAxisAlignment: MainAxisAlignment.center,
                         crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -160,13 +229,15 @@ class _QuizBodyState extends State<QuizBody> {
                           Text(
                             question.question,
                             style: GoogleFonts.scheherazadeNew(
-                              fontSize: 22.sp,
+                              fontSize: imageUrl != null && imageUrl.isNotEmpty
+                                  ? 18.sp
+                                  : 22.sp, // Adjust font size if image is present
                               fontWeight: FontWeight.bold,
                               color: ZnoonaColors.text(context),
                             ),
                             textAlign: TextAlign.center,
                           ),
-                          const SizedBox(height: 20),
+                          SizedBox(height: 20.sp),
                           ...question.options.map((option) {
                             final isSelected = option == selectedAnswer;
                             final isCorrect = option == question.correctAnswer;
@@ -181,6 +252,7 @@ class _QuizBodyState extends State<QuizBody> {
                               remainingTime: remainingTime,
                             );
                           }),
+                          SizedBox(height: 20.sp), // Extra space at bottom
                         ],
                       ),
                     ],

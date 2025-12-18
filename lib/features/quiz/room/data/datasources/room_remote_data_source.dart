@@ -116,7 +116,6 @@ class RoomRemoteDataSource {
     final user = supabase.auth.currentUser;
     if (user == null) throw Exception('User not logged in');
 
-
     try {
       await supabase.rpc('leave_all_rooms', params: {'p_user_id': user.id});
 
@@ -189,12 +188,23 @@ class RoomRemoteDataSource {
   Future<List<Question>> getQuestions(List<String> questionIds) async {
     if (questionIds.isEmpty) return [];
 
+    // Add category_id to the select
     final data = await supabase
         .from('questions')
-        .select()
+        .select(
+          'id, question, options, correct_answer, created_at, good_question, image, category_id',
+        )
         .inFilter('id', questionIds);
 
-    print(' getQuestions data: $data');
+    print('📋 getQuestions data: $data');
+
+    // Debug output
+    for (var item in data) {
+      final json = item as Map<String, dynamic>;
+      print('❓ Question: ${json['question']}');
+      print('🏷️ Category ID: ${json['category_id']}');
+      print('🖼️ Image: ${json['image']}');
+    }
 
     return (data as List)
         .map((e) => QuestionModel.fromJson(e as Map<String, dynamic>))

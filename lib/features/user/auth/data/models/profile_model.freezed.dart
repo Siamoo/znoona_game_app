@@ -25,12 +25,11 @@ mixin _$ProfileModel {
   String get full_name => throw _privateConstructorUsedError;
   String get level => throw _privateConstructorUsedError;
   String? get avatar_url => throw _privateConstructorUsedError;
-  DateTime get created_at => throw _privateConstructorUsedError; // NEW FIELDS
+  DateTime get created_at => throw _privateConstructorUsedError;
   int get all_cups => throw _privateConstructorUsedError;
   int get cups_by_month => throw _privateConstructorUsedError;
   String? get username => throw _privateConstructorUsedError;
   String? get email => throw _privateConstructorUsedError;
-  @JsonKey(name: 'last_month_reset')
   DateTime? get lastMonthReset => throw _privateConstructorUsedError;
   int get games_played => throw _privateConstructorUsedError;
   int get games_won => throw _privateConstructorUsedError;
@@ -68,7 +67,7 @@ abstract class $ProfileModelCopyWith<$Res> {
     int cups_by_month,
     String? username,
     String? email,
-    @JsonKey(name: 'last_month_reset') DateTime? lastMonthReset,
+    DateTime? lastMonthReset,
     int games_played,
     int games_won,
     int total_score,
@@ -213,7 +212,7 @@ abstract class _$$ProfileModelImplCopyWith<$Res>
     int cups_by_month,
     String? username,
     String? email,
-    @JsonKey(name: 'last_month_reset') DateTime? lastMonthReset,
+    DateTime? lastMonthReset,
     int games_played,
     int games_won,
     int total_score,
@@ -350,7 +349,7 @@ class _$ProfileModelImpl implements _ProfileModel {
     this.cups_by_month = 0,
     this.username,
     this.email,
-    @JsonKey(name: 'last_month_reset') this.lastMonthReset,
+    this.lastMonthReset,
     this.games_played = 0,
     this.games_won = 0,
     this.total_score = 0,
@@ -374,7 +373,6 @@ class _$ProfileModelImpl implements _ProfileModel {
   final String? avatar_url;
   @override
   final DateTime created_at;
-  // NEW FIELDS
   @override
   @JsonKey()
   final int all_cups;
@@ -386,7 +384,6 @@ class _$ProfileModelImpl implements _ProfileModel {
   @override
   final String? email;
   @override
-  @JsonKey(name: 'last_month_reset')
   final DateTime? lastMonthReset;
   @override
   @JsonKey()
@@ -505,7 +502,7 @@ abstract class _ProfileModel implements ProfileModel {
     final int cups_by_month,
     final String? username,
     final String? email,
-    @JsonKey(name: 'last_month_reset') final DateTime? lastMonthReset,
+    final DateTime? lastMonthReset,
     final int games_played,
     final int games_won,
     final int total_score,
@@ -528,7 +525,7 @@ abstract class _ProfileModel implements ProfileModel {
   @override
   String? get avatar_url;
   @override
-  DateTime get created_at; // NEW FIELDS
+  DateTime get created_at;
   @override
   int get all_cups;
   @override
@@ -538,7 +535,6 @@ abstract class _ProfileModel implements ProfileModel {
   @override
   String? get email;
   @override
-  @JsonKey(name: 'last_month_reset')
   DateTime? get lastMonthReset;
   @override
   int get games_played;

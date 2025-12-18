@@ -21,7 +21,7 @@ mixin _$Profile {
   String get fullName => throw _privateConstructorUsedError;
   String get level => throw _privateConstructorUsedError;
   DateTime get createdAt => throw _privateConstructorUsedError;
-  String? get avatarUrl => throw _privateConstructorUsedError; // NEW FIELDS
+  String? get avatarUrl => throw _privateConstructorUsedError;
   int get allCups => throw _privateConstructorUsedError;
   int get cupsByMonth => throw _privateConstructorUsedError;
   String? get username => throw _privateConstructorUsedError;
@@ -359,7 +359,6 @@ class _$ProfileImpl implements _Profile {
   final DateTime createdAt;
   @override
   final String? avatarUrl;
-  // NEW FIELDS
   @override
   @JsonKey()
   final int allCups;
@@ -501,7 +500,7 @@ abstract class _Profile implements Profile {
   @override
   DateTime get createdAt;
   @override
-  String? get avatarUrl; // NEW FIELDS
+  String? get avatarUrl;
   @override
   int get allCups;
   @override

@@ -367,14 +367,14 @@ class __$$AuthenticatedImplCopyWithImpl<$Res>
   /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
-  $Res call({Object? profile = null, Object? authMethod = freezed}) {
+  $Res call({Object? profile = null, Object? authMethod = null}) {
     return _then(
       _$AuthenticatedImpl(
         profile: null == profile
             ? _value.profile
             : profile // ignore: cast_nullable_to_non_nullable
                   as Profile,
-        authMethod: freezed == authMethod
+        authMethod: null == authMethod
             ? _value.authMethod
             : authMethod // ignore: cast_nullable_to_non_nullable
                   as AuthMethod,
@@ -414,18 +414,12 @@ class _$AuthenticatedImpl implements _Authenticated {
         (other.runtimeType == runtimeType &&
             other is _$AuthenticatedImpl &&
             (identical(other.profile, profile) || other.profile == profile) &&
-            const DeepCollectionEquality().equals(
-              other.authMethod,
-              authMethod,
-            ));
+            (identical(other.authMethod, authMethod) ||
+                other.authMethod == authMethod));
   }
 
   @override
-  int get hashCode => Object.hash(
-    runtimeType,
-    profile,
-    const DeepCollectionEquality().hash(authMethod),
-  );
+  int get hashCode => Object.hash(runtimeType, profile, authMethod);
 
   /// Create a copy of AuthState
   /// with the given fields replaced by the non-null parameter values.

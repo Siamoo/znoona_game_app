@@ -17,9 +17,9 @@ _$ProfileModelImpl _$$ProfileModelImplFromJson(Map<String, dynamic> json) =>
       cups_by_month: (json['cups_by_month'] as num?)?.toInt() ?? 0,
       username: json['username'] as String?,
       email: json['email'] as String?,
-      lastMonthReset: json['last_month_reset'] == null
+      lastMonthReset: json['lastMonthReset'] == null
           ? null
-          : DateTime.parse(json['last_month_reset'] as String),
+          : DateTime.parse(json['lastMonthReset'] as String),
       games_played: (json['games_played'] as num?)?.toInt() ?? 0,
       games_won: (json['games_won'] as num?)?.toInt() ?? 0,
       total_score: (json['total_score'] as num?)?.toInt() ?? 0,
@@ -43,7 +43,7 @@ Map<String, dynamic> _$$ProfileModelImplToJson(_$ProfileModelImpl instance) =>
       'cups_by_month': instance.cups_by_month,
       'username': instance.username,
       'email': instance.email,
-      'last_month_reset': instance.lastMonthReset?.toIso8601String(),
+      'lastMonthReset': instance.lastMonthReset?.toIso8601String(),
       'games_played': instance.games_played,
       'games_won': instance.games_won,
       'total_score': instance.total_score,

@@ -17,6 +17,7 @@ import 'package:znoona_game_app/features/quiz/room/presentation/widgets/Quiz/emp
 import 'package:znoona_game_app/features/quiz/room/presentation/widgets/Quiz/room_game_header.dart';
 import 'package:znoona_game_app/features/quiz/single/domain/entities/question.dart';
 import 'package:znoona_game_app/features/quiz/single/presentation/widgets/option_button.dart';
+import 'package:cached_network_image/cached_network_image.dart'; // Add this import
 
 class RoomQuizBody extends StatefulWidget {
   const RoomQuizBody({
@@ -181,72 +182,160 @@ class _RoomQuizBodyState extends State<RoomQuizBody> {
     if (questions.isEmpty) {
       return EmptyQuizBody(roomCode: widget.room.code);
     }
+    String? _convertGoogleDriveUrl(String? url) {
+      if (url == null || url.isEmpty) return null;
+
+      if (url.contains('drive.google.com')) {
+        final regex = RegExp(r'/d/([a-zA-Z0-9_-]+)');
+        final match = regex.firstMatch(url);
+
+        if (match != null) {
+          final fileId = match.group(1);
+          return 'https://drive.google.com/uc?export=view&id=$fileId';
+        }
+      }
+
+      return url;
+    }
 
     final question = questions[currentQuestionIndex];
     final currentUserId = _getCurrentUserId();
     final hasAnswered =
         playerAnswers.containsKey(currentUserId) &&
         playerAnswers[currentUserId] != null;
+    final imageUrl = _convertGoogleDriveUrl(question.image);
 
     return Scaffold(
-      body: SafeArea(
-        child: Padding(
-          padding: EdgeInsets.symmetric(horizontal: 16.w),
-          child: Column(
-            children: [
-              CustomAppBar(
-                title: LangKeys.room,
-                icon: Icons.close,
-                onTap: () {
-                  ZnoonaNavigate.pop(context);
-                  context.read<RoomCubit>().leaveFromAllRooms();
-                },
-                otherText:
-                    '${currentQuestionIndex + 1}  ${ZnoonaTexts.tr(context, LangKeys.from)}  ${questions.length}  ${ZnoonaTexts.tr(context, LangKeys.question)}',
-              ),
-
-              RoomGameHeader(
-                context: context,
-                remainingTime: remainingTime,
-                playerAnswers: playerAnswers,
-                players: players,
-                correctCount: correctCount,
-                totalQuestions: questions.length,
-                currentUserId: currentUserId,
-              ),
-              SizedBox(height: 40.sp),
-              Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                crossAxisAlignment: CrossAxisAlignment.stretch,
+      body: Column(
+        children: [
+          // Fixed header section
+          SafeArea(
+            child: Padding(
+              padding: EdgeInsets.symmetric(horizontal: 16.w),
+              child: Column(
                 children: [
-                  Text(
-                    question.question,
-                    style: GoogleFonts.scheherazadeNew(
-                      fontSize: 22.sp,
-                      fontWeight: FontWeight.bold,
-                      color: ZnoonaColors.text(context),
-                    ),
-                    textAlign: TextAlign.center,
+                  CustomAppBar(
+                    title: LangKeys.room,
+                    icon: Icons.close,
+                    onTap: () {
+                      ZnoonaNavigate.pop(context);
+                      context.read<RoomCubit>().leaveFromAllRooms();
+                    },
+                    otherText:
+                        '${currentQuestionIndex + 1}  ${ZnoonaTexts.tr(context, LangKeys.from)}  ${questions.length}  ${ZnoonaTexts.tr(context, LangKeys.question)}',
                   ),
-                  const SizedBox(height: 20),
-                  ...question.options.map((option) {
-                    final isSelected = option == selectedAnswer;
-                    final isCorrect = option == question.correctAnswer;
 
-                    return OptionButton(
-                      option: option,
-                      isSelected: isSelected,
-                      selectedAnswer: selectedAnswer,
-                      onTap: hasAnswered ? null : () => _selectAnswer(option),
-                      isCorrect: isCorrect,
-                      remainingTime: remainingTime,
-                    );
-                  }),
+                  RoomGameHeader(
+                    context: context,
+                    remainingTime: remainingTime,
+                    playerAnswers: playerAnswers,
+                    players: players,
+                    correctCount: correctCount,
+                    totalQuestions: questions.length,
+                    currentUserId: currentUserId,
+                  ),
+                  SizedBox(height: 20.sp),
                 ],
               ),
-            ],
+            ),
           ),
-        ),
+
+          // Scrollable content section
+          Expanded(
+            child: SingleChildScrollView(
+              padding: EdgeInsets.symmetric(horizontal: 16.w),
+              child: Column(
+                children: [
+                  // Show image if available
+                  if (imageUrl != null && imageUrl.isNotEmpty)
+                    Column(
+                      children: [
+                        Container(
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(12.r),
+                            color: Colors.grey[100],
+                          ),
+                          child: ClipRRect(
+                            child: CachedNetworkImage(
+                              imageUrl: imageUrl,
+                              placeholder: (context, url) => Center(
+                                child: CircularProgressIndicator(
+                                  color: ZnoonaColors.main(context),
+                                ),
+                              ),
+                              errorWidget: (context, url, error) {
+                               
+                                return Center(
+                                  child: Column(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children: [
+                                      Icon(
+                                        Icons.broken_image,
+                                        size: 50.sp,
+                                        color: ZnoonaColors.text(
+                                          context,
+                                        ).withOpacity(0.5),
+                                      ),
+                                      SizedBox(height: 10.h),
+                                      Text(
+                                        'Failed to load image',
+                                        style: TextStyle(
+                                          fontSize: 12.sp,
+                                          color: ZnoonaColors.text(
+                                            context,
+                                          ).withOpacity(0.5),
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                );
+                              },
+                            ),
+                          ),
+                        ),
+                        SizedBox(height: 20.sp),
+                      ],
+                    ),
+
+                  Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.stretch,
+                    children: [
+                      Text(
+                        question.question,
+                        style: GoogleFonts.scheherazadeNew(
+                          fontSize: imageUrl != null ? 18.sp : 22.sp,
+                          fontWeight: FontWeight.bold,
+                          color: ZnoonaColors.text(context),
+                        ),
+                        textAlign: TextAlign.center,
+                      ),
+                      SizedBox(height: 20.sp),
+                      ...question.options.map((option) {
+                        final isSelected = option == selectedAnswer;
+                        final isCorrect = option == question.correctAnswer;
+
+                        return OptionButton(
+                          option: option,
+                          isSelected: isSelected,
+                          selectedAnswer: selectedAnswer,
+                          onTap: hasAnswered
+                              ? null
+                              : () => _selectAnswer(option),
+                          isCorrect: isCorrect,
+                          remainingTime: remainingTime,
+                        );
+                      }),
+                      SizedBox(
+                        height: 40.sp,
+                      ), // Extra space at bottom for scrolling
+                    ],
+                  ),
+                ],
+              ),
+            ),
+          ),
+        ],
       ),
     );
   }

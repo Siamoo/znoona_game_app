@@ -1,19 +1,19 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:znoona_game_app/core/helpers/znoona_navigate.dart';
-import 'package:znoona_game_app/core/helpers/znoona_texts.dart';
-import 'package:znoona_game_app/core/language/lang_keys.dart';
-import 'package:znoona_game_app/features/home/screens/home_screen.dart';
-import 'package:znoona_game_app/features/user/auth/presentation/cubit/auth_cubit.dart';
-import 'package:znoona_game_app/features/user/auth/presentation/screens/login_screen.dart';
-import 'package:znoona_game_app/features/user/auth/presentation/widgets/auth_title_info.dart';
-import 'package:znoona_game_app/features/user/auth/presentation/widgets/dark_and_lang_buttons.dart';
-import 'package:znoona_game_app/features/user/auth/presentation/widgets/have_account_or_not.dart';
-import 'package:znoona_game_app/features/user/auth/presentation/widgets/login_or_sign_up_with_google.dart';
-import 'package:znoona_game_app/features/user/auth/presentation/widgets/sign_up/sign_up_button.dart';
-import 'package:znoona_game_app/features/user/auth/presentation/widgets/sign_up/sign_up_text_form.dart';
-import 'package:znoona_game_app/features/user/auth/presentation/widgets/sign_up/user_avatar_image.dart';
+import 'package:medaan_almaarifa/core/helpers/znoona_navigate.dart';
+import 'package:medaan_almaarifa/core/helpers/znoona_texts.dart';
+import 'package:medaan_almaarifa/core/language/lang_keys.dart';
+import 'package:medaan_almaarifa/features/home/screens/home_screen.dart';
+import 'package:medaan_almaarifa/features/user/auth/presentation/cubit/auth_cubit.dart';
+import 'package:medaan_almaarifa/features/user/auth/presentation/screens/login_screen.dart';
+import 'package:medaan_almaarifa/features/user/auth/presentation/widgets/auth_title_info.dart';
+import 'package:medaan_almaarifa/features/user/auth/presentation/widgets/dark_and_lang_buttons.dart';
+import 'package:medaan_almaarifa/features/user/auth/presentation/widgets/have_account_or_not.dart';
+import 'package:medaan_almaarifa/features/user/auth/presentation/widgets/login_or_sign_up_with_google.dart';
+import 'package:medaan_almaarifa/features/user/auth/presentation/widgets/sign_up/sign_up_button.dart';
+import 'package:medaan_almaarifa/features/user/auth/presentation/widgets/sign_up/sign_up_text_form.dart';
+import 'package:medaan_almaarifa/features/user/auth/presentation/widgets/sign_up/user_avatar_image.dart';
 
 class SignUpBody extends StatelessWidget {
   SignUpBody({super.key});

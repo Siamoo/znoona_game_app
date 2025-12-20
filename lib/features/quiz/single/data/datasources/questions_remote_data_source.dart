@@ -1,5 +1,5 @@
 import 'package:supabase_flutter/supabase_flutter.dart';
-import 'package:znoona_game_app/features/quiz/single/data/models/question_model.dart';
+import 'package:medaan_almaarifa/features/quiz/single/data/models/question_model.dart';
 
 abstract class QuestionsRemoteDataSource {
   Future<List<QuestionModel>> getQuestionsByCategory(String categoryId);

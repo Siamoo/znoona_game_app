@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:znoona_game_app/features/quiz/room/presentation/refactors/room_body.dart';
+import 'package:medaan_almaarifa/features/quiz/room/presentation/refactors/room_body.dart';
 
 class RoomScreen extends StatelessWidget {
   const RoomScreen({super.key});

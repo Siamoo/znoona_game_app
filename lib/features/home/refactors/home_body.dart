@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:znoona_game_app/core/helpers/znoona_navigate.dart';
-import 'package:znoona_game_app/core/language/lang_keys.dart';
-import 'package:znoona_game_app/core/style/images/app_images.dart';
-import 'package:znoona_game_app/features/home/screens/quiz_home_screen.dart';
-import 'package:znoona_game_app/features/home/widgets/custom_game_button.dart';
-import 'package:znoona_game_app/features/home/widgets/custom_home_appbar.dart';
-import 'package:znoona_game_app/features/home/widgets/custom_section_title.dart';
-import 'package:znoona_game_app/features/home/widgets/discover_button.dart';
-import 'package:znoona_game_app/features/user/auth/domain/entities/profile.dart';
+import 'package:medaan_almaarifa/core/helpers/znoona_navigate.dart';
+import 'package:medaan_almaarifa/core/language/lang_keys.dart';
+import 'package:medaan_almaarifa/core/style/images/app_images.dart';
+import 'package:medaan_almaarifa/features/home/screens/quiz_home_screen.dart';
+import 'package:medaan_almaarifa/features/home/widgets/custom_game_button.dart';
+import 'package:medaan_almaarifa/features/home/widgets/custom_home_appbar.dart';
+import 'package:medaan_almaarifa/features/home/widgets/custom_section_title.dart';
+import 'package:medaan_almaarifa/features/home/widgets/discover_button.dart';
+import 'package:medaan_almaarifa/features/user/auth/domain/entities/profile.dart';
 
 class HomeBody extends StatelessWidget {
   const HomeBody({

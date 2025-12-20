@@ -1,5 +1,5 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
-import 'package:znoona_game_app/features/quiz/categories/domain/entities/category.dart';
+import 'package:medaan_almaarifa/features/quiz/categories/domain/entities/category.dart';
 
 part 'category_model.freezed.dart';
 part 'category_model.g.dart';

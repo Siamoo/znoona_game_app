@@ -1,12 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:znoona_game_app/core/common/animations/animate_do.dart';
-import 'package:znoona_game_app/core/common/widgets/text_app.dart';
-import 'package:znoona_game_app/features/quiz/categories/domain/entities/category.dart';
-import 'package:znoona_game_app/features/quiz/categories/presentation/cubit/categories_cubit.dart';
-import 'package:znoona_game_app/features/quiz/categories/presentation/widgets/category_item.dart';
-
+import 'package:medaan_almaarifa/core/common/animations/animate_do.dart';
+import 'package:medaan_almaarifa/core/common/widgets/text_app.dart';
+import 'package:medaan_almaarifa/features/quiz/categories/domain/entities/category.dart';
+import 'package:medaan_almaarifa/features/quiz/categories/presentation/cubit/categories_cubit.dart';
+import 'package:medaan_almaarifa/features/quiz/categories/presentation/widgets/category_item.dart';
 class CategoryLevelBody extends StatelessWidget {
   const CategoryLevelBody({
     required this.state,

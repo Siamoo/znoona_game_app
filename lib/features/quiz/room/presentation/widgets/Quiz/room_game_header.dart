@@ -2,10 +2,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:znoona_game_app/core/helpers/znoona.colors.dart';
-import 'package:znoona_game_app/features/quiz/room/domain/entities/room_player.dart';
-import 'package:znoona_game_app/features/quiz/room/presentation/widgets/Quiz/players_status.dart';
-import 'package:znoona_game_app/features/quiz/room/presentation/widgets/Quiz/top_player_section.dart';
+import 'package:medaan_almaarifa/core/helpers/znoona.colors.dart';
+import 'package:medaan_almaarifa/features/quiz/room/domain/entities/room_player.dart';
+import 'package:medaan_almaarifa/features/quiz/room/presentation/widgets/Quiz/players_status.dart';
+import 'package:medaan_almaarifa/features/quiz/room/presentation/widgets/Quiz/top_player_section.dart';
 
 class RoomGameHeader extends StatelessWidget {
   const RoomGameHeader({

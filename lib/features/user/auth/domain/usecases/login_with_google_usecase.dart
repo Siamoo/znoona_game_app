@@ -1,6 +1,6 @@
 import 'package:dartz/dartz.dart';
-import 'package:znoona_game_app/features/user/auth/domain/entities/profile.dart';
-import 'package:znoona_game_app/features/user/auth/domain/repositories/auth_repository.dart';
+import 'package:medaan_almaarifa/features/user/auth/domain/entities/profile.dart';
+import 'package:medaan_almaarifa/features/user/auth/domain/repositories/auth_repository.dart';
 
 class LoginWithGoogleUseCase {
   LoginWithGoogleUseCase(this.repository);

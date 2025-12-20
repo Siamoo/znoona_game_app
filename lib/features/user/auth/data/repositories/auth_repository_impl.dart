@@ -1,8 +1,8 @@
 import 'package:dartz/dartz.dart';
-import 'package:znoona_game_app/features/user/auth/data/datasources/auth_remote_data_source.dart';
-import 'package:znoona_game_app/features/user/auth/data/models/profile_model.dart';
-import 'package:znoona_game_app/features/user/auth/domain/entities/profile.dart';
-import 'package:znoona_game_app/features/user/auth/domain/repositories/auth_repository.dart';
+import 'package:medaan_almaarifa/features/user/auth/data/datasources/auth_remote_data_source.dart';
+import 'package:medaan_almaarifa/features/user/auth/data/models/profile_model.dart';
+import 'package:medaan_almaarifa/features/user/auth/domain/entities/profile.dart';
+import 'package:medaan_almaarifa/features/user/auth/domain/repositories/auth_repository.dart';
 
 class AuthRepositoryImpl implements AuthRepository {
   AuthRepositoryImpl(this.remote);

@@ -1,5 +1,5 @@
 import 'package:supabase_flutter/supabase_flutter.dart';
-import 'package:znoona_game_app/features/user/auth/data/models/profile_model.dart';
+import 'package:medaan_almaarifa/features/user/auth/data/models/profile_model.dart';
 
 abstract class AuthRemoteDataSource {
   Future<ProfileModel> signUp({

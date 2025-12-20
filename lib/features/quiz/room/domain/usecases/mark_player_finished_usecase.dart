@@ -1,5 +1,5 @@
 import 'package:dartz/dartz.dart';
-import 'package:znoona_game_app/features/quiz/room/domain/repositories/room_repository.dart';
+import 'package:medaan_almaarifa/features/quiz/room/domain/repositories/room_repository.dart';
 
 class MarkPlayerFinishedUseCase {
   MarkPlayerFinishedUseCase(this.repository);

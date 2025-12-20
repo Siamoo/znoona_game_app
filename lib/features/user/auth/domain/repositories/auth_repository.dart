@@ -1,6 +1,6 @@
 // auth_repository.dart
 import 'package:dartz/dartz.dart';
-import 'package:znoona_game_app/features/user/auth/domain/entities/profile.dart';
+import 'package:medaan_almaarifa/features/user/auth/domain/entities/profile.dart';
 
 abstract class AuthRepository {
   Future<Either<String, Profile>> signUp({

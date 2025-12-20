@@ -3,15 +3,15 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:znoona_game_app/core/common/widgets/custom_app_bar.dart';
-import 'package:znoona_game_app/core/helpers/znoona.colors.dart';
-import 'package:znoona_game_app/core/helpers/znoona_navigate.dart';
-import 'package:znoona_game_app/core/helpers/znoona_texts.dart';
-import 'package:znoona_game_app/core/language/lang_keys.dart';
-import 'package:znoona_game_app/features/quiz/single/domain/entities/question.dart';
-import 'package:znoona_game_app/features/quiz/single/presentation/cubit/questions_cubit.dart';
-import 'package:znoona_game_app/features/quiz/single/presentation/screen/results_screen.dart';
-import 'package:znoona_game_app/features/quiz/single/presentation/widgets/option_button.dart';
+import 'package:medaan_almaarifa/core/common/widgets/custom_app_bar.dart';
+import 'package:medaan_almaarifa/core/helpers/znoona.colors.dart';
+import 'package:medaan_almaarifa/core/helpers/znoona_navigate.dart';
+import 'package:medaan_almaarifa/core/helpers/znoona_texts.dart';
+import 'package:medaan_almaarifa/core/language/lang_keys.dart';
+import 'package:medaan_almaarifa/features/quiz/single/domain/entities/question.dart';
+import 'package:medaan_almaarifa/features/quiz/single/presentation/cubit/questions_cubit.dart';
+import 'package:medaan_almaarifa/features/quiz/single/presentation/screen/results_screen.dart';
+import 'package:medaan_almaarifa/features/quiz/single/presentation/widgets/option_button.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 
 class QuizBody extends StatefulWidget {

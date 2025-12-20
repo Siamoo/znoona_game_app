@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:znoona_game_app/core/common/widgets/custom_app_bar.dart';
+import 'package:medaan_almaarifa/core/common/widgets/custom_app_bar.dart';
 
 class EmptyQuizBody extends StatelessWidget {
   const EmptyQuizBody({

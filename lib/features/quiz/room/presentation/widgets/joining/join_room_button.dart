@@ -2,10 +2,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:znoona_game_app/core/common/widgets/custom_linear_button.dart';
-import 'package:znoona_game_app/core/helpers/znoona_texts.dart';
-import 'package:znoona_game_app/core/language/lang_keys.dart';
-import 'package:znoona_game_app/features/quiz/room/presentation/cubit/room_cubit.dart';
+import 'package:medaan_almaarifa/core/common/widgets/custom_linear_button.dart';
+import 'package:medaan_almaarifa/core/helpers/znoona_texts.dart';
+import 'package:medaan_almaarifa/core/language/lang_keys.dart';
+import 'package:medaan_almaarifa/features/quiz/room/presentation/cubit/room_cubit.dart';
 
 class JoinRoomButton extends StatelessWidget {
   const JoinRoomButton({

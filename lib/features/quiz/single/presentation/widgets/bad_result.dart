@@ -1,12 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:znoona_game_app/core/common/widgets/text_app.dart';
-import 'package:znoona_game_app/core/helpers/znoona.colors.dart';
-import 'package:znoona_game_app/core/helpers/znoona_texts.dart';
-import 'package:znoona_game_app/core/language/lang_keys.dart';
-import 'package:znoona_game_app/core/style/images/app_images.dart';
-
+import 'package:medaan_almaarifa/core/common/widgets/text_app.dart';
+import 'package:medaan_almaarifa/core/helpers/znoona.colors.dart';
+import 'package:medaan_almaarifa/core/helpers/znoona_texts.dart';
+import 'package:medaan_almaarifa/core/language/lang_keys.dart';
+import 'package:medaan_almaarifa/core/style/images/app_images.dart';
 class BadResultBody extends StatelessWidget {
   const BadResultBody({
     super.key,

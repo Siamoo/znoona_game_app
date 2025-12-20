@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:znoona_game_app/core/style/colors/colors_dark.dart';
-import 'package:znoona_game_app/core/style/colors/colors_light.dart';
+import 'package:medaan_almaarifa/core/style/colors/colors_dark.dart';
+import 'package:medaan_almaarifa/core/style/colors/colors_light.dart';
 
 class MyColors extends ThemeExtension<MyColors> {
   const MyColors({

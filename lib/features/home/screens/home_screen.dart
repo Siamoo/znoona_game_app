@@ -1,7 +1,7 @@
 import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:znoona_game_app/features/home/refactors/home_body.dart';
-import 'package:znoona_game_app/features/user/auth/presentation/cubit/auth_cubit.dart';
+import 'package:medaan_almaarifa/features/home/refactors/home_body.dart';
+import 'package:medaan_almaarifa/features/user/auth/presentation/cubit/auth_cubit.dart';
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});

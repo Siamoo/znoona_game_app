@@ -1,15 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:znoona_game_app/core/common/widgets/custom_app_bar.dart';
-import 'package:znoona_game_app/core/helpers/znoona_navigate.dart';
-import 'package:znoona_game_app/core/language/lang_keys.dart';
-import 'package:znoona_game_app/features/quiz/room/domain/entities/room.dart';
-import 'package:znoona_game_app/features/quiz/room/presentation/cubit/room_cubit.dart';
-import 'package:znoona_game_app/features/quiz/room/presentation/refactors/room_load_questions_body.dart';
-import 'package:znoona_game_app/features/quiz/room/presentation/widgets/lobby/players_list.dart';
-import 'package:znoona_game_app/features/quiz/room/presentation/widgets/lobby/room_info_card.dart';
-import 'package:znoona_game_app/features/quiz/room/presentation/widgets/lobby/start_game_button.dart';
+import 'package:medaan_almaarifa/core/common/widgets/custom_app_bar.dart';
+import 'package:medaan_almaarifa/core/helpers/znoona_navigate.dart';
+import 'package:medaan_almaarifa/core/language/lang_keys.dart';
+import 'package:medaan_almaarifa/features/quiz/room/domain/entities/room.dart';
+import 'package:medaan_almaarifa/features/quiz/room/presentation/cubit/room_cubit.dart';
+import 'package:medaan_almaarifa/features/quiz/room/presentation/refactors/room_load_questions_body.dart';
+import 'package:medaan_almaarifa/features/quiz/room/presentation/widgets/lobby/players_list.dart';
+import 'package:medaan_almaarifa/features/quiz/room/presentation/widgets/lobby/room_info_card.dart';
+import 'package:medaan_almaarifa/features/quiz/room/presentation/widgets/lobby/start_game_button.dart';
 
 class RoomLobbyBody extends StatefulWidget {
   const RoomLobbyBody({required this.room, super.key});

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:znoona_game_app/core/helpers/znoona.colors.dart';
+import 'package:medaan_almaarifa/core/helpers/znoona.colors.dart';
 
 class SelectedTimerDisplay extends StatelessWidget {
   const SelectedTimerDisplay({

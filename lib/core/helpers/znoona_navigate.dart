@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:znoona_game_app/core/routes/base_routes.dart';
+import 'package:medaan_almaarifa/core/routes/base_routes.dart';
 
 class ZnoonaNavigate {
   // Push a widget with animation

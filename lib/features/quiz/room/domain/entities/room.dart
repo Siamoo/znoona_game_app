@@ -1,6 +1,6 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
-import 'package:znoona_game_app/features/quiz/room/domain/entities/room_player.dart';
-import 'package:znoona_game_app/features/quiz/room/domain/entities/room_question.dart';
+import 'package:medaan_almaarifa/features/quiz/room/domain/entities/room_player.dart';
+import 'package:medaan_almaarifa/features/quiz/room/domain/entities/room_question.dart';
 
 part 'room.freezed.dart';
 part 'room.g.dart';

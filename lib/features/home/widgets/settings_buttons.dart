@@ -2,13 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
-import 'package:znoona_game_app/core/app/app_cubit/app_cubit.dart';
-import 'package:znoona_game_app/core/helpers/znoona_navigate.dart';
-import 'package:znoona_game_app/core/language/lang_keys.dart';
-import 'package:znoona_game_app/core/style/images/app_images.dart';
-import 'package:znoona_game_app/features/home/widgets/custom_setting_button.dart';
-import 'package:znoona_game_app/features/user/auth/presentation/refactors/profile_edit_body.dart';
-import 'package:znoona_game_app/features/user/auth/presentation/screens/login_screen.dart';
+import 'package:medaan_almaarifa/core/app/app_cubit/app_cubit.dart';
+import 'package:medaan_almaarifa/core/helpers/znoona_navigate.dart';
+import 'package:medaan_almaarifa/core/language/lang_keys.dart';
+import 'package:medaan_almaarifa/core/style/images/app_images.dart';
+import 'package:medaan_almaarifa/features/home/widgets/custom_setting_button.dart';
+import 'package:medaan_almaarifa/features/user/auth/presentation/refactors/profile_edit_body.dart';
+import 'package:medaan_almaarifa/features/user/auth/presentation/screens/login_screen.dart';
 
 class SettingsButtons extends StatelessWidget {
   const SettingsButtons({

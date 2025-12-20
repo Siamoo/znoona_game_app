@@ -1,12 +1,12 @@
 
 import 'package:flutter/widgets.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:znoona_game_app/core/helpers/znoona.colors.dart';
-import 'package:znoona_game_app/core/helpers/znoona_texts.dart';
-import 'package:znoona_game_app/core/language/lang_keys.dart';
-import 'package:znoona_game_app/features/quiz/room/presentation/widgets/creation/question_timer_title.dart';
-import 'package:znoona_game_app/features/quiz/room/presentation/widgets/creation/selected_timer_display.dart';
-import 'package:znoona_game_app/features/quiz/room/presentation/widgets/creation/timer_option.dart';
+import 'package:medaan_almaarifa/core/helpers/znoona.colors.dart';
+import 'package:medaan_almaarifa/core/helpers/znoona_texts.dart';
+import 'package:medaan_almaarifa/core/language/lang_keys.dart';
+import 'package:medaan_almaarifa/features/quiz/room/presentation/widgets/creation/question_timer_title.dart';
+import 'package:medaan_almaarifa/features/quiz/room/presentation/widgets/creation/selected_timer_display.dart';
+import 'package:medaan_almaarifa/features/quiz/room/presentation/widgets/creation/timer_option.dart';
 
 class BuildTimerSelectionSection extends StatelessWidget {
   const BuildTimerSelectionSection({

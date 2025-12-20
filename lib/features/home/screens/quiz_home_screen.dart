@@ -1,5 +1,5 @@
 import 'package:flutter/widgets.dart';
-import 'package:znoona_game_app/features/home/refactors/quiz_home_body.dart';
+import 'package:medaan_almaarifa/features/home/refactors/quiz_home_body.dart';
 
 class QuizHomeScreen extends StatelessWidget {
   const QuizHomeScreen({ super.key});

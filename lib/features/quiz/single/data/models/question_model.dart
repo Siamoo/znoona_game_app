@@ -1,5 +1,5 @@
 import 'dart:math';
-import 'package:znoona_game_app/features/quiz/single/domain/entities/question.dart';
+import 'package:medaan_almaarifa/features/quiz/single/domain/entities/question.dart';
 
 class QuestionModel {
   const QuestionModel({

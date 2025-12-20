@@ -1,13 +1,13 @@
 // auth_cubit.dart
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
-import 'package:znoona_game_app/features/user/auth/domain/entities/profile.dart';
-import 'package:znoona_game_app/features/user/auth/domain/repositories/auth_repository.dart';
-import 'package:znoona_game_app/features/user/auth/domain/usecases/get_current_user_usecase.dart';
-import 'package:znoona_game_app/features/user/auth/domain/usecases/login_usecase.dart';
-import 'package:znoona_game_app/features/user/auth/domain/usecases/login_with_google_usecase.dart';
-import 'package:znoona_game_app/features/user/auth/domain/usecases/logout_usecase.dart';
-import 'package:znoona_game_app/features/user/auth/domain/usecases/sign_up_usecase.dart';
+import 'package:medaan_almaarifa/features/user/auth/domain/entities/profile.dart';
+import 'package:medaan_almaarifa/features/user/auth/domain/repositories/auth_repository.dart';
+import 'package:medaan_almaarifa/features/user/auth/domain/usecases/get_current_user_usecase.dart';
+import 'package:medaan_almaarifa/features/user/auth/domain/usecases/login_usecase.dart';
+import 'package:medaan_almaarifa/features/user/auth/domain/usecases/login_with_google_usecase.dart';
+import 'package:medaan_almaarifa/features/user/auth/domain/usecases/logout_usecase.dart';
+import 'package:medaan_almaarifa/features/user/auth/domain/usecases/sign_up_usecase.dart';
 
 part 'auth_state.dart';
 part 'auth_cubit.freezed.dart';

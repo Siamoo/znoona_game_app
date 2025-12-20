@@ -1,10 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:znoona_game_app/core/helpers/znoona_texts.dart';
-import 'package:znoona_game_app/core/language/lang_keys.dart';
-import 'package:znoona_game_app/features/quiz/room/domain/entities/room_player.dart';
-import 'package:znoona_game_app/features/quiz/room/presentation/widgets/lobby/host_or_player_name.dart';
-import 'package:znoona_game_app/features/quiz/room/presentation/widgets/lobby/player_circle_image.dart';
-
+import 'package:medaan_almaarifa/core/helpers/znoona_texts.dart';
+import 'package:medaan_almaarifa/core/language/lang_keys.dart';
+import 'package:medaan_almaarifa/features/quiz/room/domain/entities/room_player.dart';
+import 'package:medaan_almaarifa/features/quiz/room/presentation/widgets/lobby/host_or_player_name.dart';
+import 'package:medaan_almaarifa/features/quiz/room/presentation/widgets/lobby/player_circle_image.dart';
 class PlayerListItem extends StatelessWidget {
   const PlayerListItem({required this.player, super.key});
   final RoomPlayer player;

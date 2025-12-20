@@ -3,8 +3,8 @@ import 'dart:ui';
 import 'package:flutter/foundation.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
-import 'package:znoona_game_app/core/service/shared_pref/pref_keys.dart';
-import 'package:znoona_game_app/core/service/shared_pref/shared_pref.dart';
+import 'package:medaan_almaarifa/core/service/shared_pref/pref_keys.dart';
+import 'package:medaan_almaarifa/core/service/shared_pref/shared_pref.dart';
 
 part 'app_state.dart';
 part 'app_cubit.freezed.dart';

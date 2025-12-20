@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:znoona_game_app/core/common/widgets/custom_app_bar.dart';
-import 'package:znoona_game_app/features/quiz/room/domain/entities/room.dart';
-import 'package:znoona_game_app/features/quiz/room/domain/entities/room_question.dart';
-import 'package:znoona_game_app/features/quiz/room/presentation/cubit/room_cubit.dart';
-import 'package:znoona_game_app/features/quiz/room/presentation/screen/room_quiz_screen.dart';
-import 'package:znoona_game_app/features/quiz/single/domain/entities/question.dart';
+import 'package:medaan_almaarifa/core/common/widgets/custom_app_bar.dart';
+import 'package:medaan_almaarifa/features/quiz/room/domain/entities/room.dart';
+import 'package:medaan_almaarifa/features/quiz/room/domain/entities/room_question.dart';
+import 'package:medaan_almaarifa/features/quiz/room/presentation/cubit/room_cubit.dart';
+import 'package:medaan_almaarifa/features/quiz/room/presentation/screen/room_quiz_screen.dart';
+import 'package:medaan_almaarifa/features/quiz/single/domain/entities/question.dart';
 
 class RoomLoadQuestionsBody extends StatefulWidget {
   const RoomLoadQuestionsBody({required this.room, super.key});

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:znoona_game_app/features/quiz/single/presentation/refactors/result_body.dart';
+import 'package:medaan_almaarifa/features/quiz/single/presentation/refactors/result_body.dart';
 
 class ResultsScreen extends StatelessWidget {
   const ResultsScreen({

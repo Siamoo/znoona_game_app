@@ -1,10 +1,9 @@
 import 'package:supabase_flutter/supabase_flutter.dart';
-import 'package:znoona_game_app/features/quiz/room/data/models/room_model.dart';
-import 'package:znoona_game_app/features/quiz/room/data/models/room_player_model.dart';
-import 'package:znoona_game_app/features/quiz/room/data/models/room_question_model.dart';
-import 'package:znoona_game_app/features/quiz/single/data/models/question_model.dart';
-import 'package:znoona_game_app/features/quiz/single/domain/entities/question.dart';
-
+import 'package:medaan_almaarifa/features/quiz/room/data/models/room_model.dart';
+import 'package:medaan_almaarifa/features/quiz/room/data/models/room_player_model.dart';
+import 'package:medaan_almaarifa/features/quiz/room/data/models/room_question_model.dart';
+import 'package:medaan_almaarifa/features/quiz/single/data/models/question_model.dart';
+import 'package:medaan_almaarifa/features/quiz/single/domain/entities/question.dart';
 class RoomRemoteDataSource {
   RoomRemoteDataSource(this.supabase);
   final SupabaseClient supabase;

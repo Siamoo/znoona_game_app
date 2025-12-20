@@ -1,15 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:znoona_game_app/core/common/widgets/custom_app_bar.dart';
-import 'package:znoona_game_app/core/common/widgets/custom_linear_button.dart';
-import 'package:znoona_game_app/core/common/widgets/text_app.dart';
-import 'package:znoona_game_app/core/helpers/znoona.colors.dart';
-import 'package:znoona_game_app/core/helpers/znoona_texts.dart';
-import 'package:znoona_game_app/core/language/lang_keys.dart';
-import 'package:znoona_game_app/features/quiz/single/presentation/widgets/bad_result.dart';
-import 'package:znoona_game_app/features/quiz/single/presentation/widgets/good_result_body.dart';
-import 'package:znoona_game_app/features/quiz/single/presentation/widgets/won_cup_body.dart';
+import 'package:medaan_almaarifa/core/common/widgets/custom_app_bar.dart';
+import 'package:medaan_almaarifa/core/common/widgets/custom_linear_button.dart';
+import 'package:medaan_almaarifa/core/common/widgets/text_app.dart';
+import 'package:medaan_almaarifa/core/helpers/znoona.colors.dart';
+import 'package:medaan_almaarifa/core/helpers/znoona_texts.dart';
+import 'package:medaan_almaarifa/core/language/lang_keys.dart';
+import 'package:medaan_almaarifa/features/quiz/single/presentation/widgets/bad_result.dart';
+import 'package:medaan_almaarifa/features/quiz/single/presentation/widgets/good_result_body.dart';
+import 'package:medaan_almaarifa/features/quiz/single/presentation/widgets/won_cup_body.dart';
 
 class ResultBody extends StatelessWidget {
   const ResultBody({

@@ -1,7 +1,7 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
-import 'package:znoona_game_app/features/quiz/single/domain/entities/question.dart';
-import 'package:znoona_game_app/features/quiz/single/domain/usecases/get_questions_by_category_usecase.dart';
+import 'package:medaan_almaarifa/features/quiz/single/domain/entities/question.dart';
+import 'package:medaan_almaarifa/features/quiz/single/domain/usecases/get_questions_by_category_usecase.dart';
 
 part 'questions_state.dart';
 part 'questions_cubit.freezed.dart';

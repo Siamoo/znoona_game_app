@@ -1,13 +1,13 @@
 import 'package:dartz/dartz.dart';
-import 'package:znoona_game_app/features/quiz/room/data/datasources/room_remote_data_source.dart';
-import 'package:znoona_game_app/features/quiz/room/data/models/room_model.dart';
-import 'package:znoona_game_app/features/quiz/room/data/models/room_player_model.dart';
-import 'package:znoona_game_app/features/quiz/room/data/models/room_question_model.dart';
-import 'package:znoona_game_app/features/quiz/room/domain/entities/room.dart';
-import 'package:znoona_game_app/features/quiz/room/domain/entities/room_player.dart';
-import 'package:znoona_game_app/features/quiz/room/domain/entities/room_question.dart';
-import 'package:znoona_game_app/features/quiz/room/domain/repositories/room_repository.dart';
-import 'package:znoona_game_app/features/quiz/single/domain/entities/question.dart';
+import 'package:medaan_almaarifa/features/quiz/room/data/datasources/room_remote_data_source.dart';
+import 'package:medaan_almaarifa/features/quiz/room/data/models/room_model.dart';
+import 'package:medaan_almaarifa/features/quiz/room/data/models/room_player_model.dart';
+import 'package:medaan_almaarifa/features/quiz/room/data/models/room_question_model.dart';
+import 'package:medaan_almaarifa/features/quiz/room/domain/entities/room.dart';
+import 'package:medaan_almaarifa/features/quiz/room/domain/entities/room_player.dart';
+import 'package:medaan_almaarifa/features/quiz/room/domain/entities/room_question.dart';
+import 'package:medaan_almaarifa/features/quiz/room/domain/repositories/room_repository.dart';
+import 'package:medaan_almaarifa/features/quiz/single/domain/entities/question.dart';
 
 class RoomRepositoryImpl implements RoomRepository {
   RoomRepositoryImpl(this.remote);

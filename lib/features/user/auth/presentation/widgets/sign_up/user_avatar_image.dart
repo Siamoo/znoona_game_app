@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:znoona_game_app/core/common/animations/animate_do.dart';
-import 'package:znoona_game_app/core/style/images/app_images.dart';
+import 'package:medaan_almaarifa/core/common/animations/animate_do.dart';
+import 'package:medaan_almaarifa/core/style/images/app_images.dart';
 
 class UserAvatarImage extends StatelessWidget {
   const UserAvatarImage({super.key});

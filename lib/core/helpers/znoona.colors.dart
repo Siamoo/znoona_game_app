@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:znoona_game_app/core/style/theme/my_colors_extension.dart';
+import 'package:medaan_almaarifa/core/style/theme/my_colors_extension.dart';
 
 class ZnoonaColors {
   static MyColors of(BuildContext context) {

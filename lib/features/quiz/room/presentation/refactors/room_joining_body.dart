@@ -1,18 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:znoona_game_app/core/common/animations/animate_do.dart';
-import 'package:znoona_game_app/core/common/widgets/custom_app_bar.dart';
-import 'package:znoona_game_app/core/common/widgets/custom_text_filed.dart';
-import 'package:znoona_game_app/core/helpers/znoona_navigate.dart';
-import 'package:znoona_game_app/core/helpers/znoona_texts.dart';
-import 'package:znoona_game_app/core/language/lang_keys.dart';
-import 'package:znoona_game_app/core/style/images/app_images.dart';
-import 'package:znoona_game_app/features/quiz/room/presentation/cubit/room_cubit.dart';
-import 'package:znoona_game_app/features/quiz/room/presentation/screen/room_lobby_screen.dart';
-import 'package:znoona_game_app/features/quiz/room/presentation/widgets/joining/enter_code_or_scan.dart';
-import 'package:znoona_game_app/features/quiz/room/presentation/widgets/joining/join_room_button.dart';
-import 'package:znoona_game_app/features/quiz/room/presentation/widgets/joining/scan_qr_button.dart';
+import 'package:medaan_almaarifa/core/common/animations/animate_do.dart';
+import 'package:medaan_almaarifa/core/common/widgets/custom_app_bar.dart';
+import 'package:medaan_almaarifa/core/common/widgets/custom_text_filed.dart';
+import 'package:medaan_almaarifa/core/helpers/znoona_navigate.dart';
+import 'package:medaan_almaarifa/core/helpers/znoona_texts.dart';
+import 'package:medaan_almaarifa/core/language/lang_keys.dart';
+import 'package:medaan_almaarifa/core/style/images/app_images.dart';
+import 'package:medaan_almaarifa/features/quiz/room/presentation/cubit/room_cubit.dart';
+import 'package:medaan_almaarifa/features/quiz/room/presentation/screen/room_lobby_screen.dart';
+import 'package:medaan_almaarifa/features/quiz/room/presentation/widgets/joining/enter_code_or_scan.dart';
+import 'package:medaan_almaarifa/features/quiz/room/presentation/widgets/joining/join_room_button.dart';
+import 'package:medaan_almaarifa/features/quiz/room/presentation/widgets/joining/scan_qr_button.dart';
 
 class RoomJoiningBody extends StatefulWidget {
   const RoomJoiningBody({super.key});

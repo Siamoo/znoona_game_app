@@ -1,8 +1,8 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
-import 'package:znoona_game_app/features/quiz/categories/domain/entities/category.dart';
-import 'package:znoona_game_app/features/quiz/categories/domain/usecases/get_main_categories_usecase.dart';
-import 'package:znoona_game_app/features/quiz/categories/domain/usecases/get_sub_categories_usecase.dart';
+import 'package:medaan_almaarifa/features/quiz/categories/domain/entities/category.dart';
+import 'package:medaan_almaarifa/features/quiz/categories/domain/usecases/get_main_categories_usecase.dart';
+import 'package:medaan_almaarifa/features/quiz/categories/domain/usecases/get_sub_categories_usecase.dart';
 
 part 'categories_state.dart';
 part 'categories_cubit.freezed.dart';

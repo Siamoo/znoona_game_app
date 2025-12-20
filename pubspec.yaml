@@ -1,5 +1,5 @@
-name: znoona_game_app
-description: "A new Flutter project."
+name: medaan_almaarifa 
+description: "ميدان المعرفة - تطبيق تعليمي تفاعلي"  
 
 publish_to: "none" # Remove this line if you wish to publish to pub.dev
 
@@ -80,10 +80,10 @@ flutter:
   #
   # For details regarding fonts from package dependencies,
   # see https://flutter.dev/to/font-from-package
-
 flutter_icons:
   android: "launcher_icon"
   ios: true
   image_path: "assets/icon/icon.jpeg"
   adaptive_icon_background: "#13153b"
   adaptive_icon_foreground: "assets/icon/icon_foreground.png"
+

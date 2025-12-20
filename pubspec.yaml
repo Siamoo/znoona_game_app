@@ -82,7 +82,8 @@ flutter:
   # see https://flutter.dev/to/font-from-package
 
 flutter_icons:
-  android: true
+  android: "launcher_icon"
   ios: true
   image_path: "assets/icon/icon.jpeg"
-  # Remove adaptive icon settings
+  adaptive_icon_background: "#13153b"
+  adaptive_icon_foreground: "assets/icon/icon_foreground.png"

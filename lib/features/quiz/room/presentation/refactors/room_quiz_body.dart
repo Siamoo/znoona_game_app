@@ -304,7 +304,7 @@ class _RoomQuizBodyState extends State<RoomQuizBody> {
                       Text(
                         question.question,
                         style: GoogleFonts.scheherazadeNew(
-                          fontSize: imageUrl != null ? 18.sp : 22.sp,
+                          fontSize:  22.sp,
                           fontWeight: FontWeight.bold,
                           color: ZnoonaColors.text(context),
                         ),

@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:photo_view/photo_view.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 import 'package:medaan_almaarifa/core/common/widgets/custom_app_bar.dart';
 import 'package:medaan_almaarifa/core/helpers/znoona.colors.dart';
@@ -17,7 +18,7 @@ import 'package:medaan_almaarifa/features/quiz/room/presentation/widgets/Quiz/em
 import 'package:medaan_almaarifa/features/quiz/room/presentation/widgets/Quiz/room_game_header.dart';
 import 'package:medaan_almaarifa/features/quiz/single/domain/entities/question.dart';
 import 'package:medaan_almaarifa/features/quiz/single/presentation/widgets/option_button.dart';
-import 'package:cached_network_image/cached_network_image.dart'; // Add this import
+import 'package:cached_network_image/cached_network_image.dart';
 
 class RoomQuizBody extends StatefulWidget {
   const RoomQuizBody({
@@ -44,10 +45,149 @@ class _RoomQuizBodyState extends State<RoomQuizBody> {
   void initState() {
     super.initState();
     _currentQuestions = widget.questions;
-    // Start with initial state using the passed questions
     _currentPlayers = [];
     context.read<RoomCubit>().startQuiz(widget.questions);
     context.read<RoomCubit>().watchPlayerAnswers(widget.room.id);
+  }
+
+  String? _convertGoogleDriveUrl(String? url) {
+    if (url == null || url.isEmpty) return null;
+
+    if (url.contains('drive.google.com')) {
+      final regex = RegExp(r'/d/([a-zA-Z0-9_-]+)');
+      final match = regex.firstMatch(url);
+
+      if (match != null) {
+        final fileId = match.group(1);
+        return 'https://drive.google.com/uc?export=view&id=$fileId';
+      }
+    }
+
+    return url;
+  }
+
+  void _showFullScreenImage(String imageUrl) {
+    // Check if the image URL is valid before showing
+    if (imageUrl.isEmpty) return;
+
+    showDialog(
+      context: context,
+      barrierColor: Colors.black.withOpacity(0.9),
+      builder: (context) => Dialog.fullscreen(
+        backgroundColor: Colors.black,
+        child: Stack(
+          children: [
+            PhotoView(
+              imageProvider: CachedNetworkImageProvider(imageUrl),
+              minScale: PhotoViewComputedScale.contained * 0.8,
+              maxScale: PhotoViewComputedScale.covered * 3,
+              initialScale: PhotoViewComputedScale.contained,
+              backgroundDecoration: const BoxDecoration(
+                color: Colors.black,
+              ),
+              loadingBuilder: (context, event) => Center(
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    CircularProgressIndicator(
+                      color: ZnoonaColors.main(context),
+                    ),
+                    SizedBox(height: 20.h),
+                    Text(
+                      'Loading image...',
+                      style: TextStyle(
+                        color: Colors.white,
+                        fontSize: 14.sp,
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+              errorBuilder: (context, error, stackTrace) {
+                return Center(
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Icon(
+                        Icons.broken_image,
+                        size: 60.sp,
+                        color: Colors.white54,
+                      ),
+                      SizedBox(height: 20.h),
+                      Text(
+                        'Failed to load image',
+                        style: TextStyle(
+                          color: Colors.white70,
+                          fontSize: 16.sp,
+                        ),
+                      ),
+                      SizedBox(height: 10.h),
+                      Text(
+                        'The image may have been moved or deleted',
+                        style: TextStyle(
+                          color: Colors.white54,
+                          fontSize: 12.sp,
+                        ),
+                        textAlign: TextAlign.center,
+                      ),
+                    ],
+                  ),
+                );
+              },
+              heroAttributes: PhotoViewHeroAttributes(
+                tag: imageUrl,
+                transitionOnUserGestures: true,
+              ),
+              enableRotation: true,
+              basePosition: Alignment.center,
+            ),
+            Positioned(
+              top: MediaQuery.of(context).padding.top + 10.h,
+              right: 20.w,
+              child: Container(
+                decoration: BoxDecoration(
+                  color: Colors.black.withOpacity(0.5),
+                  shape: BoxShape.circle,
+                ),
+                child: IconButton(
+                  icon: Icon(
+                    Icons.close,
+                    color: Colors.white,
+                    size: 28.sp,
+                  ),
+                  onPressed: () => Navigator.of(context).pop(),
+                ),
+              ),
+            ),
+            Positioned(
+              bottom: MediaQuery.of(context).padding.bottom + 20.h,
+              left: 0,
+              right: 0,
+              child: Column(
+                children: [
+                  Text(
+                    'Pinch to zoom • Double tap to reset',
+                    style: TextStyle(
+                      color: Colors.white70,
+                      fontSize: 12.sp,
+                    ),
+                  ),
+                  SizedBox(height: 5.h),
+                  Text(
+                    'Rotate device for landscape view',
+                    style: TextStyle(
+                      color: Colors.white54,
+                      fontSize: 11.sp,
+                      fontStyle: FontStyle.italic,
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
   }
 
   Future<void> _selectAnswer(String answer) async {
@@ -182,21 +322,6 @@ class _RoomQuizBodyState extends State<RoomQuizBody> {
     if (questions.isEmpty) {
       return EmptyQuizBody(roomCode: widget.room.code);
     }
-    String? _convertGoogleDriveUrl(String? url) {
-      if (url == null || url.isEmpty) return null;
-
-      if (url.contains('drive.google.com')) {
-        final regex = RegExp(r'/d/([a-zA-Z0-9_-]+)');
-        final match = regex.firstMatch(url);
-
-        if (match != null) {
-          final fileId = match.group(1);
-          return 'https://drive.google.com/uc?export=view&id=$fileId';
-        }
-      }
-
-      return url;
-    }
 
     final question = questions[currentQuestionIndex];
     final currentUserId = _getCurrentUserId();
@@ -246,57 +371,74 @@ class _RoomQuizBodyState extends State<RoomQuizBody> {
               padding: EdgeInsets.symmetric(horizontal: 16.w),
               child: Column(
                 children: [
-                  // Show image if available
                   if (imageUrl != null && imageUrl.isNotEmpty)
                     Column(
                       children: [
-                        Container(
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(12.r),
-                            color: Colors.grey[100],
-                          ),
-                          child: ClipRRect(
-                            child: CachedNetworkImage(
-                              imageUrl: imageUrl,
-                              placeholder: (context, url) => Center(
-                                child: CircularProgressIndicator(
-                                  color: ZnoonaColors.main(context),
-                                ),
-                              ),
-                              errorWidget: (context, url, error) {
-                               
-                                return Center(
-                                  child: Column(
-                                    mainAxisAlignment: MainAxisAlignment.center,
-                                    children: [
-                                      Icon(
-                                        Icons.broken_image,
-                                        size: 50.sp,
-                                        color: ZnoonaColors.text(
-                                          context,
-                                        ).withOpacity(0.5),
-                                      ),
-                                      SizedBox(height: 10.h),
-                                      Text(
-                                        'Failed to load image',
-                                        style: TextStyle(
-                                          fontSize: 12.sp,
-                                          color: ZnoonaColors.text(
-                                            context,
-                                          ).withOpacity(0.5),
-                                        ),
-                                      ),
-                                    ],
+                        // Text(
+                        //   'Tap image to view full screen',
+                        //   style: TextStyle(
+                        //     fontSize: 12.sp,
+                        //     color: ZnoonaColors.text(context).withOpacity(0.7),
+                        //     fontStyle: FontStyle.italic,
+                        //   ),
+                        //   textAlign: TextAlign.center,
+                        // ),
+                        // SizedBox(height: 10.h),
+                        GestureDetector(
+                          onTap: () => _showFullScreenImage(imageUrl),
+                          child: Hero(
+                            tag: imageUrl,
+                            child: ClipRRect(
+                              borderRadius: BorderRadius.circular(8.r),
+                              child: CachedNetworkImage(
+                                imageUrl: imageUrl,
+                                placeholder: (context, url) => Container(
+                                  color: Colors.grey[200],
+                                  child: Center(
+                                    child: CircularProgressIndicator(
+                                      color: ZnoonaColors.main(context),
+                                      strokeWidth: 2.0,
+                                    ),
                                   ),
-                                );
-                              },
+                                ),
+                                errorWidget: (context, url, error) {
+                                  return Container(
+                                    color: Colors.grey[200],
+                                    child: Center(
+                                      child: Column(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.center,
+                                        children: [
+                                          Icon(
+                                            Icons.image_not_supported,
+                                            size: 50.sp,
+                                            color: ZnoonaColors.text(
+                                              context,
+                                            ).withOpacity(0.5),
+                                          ),
+                                          SizedBox(height: 10.h),
+                                          Text(
+                                            'Image not available',
+                                            style: TextStyle(
+                                              fontSize: 12.sp,
+                                              color: ZnoonaColors.text(
+                                                context,
+                                              ).withOpacity(0.5),
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                  );
+                                },
+                              ),
                             ),
                           ),
                         ),
+
                         SizedBox(height: 20.sp),
                       ],
                     ),
-
                   Column(
                     mainAxisAlignment: MainAxisAlignment.center,
                     crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -304,9 +446,12 @@ class _RoomQuizBodyState extends State<RoomQuizBody> {
                       Text(
                         question.question,
                         style: GoogleFonts.scheherazadeNew(
-                          fontSize:  22.sp,
+                          fontSize: imageUrl != null && imageUrl.isNotEmpty
+                              ? 20.sp
+                              : 22.sp,
                           fontWeight: FontWeight.bold,
                           color: ZnoonaColors.text(context),
+                          height: 1.4,
                         ),
                         textAlign: TextAlign.center,
                       ),
@@ -328,7 +473,7 @@ class _RoomQuizBodyState extends State<RoomQuizBody> {
                       }),
                       SizedBox(
                         height: 40.sp,
-                      ), // Extra space at bottom for scrolling
+                      ),
                     ],
                   ),
                 ],

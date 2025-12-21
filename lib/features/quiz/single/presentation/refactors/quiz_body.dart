@@ -13,6 +13,8 @@ import 'package:medaan_almaarifa/features/quiz/single/presentation/cubit/questio
 import 'package:medaan_almaarifa/features/quiz/single/presentation/screen/results_screen.dart';
 import 'package:medaan_almaarifa/features/quiz/single/presentation/widgets/option_button.dart';
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:photo_view/photo_view.dart';
+import 'package:photo_view/photo_view_gallery.dart';
 
 class QuizBody extends StatefulWidget {
   const QuizBody({
@@ -87,6 +89,45 @@ class _QuizBodyState extends State<QuizBody> {
         ),
       );
     }
+  }
+
+  void _showFullScreenImage(String imageUrl) {
+    showDialog(
+      context: context,
+      builder: (context) => Dialog.fullscreen(
+        backgroundColor: Colors.black,
+        child: Stack(
+          children: [
+            PhotoView(
+              imageProvider: CachedNetworkImageProvider(imageUrl),
+              minScale: PhotoViewComputedScale.contained * 0.8,
+              maxScale: PhotoViewComputedScale.covered * 3,
+              initialScale: PhotoViewComputedScale.contained,
+              backgroundDecoration: const BoxDecoration(
+                color: Colors.black,
+              ),
+              loadingBuilder: (context, event) => Center(
+                child: CircularProgressIndicator(
+                  color: ZnoonaColors.main(context),
+                ),
+              ),
+            ),
+            Positioned(
+              top: 50.h,
+              right: 20.w,
+              child: IconButton(
+                icon: Icon(
+                  Icons.close,
+                  color: Colors.white,
+                  size: 30.sp,
+                ),
+                onPressed: () => Navigator.of(context).pop(),
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
   }
 
   // Add Google Drive URL conversion function
@@ -173,55 +214,71 @@ class _QuizBodyState extends State<QuizBody> {
                       ),
                       SizedBox(height: 20.sp),
 
-                      // Show image if available (using converted URL)
                       if (imageUrl != null && imageUrl.isNotEmpty)
                         Column(
                           children: [
-                            ClipRRect(
-                              child: CachedNetworkImage(
-                                imageUrl: imageUrl,
-                                placeholder: (context, url) => Center(
-                                  child: CircularProgressIndicator(
-                                    color: ZnoonaColors.main(context),
+                            GestureDetector(
+                              onTap: () => _showFullScreenImage(imageUrl),
+                              child: ClipRRect(
+                                borderRadius: BorderRadius.circular(12.r),
+                                child: CachedNetworkImage(
+                                  imageUrl: imageUrl,
+                                  height: 200.h,
+                                  fit: BoxFit.contain,
+                                  placeholder: (context, url) => Center(
+                                    child: CircularProgressIndicator(
+                                      color: ZnoonaColors.main(context),
+                                    ),
                                   ),
-                                ),
-                                errorWidget: (context, url, error) {
-                                  return Container(
-                                    height: 200.h,
-                                    color: Colors.grey[200],
-                                    child: Center(
-                                      child: Column(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.center,
-                                        children: [
-                                          Icon(
-                                            Icons.broken_image,
-                                            size: 50.sp,
-                                            color: ZnoonaColors.text(
-                                              context,
-                                            ).withOpacity(0.5),
-                                          ),
-                                          SizedBox(height: 10.h),
-                                          Text(
-                                            'Failed to load image',
-                                            style: TextStyle(
-                                              fontSize: 12.sp,
+                                  errorWidget: (context, url, error) {
+                                    return Container(
+                                      height: 200.h,
+                                      color: Colors.grey[200],
+                                      child: Center(
+                                        child: Column(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.center,
+                                          children: [
+                                            Icon(
+                                              Icons.broken_image,
+                                              size: 50.sp,
                                               color: ZnoonaColors.text(
                                                 context,
                                               ).withOpacity(0.5),
                                             ),
-                                          ),
-                                        ],
+                                            SizedBox(height: 10.h),
+                                            Text(
+                                              'Failed to load image',
+                                              style: TextStyle(
+                                                fontSize: 12.sp,
+                                                color: ZnoonaColors.text(
+                                                  context,
+                                                ).withOpacity(0.5),
+                                              ),
+                                            ),
+                                          ],
+                                        ),
                                       ),
-                                    ),
-                                  );
-                                },
+                                    );
+                                  },
+                                ),
                               ),
+                            ),
+                            SizedBox(height: 10.h),
+                            Text(
+                              'Tap image to zoom',
+                              style: TextStyle(
+                                fontSize: 12.sp,
+                                color: ZnoonaColors.text(
+                                  context,
+                                ).withOpacity(0.7),
+                                fontStyle: FontStyle.italic,
+                              ),
+                              textAlign: TextAlign.center,
                             ),
                             SizedBox(height: 20.sp),
                           ],
                         ),
-
                       Column(
                         mainAxisAlignment: MainAxisAlignment.center,
                         crossAxisAlignment: CrossAxisAlignment.stretch,

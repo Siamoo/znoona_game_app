@@ -160,7 +160,14 @@ class LangKeys {
   static const String fullNameTooLong = 'fullNameTooLong';
   static const String profileUpdated = 'profileUpdated';
   static const String chooseImageSource = 'chooseImageSource';
-static const String camera = 'camera';
-static const String gallery = 'gallery';
-static const String tapToChangePhoto = 'tapToChangePhoto';
+  static const String camera = 'camera';
+  static const String gallery = 'gallery';
+  static const String tapToChangePhoto = 'tapToChangePhoto';
+  static const String selectTimer = 'selectTimer';
+  static const String chooseTimeForEachQuestion = 'chooseTimeForEachQuestion';
+  static const String timerSelectionDescription = 'timerSelectionDescription';
+  static const String seconds = 'seconds';
+  static const String minute = 'minute';
+  static const String minutes = 'minutes';
+  static const String hour = 'hour';
 }

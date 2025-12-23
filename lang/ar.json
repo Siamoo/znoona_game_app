@@ -161,6 +161,12 @@
    "chooseImageSource": "اختر مصدر الصورة",
   "camera": "الكاميرا",
   "gallery": "المعرض",
-  "tapToChangePhoto": "انقر لتغيير الصورة"
+  "tapToChangePhoto": "انقر لتغيير الصورة",
+  "selectTimer": "اختر المؤقت",
+  "chooseTimeForEachQuestion": "اختر الوقت لكل سؤال",
+  "timerSelectionDescription": "اختر المدة الزمنية للإجابة على كل سؤال",
+  "seconds": "ثانية",
+  "minute": "دقيقة",
+  "hour": "ساعة"
 
 }

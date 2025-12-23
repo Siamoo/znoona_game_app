@@ -161,7 +161,13 @@
       "chooseImageSource": "Choose Image Source",
   "camera": "Camera",
   "gallery": "Gallery",
-  "tapToChangePhoto": "Tap to change photo"
+  "tapToChangePhoto": "Tap to change photo",
+  "selectTimer": "Select Timer",
+  "chooseTimeForEachQuestion": "Choose time for each question",
+  "timerSelectionDescription": "Select the time duration for each question",
+  "seconds": "Seconds",
+  "minute": "Minute",
+  "hour": "Hour"
 
 
 }

@@ -14,16 +14,18 @@ import 'package:medaan_almaarifa/features/quiz/single/presentation/screen/result
 import 'package:medaan_almaarifa/features/quiz/single/presentation/widgets/option_button.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:photo_view/photo_view.dart';
-import 'package:photo_view/photo_view_gallery.dart';
 
 class QuizBody extends StatefulWidget {
   const QuizBody({
     required this.categoryId,
     required this.categoryName,
+    required this.timerDuration,
     super.key,
   });
+
   final String categoryId;
   final String categoryName;
+  final int timerDuration; // Timer duration in seconds
 
   @override
   State<QuizBody> createState() => _QuizBodyState();
@@ -31,7 +33,7 @@ class QuizBody extends StatefulWidget {
 
 class _QuizBodyState extends State<QuizBody> {
   int currentQuestionIndex = 0;
-  int remainingTime = 15;
+  int remainingTime = 0; // Will be initialized with timerDuration
   Timer? timer;
   String? selectedAnswer;
   int correctCount = 0;
@@ -46,11 +48,13 @@ class _QuizBodyState extends State<QuizBody> {
   void initState() {
     super.initState();
     context.read<QuestionsCubit>().loadQuestions(widget.categoryId);
+    // Initialize remaining time with the selected duration
+    remainingTime = widget.timerDuration;
   }
 
   void startTimer() {
     timer?.cancel();
-    setState(() => remainingTime = 15);
+    setState(() => remainingTime = widget.timerDuration);
     timer = Timer.periodic(const Duration(seconds: 1), (t) {
       if (remainingTime > 0) {
         setState(() => remainingTime--);
@@ -130,7 +134,6 @@ class _QuizBodyState extends State<QuizBody> {
     );
   }
 
-  // Add Google Drive URL conversion function
   String? _convertGoogleDriveUrl(String? url) {
     if (url == null || url.isEmpty) return null;
 
@@ -153,6 +156,15 @@ class _QuizBodyState extends State<QuizBody> {
     super.dispose();
   }
 
+  String _formatTime(int seconds) {
+    if (seconds >= 60) {
+      final minutes = seconds ~/ 60;
+      final remainingSeconds = seconds % 60;
+      return '${minutes.toString().padLeft(2, '0')}:${remainingSeconds.toString().padLeft(2, '0')}';
+    }
+    return seconds.toString().padLeft(2, '0');
+  }
+
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<QuestionsCubit, QuestionsState>(
@@ -165,9 +177,7 @@ class _QuizBodyState extends State<QuizBody> {
             if (questions.isEmpty) {
               return SafeArea(
                 child: Padding(
-                  padding: EdgeInsets.symmetric(
-                    horizontal: 16.w,
-                  ),
+                  padding: EdgeInsets.symmetric(horizontal: 16.w),
                   child: Column(
                     children: [
                       CustomAppBar(
@@ -188,7 +198,6 @@ class _QuizBodyState extends State<QuizBody> {
             }
 
             final question = questions[currentQuestionIndex];
-            // Convert Google Drive URL if needed
             final imageUrl = _convertGoogleDriveUrl(question.image);
 
             return Scaffold(
@@ -203,28 +212,63 @@ class _QuizBodyState extends State<QuizBody> {
                         otherText:
                             '${currentQuestionIndex + 1}  ${ZnoonaTexts.tr(context, LangKeys.from)}  ${questions.length}  ${ZnoonaTexts.tr(context, LangKeys.question)}',
                       ),
-                      Text(
-                        '⏳ $remainingTime',
-                        style: GoogleFonts.beiruti(
-                          fontSize: 18.sp,
-                          fontWeight: FontWeight.bold,
-                          color: ZnoonaColors.text(context),
-                        ),
-                        textAlign: TextAlign.center,
+                      SizedBox(height: 20.h),
+
+                      // Timer with progress indicator
+                      Column(
+                        children: [
+                          LinearProgressIndicator(
+                            value: remainingTime / widget.timerDuration,
+                            backgroundColor: Colors.grey[300],
+                            valueColor: AlwaysStoppedAnimation<Color>(
+                              remainingTime > widget.timerDuration * 0.3
+                                  ? Colors.green
+                                  : remainingTime > widget.timerDuration * 0.1
+                                  ? Colors.orange
+                                  : Colors.red,
+                            ),
+                            minHeight: 8.h,
+                            borderRadius: BorderRadius.circular(4.r),
+                          ),
+                          SizedBox(height: 10.h),
+                          Text(
+                            '⏳ ${_formatTime(remainingTime)}',
+                            style: GoogleFonts.beiruti(
+                              fontSize: 24.sp,
+                              fontWeight: FontWeight.bold,
+                              color: remainingTime > widget.timerDuration * 0.3
+                                  ? Colors.green
+                                  : remainingTime > widget.timerDuration * 0.1
+                                  ? Colors.orange
+                                  : Colors.red,
+                            ),
+                            textAlign: TextAlign.center,
+                          ),
+                        ],
                       ),
                       SizedBox(height: 20.sp),
 
                       if (imageUrl != null && imageUrl.isNotEmpty)
                         Column(
                           children: [
+                            Text(
+                              'Tap image to zoom',
+                              style: TextStyle(
+                                fontSize: 12.sp,
+                                color: ZnoonaColors.text(
+                                  context,
+                                ).withOpacity(0.7),
+                                fontStyle: FontStyle.italic,
+                              ),
+                              textAlign: TextAlign.center,
+                            ),
+                            SizedBox(height: 5.h),
                             GestureDetector(
                               onTap: () => _showFullScreenImage(imageUrl),
                               child: ClipRRect(
-                                borderRadius: BorderRadius.circular(12.r),
+                                borderRadius: BorderRadius.circular(8.r),
                                 child: CachedNetworkImage(
                                   imageUrl: imageUrl,
-                                  height: 200.h,
-                                  fit: BoxFit.contain,
                                   placeholder: (context, url) => Center(
                                     child: CircularProgressIndicator(
                                       color: ZnoonaColors.main(context),
@@ -264,18 +308,6 @@ class _QuizBodyState extends State<QuizBody> {
                                 ),
                               ),
                             ),
-                            SizedBox(height: 10.h),
-                            Text(
-                              'Tap image to zoom',
-                              style: TextStyle(
-                                fontSize: 12.sp,
-                                color: ZnoonaColors.text(
-                                  context,
-                                ).withOpacity(0.7),
-                                fontStyle: FontStyle.italic,
-                              ),
-                              textAlign: TextAlign.center,
-                            ),
                             SizedBox(height: 20.sp),
                           ],
                         ),
@@ -288,7 +320,7 @@ class _QuizBodyState extends State<QuizBody> {
                             style: GoogleFonts.scheherazadeNew(
                               fontSize: imageUrl != null && imageUrl.isNotEmpty
                                   ? 18.sp
-                                  : 22.sp, // Adjust font size if image is present
+                                  : 22.sp,
                               fontWeight: FontWeight.bold,
                               color: ZnoonaColors.text(context),
                             ),
@@ -309,7 +341,7 @@ class _QuizBodyState extends State<QuizBody> {
                               remainingTime: remainingTime,
                             );
                           }),
-                          SizedBox(height: 20.sp), // Extra space at bottom
+                          SizedBox(height: 20.sp),
                         ],
                       ),
                     ],

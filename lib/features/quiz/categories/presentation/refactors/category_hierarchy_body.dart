@@ -10,6 +10,7 @@ import 'package:medaan_almaarifa/features/quiz/categories/presentation/refactors
 import 'package:medaan_almaarifa/features/quiz/categories/presentation/widgets/category_level_class.dart';
 import 'package:medaan_almaarifa/features/quiz/room/presentation/screen/room_creation_screen.dart';
 import 'package:medaan_almaarifa/features/quiz/single/presentation/screen/quiz_screen.dart';
+import 'package:medaan_almaarifa/features/quiz/single/presentation/screen/timer_selection_screen.dart';
 
 class CategoryHierarchyBody extends StatefulWidget {
   const CategoryHierarchyBody({required this.isRoom, super.key});
@@ -87,7 +88,7 @@ class _CategoryHierarchyBodyState extends State<CategoryHierarchyBody> {
               categoryName: category.arabicName,
               imageUrl: category.image,
             )
-          : QuizScreen(
+          : TimerSelectionScreen(
               categoryId: category.id,
               categoryName: category.arabicName,
             ),

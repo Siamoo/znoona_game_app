@@ -9,7 +9,6 @@ import 'package:medaan_almaarifa/features/quiz/categories/presentation/cubit/cat
 import 'package:medaan_almaarifa/features/quiz/categories/presentation/refactors/category_level_body.dart';
 import 'package:medaan_almaarifa/features/quiz/categories/presentation/widgets/category_level_class.dart';
 import 'package:medaan_almaarifa/features/quiz/room/presentation/screen/room_creation_screen.dart';
-import 'package:medaan_almaarifa/features/quiz/single/presentation/screen/quiz_screen.dart';
 import 'package:medaan_almaarifa/features/quiz/single/presentation/screen/timer_selection_screen.dart';
 
 class CategoryHierarchyBody extends StatefulWidget {
@@ -46,12 +45,16 @@ class _CategoryHierarchyBodyState extends State<CategoryHierarchyBody> {
     } else {
       // Navigate to next level
       await context.read<CategoriesCubit>().loadSubCategories(category.id);
-      _navigationStack.add(
-        CategoryLevel(
-          title: category.name,
-          parentId: category.id,
-        ),
-      );
+
+      // Add this setState call to trigger UI rebuild
+      setState(() {
+        _navigationStack.add(
+          CategoryLevel(
+            title: category.arabicName,
+            parentId: category.id,
+          ),
+        );
+      });
     }
   }
 

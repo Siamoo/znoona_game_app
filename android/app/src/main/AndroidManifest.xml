@@ -8,10 +8,29 @@
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
 
+    <!-- ADD THESE PERMISSIONS FOR AUDIO AND NETWORK -->
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+    
+    <!-- Optional: For vibration feedback -->
+    <uses-permission android:name="android.permission.VIBRATE" />
+
     <application
         android:label="ميدان المعرفة"
         android:name="${applicationName}"
-        android:icon="@mipmap/launcher_icon">
+        android:icon="@mipmap/launcher_icon"
+        android:usesCleartextTraffic="true"> <!-- Add this for HTTP traffic -->
+
+        <!-- Add this meta-data for AudioPlayers plugin -->
+        <meta-data
+            android:name="flutterEmbedding"
+            android:value="2" />
+            
+        <!-- Add audio session meta-data -->
+        <meta-data
+            android:name="android.media.metadata.AUDIO_SESSION_ID"
+            android:value="1" />
 
         <activity
             android:name=".MainActivity"

@@ -11,6 +11,7 @@ environment:
 dependencies:
   animate_do: ^4.2.0
   async: ^2.11.0
+  audioplayers: ^6.5.1
   cached_network_image: ^3.4.1
   connectivity_plus: ^7.0.0
   cupertino_icons: ^1.0.8
@@ -30,12 +31,15 @@ dependencies:
   google_sign_in: ^7.2.0
   image_picker: ^1.2.1
   json_annotation: ^4.9.0
+  just_audio: ^0.10.5
   mobile_scanner: ^7.1.4
   permission_handler: ^12.0.1
   photo_view: ^0.15.0
   qr_flutter: ^4.1.0
   shared_preferences: ^2.5.3
   supabase_flutter: ^2.12.0
+  vibration: ^3.1.6
+  audio_session: ^0.1.21
 
 dev_dependencies:
   build_runner: ^2.4.11
@@ -58,6 +62,7 @@ flutter:
     - assets/images/core/
     - assets/images/user/
     - assets/svg/
+    - assets/audio/
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/to/resolution-aware-images
   # For details regarding adding assets from package dependencies, see

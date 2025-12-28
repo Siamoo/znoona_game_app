@@ -1,4 +1,13 @@
 class PrefKeys {
-  static const String themeMode = 'mode';
-  static const String language = 'language';
+  // Theme
+  static const themeMode = 'themeMode';
+  
+  // Language
+  static const language = 'language';
+  
+  // Audio
+  static const soundEnabled = 'soundEnabled';
+  static const backgroundMusicEnabled = 'backgroundMusicEnabled';
+  static const soundVolume = 'soundVolume';
+  static const musicVolume = 'musicVolume';
 }

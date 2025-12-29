@@ -170,4 +170,9 @@ class LangKeys {
   static const String minute = 'minute';
   static const String minutes = 'minutes';
   static const String hour = 'hour';
+  static const String soundSettings = 'sound_settings';
+  static const String soundEffects = 'sound_effects';
+  static const String backgroundMusic = 'background_music';
+  static const String volume = 'volume';
+  static const String testSound = 'test_sound';
 }

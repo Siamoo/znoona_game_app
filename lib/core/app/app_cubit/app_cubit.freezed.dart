@@ -17,50 +17,34 @@ final _privateConstructorUsedError = UnsupportedError(
 
 /// @nodoc
 mixin _$AppState {
-  @optionalTypeArgs
-  TResult when<TResult extends Object?>({
-    required TResult Function() initial,
-    required TResult Function(bool isDarkMode) themeChangMode,
-    required TResult Function(Locale locale) languageChange,
-  }) => throw _privateConstructorUsedError;
-  @optionalTypeArgs
-  TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function()? initial,
-    TResult? Function(bool isDarkMode)? themeChangMode,
-    TResult? Function(Locale locale)? languageChange,
-  }) => throw _privateConstructorUsedError;
-  @optionalTypeArgs
-  TResult maybeWhen<TResult extends Object?>({
-    TResult Function()? initial,
-    TResult Function(bool isDarkMode)? themeChangMode,
-    TResult Function(Locale locale)? languageChange,
-    required TResult orElse(),
-  }) => throw _privateConstructorUsedError;
-  @optionalTypeArgs
-  TResult map<TResult extends Object?>({
-    required TResult Function(_Initial value) initial,
-    required TResult Function(ThemeChangModeState value) themeChangMode,
-    required TResult Function(LanguageChangState value) languageChange,
-  }) => throw _privateConstructorUsedError;
-  @optionalTypeArgs
-  TResult? mapOrNull<TResult extends Object?>({
-    TResult? Function(_Initial value)? initial,
-    TResult? Function(ThemeChangModeState value)? themeChangMode,
-    TResult? Function(LanguageChangState value)? languageChange,
-  }) => throw _privateConstructorUsedError;
-  @optionalTypeArgs
-  TResult maybeMap<TResult extends Object?>({
-    TResult Function(_Initial value)? initial,
-    TResult Function(ThemeChangModeState value)? themeChangMode,
-    TResult Function(LanguageChangState value)? languageChange,
-    required TResult orElse(),
-  }) => throw _privateConstructorUsedError;
+  // Theme
+  bool get isDarkMode => throw _privateConstructorUsedError; // Language
+  Locale get locale => throw _privateConstructorUsedError; // Audio Settings
+  bool get isSoundEnabled => throw _privateConstructorUsedError;
+  bool get isBackgroundMusicEnabled => throw _privateConstructorUsedError;
+  double get soundVolume => throw _privateConstructorUsedError;
+  double get musicVolume => throw _privateConstructorUsedError;
+
+  /// Create a copy of AppState
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  $AppStateCopyWith<AppState> get copyWith =>
+      throw _privateConstructorUsedError;
 }
 
 /// @nodoc
 abstract class $AppStateCopyWith<$Res> {
   factory $AppStateCopyWith(AppState value, $Res Function(AppState) then) =
       _$AppStateCopyWithImpl<$Res, AppState>;
+  @useResult
+  $Res call({
+    bool isDarkMode,
+    Locale locale,
+    bool isSoundEnabled,
+    bool isBackgroundMusicEnabled,
+    double soundVolume,
+    double musicVolume,
+  });
 }
 
 /// @nodoc
@@ -75,320 +59,114 @@ class _$AppStateCopyWithImpl<$Res, $Val extends AppState>
 
   /// Create a copy of AppState
   /// with the given fields replaced by the non-null parameter values.
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? isDarkMode = null,
+    Object? locale = null,
+    Object? isSoundEnabled = null,
+    Object? isBackgroundMusicEnabled = null,
+    Object? soundVolume = null,
+    Object? musicVolume = null,
+  }) {
+    return _then(
+      _value.copyWith(
+            isDarkMode: null == isDarkMode
+                ? _value.isDarkMode
+                : isDarkMode // ignore: cast_nullable_to_non_nullable
+                      as bool,
+            locale: null == locale
+                ? _value.locale
+                : locale // ignore: cast_nullable_to_non_nullable
+                      as Locale,
+            isSoundEnabled: null == isSoundEnabled
+                ? _value.isSoundEnabled
+                : isSoundEnabled // ignore: cast_nullable_to_non_nullable
+                      as bool,
+            isBackgroundMusicEnabled: null == isBackgroundMusicEnabled
+                ? _value.isBackgroundMusicEnabled
+                : isBackgroundMusicEnabled // ignore: cast_nullable_to_non_nullable
+                      as bool,
+            soundVolume: null == soundVolume
+                ? _value.soundVolume
+                : soundVolume // ignore: cast_nullable_to_non_nullable
+                      as double,
+            musicVolume: null == musicVolume
+                ? _value.musicVolume
+                : musicVolume // ignore: cast_nullable_to_non_nullable
+                      as double,
+          )
+          as $Val,
+    );
+  }
 }
 
 /// @nodoc
-abstract class _$$InitialImplCopyWith<$Res> {
-  factory _$$InitialImplCopyWith(
-    _$InitialImpl value,
-    $Res Function(_$InitialImpl) then,
-  ) = __$$InitialImplCopyWithImpl<$Res>;
-}
-
-/// @nodoc
-class __$$InitialImplCopyWithImpl<$Res>
-    extends _$AppStateCopyWithImpl<$Res, _$InitialImpl>
-    implements _$$InitialImplCopyWith<$Res> {
-  __$$InitialImplCopyWithImpl(
-    _$InitialImpl _value,
-    $Res Function(_$InitialImpl) _then,
-  ) : super(_value, _then);
-
-  /// Create a copy of AppState
-  /// with the given fields replaced by the non-null parameter values.
-}
-
-/// @nodoc
-
-class _$InitialImpl with DiagnosticableTreeMixin implements _Initial {
-  const _$InitialImpl();
-
+abstract class _$$AppStateImplCopyWith<$Res>
+    implements $AppStateCopyWith<$Res> {
+  factory _$$AppStateImplCopyWith(
+    _$AppStateImpl value,
+    $Res Function(_$AppStateImpl) then,
+  ) = __$$AppStateImplCopyWithImpl<$Res>;
   @override
-  String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
-    return 'AppState.initial()';
-  }
-
-  @override
-  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
-    super.debugFillProperties(properties);
-    properties..add(DiagnosticsProperty('type', 'AppState.initial'));
-  }
-
-  @override
-  bool operator ==(Object other) {
-    return identical(this, other) ||
-        (other.runtimeType == runtimeType && other is _$InitialImpl);
-  }
-
-  @override
-  int get hashCode => runtimeType.hashCode;
-
-  @override
-  @optionalTypeArgs
-  TResult when<TResult extends Object?>({
-    required TResult Function() initial,
-    required TResult Function(bool isDarkMode) themeChangMode,
-    required TResult Function(Locale locale) languageChange,
-  }) {
-    return initial();
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function()? initial,
-    TResult? Function(bool isDarkMode)? themeChangMode,
-    TResult? Function(Locale locale)? languageChange,
-  }) {
-    return initial?.call();
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult maybeWhen<TResult extends Object?>({
-    TResult Function()? initial,
-    TResult Function(bool isDarkMode)? themeChangMode,
-    TResult Function(Locale locale)? languageChange,
-    required TResult orElse(),
-  }) {
-    if (initial != null) {
-      return initial();
-    }
-    return orElse();
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult map<TResult extends Object?>({
-    required TResult Function(_Initial value) initial,
-    required TResult Function(ThemeChangModeState value) themeChangMode,
-    required TResult Function(LanguageChangState value) languageChange,
-  }) {
-    return initial(this);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult? mapOrNull<TResult extends Object?>({
-    TResult? Function(_Initial value)? initial,
-    TResult? Function(ThemeChangModeState value)? themeChangMode,
-    TResult? Function(LanguageChangState value)? languageChange,
-  }) {
-    return initial?.call(this);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult maybeMap<TResult extends Object?>({
-    TResult Function(_Initial value)? initial,
-    TResult Function(ThemeChangModeState value)? themeChangMode,
-    TResult Function(LanguageChangState value)? languageChange,
-    required TResult orElse(),
-  }) {
-    if (initial != null) {
-      return initial(this);
-    }
-    return orElse();
-  }
-}
-
-abstract class _Initial implements AppState {
-  const factory _Initial() = _$InitialImpl;
-}
-
-/// @nodoc
-abstract class _$$ThemeChangModeStateImplCopyWith<$Res> {
-  factory _$$ThemeChangModeStateImplCopyWith(
-    _$ThemeChangModeStateImpl value,
-    $Res Function(_$ThemeChangModeStateImpl) then,
-  ) = __$$ThemeChangModeStateImplCopyWithImpl<$Res>;
   @useResult
-  $Res call({bool isDarkMode});
+  $Res call({
+    bool isDarkMode,
+    Locale locale,
+    bool isSoundEnabled,
+    bool isBackgroundMusicEnabled,
+    double soundVolume,
+    double musicVolume,
+  });
 }
 
 /// @nodoc
-class __$$ThemeChangModeStateImplCopyWithImpl<$Res>
-    extends _$AppStateCopyWithImpl<$Res, _$ThemeChangModeStateImpl>
-    implements _$$ThemeChangModeStateImplCopyWith<$Res> {
-  __$$ThemeChangModeStateImplCopyWithImpl(
-    _$ThemeChangModeStateImpl _value,
-    $Res Function(_$ThemeChangModeStateImpl) _then,
+class __$$AppStateImplCopyWithImpl<$Res>
+    extends _$AppStateCopyWithImpl<$Res, _$AppStateImpl>
+    implements _$$AppStateImplCopyWith<$Res> {
+  __$$AppStateImplCopyWithImpl(
+    _$AppStateImpl _value,
+    $Res Function(_$AppStateImpl) _then,
   ) : super(_value, _then);
 
   /// Create a copy of AppState
   /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
-  $Res call({Object? isDarkMode = null}) {
+  $Res call({
+    Object? isDarkMode = null,
+    Object? locale = null,
+    Object? isSoundEnabled = null,
+    Object? isBackgroundMusicEnabled = null,
+    Object? soundVolume = null,
+    Object? musicVolume = null,
+  }) {
     return _then(
-      _$ThemeChangModeStateImpl(
+      _$AppStateImpl(
         isDarkMode: null == isDarkMode
             ? _value.isDarkMode
             : isDarkMode // ignore: cast_nullable_to_non_nullable
                   as bool,
-      ),
-    );
-  }
-}
-
-/// @nodoc
-
-class _$ThemeChangModeStateImpl
-    with DiagnosticableTreeMixin
-    implements ThemeChangModeState {
-  const _$ThemeChangModeStateImpl({required this.isDarkMode});
-
-  @override
-  final bool isDarkMode;
-
-  @override
-  String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
-    return 'AppState.themeChangMode(isDarkMode: $isDarkMode)';
-  }
-
-  @override
-  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
-    super.debugFillProperties(properties);
-    properties
-      ..add(DiagnosticsProperty('type', 'AppState.themeChangMode'))
-      ..add(DiagnosticsProperty('isDarkMode', isDarkMode));
-  }
-
-  @override
-  bool operator ==(Object other) {
-    return identical(this, other) ||
-        (other.runtimeType == runtimeType &&
-            other is _$ThemeChangModeStateImpl &&
-            (identical(other.isDarkMode, isDarkMode) ||
-                other.isDarkMode == isDarkMode));
-  }
-
-  @override
-  int get hashCode => Object.hash(runtimeType, isDarkMode);
-
-  /// Create a copy of AppState
-  /// with the given fields replaced by the non-null parameter values.
-  @JsonKey(includeFromJson: false, includeToJson: false)
-  @override
-  @pragma('vm:prefer-inline')
-  _$$ThemeChangModeStateImplCopyWith<_$ThemeChangModeStateImpl> get copyWith =>
-      __$$ThemeChangModeStateImplCopyWithImpl<_$ThemeChangModeStateImpl>(
-        this,
-        _$identity,
-      );
-
-  @override
-  @optionalTypeArgs
-  TResult when<TResult extends Object?>({
-    required TResult Function() initial,
-    required TResult Function(bool isDarkMode) themeChangMode,
-    required TResult Function(Locale locale) languageChange,
-  }) {
-    return themeChangMode(isDarkMode);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function()? initial,
-    TResult? Function(bool isDarkMode)? themeChangMode,
-    TResult? Function(Locale locale)? languageChange,
-  }) {
-    return themeChangMode?.call(isDarkMode);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult maybeWhen<TResult extends Object?>({
-    TResult Function()? initial,
-    TResult Function(bool isDarkMode)? themeChangMode,
-    TResult Function(Locale locale)? languageChange,
-    required TResult orElse(),
-  }) {
-    if (themeChangMode != null) {
-      return themeChangMode(isDarkMode);
-    }
-    return orElse();
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult map<TResult extends Object?>({
-    required TResult Function(_Initial value) initial,
-    required TResult Function(ThemeChangModeState value) themeChangMode,
-    required TResult Function(LanguageChangState value) languageChange,
-  }) {
-    return themeChangMode(this);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult? mapOrNull<TResult extends Object?>({
-    TResult? Function(_Initial value)? initial,
-    TResult? Function(ThemeChangModeState value)? themeChangMode,
-    TResult? Function(LanguageChangState value)? languageChange,
-  }) {
-    return themeChangMode?.call(this);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult maybeMap<TResult extends Object?>({
-    TResult Function(_Initial value)? initial,
-    TResult Function(ThemeChangModeState value)? themeChangMode,
-    TResult Function(LanguageChangState value)? languageChange,
-    required TResult orElse(),
-  }) {
-    if (themeChangMode != null) {
-      return themeChangMode(this);
-    }
-    return orElse();
-  }
-}
-
-abstract class ThemeChangModeState implements AppState {
-  const factory ThemeChangModeState({required final bool isDarkMode}) =
-      _$ThemeChangModeStateImpl;
-
-  bool get isDarkMode;
-
-  /// Create a copy of AppState
-  /// with the given fields replaced by the non-null parameter values.
-  @JsonKey(includeFromJson: false, includeToJson: false)
-  _$$ThemeChangModeStateImplCopyWith<_$ThemeChangModeStateImpl> get copyWith =>
-      throw _privateConstructorUsedError;
-}
-
-/// @nodoc
-abstract class _$$LanguageChangStateImplCopyWith<$Res> {
-  factory _$$LanguageChangStateImplCopyWith(
-    _$LanguageChangStateImpl value,
-    $Res Function(_$LanguageChangStateImpl) then,
-  ) = __$$LanguageChangStateImplCopyWithImpl<$Res>;
-  @useResult
-  $Res call({Locale locale});
-}
-
-/// @nodoc
-class __$$LanguageChangStateImplCopyWithImpl<$Res>
-    extends _$AppStateCopyWithImpl<$Res, _$LanguageChangStateImpl>
-    implements _$$LanguageChangStateImplCopyWith<$Res> {
-  __$$LanguageChangStateImplCopyWithImpl(
-    _$LanguageChangStateImpl _value,
-    $Res Function(_$LanguageChangStateImpl) _then,
-  ) : super(_value, _then);
-
-  /// Create a copy of AppState
-  /// with the given fields replaced by the non-null parameter values.
-  @pragma('vm:prefer-inline')
-  @override
-  $Res call({Object? locale = null}) {
-    return _then(
-      _$LanguageChangStateImpl(
         locale: null == locale
             ? _value.locale
             : locale // ignore: cast_nullable_to_non_nullable
                   as Locale,
+        isSoundEnabled: null == isSoundEnabled
+            ? _value.isSoundEnabled
+            : isSoundEnabled // ignore: cast_nullable_to_non_nullable
+                  as bool,
+        isBackgroundMusicEnabled: null == isBackgroundMusicEnabled
+            ? _value.isBackgroundMusicEnabled
+            : isBackgroundMusicEnabled // ignore: cast_nullable_to_non_nullable
+                  as bool,
+        soundVolume: null == soundVolume
+            ? _value.soundVolume
+            : soundVolume // ignore: cast_nullable_to_non_nullable
+                  as double,
+        musicVolume: null == musicVolume
+            ? _value.musicVolume
+            : musicVolume // ignore: cast_nullable_to_non_nullable
+                  as double,
       ),
     );
   }
@@ -396,127 +174,106 @@ class __$$LanguageChangStateImplCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$LanguageChangStateImpl
-    with DiagnosticableTreeMixin
-    implements LanguageChangState {
-  const _$LanguageChangStateImpl({required this.locale});
+class _$AppStateImpl implements _AppState {
+  const _$AppStateImpl({
+    required this.isDarkMode,
+    required this.locale,
+    required this.isSoundEnabled,
+    required this.isBackgroundMusicEnabled,
+    required this.soundVolume,
+    required this.musicVolume,
+  });
 
+  // Theme
+  @override
+  final bool isDarkMode;
+  // Language
   @override
   final Locale locale;
+  // Audio Settings
+  @override
+  final bool isSoundEnabled;
+  @override
+  final bool isBackgroundMusicEnabled;
+  @override
+  final double soundVolume;
+  @override
+  final double musicVolume;
 
   @override
-  String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
-    return 'AppState.languageChange(locale: $locale)';
-  }
-
-  @override
-  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
-    super.debugFillProperties(properties);
-    properties
-      ..add(DiagnosticsProperty('type', 'AppState.languageChange'))
-      ..add(DiagnosticsProperty('locale', locale));
+  String toString() {
+    return 'AppState(isDarkMode: $isDarkMode, locale: $locale, isSoundEnabled: $isSoundEnabled, isBackgroundMusicEnabled: $isBackgroundMusicEnabled, soundVolume: $soundVolume, musicVolume: $musicVolume)';
   }
 
   @override
   bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$LanguageChangStateImpl &&
-            (identical(other.locale, locale) || other.locale == locale));
+            other is _$AppStateImpl &&
+            (identical(other.isDarkMode, isDarkMode) ||
+                other.isDarkMode == isDarkMode) &&
+            (identical(other.locale, locale) || other.locale == locale) &&
+            (identical(other.isSoundEnabled, isSoundEnabled) ||
+                other.isSoundEnabled == isSoundEnabled) &&
+            (identical(
+                  other.isBackgroundMusicEnabled,
+                  isBackgroundMusicEnabled,
+                ) ||
+                other.isBackgroundMusicEnabled == isBackgroundMusicEnabled) &&
+            (identical(other.soundVolume, soundVolume) ||
+                other.soundVolume == soundVolume) &&
+            (identical(other.musicVolume, musicVolume) ||
+                other.musicVolume == musicVolume));
   }
 
   @override
-  int get hashCode => Object.hash(runtimeType, locale);
+  int get hashCode => Object.hash(
+    runtimeType,
+    isDarkMode,
+    locale,
+    isSoundEnabled,
+    isBackgroundMusicEnabled,
+    soundVolume,
+    musicVolume,
+  );
 
   /// Create a copy of AppState
   /// with the given fields replaced by the non-null parameter values.
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   @pragma('vm:prefer-inline')
-  _$$LanguageChangStateImplCopyWith<_$LanguageChangStateImpl> get copyWith =>
-      __$$LanguageChangStateImplCopyWithImpl<_$LanguageChangStateImpl>(
-        this,
-        _$identity,
-      );
-
-  @override
-  @optionalTypeArgs
-  TResult when<TResult extends Object?>({
-    required TResult Function() initial,
-    required TResult Function(bool isDarkMode) themeChangMode,
-    required TResult Function(Locale locale) languageChange,
-  }) {
-    return languageChange(locale);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function()? initial,
-    TResult? Function(bool isDarkMode)? themeChangMode,
-    TResult? Function(Locale locale)? languageChange,
-  }) {
-    return languageChange?.call(locale);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult maybeWhen<TResult extends Object?>({
-    TResult Function()? initial,
-    TResult Function(bool isDarkMode)? themeChangMode,
-    TResult Function(Locale locale)? languageChange,
-    required TResult orElse(),
-  }) {
-    if (languageChange != null) {
-      return languageChange(locale);
-    }
-    return orElse();
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult map<TResult extends Object?>({
-    required TResult Function(_Initial value) initial,
-    required TResult Function(ThemeChangModeState value) themeChangMode,
-    required TResult Function(LanguageChangState value) languageChange,
-  }) {
-    return languageChange(this);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult? mapOrNull<TResult extends Object?>({
-    TResult? Function(_Initial value)? initial,
-    TResult? Function(ThemeChangModeState value)? themeChangMode,
-    TResult? Function(LanguageChangState value)? languageChange,
-  }) {
-    return languageChange?.call(this);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult maybeMap<TResult extends Object?>({
-    TResult Function(_Initial value)? initial,
-    TResult Function(ThemeChangModeState value)? themeChangMode,
-    TResult Function(LanguageChangState value)? languageChange,
-    required TResult orElse(),
-  }) {
-    if (languageChange != null) {
-      return languageChange(this);
-    }
-    return orElse();
-  }
+  _$$AppStateImplCopyWith<_$AppStateImpl> get copyWith =>
+      __$$AppStateImplCopyWithImpl<_$AppStateImpl>(this, _$identity);
 }
 
-abstract class LanguageChangState implements AppState {
-  const factory LanguageChangState({required final Locale locale}) =
-      _$LanguageChangStateImpl;
+abstract class _AppState implements AppState {
+  const factory _AppState({
+    required final bool isDarkMode,
+    required final Locale locale,
+    required final bool isSoundEnabled,
+    required final bool isBackgroundMusicEnabled,
+    required final double soundVolume,
+    required final double musicVolume,
+  }) = _$AppStateImpl;
 
-  Locale get locale;
+  // Theme
+  @override
+  bool get isDarkMode; // Language
+  @override
+  Locale get locale; // Audio Settings
+  @override
+  bool get isSoundEnabled;
+  @override
+  bool get isBackgroundMusicEnabled;
+  @override
+  double get soundVolume;
+  @override
+  double get musicVolume;
 
   /// Create a copy of AppState
   /// with the given fields replaced by the non-null parameter values.
+  @override
   @JsonKey(includeFromJson: false, includeToJson: false)
-  _$$LanguageChangStateImplCopyWith<_$LanguageChangStateImpl> get copyWith =>
+  _$$AppStateImplCopyWith<_$AppStateImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }

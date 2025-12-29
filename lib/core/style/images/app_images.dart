@@ -29,4 +29,5 @@ class AppImages {
   static const google = 'assets/svg/google.svg';
   static const editProfile = 'assets/svg/edit_profile.svg';
   static const language = 'assets/svg/language.svg';
+  static const volume = 'assets/svg/volume.svg';
 }

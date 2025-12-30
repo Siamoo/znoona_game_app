@@ -49,6 +49,9 @@ import 'package:medaan_almaarifa/features/quiz/categories/data/repositories/cate
 import 'package:medaan_almaarifa/features/quiz/categories/domain/repositories/categories_repository.dart';
 import 'package:medaan_almaarifa/features/quiz/categories/presentation/cubit/categories_cubit.dart';
 
+// Add AudioService import
+import 'package:medaan_almaarifa/core/helpers/audio_service.dart';
+
 // ---------------- MULTIPLAYER ROOM ----------------
 
 final GetIt sl = GetIt.instance;
@@ -59,6 +62,11 @@ Future<void> setupInjector() async {
     ..registerFactory(AppCubit.new)
     /// External
     ..registerLazySingleton(() => Supabase.instance.client)
+    // ---------------- AUDIO SERVICE ----------------
+    /// Audio Service (Singleton) - SIMPLIFIED REGISTRATION
+    ..registerSingleton<AudioService>(
+      AudioService(),
+    )
     // ---------------- AUTH ----------------
     /// Datasources
     ..registerLazySingleton<AuthRemoteDataSource>(
@@ -73,14 +81,16 @@ Future<void> setupInjector() async {
     ..registerLazySingleton(() => LoginWithGoogleUseCase(sl()))
     ..registerLazySingleton(() => GetCurrentUserUseCase(sl()))
     /// Cubits - UPDATED TO INCLUDE AUTHREPOSITORY
-    ..registerFactory(() => AuthCubit(
-      loginUseCase: sl(),
-      signUpUseCase: sl(),
-      loginWithGoogleUseCase: sl(),
-      logoutUseCase: sl(),
-      getCurrentUserUseCase: sl(),
-      authRepository: sl(), // ADD THIS
-    ))
+    ..registerFactory(
+      () => AuthCubit(
+        loginUseCase: sl(),
+        signUpUseCase: sl(),
+        loginWithGoogleUseCase: sl(),
+        logoutUseCase: sl(),
+        getCurrentUserUseCase: sl(),
+        authRepository: sl(), // ADD THIS
+      ),
+    )
     // ---------------- CATEGORIES ----------------
     /// Datasources
     ..registerLazySingleton<CategoriesRemoteDataSource>(
@@ -93,7 +103,6 @@ Future<void> setupInjector() async {
     /// Usecases
     ..registerLazySingleton(() => GetMainCategoriesUseCase(sl()))
     ..registerLazySingleton(() => GetSubCategoriesUseCase(sl()))
-    
     /// Cubits
     ..registerFactory(
       () => CategoriesCubit(

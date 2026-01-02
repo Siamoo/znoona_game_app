@@ -39,28 +39,45 @@ class CustomAppBar extends StatelessWidget {
         if (otherText == null)
           const SizedBox()
         else
-          TextApp(
-            text: ZnoonaTexts.tr(
-              context,
-              otherText!,
-            ),
-            textStyle: GoogleFonts.beiruti(
-              fontSize: 18.sp,
-              fontWeight: FontWeight.w800,
-              color: ZnoonaColors.text(context),
+          CustomFadeInLeft(
+            duration: 500,
+            child: Container(
+              constraints: BoxConstraints(
+                maxWidth: 150.w,
+              ),
+              child: TextApp(
+                text: ZnoonaTexts.tr(
+                  context,
+                  otherText!,
+                ),
+                textStyle: GoogleFonts.beiruti(
+                  fontSize: 18.sp,
+                  fontWeight: FontWeight.w800,
+                  color: ZnoonaColors.text(context),
+                ),
+                maxLines: 1,
+                textOverflow: TextOverflow.ellipsis,
+              ),
             ),
           ),
         CustomFadeInLeft(
           duration: 500,
-          child: TextApp(
-            text: ZnoonaTexts.tr(
-              context,
-              title,
+          child: Container(
+            constraints: BoxConstraints(
+              maxWidth: 200.w,
             ),
-            textStyle: GoogleFonts.beiruti(
-              fontSize: 26.sp,
-              fontWeight: FontWeight.w800,
-              color: ZnoonaColors.text(context),
+            child: TextApp(
+              text: ZnoonaTexts.tr(
+                context,
+                title,
+              ),
+              textStyle: GoogleFonts.beiruti(
+                fontSize: 26.sp,
+                fontWeight: FontWeight.w800,
+                color: ZnoonaColors.text(context),
+              ),
+              maxLines: 2,
+              textOverflow: TextOverflow.ellipsis,
             ),
           ),
         ),

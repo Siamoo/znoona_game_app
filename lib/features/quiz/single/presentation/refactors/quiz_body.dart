@@ -5,11 +5,14 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:get_it/get_it.dart';
+import 'package:medaan_almaarifa/core/app/app_cubit/app_cubit.dart';
 import 'package:medaan_almaarifa/core/common/widgets/custom_app_bar.dart';
 import 'package:medaan_almaarifa/core/helpers/znoona.colors.dart';
 import 'package:medaan_almaarifa/core/helpers/znoona_navigate.dart';
 import 'package:medaan_almaarifa/core/helpers/znoona_texts.dart';
 import 'package:medaan_almaarifa/core/language/lang_keys.dart';
+import 'package:medaan_almaarifa/core/helpers/audio_service.dart';
 import 'package:medaan_almaarifa/features/quiz/single/domain/entities/question.dart';
 import 'package:medaan_almaarifa/features/quiz/single/presentation/cubit/questions_cubit.dart';
 import 'package:medaan_almaarifa/features/quiz/single/presentation/screen/results_screen.dart';
@@ -38,6 +41,8 @@ class _QuizBodyState extends State<QuizBody> {
   Timer? timer;
   String? selectedAnswer;
   int correctCount = 0;
+  bool _hasPlayedTimerWarning = false;
+  // bool _hasPlayedTimerCritical = false;
 
   List<Question> get questions =>
       context.read<QuestionsCubit>().state.maybeWhen(
@@ -55,10 +60,30 @@ class _QuizBodyState extends State<QuizBody> {
 
   void startTimer() {
     timer?.cancel();
-    setState(() => remainingTime = widget.timerDuration);
+    setState(() {
+      remainingTime = widget.timerDuration;
+      _hasPlayedTimerWarning = false;
+      // _hasPlayedTimerCritical = false;
+    });
+
     timer = Timer.periodic(const Duration(seconds: 1), (t) {
       if (remainingTime > 0) {
         setState(() => remainingTime--);
+
+        // Play timer warning sounds
+        if (remainingTime <= widget.timerDuration * 0.3 &&
+            remainingTime > widget.timerDuration * 0.01 &&
+            !_hasPlayedTimerWarning) {
+          _hasPlayedTimerWarning = true;
+          _playTimerWarningSound();
+        }
+
+        // if (remainingTime <= widget.timerDuration * 0.1 &&
+        //     !_hasPlayedTimerCritical) {
+        //   _hasPlayedTimerCritical = true;
+        //   _playTimerCriticalSound();
+        //   _showTimerCritical();
+        // }
       } else {
         t.cancel();
         goToNextQuestion();
@@ -66,11 +91,80 @@ class _QuizBodyState extends State<QuizBody> {
     });
   }
 
+  // Audio helper methods
+  Future<void> _playCorrectSound() async {
+    final appState = context.read<AppCubit>().state;
+    if (appState.isSoundEnabled) {
+      await GetIt.I<AudioService>().playCorrectSound();
+    }
+  }
+
+  Future<void> _playWrongSound() async {
+    final appState = context.read<AppCubit>().state;
+    if (appState.isSoundEnabled) {
+      await GetIt.I<AudioService>().playWrongSound();
+    }
+  }
+
+  Future<void> _playTimerWarningSound() async {
+    final appState = context.read<AppCubit>().state;
+    if (appState.isSoundEnabled) {
+      await GetIt.I<AudioService>().playTimerWarningSound();
+    }
+  }
+
+  // Future<void> _playTimerCriticalSound() async {
+  //   final appState = context.read<AppCubit>().state;
+  //   if (appState.isSoundEnabled) {
+  //     await GetIt.I<AudioService>().playTimerCriticalSound();
+  //   }
+  // }
+
+  Future<void> _playWinSound() async {
+    final appState = context.read<AppCubit>().state;
+    if (appState.isSoundEnabled) {
+      await GetIt.I<AudioService>().playWinSound();
+    }
+  }
+
+  Future<void> _playGoodResultSound() async {
+    final appState = context.read<AppCubit>().state;
+    if (appState.isSoundEnabled) {
+      await GetIt.I<AudioService>().playGoodResultSound();
+    }
+  }
+
+  Future<void> _playBadResultSound() async {
+    final appState = context.read<AppCubit>().state;
+    if (appState.isSoundEnabled) {
+      await GetIt.I<AudioService>().playBadResultSound();
+    }
+  }
+
+  // void _showTimerCritical() {
+  //   ScaffoldMessenger.of(context).showSnackBar(
+  //     SnackBar(
+  //       content: const Text('🚨 وقت قليل جداً!'),
+  //       duration: const Duration(seconds: 1),
+  //       backgroundColor: Colors.red,
+  //     ),
+  //   );
+  // }
+
   void selectAnswer(String answer, String correctAnswer) {
+    final appState = context.read<AppCubit>().state;
+
     setState(() {
       selectedAnswer = answer;
       if (answer == correctAnswer) {
         correctCount++;
+        if (appState.isSoundEnabled) {
+          _playCorrectSound();
+        }
+      } else {
+        if (appState.isSoundEnabled) {
+          _playWrongSound();
+        }
       }
     });
     timer?.cancel();
@@ -83,9 +177,25 @@ class _QuizBodyState extends State<QuizBody> {
       setState(() {
         currentQuestionIndex++;
         selectedAnswer = null;
+        _hasPlayedTimerWarning = false;
+        // _hasPlayedTimerCritical = false;
       });
       startTimer();
     } else {
+      // Play result sound based on score
+      final appState = context.read<AppCubit>().state;
+      final double scorePercentage = correctCount / questions.length * 100;
+
+      if (appState.isSoundEnabled) {
+        if (scorePercentage >= 70) {
+          _playWinSound();
+        } else if (scorePercentage >= 50) {
+          _playGoodResultSound();
+        } else {
+          _playBadResultSound();
+        }
+      }
+
       ZnoonaNavigate.pushReplacementTo(
         context,
         ResultsScreen(
@@ -343,6 +453,9 @@ class _QuizBodyState extends State<QuizBody> {
                             );
                           }),
                           SizedBox(height: 20.sp),
+
+                          // Add sound control at bottom
+                          _buildSoundControl(),
                         ],
                       ),
                     ],
@@ -351,6 +464,60 @@ class _QuizBodyState extends State<QuizBody> {
               ),
             );
           },
+        );
+      },
+    );
+  }
+
+  Widget _buildSoundControl() {
+    return BlocBuilder<AppCubit, AppState>(
+      builder: (context, appState) {
+        return Container(
+          margin: EdgeInsets.only(top: 20.h),
+          padding: EdgeInsets.symmetric(vertical: 10.h, horizontal: 20.w),
+          decoration: BoxDecoration(
+            color: ZnoonaColors.main(context).withOpacity(0.1),
+            borderRadius: BorderRadius.circular(12.r),
+          ),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Icon(
+                appState.isSoundEnabled ? Icons.volume_up : Icons.volume_off,
+                color: ZnoonaColors.text(context),
+                size: 20.sp,
+              ),
+              SizedBox(width: 10.w),
+              Text(
+                appState.isSoundEnabled ? 'الصوت مفعل' : 'الصوت معطل',
+                style: TextStyle(
+                  fontSize: 14.sp,
+                  color: ZnoonaColors.text(context),
+                ),
+              ),
+              Spacer(),
+              GestureDetector(
+                onTap: () => context.read<AppCubit>().toggleSound(),
+                child: Container(
+                  padding: EdgeInsets.symmetric(
+                    horizontal: 16.w,
+                    vertical: 8.h,
+                  ),
+                  decoration: BoxDecoration(
+                    color: ZnoonaColors.main(context),
+                    borderRadius: BorderRadius.circular(8.r),
+                  ),
+                  child: Text(
+                    appState.isSoundEnabled ? 'إيقاف الصوت' : 'تشغيل الصوت',
+                    style: TextStyle(
+                      fontSize: 12.sp,
+                      color: Colors.white,
+                    ),
+                  ),
+                ),
+              ),
+            ],
+          ),
         );
       },
     );

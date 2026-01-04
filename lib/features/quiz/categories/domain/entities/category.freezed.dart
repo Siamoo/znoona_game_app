@@ -25,6 +25,9 @@ mixin _$Category {
   DateTime? get createdAt => throw _privateConstructorUsedError;
   String? get type => throw _privateConstructorUsedError;
   String? get parentId => throw _privateConstructorUsedError;
+  int get totalQuestionsCount =>
+      throw _privateConstructorUsedError; // Add this field
+  bool get show => throw _privateConstructorUsedError;
 
   /// Create a copy of Category
   /// with the given fields replaced by the non-null parameter values.
@@ -47,6 +50,8 @@ abstract class $CategoryCopyWith<$Res> {
     DateTime? createdAt,
     String? type,
     String? parentId,
+    int totalQuestionsCount,
+    bool show,
   });
 }
 
@@ -73,6 +78,8 @@ class _$CategoryCopyWithImpl<$Res, $Val extends Category>
     Object? createdAt = freezed,
     Object? type = freezed,
     Object? parentId = freezed,
+    Object? totalQuestionsCount = null,
+    Object? show = null,
   }) {
     return _then(
       _value.copyWith(
@@ -108,6 +115,14 @@ class _$CategoryCopyWithImpl<$Res, $Val extends Category>
                 ? _value.parentId
                 : parentId // ignore: cast_nullable_to_non_nullable
                       as String?,
+            totalQuestionsCount: null == totalQuestionsCount
+                ? _value.totalQuestionsCount
+                : totalQuestionsCount // ignore: cast_nullable_to_non_nullable
+                      as int,
+            show: null == show
+                ? _value.show
+                : show // ignore: cast_nullable_to_non_nullable
+                      as bool,
           )
           as $Val,
     );
@@ -132,6 +147,8 @@ abstract class _$$CategoryImplCopyWith<$Res>
     DateTime? createdAt,
     String? type,
     String? parentId,
+    int totalQuestionsCount,
+    bool show,
   });
 }
 
@@ -157,6 +174,8 @@ class __$$CategoryImplCopyWithImpl<$Res>
     Object? createdAt = freezed,
     Object? type = freezed,
     Object? parentId = freezed,
+    Object? totalQuestionsCount = null,
+    Object? show = null,
   }) {
     return _then(
       _$CategoryImpl(
@@ -192,6 +211,14 @@ class __$$CategoryImplCopyWithImpl<$Res>
             ? _value.parentId
             : parentId // ignore: cast_nullable_to_non_nullable
                   as String?,
+        totalQuestionsCount: null == totalQuestionsCount
+            ? _value.totalQuestionsCount
+            : totalQuestionsCount // ignore: cast_nullable_to_non_nullable
+                  as int,
+        show: null == show
+            ? _value.show
+            : show // ignore: cast_nullable_to_non_nullable
+                  as bool,
       ),
     );
   }
@@ -209,6 +236,8 @@ class _$CategoryImpl implements _Category {
     this.createdAt,
     this.type,
     this.parentId,
+    this.totalQuestionsCount = 0,
+    this.show = true,
   });
 
   @override
@@ -227,10 +256,17 @@ class _$CategoryImpl implements _Category {
   final String? type;
   @override
   final String? parentId;
+  @override
+  @JsonKey()
+  final int totalQuestionsCount;
+  // Add this field
+  @override
+  @JsonKey()
+  final bool show;
 
   @override
   String toString() {
-    return 'Category(id: $id, name: $name, arabicName: $arabicName, discription: $discription, image: $image, createdAt: $createdAt, type: $type, parentId: $parentId)';
+    return 'Category(id: $id, name: $name, arabicName: $arabicName, discription: $discription, image: $image, createdAt: $createdAt, type: $type, parentId: $parentId, totalQuestionsCount: $totalQuestionsCount, show: $show)';
   }
 
   @override
@@ -249,7 +285,10 @@ class _$CategoryImpl implements _Category {
                 other.createdAt == createdAt) &&
             (identical(other.type, type) || other.type == type) &&
             (identical(other.parentId, parentId) ||
-                other.parentId == parentId));
+                other.parentId == parentId) &&
+            (identical(other.totalQuestionsCount, totalQuestionsCount) ||
+                other.totalQuestionsCount == totalQuestionsCount) &&
+            (identical(other.show, show) || other.show == show));
   }
 
   @override
@@ -263,6 +302,8 @@ class _$CategoryImpl implements _Category {
     createdAt,
     type,
     parentId,
+    totalQuestionsCount,
+    show,
   );
 
   /// Create a copy of Category
@@ -284,6 +325,8 @@ abstract class _Category implements Category {
     final DateTime? createdAt,
     final String? type,
     final String? parentId,
+    final int totalQuestionsCount,
+    final bool show,
   }) = _$CategoryImpl;
 
   @override
@@ -302,6 +345,10 @@ abstract class _Category implements Category {
   String? get type;
   @override
   String? get parentId;
+  @override
+  int get totalQuestionsCount; // Add this field
+  @override
+  bool get show;
 
   /// Create a copy of Category
   /// with the given fields replaced by the non-null parameter values.

@@ -18,6 +18,9 @@ _$CategoryModelImpl _$$CategoryModelImplFromJson(Map<String, dynamic> json) =>
           : DateTime.parse(json['created_at'] as String),
       type: json['type'] as String?,
       parentId: json['parentId'] as String?,
+      total_questions_count:
+          (json['total_questions_count'] as num?)?.toInt() ?? 0,
+      show: json['show'] as bool? ?? true,
     );
 
 Map<String, dynamic> _$$CategoryModelImplToJson(_$CategoryModelImpl instance) =>
@@ -30,4 +33,6 @@ Map<String, dynamic> _$$CategoryModelImplToJson(_$CategoryModelImpl instance) =>
       'created_at': instance.created_at?.toIso8601String(),
       'type': instance.type,
       'parentId': instance.parentId,
+      'total_questions_count': instance.total_questions_count,
+      'show': instance.show,
     };

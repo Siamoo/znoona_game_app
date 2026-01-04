@@ -3,13 +3,16 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:get_it/get_it.dart';
 import 'package:photo_view/photo_view.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
+import 'package:medaan_almaarifa/core/app/app_cubit/app_cubit.dart';
 import 'package:medaan_almaarifa/core/common/widgets/custom_app_bar.dart';
 import 'package:medaan_almaarifa/core/helpers/znoona.colors.dart';
 import 'package:medaan_almaarifa/core/helpers/znoona_navigate.dart';
 import 'package:medaan_almaarifa/core/helpers/znoona_texts.dart';
 import 'package:medaan_almaarifa/core/language/lang_keys.dart';
+import 'package:medaan_almaarifa/core/helpers/audio_service.dart';
 import 'package:medaan_almaarifa/features/quiz/room/domain/entities/room.dart';
 import 'package:medaan_almaarifa/features/quiz/room/domain/entities/room_player.dart';
 import 'package:medaan_almaarifa/features/quiz/room/presentation/cubit/room_cubit.dart';
@@ -40,6 +43,7 @@ class _RoomQuizBodyState extends State<RoomQuizBody> {
   String? _currentSelectedAnswer;
   int _currentCorrectCount = 0;
   List<RoomPlayer> _currentPlayers = [];
+  bool _hasPlayedTimerWarning = false;
 
   @override
   void initState() {
@@ -48,6 +52,49 @@ class _RoomQuizBodyState extends State<RoomQuizBody> {
     _currentPlayers = [];
     context.read<RoomCubit>().startQuiz(widget.questions);
     context.read<RoomCubit>().watchPlayerAnswers(widget.room.id);
+  }
+
+  // Audio helper methods
+  Future<void> _playCorrectSound() async {
+    final appState = context.read<AppCubit>().state;
+    if (appState.isSoundEnabled) {
+      await GetIt.I<AudioService>().playCorrectSound();
+    }
+  }
+
+  Future<void> _playWrongSound() async {
+    final appState = context.read<AppCubit>().state;
+    if (appState.isSoundEnabled) {
+      await GetIt.I<AudioService>().playWrongSound();
+    }
+  }
+
+  Future<void> _playTimerWarningSound() async {
+    final appState = context.read<AppCubit>().state;
+    if (appState.isSoundEnabled) {
+      await GetIt.I<AudioService>().playTimerWarningSound();
+    }
+  }
+
+  Future<void> _playWinSound() async {
+    final appState = context.read<AppCubit>().state;
+    if (appState.isSoundEnabled) {
+      await GetIt.I<AudioService>().playWinSound();
+    }
+  }
+
+  Future<void> _playGoodResultSound() async {
+    final appState = context.read<AppCubit>().state;
+    if (appState.isSoundEnabled) {
+      await GetIt.I<AudioService>().playGoodResultSound();
+    }
+  }
+
+  Future<void> _playBadResultSound() async {
+    final appState = context.read<AppCubit>().state;
+    if (appState.isSoundEnabled) {
+      await GetIt.I<AudioService>().playBadResultSound();
+    }
   }
 
   String? _convertGoogleDriveUrl(String? url) {
@@ -193,6 +240,7 @@ class _RoomQuizBodyState extends State<RoomQuizBody> {
   Future<void> _selectAnswer(String answer) async {
     final currentUserId = _getCurrentUserId();
     final currentQuestion = _currentQuestions[_currentQuestionIndex];
+    final appState = context.read<AppCubit>().state;
 
     // Check if user already answered
     if (_currentPlayerAnswers.containsKey(currentUserId) &&
@@ -207,6 +255,13 @@ class _RoomQuizBodyState extends State<RoomQuizBody> {
     final isCorrect = answer == currentQuestion.correctAnswer;
     if (isCorrect) {
       _currentCorrectCount++;
+      if (appState.isSoundEnabled) {
+        await _playCorrectSound();
+      }
+    } else {
+      if (appState.isSoundEnabled) {
+        await _playWrongSound();
+      }
     }
 
     _emitQuizState();
@@ -214,6 +269,13 @@ class _RoomQuizBodyState extends State<RoomQuizBody> {
     // Submit answer to database
     await context.read<RoomCubit>().selectAnswer(answer);
   }
+
+void _checkTimerWarning(int remainingTime) {
+  if (remainingTime <= 3 && remainingTime > 0 && !_hasPlayedTimerWarning) {
+    _hasPlayedTimerWarning = true;
+    _playTimerWarningSound();
+  }
+}
 
   @override
   Widget build(BuildContext context) {
@@ -231,6 +293,14 @@ class _RoomQuizBodyState extends State<RoomQuizBody> {
                 isWaitingForPlayers,
                 players,
               ) {
+                // **FIX: Reset timer warning flag when question index changes**
+                if (_currentQuestionIndex != currentQuestionIndex) {
+                  _hasPlayedTimerWarning = false;
+                }
+                
+                // Check for timer warning
+                _checkTimerWarning(remainingTime);
+                
                 final mutablePlayerAnswers = Map<String, String?>.from(
                   playerAnswers,
                 );
@@ -245,6 +315,8 @@ class _RoomQuizBodyState extends State<RoomQuizBody> {
               },
 
           quizFinished: (totalQuestions, correctAnswers, players) {
+            // Play result sound based on performance
+            _playQuizFinishedSound(correctAnswers, totalQuestions);
             _navigateToResultsScreen();
           },
         );
@@ -288,8 +360,23 @@ class _RoomQuizBodyState extends State<RoomQuizBody> {
     );
   }
 
+  Future<void> _playQuizFinishedSound(int correctAnswers, int totalQuestions) async {
+    final appState = context.read<AppCubit>().state;
+    if (!appState.isSoundEnabled) return;
+    
+    final double scorePercentage = correctAnswers / totalQuestions * 100;
+    
+    if (scorePercentage >= 70) {
+      await _playWinSound();
+    } else if (scorePercentage >= 50) {
+      await _playGoodResultSound();
+    } else {
+      await _playBadResultSound();
+    }
+  }
+
   void _navigateToResultsScreen() {
-    Future.delayed(const Duration(milliseconds: 500), () async {
+    Future.delayed(const Duration(milliseconds: 800), () async {
       if (mounted) {
         await ZnoonaNavigate.pushReplacementTo(
           context,
@@ -374,16 +461,6 @@ class _RoomQuizBodyState extends State<RoomQuizBody> {
                   if (imageUrl != null && imageUrl.isNotEmpty)
                     Column(
                       children: [
-                        // Text(
-                        //   'Tap image to view full screen',
-                        //   style: TextStyle(
-                        //     fontSize: 12.sp,
-                        //     color: ZnoonaColors.text(context).withOpacity(0.7),
-                        //     fontStyle: FontStyle.italic,
-                        //   ),
-                        //   textAlign: TextAlign.center,
-                        // ),
-                        // SizedBox(height: 10.h),
                         GestureDetector(
                           onTap: () => _showFullScreenImage(imageUrl),
                           child: Hero(
@@ -435,7 +512,6 @@ class _RoomQuizBodyState extends State<RoomQuizBody> {
                             ),
                           ),
                         ),
-
                         SizedBox(height: 20.sp),
                       ],
                     ),
@@ -471,9 +547,12 @@ class _RoomQuizBodyState extends State<RoomQuizBody> {
                           remainingTime: remainingTime,
                         );
                       }),
-                      SizedBox(
-                        height: 40.sp,
-                      ),
+                      SizedBox(height: 20.sp),
+                      
+                      // Add sound control at bottom
+                      _buildSoundControl(),
+                      
+                      SizedBox(height: 20.sp),
                     ],
                   ),
                 ],
@@ -482,6 +561,60 @@ class _RoomQuizBodyState extends State<RoomQuizBody> {
           ),
         ],
       ),
+    );
+  }
+
+  Widget _buildSoundControl() {
+    return BlocBuilder<AppCubit, AppState>(
+      builder: (context, appState) {
+        return Container(
+          margin: EdgeInsets.only(top: 10.h),
+          padding: EdgeInsets.symmetric(vertical: 8.h, horizontal: 16.w),
+          decoration: BoxDecoration(
+            color: ZnoonaColors.main(context).withOpacity(0.1),
+            borderRadius: BorderRadius.circular(12.r),
+          ),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Icon(
+                appState.isSoundEnabled ? Icons.volume_up : Icons.volume_off,
+                color: ZnoonaColors.text(context),
+                size: 18.sp,
+              ),
+              SizedBox(width: 8.w),
+              Text(
+                appState.isSoundEnabled ? 'الصوت مفعل' : 'الصوت معطل',
+                style: TextStyle(
+                  fontSize: 12.sp,
+                  color: ZnoonaColors.text(context),
+                ),
+              ),
+              Spacer(),
+              GestureDetector(
+                onTap: () => context.read<AppCubit>().toggleSound(),
+                child: Container(
+                  padding: EdgeInsets.symmetric(
+                    horizontal: 12.w,
+                    vertical: 6.h,
+                  ),
+                  decoration: BoxDecoration(
+                    color: ZnoonaColors.main(context),
+                    borderRadius: BorderRadius.circular(8.r),
+                  ),
+                  child: Text(
+                    appState.isSoundEnabled ? 'إيقاف الصوت' : 'تشغيل الصوت',
+                    style: TextStyle(
+                      fontSize: 11.sp,
+                      color: Colors.white,
+                    ),
+                  ),
+                ),
+              ),
+            ],
+          ),
+        );
+      },
     );
   }
 }

@@ -58,39 +58,47 @@ class _QuizBodyState extends State<QuizBody> {
     remainingTime = widget.timerDuration;
   }
 
-  void startTimer() {
-    timer?.cancel();
-    setState(() {
-      remainingTime = widget.timerDuration;
-      _hasPlayedTimerWarning = false;
-      // _hasPlayedTimerCritical = false;
-    });
+void startTimer() {
+  timer?.cancel();
+  setState(() {
+    remainingTime = widget.timerDuration;
+    _hasPlayedTimerWarning = false;
+    // _hasPlayedTimerCritical = false;
+  });
 
-    timer = Timer.periodic(const Duration(seconds: 1), (t) {
-      if (remainingTime > 0) {
-        setState(() => remainingTime--);
+  timer = Timer.periodic(const Duration(seconds: 1), (t) {
+    if (remainingTime > 0) {
+      setState(() => remainingTime--);
 
-        // Play timer warning sounds
-        if (remainingTime <= widget.timerDuration * 0.3 &&
-            remainingTime > widget.timerDuration * 0.01 &&
-            !_hasPlayedTimerWarning) {
-          _hasPlayedTimerWarning = true;
-          _playTimerWarningSound();
-        }
-
-        // if (remainingTime <= widget.timerDuration * 0.1 &&
-        //     !_hasPlayedTimerCritical) {
-        //   _hasPlayedTimerCritical = true;
-        //   _playTimerCriticalSound();
-        //   _showTimerCritical();
-        // }
-      } else {
-        t.cancel();
-        goToNextQuestion();
+      // Play timer warning sound in last 3 seconds only
+      if (remainingTime <= 3 && remainingTime > 0 && !_hasPlayedTimerWarning) {
+        _hasPlayedTimerWarning = true;
+        _playTimerWarningSound();
+        _showTimerWarning();
       }
-    });
-  }
 
+      // if (remainingTime <= widget.timerDuration * 0.1 &&
+      //     !_hasPlayedTimerCritical) {
+      //   _hasPlayedTimerCritical = true;
+      //   _playTimerCriticalSound();
+      //   _showTimerCritical();
+      // }
+    } else {
+      t.cancel();
+      goToNextQuestion();
+    }
+  });
+}
+
+void _showTimerWarning() {
+  ScaffoldMessenger.of(context).showSnackBar(
+    SnackBar(
+      content: const Text('⚠️ آخر 3 ثواني!'),
+      duration: const Duration(seconds: 1),
+      backgroundColor: Colors.orange,
+    ),
+  );
+}
   // Audio helper methods
   Future<void> _playCorrectSound() async {
     final appState = context.read<AppCubit>().state;

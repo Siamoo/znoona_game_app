@@ -10,13 +10,13 @@ class CategoriesRemoteDataSourceImpl implements CategoriesRemoteDataSource {
   CategoriesRemoteDataSourceImpl(this.client);
   final SupabaseClient client;
 
-
-
+  @override
   Future<List<CategoryModel>> getMainCategories() async {
     final response = await client
         .from('categories')
         .select()
         .filter('parent_id', 'is', null)
+        .eq('show', true)  // Only show categories with show = true
         .order('sort_by', ascending: true);
 
     final data = response as List<dynamic>;
@@ -25,11 +25,13 @@ class CategoriesRemoteDataSourceImpl implements CategoriesRemoteDataSource {
         .toList();
   }
 
+  @override
   Future<List<CategoryModel>> getSubCategories(String parentId) async {
     final response = await client
         .from('categories')
         .select()
         .eq('parent_id', parentId)
+        .eq('show', true)  // Only show categories with show = true
         .order('sort_by', ascending: true);
 
     final data = response as List<dynamic>;

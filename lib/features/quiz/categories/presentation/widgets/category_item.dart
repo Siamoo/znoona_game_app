@@ -6,6 +6,7 @@ import 'package:medaan_almaarifa/core/common/widgets/custom_linear_button.dart';
 import 'package:medaan_almaarifa/core/common/widgets/text_app.dart';
 import 'package:medaan_almaarifa/core/helpers/znoona.colors.dart';
 import 'package:medaan_almaarifa/features/quiz/categories/domain/entities/category.dart';
+
 class CategoryItem extends StatelessWidget {
   const CategoryItem({
     required this.category,
@@ -18,6 +19,8 @@ class CategoryItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final bool isLesson = category.type == 'lesson';
+
     return CustomLinearButton(
       borderRadiusNum: 20,
       colors: [
@@ -30,47 +33,93 @@ class CategoryItem extends StatelessWidget {
       child: Padding(
         padding: EdgeInsets.only(left: 20.w, right: 10.w),
         child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            CustomFadeInRight(
-              duration: 700,
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  TextApp(
-                    text: category.arabicName,
-                    textStyle: TextStyle(
-                      fontSize: 26.sp,
-                      fontWeight: FontWeight.w800,
-                      color: ZnoonaColors.text(context),
+            // Left side - Text content
+            Expanded(
+              flex: 3,
+              child: CustomFadeInRight(
+                duration: 700,
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    // Title and badge row
+                    Row(
+                      children: [
+                        // Title with flexible width
+                        Expanded(
+                          child: TextApp(
+                            text: category.arabicName,
+                            textStyle: TextStyle(
+                              fontSize: 26.sp,
+                              fontWeight: FontWeight.w800,
+                              color: ZnoonaColors.text(context),
+                            ),
+                            maxLines: 2,
+                            // Overflow is now handled by TextApp default
+                          ),
+                        ),
+                        if (category.totalQuestionsCount > 0) ...[
+                          SizedBox(width: 8.w),
+                          // Badge
+                          Container(
+                            padding: EdgeInsets.symmetric(
+                              horizontal: 8.w,
+                              vertical: 4.h,
+                            ),
+                            decoration: BoxDecoration(
+                              color: Colors.white.withAlpha(30),
+                              borderRadius: BorderRadius.circular(12.r),
+                            ),
+                            child: TextApp(
+                              text: isLesson
+                                  ? '${category.totalQuestionsCount} س'
+                                  : '${category.totalQuestionsCount} س',
+                              textStyle: TextStyle(
+                                fontSize: 14.sp,
+                                fontWeight: FontWeight.bold,
+                                color: Colors.white,
+                              ),
+                              maxLines:
+                                  1, // Ensure badge text stays in one line
+                            ),
+                          ),
+                        ],
+                      ],
                     ),
-                    maxLines: 2,
-                    // overflow: TextOverflow.ellipsis,
-                  ),
-                  SizedBox(height: 4.h),
-                  SizedBox(
-                    width: 220.w,
-                    child: TextApp(
+                    SizedBox(height: 4.h),
+                    // Description
+                    TextApp(
                       text: category.discription,
                       textStyle: TextStyle(
                         fontSize: 17.sp,
                         fontWeight: FontWeight.w500,
                         color: ZnoonaColors.text(context).withAlpha(200),
                       ),
+                      maxLines: 2,
                     ),
-                  ),
-                ],
+                  ],
+                ),
               ),
             ),
+
+            SizedBox(width: 10.w),
+
+            // Right side - Image
             CustomFadeInLeft(
               duration: 700,
-              child: CachedNetworkImage(
-                imageUrl: category.image,
-                placeholder: (context, url) => CircularProgressIndicator(),
-                errorWidget: (context, url, error) => Icon(Icons.error),
+              child: Container(
                 width: 90.w,
                 height: 90.h,
+                child: CachedNetworkImage(
+                  imageUrl: category.image,
+                  placeholder: (context, url) =>
+                      const CircularProgressIndicator(),
+                  errorWidget: (context, url, error) =>
+                      Icon(Icons.error, size: 90.w),
+                  fit: BoxFit.contain,
+                ),
               ),
             ),
           ],

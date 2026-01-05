@@ -15,6 +15,8 @@ class CategoryModel with _$CategoryModel {
     DateTime? created_at,
     String? type,
     String? parentId,
+    @Default(0) int total_questions_count, // Add this field with default 0
+    @Default(true) bool show, // Add show field with default true
   }) = _CategoryModel;
 
   factory CategoryModel.fromJson(Map<String, dynamic> json) =>
@@ -32,6 +34,8 @@ extension CategoryModelX on CategoryModel {
       createdAt: created_at,
       type: type,
       parentId: parentId,
+      totalQuestionsCount: total_questions_count, // Map to entity
+      show: show, // Map to entity
     );
   }
 }

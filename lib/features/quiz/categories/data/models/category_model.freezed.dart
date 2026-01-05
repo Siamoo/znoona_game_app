@@ -29,6 +29,9 @@ mixin _$CategoryModel {
   DateTime? get created_at => throw _privateConstructorUsedError;
   String? get type => throw _privateConstructorUsedError;
   String? get parentId => throw _privateConstructorUsedError;
+  int get total_questions_count =>
+      throw _privateConstructorUsedError; // Add this field with default 0
+  bool get show => throw _privateConstructorUsedError;
 
   /// Serializes this CategoryModel to a JSON map.
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
@@ -56,6 +59,8 @@ abstract class $CategoryModelCopyWith<$Res> {
     DateTime? created_at,
     String? type,
     String? parentId,
+    int total_questions_count,
+    bool show,
   });
 }
 
@@ -82,6 +87,8 @@ class _$CategoryModelCopyWithImpl<$Res, $Val extends CategoryModel>
     Object? created_at = freezed,
     Object? type = freezed,
     Object? parentId = freezed,
+    Object? total_questions_count = null,
+    Object? show = null,
   }) {
     return _then(
       _value.copyWith(
@@ -117,6 +124,14 @@ class _$CategoryModelCopyWithImpl<$Res, $Val extends CategoryModel>
                 ? _value.parentId
                 : parentId // ignore: cast_nullable_to_non_nullable
                       as String?,
+            total_questions_count: null == total_questions_count
+                ? _value.total_questions_count
+                : total_questions_count // ignore: cast_nullable_to_non_nullable
+                      as int,
+            show: null == show
+                ? _value.show
+                : show // ignore: cast_nullable_to_non_nullable
+                      as bool,
           )
           as $Val,
     );
@@ -141,6 +156,8 @@ abstract class _$$CategoryModelImplCopyWith<$Res>
     DateTime? created_at,
     String? type,
     String? parentId,
+    int total_questions_count,
+    bool show,
   });
 }
 
@@ -166,6 +183,8 @@ class __$$CategoryModelImplCopyWithImpl<$Res>
     Object? created_at = freezed,
     Object? type = freezed,
     Object? parentId = freezed,
+    Object? total_questions_count = null,
+    Object? show = null,
   }) {
     return _then(
       _$CategoryModelImpl(
@@ -201,6 +220,14 @@ class __$$CategoryModelImplCopyWithImpl<$Res>
             ? _value.parentId
             : parentId // ignore: cast_nullable_to_non_nullable
                   as String?,
+        total_questions_count: null == total_questions_count
+            ? _value.total_questions_count
+            : total_questions_count // ignore: cast_nullable_to_non_nullable
+                  as int,
+        show: null == show
+            ? _value.show
+            : show // ignore: cast_nullable_to_non_nullable
+                  as bool,
       ),
     );
   }
@@ -218,6 +245,8 @@ class _$CategoryModelImpl implements _CategoryModel {
     this.created_at,
     this.type,
     this.parentId,
+    this.total_questions_count = 0,
+    this.show = true,
   });
 
   factory _$CategoryModelImpl.fromJson(Map<String, dynamic> json) =>
@@ -239,10 +268,17 @@ class _$CategoryModelImpl implements _CategoryModel {
   final String? type;
   @override
   final String? parentId;
+  @override
+  @JsonKey()
+  final int total_questions_count;
+  // Add this field with default 0
+  @override
+  @JsonKey()
+  final bool show;
 
   @override
   String toString() {
-    return 'CategoryModel(id: $id, name: $name, arabic_name: $arabic_name, discription: $discription, image: $image, created_at: $created_at, type: $type, parentId: $parentId)';
+    return 'CategoryModel(id: $id, name: $name, arabic_name: $arabic_name, discription: $discription, image: $image, created_at: $created_at, type: $type, parentId: $parentId, total_questions_count: $total_questions_count, show: $show)';
   }
 
   @override
@@ -261,7 +297,10 @@ class _$CategoryModelImpl implements _CategoryModel {
                 other.created_at == created_at) &&
             (identical(other.type, type) || other.type == type) &&
             (identical(other.parentId, parentId) ||
-                other.parentId == parentId));
+                other.parentId == parentId) &&
+            (identical(other.total_questions_count, total_questions_count) ||
+                other.total_questions_count == total_questions_count) &&
+            (identical(other.show, show) || other.show == show));
   }
 
   @JsonKey(includeFromJson: false, includeToJson: false)
@@ -276,6 +315,8 @@ class _$CategoryModelImpl implements _CategoryModel {
     created_at,
     type,
     parentId,
+    total_questions_count,
+    show,
   );
 
   /// Create a copy of CategoryModel
@@ -302,6 +343,8 @@ abstract class _CategoryModel implements CategoryModel {
     final DateTime? created_at,
     final String? type,
     final String? parentId,
+    final int total_questions_count,
+    final bool show,
   }) = _$CategoryModelImpl;
 
   factory _CategoryModel.fromJson(Map<String, dynamic> json) =
@@ -323,6 +366,10 @@ abstract class _CategoryModel implements CategoryModel {
   String? get type;
   @override
   String? get parentId;
+  @override
+  int get total_questions_count; // Add this field with default 0
+  @override
+  bool get show;
 
   /// Create a copy of CategoryModel
   /// with the given fields replaced by the non-null parameter values.

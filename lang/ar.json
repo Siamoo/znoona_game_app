@@ -1,6 +1,6 @@
 {
   "language": "English",
-  "app_name": "لعبة ظنونا",
+    "app_name": "لعبة ظنونا",
   "login": "تسجيل الدخول",
   "welcome": "مرحباً! الرجاء إدخال بريدك إلكتروني والبدء.",
   "your_email": "بريدك الالكتروني",
@@ -30,7 +30,7 @@
   "log_out_from_app": "هل تريد تسجيل الخروج؟",
   "yes": "نعم",
   "no": "لا",
-  "dark_mode": "Dark Mode",
+  "dark_mode": "الوضع الليلي",
   "lang_code": "العربية",
   "googel": "بجوجل",
   "hello": "مرحباً",
@@ -141,7 +141,7 @@
   "playerInfo": "معلومات اللاعب",
   "bestCategory": "أفضل فئة",
   "username": "اسم المستخدم",
-    "editUsername": "تعديل اسم المستخدم",
+  "editUsername": "تعديل اسم المستخدم",
   "usernameHint": "اختر اسم مستخدم فريد (3-12 حرف)",
   "usernameRequired": "اسم المستخدم مطلوب",
   "usernameTooShort": "يجب أن يكون اسم المستخدم 3 أحرف على الأقل",
@@ -158,7 +158,7 @@
   "fullNameTooShort": "يجب أن يكون الاسم الكامل حرفين على الأقل",
   "fullNameTooLong": "لا يمكن أن يتجاوز الاسم الكامل 25 حرف",
   "profileUpdated": "تم تحديث الملف الشخصي بنجاح!",
-   "chooseImageSource": "اختر مصدر الصورة",
+  "chooseImageSource": "اختر مصدر الصورة",
   "camera": "الكاميرا",
   "gallery": "المعرض",
   "tapToChangePhoto": "انقر لتغيير الصورة",
@@ -167,6 +167,11 @@
   "timerSelectionDescription": "اختر المدة الزمنية للإجابة على كل سؤال",
   "seconds": "ثانية",
   "minute": "دقيقة",
-  "hour": "ساعة"
-
+  "minutes": "دقائق",
+  "hour": "ساعة",
+  "soundSettings": "إعدادات الصوت",
+  "soundEffects": "المؤثرات الصوتية",
+  "backgroundMusic": "الموسيقى الخلفية",
+  "volume": "مستوى الصوت",
+  "testSound": "اختبار الصوت"
 }

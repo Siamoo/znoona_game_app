@@ -158,7 +158,7 @@
   "fullNameTooShort": "Full name must be at least 2 characters",
   "fullNameTooLong": "Full name cannot exceed 25 characters",
   "profileUpdated": "Profile updated successfully",
-      "chooseImageSource": "Choose Image Source",
+  "chooseImageSource": "Choose Image Source",
   "camera": "Camera",
   "gallery": "Gallery",
   "tapToChangePhoto": "Tap to change photo",
@@ -167,7 +167,11 @@
   "timerSelectionDescription": "Select the time duration for each question",
   "seconds": "Seconds",
   "minute": "Minute",
-  "hour": "Hour"
-
-
+  "minutes": "Minutes",
+  "hour": "Hour",
+  "soundSettings": "Sound Settings",
+  "soundEffects": "Sound Effects",
+  "backgroundMusic": "Background Music",
+  "volume": "Volume",
+  "testSound": "Test Sound"
 }

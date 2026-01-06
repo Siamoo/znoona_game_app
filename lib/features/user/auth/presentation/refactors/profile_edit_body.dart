@@ -60,7 +60,7 @@ class _ProfileEditBodyState extends State<ProfileEditBody> {
       builder: (context) {
         return Container(
           decoration: BoxDecoration(
-            color: ZnoonaColors.main(context) ?? Colors.white,
+            color: ZnoonaColors.main(context),
             borderRadius: BorderRadius.only(
               topLeft: Radius.circular(20.r),
               topRight: Radius.circular(20.r),
@@ -150,10 +150,10 @@ class _ProfileEditBodyState extends State<ProfileEditBody> {
           width: 70.w,
           height: 70.h,
           decoration: BoxDecoration(
-            color: ZnoonaColors.bluePinkLight(context)?.withOpacity(0.2),
+            color: ZnoonaColors.bluePinkLight(context).withOpacity(0.2),
             borderRadius: BorderRadius.circular(20),
             border: Border.all(
-              color: ZnoonaColors.bluePinkLight(context)!,
+              color: ZnoonaColors.bluePinkLight(context),
               width: 2,
             ),
           ),
@@ -256,7 +256,7 @@ class _ProfileEditBodyState extends State<ProfileEditBody> {
           ZnoonaTexts.tr(context, LangKeys.tapToChangePhoto),
           style: TextStyle(
             fontSize: 14.sp,
-            color: ZnoonaColors.text(context)?.withOpacity(0.7),
+            color: ZnoonaColors.text(context).withOpacity(0.7),
           ),
         ),
       ],
@@ -294,7 +294,7 @@ class _ProfileEditBodyState extends State<ProfileEditBody> {
     return Icon(
       Icons.person,
       size: 60.sp,
-      color: ZnoonaColors.bluePinkDark(context)?.withOpacity(0.5),
+      color: ZnoonaColors.bluePinkDark(context).withOpacity(0.5),
     );
   }
 
@@ -357,7 +357,7 @@ class _ProfileEditBodyState extends State<ProfileEditBody> {
                               filled: true,
                               fillColor: ZnoonaColors.main(
                                 context,
-                              )?.withOpacity(0.5),
+                              ).withOpacity(0.5),
                             ),
                             keyboardType: TextInputType.name,
                             validator: (value) {
@@ -403,7 +403,7 @@ class _ProfileEditBodyState extends State<ProfileEditBody> {
                               fontSize: 14.sp,
                               color: ZnoonaColors.text(
                                 context,
-                              )?.withOpacity(0.7),
+                              ).withOpacity(0.7),
                             ),
                           ),
                           SizedBox(height: 8.h),
@@ -430,7 +430,7 @@ class _ProfileEditBodyState extends State<ProfileEditBody> {
                               filled: true,
                               fillColor: ZnoonaColors.main(
                                 context,
-                              )?.withOpacity(0.5),
+                              ).withOpacity(0.5),
                               errorText: _errorMessage,
                             ),
                             validator: (value) {
@@ -672,7 +672,7 @@ class _ProfileEditBodyState extends State<ProfileEditBody> {
       );
 
       // Navigate back after short delay
-      await Future.delayed(Duration(milliseconds: 800));
+      await Future<void>.delayed(const Duration(milliseconds: 800));
       Navigator.pop(context);
     } on Exception catch (e) {
       setState(() {

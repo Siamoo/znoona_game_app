@@ -6,6 +6,7 @@ import 'package:medaan_almaarifa/core/common/widgets/text_app.dart';
 import 'package:medaan_almaarifa/features/quiz/categories/domain/entities/category.dart';
 import 'package:medaan_almaarifa/features/quiz/categories/presentation/cubit/categories_cubit.dart';
 import 'package:medaan_almaarifa/features/quiz/categories/presentation/widgets/category_item.dart';
+
 class CategoryLevelBody extends StatelessWidget {
   const CategoryLevelBody({
     required this.state,
@@ -59,12 +60,24 @@ class CategoryLevelBody extends StatelessWidget {
   Widget _buildCategoriesList(List<Category> categories) {
     if (categories.isEmpty) {
       return Center(
-        child: TextApp(
-          text: 'No categories found',
-          textStyle: TextStyle(
-            fontSize: 16.sp,
-            color: Colors.grey,
-          ),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Icon(
+              Icons.folder_open,
+              size: 80.w,
+              color: Colors.grey,
+            ),
+            SizedBox(height: 16.h),
+            TextApp(
+              text: 'No categories available',
+              textStyle: TextStyle(
+                fontSize: 18.sp,
+                color: Colors.grey,
+                fontWeight: FontWeight.w500,
+              ),
+            ),
+          ],
         ),
       );
     }

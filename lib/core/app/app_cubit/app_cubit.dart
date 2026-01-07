@@ -20,6 +20,7 @@ class AppCubit extends Cubit<AppState> {
     final isDarkMode = SharedPref().getBoolean(PrefKeys.themeMode) ?? false;
     final languageCode = SharedPref().getString(PrefKeys.language) ?? 'en';
     final isSoundEnabled = SharedPref().getBoolean(PrefKeys.soundEnabled) ?? true;
+    final isVibrationEnabled = SharedPref().getBoolean(PrefKeys.vibrationEnabled) ?? true; // Add this line
     final isBackgroundMusicEnabled = 
         SharedPref().getBoolean(PrefKeys.backgroundMusicEnabled) ?? true;
     final soundVolume = SharedPref().getDouble(PrefKeys.soundVolume) ?? 1.0;
@@ -30,12 +31,24 @@ class AppCubit extends Cubit<AppState> {
       isDarkMode: isDarkMode,
       locale: Locale(languageCode),
       isSoundEnabled: isSoundEnabled,
+      isVibrationEnabled: isVibrationEnabled, // Add this line
       isBackgroundMusicEnabled: isBackgroundMusicEnabled,
       soundVolume: soundVolume,
       musicVolume: musicVolume,
     );
     
     emit(loadedState);
+  }
+
+  /// Toggle vibration feedback
+  Future<void> toggleVibration() async {
+    final newValue = !state.isVibrationEnabled;
+    
+    // Save to preferences
+    await SharedPref().setBoolean(PrefKeys.vibrationEnabled, newValue);
+    
+    // Update state
+    emit(state.copyWith(isVibrationEnabled: newValue));
   }
 
   /// Toggle between light and dark theme
@@ -100,6 +113,7 @@ class AppCubit extends Cubit<AppState> {
     await SharedPref().removePreference(PrefKeys.themeMode);
     await SharedPref().removePreference(PrefKeys.language);
     await SharedPref().removePreference(PrefKeys.soundEnabled);
+    await SharedPref().removePreference(PrefKeys.vibrationEnabled); // Add this line
     await SharedPref().removePreference(PrefKeys.backgroundMusicEnabled);
     await SharedPref().removePreference(PrefKeys.soundVolume);
     await SharedPref().removePreference(PrefKeys.musicVolume);

@@ -18,6 +18,7 @@ import 'package:medaan_almaarifa/features/quiz/single/presentation/cubit/questio
 import 'package:medaan_almaarifa/features/quiz/single/presentation/screen/results_screen.dart';
 import 'package:medaan_almaarifa/features/quiz/single/presentation/widgets/option_button.dart';
 import 'package:photo_view/photo_view.dart';
+import 'package:vibration/vibration.dart'; // Add this import
 
 class QuizBody extends StatefulWidget {
   const QuizBody({
@@ -87,9 +88,30 @@ class _QuizBodyState extends State<QuizBody> {
         // }
       } else {
         t.cancel();
+        _vibrateTimeFinished(); // Add vibration when time finishes
         goToNextQuestion();
       }
     });
+  }
+
+  // Add vibration methods
+  Future<void> _vibrateWrongAnswer() async {
+    final appState = context.read<AppCubit>().state;
+    if (appState.isVibrationEnabled) {
+      if (await Vibration.hasVibrator() ?? false) {
+        Vibration.vibrate(duration: 200); // Short vibration for wrong answer
+      }
+    }
+  }
+
+  Future<void> _vibrateTimeFinished() async {
+    final appState = context.read<AppCubit>().state;
+    if (appState.isVibrationEnabled) {
+      if (await Vibration.hasVibrator() ?? false) {
+        // Pattern: vibrate, pause, vibrate (for time finished)
+        Vibration.vibrate(pattern: [500, 200, 500]);
+      }
+    }
   }
 
   void _showTimerWarning() {
@@ -173,9 +195,11 @@ class _QuizBodyState extends State<QuizBody> {
           _playCorrectSound();
         }
       } else {
+        // Wrong answer - play sound and vibrate
         if (appState.isSoundEnabled) {
           _playWrongSound();
         }
+        _vibrateWrongAnswer(); // Add vibration for wrong answer
       }
     });
     timer?.cancel();
@@ -465,8 +489,8 @@ class _QuizBodyState extends State<QuizBody> {
                           }),
                           SizedBox(height: 20.sp),
 
-                          // Add sound control at bottom
-                          _buildSoundControl(),
+                          // Updated sound and vibration control
+                          _buildSoundAndVibrationControl(),
                         ],
                       ),
                     ],
@@ -480,7 +504,8 @@ class _QuizBodyState extends State<QuizBody> {
     );
   }
 
-  Widget _buildSoundControl() {
+  // Updated method to include vibration control
+  Widget _buildSoundAndVibrationControl() {
     return BlocBuilder<AppCubit, AppState>(
       builder: (context, appState) {
         return Container(
@@ -490,42 +515,55 @@ class _QuizBodyState extends State<QuizBody> {
             color: ZnoonaColors.main(context).withOpacity(0.1),
             borderRadius: BorderRadius.circular(12.r),
           ),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.center,
+          child: Column(
             children: [
-              Icon(
-                appState.isSoundEnabled ? Icons.volume_up : Icons.volume_off,
-                color: ZnoonaColors.text(context),
-                size: 20.sp,
-              ),
-              SizedBox(width: 10.w),
-              Text(
-                appState.isSoundEnabled ? 'الصوت مفعل' : 'الصوت معطل',
-                style: TextStyle(
-                  fontSize: 14.sp,
-                  color: ZnoonaColors.text(context),
-                ),
-              ),
-              Spacer(),
-              GestureDetector(
-                onTap: () => context.read<AppCubit>().toggleSound(),
-                child: Container(
-                  padding: EdgeInsets.symmetric(
-                    horizontal: 16.w,
-                    vertical: 8.h,
-                  ),
-                  decoration: BoxDecoration(
-                    color: ZnoonaColors.main(context),
-                    borderRadius: BorderRadius.circular(8.r),
-                  ),
-                  child: Text(
-                    appState.isSoundEnabled ? 'إيقاف الصوت' : 'تشغيل الصوت',
-                    style: TextStyle(
-                      fontSize: 12.sp,
-                      color: Colors.white,
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  GestureDetector(
+                    onTap: () => context.read<AppCubit>().toggleVibration(),
+                    child: Container(
+                      padding: EdgeInsets.symmetric(
+                        horizontal: 16.w,
+                        vertical: 8.h,
+                      ),
+                      decoration: BoxDecoration(
+                        color: ZnoonaColors.main(context),
+                        borderRadius: BorderRadius.circular(8.r),
+                      ),
+                      child: Text(
+                        appState.isVibrationEnabled
+                            ? 'إيقاف الاهتزاز'
+                            : 'تشغيل الاهتزاز',
+                        style: TextStyle(
+                          fontSize: 12.sp,
+                          color: Colors.white,
+                        ),
+                      ),
                     ),
                   ),
-                ),
+                  Spacer(),
+                  GestureDetector(
+                    onTap: () => context.read<AppCubit>().toggleSound(),
+                    child: Container(
+                      padding: EdgeInsets.symmetric(
+                        horizontal: 16.w,
+                        vertical: 8.h,
+                      ),
+                      decoration: BoxDecoration(
+                        color: ZnoonaColors.main(context),
+                        borderRadius: BorderRadius.circular(8.r),
+                      ),
+                      child: Text(
+                        appState.isSoundEnabled ? 'إيقاف الصوت' : 'تشغيل الصوت',
+                        style: TextStyle(
+                          fontSize: 12.sp,
+                          color: Colors.white,
+                        ),
+                      ),
+                    ),
+                  ),
+                ],
               ),
             ],
           ),

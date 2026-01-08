@@ -117,7 +117,7 @@ class _RoomQuizBodyState extends State<RoomQuizBody> {
     // Check if the image URL is valid before showing
     if (imageUrl.isEmpty) return;
 
-    showDialog(
+    showDialog<void>(
       context: context,
       barrierColor: Colors.black.withOpacity(0.9),
       builder: (context) => Dialog.fullscreen(

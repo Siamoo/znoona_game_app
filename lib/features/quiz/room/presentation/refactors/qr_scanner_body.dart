@@ -84,7 +84,7 @@ class _QRScannerBodyState extends State<QRScannerBody> {
   }
 
   void _showPermissionDeniedDialog() {
-    showDialog(
+    showDialog<void>(
       context: context,
       builder: (context) => AlertDialog(
         backgroundColor: ZnoonaColors.bluePinkDark(context),

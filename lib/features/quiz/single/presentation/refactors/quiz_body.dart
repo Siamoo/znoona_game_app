@@ -30,7 +30,7 @@ class QuizBody extends StatefulWidget {
 
   final String categoryId;
   final String categoryName;
-  final int timerDuration; // Timer duration in seconds
+  final int timerDuration;
 
   @override
   State<QuizBody> createState() => _QuizBodyState();
@@ -43,7 +43,6 @@ class _QuizBodyState extends State<QuizBody> {
   String? selectedAnswer;
   int correctCount = 0;
   bool _hasPlayedTimerWarning = false;
-  // bool _hasPlayedTimerCritical = false;
 
   List<Question> get questions =>
       context.read<QuestionsCubit>().state.maybeWhen(
@@ -55,7 +54,6 @@ class _QuizBodyState extends State<QuizBody> {
   void initState() {
     super.initState();
     context.read<QuestionsCubit>().loadQuestions(widget.categoryId);
-    // Initialize remaining time with the selected duration
     remainingTime = widget.timerDuration;
   }
 
@@ -64,7 +62,6 @@ class _QuizBodyState extends State<QuizBody> {
     setState(() {
       remainingTime = widget.timerDuration;
       _hasPlayedTimerWarning = false;
-      // _hasPlayedTimerCritical = false;
     });
 
     timer = Timer.periodic(const Duration(seconds: 1), (t) {
@@ -79,13 +76,6 @@ class _QuizBodyState extends State<QuizBody> {
           _playTimerWarningSound();
           _showTimerWarning();
         }
-
-        // if (remainingTime <= widget.timerDuration * 0.1 &&
-        //     !_hasPlayedTimerCritical) {
-        //   _hasPlayedTimerCritical = true;
-        //   _playTimerCriticalSound();
-        //   _showTimerCritical();
-        // }
       } else {
         t.cancel();
         _vibrateTimeFinished(); // Add vibration when time finishes
@@ -94,11 +84,10 @@ class _QuizBodyState extends State<QuizBody> {
     });
   }
 
-  // Add vibration methods
   Future<void> _vibrateWrongAnswer() async {
     final appState = context.read<AppCubit>().state;
     if (appState.isVibrationEnabled) {
-      if (await Vibration.hasVibrator() ?? false) {
+      if (await Vibration.hasVibrator()) {
         Vibration.vibrate(duration: 200); // Short vibration for wrong answer
       }
     }
@@ -107,8 +96,7 @@ class _QuizBodyState extends State<QuizBody> {
   Future<void> _vibrateTimeFinished() async {
     final appState = context.read<AppCubit>().state;
     if (appState.isVibrationEnabled) {
-      if (await Vibration.hasVibrator() ?? false) {
-        // Pattern: vibrate, pause, vibrate (for time finished)
+      if (await Vibration.hasVibrator()) {
         Vibration.vibrate(pattern: [500, 200, 500]);
       }
     }
@@ -117,7 +105,7 @@ class _QuizBodyState extends State<QuizBody> {
   void _showTimerWarning() {
     ScaffoldMessenger.of(context).showSnackBar(
       SnackBar(
-        content: const Text('⚠️ آخر 3 ثواني!'),
+        content: Text(ZnoonaTexts.tr(context, LangKeys.lastThreeSeconds)),
         duration: const Duration(seconds: 1),
         backgroundColor: Colors.orange,
       ),
@@ -146,13 +134,6 @@ class _QuizBodyState extends State<QuizBody> {
     }
   }
 
-  // Future<void> _playTimerCriticalSound() async {
-  //   final appState = context.read<AppCubit>().state;
-  //   if (appState.isSoundEnabled) {
-  //     await GetIt.I<AudioService>().playTimerCriticalSound();
-  //   }
-  // }
-
   Future<void> _playWinSound() async {
     final appState = context.read<AppCubit>().state;
     if (appState.isSoundEnabled) {
@@ -173,16 +154,6 @@ class _QuizBodyState extends State<QuizBody> {
       await GetIt.I<AudioService>().playBadResultSound();
     }
   }
-
-  // void _showTimerCritical() {
-  //   ScaffoldMessenger.of(context).showSnackBar(
-  //     SnackBar(
-  //       content: const Text('🚨 وقت قليل جداً!'),
-  //       duration: const Duration(seconds: 1),
-  //       backgroundColor: Colors.red,
-  //     ),
-  //   );
-  // }
 
   void selectAnswer(String answer, String correctAnswer) {
     final appState = context.read<AppCubit>().state;
@@ -213,7 +184,6 @@ class _QuizBodyState extends State<QuizBody> {
         currentQuestionIndex++;
         selectedAnswer = null;
         _hasPlayedTimerWarning = false;
-        // _hasPlayedTimerCritical = false;
       });
       startTimer();
     } else {
@@ -269,7 +239,7 @@ class _QuizBodyState extends State<QuizBody> {
                     ),
                     SizedBox(height: 20.h),
                     Text(
-                      'Loading image...',
+                      ZnoonaTexts.tr(context, LangKeys.loadingImage),
                       style: TextStyle(
                         color: Colors.white,
                         fontSize: 14.sp,
@@ -290,7 +260,7 @@ class _QuizBodyState extends State<QuizBody> {
                       ),
                       SizedBox(height: 20.h),
                       Text(
-                        'Failed to load image',
+                        ZnoonaTexts.tr(context, LangKeys.failedToLoadImage),
                         style: TextStyle(
                           color: Colors.white70,
                           fontSize: 16.sp,
@@ -298,7 +268,7 @@ class _QuizBodyState extends State<QuizBody> {
                       ),
                       SizedBox(height: 10.h),
                       Text(
-                        'The image may have been moved or deleted',
+                        ZnoonaTexts.tr(context, LangKeys.imageMovedOrDeleted),
                         style: TextStyle(
                           color: Colors.white54,
                           fontSize: 12.sp,
@@ -341,7 +311,7 @@ class _QuizBodyState extends State<QuizBody> {
               child: Column(
                 children: [
                   Text(
-                    'Pinch to zoom • Double tap to reset',
+                    ZnoonaTexts.tr(context, LangKeys.pinchToZoom),
                     style: TextStyle(
                       color: Colors.white70,
                       fontSize: 12.sp,
@@ -349,7 +319,7 @@ class _QuizBodyState extends State<QuizBody> {
                   ),
                   SizedBox(height: 5.h),
                   Text(
-                    'Rotate device for landscape view',
+                    ZnoonaTexts.tr(context, LangKeys.rotateDevice),
                     style: TextStyle(
                       color: Colors.white54,
                       fontSize: 11.sp,
@@ -415,7 +385,11 @@ class _QuizBodyState extends State<QuizBody> {
                         title: widget.categoryName,
                       ),
                       SizedBox(height: 300.sp),
-                      const Center(child: Text('No questions found.')),
+                      Center(
+                        child: Text(
+                          ZnoonaTexts.tr(context, LangKeys.noQuestionsFound),
+                        ),
+                      ),
                     ],
                   ),
                 ),
@@ -462,19 +436,7 @@ class _QuizBodyState extends State<QuizBody> {
                             borderRadius: BorderRadius.circular(4.r),
                           ),
                           SizedBox(height: 10.h),
-                          Text(
-                            '⏳ ${_formatTime(remainingTime)}',
-                            style: GoogleFonts.beiruti(
-                              fontSize: 24.sp,
-                              fontWeight: FontWeight.bold,
-                              color: remainingTime > widget.timerDuration * 0.3
-                                  ? Colors.green
-                                  : remainingTime > widget.timerDuration * 0.1
-                                  ? Colors.orange
-                                  : Colors.red,
-                            ),
-                            textAlign: TextAlign.center,
-                          ),
+                          _buildSoundAndVibrationControl(),
                         ],
                       ),
                       SizedBox(height: 20.sp),
@@ -483,7 +445,7 @@ class _QuizBodyState extends State<QuizBody> {
                         Column(
                           children: [
                             Text(
-                              'Tap image to zoom',
+                              ZnoonaTexts.tr(context, LangKeys.tapImageToZoom),
                               style: TextStyle(
                                 fontSize: 12.sp,
                                 color: ZnoonaColors.text(
@@ -528,7 +490,10 @@ class _QuizBodyState extends State<QuizBody> {
                                               ),
                                               SizedBox(height: 10.h),
                                               Text(
-                                                'Image not available',
+                                                ZnoonaTexts.tr(
+                                                  context,
+                                                  LangKeys.imageNotAvailable,
+                                                ),
                                                 style: TextStyle(
                                                   fontSize: 12.sp,
                                                   color: ZnoonaColors.text(
@@ -581,7 +546,6 @@ class _QuizBodyState extends State<QuizBody> {
                           SizedBox(height: 20.sp),
 
                           // Updated sound and vibration control
-                          _buildSoundAndVibrationControl(),
                         ],
                       ),
                     ],
@@ -600,101 +564,122 @@ class _QuizBodyState extends State<QuizBody> {
     return BlocBuilder<AppCubit, AppState>(
       builder: (context, appState) {
         return Container(
-          margin: EdgeInsets.only(top: 20.h),
-          padding: EdgeInsets.symmetric(vertical: 10.h, horizontal: 20.w),
+          padding: EdgeInsets.symmetric(vertical: 10.h, horizontal: 10.w),
           decoration: BoxDecoration(
             color: ZnoonaColors.main(context).withOpacity(0.1),
             borderRadius: BorderRadius.circular(12.r),
           ),
-          child: Column(
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  // Vibration control
-                  Expanded(
-                    child: GestureDetector(
-                      onTap: () => context.read<AppCubit>().toggleVibration(),
-                      child: Container(
-                        padding: EdgeInsets.symmetric(
-                          horizontal: 12.w,
-                          vertical: 8.h,
+              // Vibration control
+              Expanded(
+                child: GestureDetector(
+                  onTap: () => context.read<AppCubit>().toggleVibration(),
+                  child: Container(
+                    padding: EdgeInsets.symmetric(
+                      horizontal: 8.w,
+                    ),
+                    decoration: BoxDecoration(
+                      color: ZnoonaColors.main(context),
+                      borderRadius: BorderRadius.circular(8.r),
+                    ),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Icon(
+                          appState.isVibrationEnabled
+                              ? Icons.vibration
+                              : Icons.not_interested,
+                          color: Colors.white,
+                          size: 16.sp,
                         ),
-                        decoration: BoxDecoration(
-                          color: ZnoonaColors.main(context),
-                          borderRadius: BorderRadius.circular(8.r),
-                        ),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            Icon(
-                              appState.isVibrationEnabled
-                                  ? Icons.vibration
-                                  : Icons.not_interested,
+                        SizedBox(width: 8.w),
+                        Expanded(
+                          child: Text(
+                            appState.isVibrationEnabled
+                                ? ZnoonaTexts.tr(
+                                    context,
+                                    LangKeys.disableVibration,
+                                  )
+                                : ZnoonaTexts.tr(
+                                    context,
+                                    LangKeys.enableVibration,
+                                  ),
+                            style: TextStyle(
+                              fontSize: 11.sp,
                               color: Colors.white,
-                              size: 16.sp,
                             ),
-                            SizedBox(width: 8.w),
-                            Expanded(
-                              child: Text(
-                                appState.isVibrationEnabled
-                                    ? 'إيقاف الاهتزاز'
-                                    : 'تشغيل الاهتزاز',
-                                style: TextStyle(
-                                  fontSize: 11.sp,
-                                  color: Colors.white,
-                                ),
-                                textAlign: TextAlign.center,
-                              ),
-                            ),
-                          ],
+                            textAlign: TextAlign.center,
+                          ),
                         ),
-                      ),
+                      ],
                     ),
                   ),
-                  SizedBox(width: 10.w),
-                  // Sound control
-                  Expanded(
-                    child: GestureDetector(
-                      onTap: () => context.read<AppCubit>().toggleSound(),
-                      child: Container(
-                        padding: EdgeInsets.symmetric(
-                          horizontal: 12.w,
-                          vertical: 8.h,
+                ),
+              ),
+
+              SizedBox(width: 10.w),
+              Expanded(
+                child: Text(
+                  '${_formatTime(remainingTime)}',
+                  style: GoogleFonts.beiruti(
+                    fontSize: 24.sp,
+                    fontWeight: FontWeight.bold,
+                    color: remainingTime > widget.timerDuration * 0.3
+                        ? Colors.green
+                        : remainingTime > widget.timerDuration * 0.1
+                        ? Colors.orange
+                        : Colors.red,
+                  ),
+                  textAlign: TextAlign.center,
+                ),
+              ),
+              SizedBox(width: 10.w),
+              Expanded(
+                child: GestureDetector(
+                  onTap: () => context.read<AppCubit>().toggleSound(),
+                  child: Container(
+                    padding: EdgeInsets.symmetric(
+                      horizontal: 8.w,
+                    ),
+                    decoration: BoxDecoration(
+                      color: ZnoonaColors.main(context),
+                      borderRadius: BorderRadius.circular(8.r),
+                    ),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Icon(
+                          appState.isSoundEnabled
+                              ? Icons.volume_up
+                              : Icons.volume_off,
+                          color: Colors.white,
+                          size: 16.sp,
                         ),
-                        decoration: BoxDecoration(
-                          color: ZnoonaColors.main(context),
-                          borderRadius: BorderRadius.circular(8.r),
-                        ),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            Icon(
-                              appState.isSoundEnabled
-                                  ? Icons.volume_up
-                                  : Icons.volume_off,
+                        SizedBox(width: 8.w),
+                        Expanded(
+                          child: Text(
+                            appState.isSoundEnabled
+                                ? ZnoonaTexts.tr(
+                                    context,
+                                    LangKeys.disableSound,
+                                  )
+                                : ZnoonaTexts.tr(
+                                    context,
+                                    LangKeys.enableSound,
+                                  ),
+                            style: TextStyle(
+                              fontSize: 11.sp,
                               color: Colors.white,
-                              size: 16.sp,
                             ),
-                            SizedBox(width: 8.w),
-                            Expanded(
-                              child: Text(
-                                appState.isSoundEnabled
-                                    ? 'إيقاف الصوت'
-                                    : 'تشغيل الصوت',
-                                style: TextStyle(
-                                  fontSize: 11.sp,
-                                  color: Colors.white,
-                                ),
-                                textAlign: TextAlign.center,
-                              ),
-                            ),
-                          ],
+                            textAlign: TextAlign.center,
+                          ),
                         ),
-                      ),
+                      ],
                     ),
                   ),
-                ],
+                ),
               ),
             ],
           ),

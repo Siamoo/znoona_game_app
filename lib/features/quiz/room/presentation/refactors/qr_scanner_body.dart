@@ -171,7 +171,7 @@ class _QRScannerBodyState extends State<QRScannerBody> {
             SizedBox(width: 10.w),
             Expanded(
               child: Text(
-                'Room code scanned successfully!',
+                ZnoonaTexts.tr(context, LangKeys.roomCodeScannedSuccess),
                 style: TextStyle(
                   fontSize: 16.sp,
                   fontWeight: FontWeight.w500,
@@ -331,7 +331,7 @@ class _QRScannerBodyState extends State<QRScannerBody> {
           ),
           SizedBox(height: 20.h),
           Text(
-            'Setting up scanner...',
+            ZnoonaTexts.tr(context, LangKeys.settingUpScanner),
             style: TextStyle(
               color: Colors.white,
               fontSize: 18.sp,
@@ -461,17 +461,17 @@ class _QRScannerBodyState extends State<QRScannerBody> {
               _buildCorner(
                 top: 0,
                 right: 0,
-                isTopRight: true, isTopLeft: false,
+                isTopRight: true,
               ),
               _buildCorner(
                 bottom: 0,
                 left: 0,
-                isBottomLeft: true, isTopLeft: false,
+                isBottomLeft: true,
               ),
               _buildCorner(
                 bottom: 0,
                 right: 0,
-                isBottomRight: true, isTopLeft: false,
+                isBottomRight: true,
               ),
             ],
           ),
@@ -485,7 +485,7 @@ class _QRScannerBodyState extends State<QRScannerBody> {
     double? bottom,
     double? left,
     double? right,
-    required bool isTopLeft,
+    bool isTopLeft = false,
     bool isTopRight = false,
     bool isBottomLeft = false,
     bool isBottomRight = false,
@@ -606,7 +606,7 @@ class _QRScannerBodyState extends State<QRScannerBody> {
                     ),
                     SizedBox(width: 8.w),
                     Text(
-                      'Scan only valid 6-digit room codes',
+                      ZnoonaTexts.tr(context, LangKeys.scanSixDigitCode),
                       style: TextStyle(
                         color: Colors.white.withOpacity(0.7),
                         fontSize: 12.sp,

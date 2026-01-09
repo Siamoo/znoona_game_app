@@ -175,4 +175,27 @@ class LangKeys {
   static const String backgroundMusic = 'background_music';
   static const String volume = 'volume';
   static const String testSound = 'test_sound';
+  static const String roomCodeScannedSuccess = 'room_code_scanned_success';
+  static const String settingUpScanner = 'setting_up_scanner';
+  static const String scanSixDigitCode = 'scan_six_digit_code';
+  static const String noQuestionsFound = 'no_questions_found';
+  static const String failedToLoadQuestions = 'failed_to_load_questions';
+  static const String noQuestionsAvailable = 'no_questions_available';
+  static const String loadingImage = 'loading_image';
+  static const String failedToLoadImage = 'failed_to_load_image';
+  static const String imageMovedOrDeleted = 'image_moved_or_deleted';
+  static const String pinchToZoom = 'pinch_to_zoom';
+  static const String rotateDevice = 'rotate_device';
+  static const String imageNotAvailable = 'image_not_available';
+  static const String soundEnabled = 'sound_enabled';
+  static const String soundDisabled = 'sound_disabled';
+  static const String disableSound = 'disable_sound';
+  static const String enableSound = 'enable_sound';
+  static const String loadingResults = 'loading_results';
+  static const String somethingWentWrong = 'something_went_wrong';
+  static const String gameComplete = 'game_complete';
+  static const String lastThreeSeconds = 'last_three_seconds';
+  static const String tapImageToZoom = 'tap_image_to_zoom';
+  static const String disableVibration = 'disable_vibration';
+  static const String enableVibration = 'enable_vibration';
 }

@@ -141,7 +141,7 @@ class _RoomQuizBodyState extends State<RoomQuizBody> {
                     ),
                     SizedBox(height: 20.h),
                     Text(
-                      'Loading image...',
+                      ZnoonaTexts.tr(context, LangKeys.loadingImage),
                       style: TextStyle(
                         color: Colors.white,
                         fontSize: 14.sp,
@@ -162,7 +162,7 @@ class _RoomQuizBodyState extends State<RoomQuizBody> {
                       ),
                       SizedBox(height: 20.h),
                       Text(
-                        'Failed to load image',
+                        ZnoonaTexts.tr(context, LangKeys.failedToLoadImage),
                         style: TextStyle(
                           color: Colors.white70,
                           fontSize: 16.sp,
@@ -170,7 +170,7 @@ class _RoomQuizBodyState extends State<RoomQuizBody> {
                       ),
                       SizedBox(height: 10.h),
                       Text(
-                        'The image may have been moved or deleted',
+                        ZnoonaTexts.tr(context, LangKeys.imageMovedOrDeleted),
                         style: TextStyle(
                           color: Colors.white54,
                           fontSize: 12.sp,
@@ -213,7 +213,7 @@ class _RoomQuizBodyState extends State<RoomQuizBody> {
               child: Column(
                 children: [
                   Text(
-                    'Pinch to zoom • Double tap to reset',
+                    ZnoonaTexts.tr(context, LangKeys.pinchToZoom),
                     style: TextStyle(
                       color: Colors.white70,
                       fontSize: 12.sp,
@@ -221,7 +221,7 @@ class _RoomQuizBodyState extends State<RoomQuizBody> {
                   ),
                   SizedBox(height: 5.h),
                   Text(
-                    'Rotate device for landscape view',
+                    ZnoonaTexts.tr(context, LangKeys.rotateDevice),
                     style: TextStyle(
                       color: Colors.white54,
                       fontSize: 11.sp,
@@ -270,12 +270,12 @@ class _RoomQuizBodyState extends State<RoomQuizBody> {
     await context.read<RoomCubit>().selectAnswer(answer);
   }
 
-void _checkTimerWarning(int remainingTime) {
-  if (remainingTime <= 3 && remainingTime > 0 && !_hasPlayedTimerWarning) {
-    _hasPlayedTimerWarning = true;
-    _playTimerWarningSound();
+  void _checkTimerWarning(int remainingTime) {
+    if (remainingTime <= 3 && remainingTime > 0 && !_hasPlayedTimerWarning) {
+      _hasPlayedTimerWarning = true;
+      _playTimerWarningSound();
+    }
   }
-}
 
   @override
   Widget build(BuildContext context) {
@@ -495,7 +495,7 @@ void _checkTimerWarning(int remainingTime) {
                                           ),
                                           SizedBox(height: 10.h),
                                           Text(
-                                            'Image not available',
+                                            ZnoonaTexts.tr(context, LangKeys.imageNotAvailable),
                                             style: TextStyle(
                                               fontSize: 12.sp,
                                               color: ZnoonaColors.text(
@@ -584,13 +584,15 @@ void _checkTimerWarning(int remainingTime) {
               ),
               SizedBox(width: 8.w),
               Text(
-                appState.isSoundEnabled ? 'الصوت مفعل' : 'الصوت معطل',
+                appState.isSoundEnabled 
+                    ? ZnoonaTexts.tr(context, LangKeys.soundEnabled)
+                    : ZnoonaTexts.tr(context, LangKeys.soundDisabled),
                 style: TextStyle(
                   fontSize: 12.sp,
                   color: ZnoonaColors.text(context),
                 ),
               ),
-              Spacer(),
+              const Spacer(),
               GestureDetector(
                 onTap: () => context.read<AppCubit>().toggleSound(),
                 child: Container(
@@ -603,7 +605,9 @@ void _checkTimerWarning(int remainingTime) {
                     borderRadius: BorderRadius.circular(8.r),
                   ),
                   child: Text(
-                    appState.isSoundEnabled ? 'إيقاف الصوت' : 'تشغيل الصوت',
+                    appState.isSoundEnabled 
+                        ? ZnoonaTexts.tr(context, LangKeys.disableSound)
+                        : ZnoonaTexts.tr(context, LangKeys.enableSound),
                     style: TextStyle(
                       fontSize: 11.sp,
                       color: Colors.white,

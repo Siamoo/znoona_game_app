@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:medaan_almaarifa/core/common/widgets/custom_app_bar.dart';
+import 'package:medaan_almaarifa/core/helpers/znoona_texts.dart';
+import 'package:medaan_almaarifa/core/language/lang_keys.dart';
 import 'package:medaan_almaarifa/features/quiz/room/domain/entities/room.dart';
 import 'package:medaan_almaarifa/features/quiz/room/domain/entities/room_question.dart';
 import 'package:medaan_almaarifa/features/quiz/room/presentation/cubit/room_cubit.dart';
@@ -57,7 +59,7 @@ class _RoomLoadQuestionsBodyState extends State<RoomLoadQuestionsBody> {
           } else {
             if (!mounted) return;
             setState(() {
-              _errorMessage = 'No questions found for this room';
+              _errorMessage = ZnoonaTexts.tr(context, LangKeys.noQuestionsFound);
               _isLoadingQuestions = false;
             });
           }
@@ -66,7 +68,7 @@ class _RoomLoadQuestionsBodyState extends State<RoomLoadQuestionsBody> {
     } on Exception catch (e) {
       if (!mounted) return;
       setState(() {
-        _errorMessage = 'Failed to load questions: $e';
+        _errorMessage = '${ZnoonaTexts.tr(context, LangKeys.failedToLoadQuestions)}: $e';
         _isLoadingQuestions = false;
       });
     }
@@ -109,7 +111,7 @@ class _RoomLoadQuestionsBodyState extends State<RoomLoadQuestionsBody> {
   Widget _buildContent() {
     if (_isLoadingQuestions) {
       return Scaffold(
-        appBar: AppBar(title: const Text('Game')),
+        appBar: AppBar(title: Text(ZnoonaTexts.tr(context, LangKeys.quizGame))),
         body: const Center(child: CircularProgressIndicator()),
       );
     }
@@ -120,16 +122,16 @@ class _RoomLoadQuestionsBodyState extends State<RoomLoadQuestionsBody> {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              const CustomAppBar(title: 'Game'),
+              const CustomAppBar(title: 'Game'), // This needs to be fixed too
               const Icon(Icons.error, size: 64, color: Colors.red),
               const SizedBox(height: 16),
-              const Text('Failed to load questions'),
+              Text(ZnoonaTexts.tr(context, LangKeys.failedToLoadQuestions)),
               const SizedBox(height: 8),
               Text(_errorMessage!, textAlign: TextAlign.center),
               const SizedBox(height: 16),
               ElevatedButton(
                 onPressed: _loadRoomQuestions,
-                child: const Text('Try Again'),
+                child: Text(ZnoonaTexts.tr(context, LangKeys.tryAgain)),
               ),
             ],
           ),
@@ -139,8 +141,8 @@ class _RoomLoadQuestionsBodyState extends State<RoomLoadQuestionsBody> {
 
     if (_questions.isEmpty) {
       return Scaffold(
-        appBar: AppBar(title: const Text('Game')),
-        body: const Center(child: Text('No questions available')),
+        appBar: AppBar(title: Text(ZnoonaTexts.tr(context, LangKeys.quizGame))),
+        body: Center(child: Text(ZnoonaTexts.tr(context, LangKeys.noQuestionsAvailable))),
       );
     }
 

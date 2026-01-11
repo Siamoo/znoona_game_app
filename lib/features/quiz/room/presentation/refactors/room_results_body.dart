@@ -54,15 +54,15 @@ class RoomResultsBody extends StatelessWidget {
                   allFinished,
                   userRank,
                 ) {
-                  return ProgressiveResultsBody(
-                    results: results,
-                    finishedPlayers: finishedPlayers,
-                    totalPlayers: totalPlayers,
-                    allPlayersFinished: allFinished,
-                    userRank: userRank,
-                    roomId: roomId,
-                  );
-                },
+              return ProgressiveResultsBody(
+                results: results,
+                finishedPlayers: finishedPlayers,
+                totalPlayers: totalPlayers,
+                allPlayersFinished: allFinished,
+                userRank: userRank,
+                roomId: roomId,
+              );
+            },
             error: (message) {
               return ErrorScreen(
                 message: message,
@@ -89,13 +89,13 @@ class LoadingScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const Center(
+    return Center(
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          CircularProgressIndicator(),
-          SizedBox(height: 16),
-          Text('Loading results...'),
+          const CircularProgressIndicator(),
+          SizedBox(height: 16.h),
+          Text(ZnoonaTexts.tr(context, LangKeys.loadingResults)),
         ],
       ),
     );
@@ -115,27 +115,27 @@ class ErrorScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Center(
       child: Padding(
-        padding: const EdgeInsets.all(24.0),
+        padding: EdgeInsets.all(24.w),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             const Icon(Icons.error_outline, size: 64, color: Colors.red),
-            const SizedBox(height: 16),
+            SizedBox(height: 16.h),
             Text(
-              'Something went wrong',
+              ZnoonaTexts.tr(context, LangKeys.somethingWentWrong),
               style: Theme.of(context).textTheme.titleLarge,
             ),
-            const SizedBox(height: 8),
+            SizedBox(height: 8.h),
             Text(
               message,
               textAlign: TextAlign.center,
               style: TextStyle(color: Colors.grey.shade600),
             ),
-            const SizedBox(height: 24),
+            SizedBox(height: 24.h),
             ElevatedButton.icon(
               onPressed: onRetry,
               icon: const Icon(Icons.refresh),
-              label: const Text('Try Again'),
+              label: Text(ZnoonaTexts.tr(context, LangKeys.tryAgain)),
             ),
           ],
         ),
@@ -186,7 +186,7 @@ class ProgressiveResultsBody extends StatelessWidget {
         child: Column(
           children: [
             UserRankCard(userResult: currentUserResult, results: results),
-            const SizedBox(height: 20),
+            SizedBox(height: 20.h),
             Expanded(
               child: ResultsList(
                 rankedGroups: rankedGroups,
@@ -220,7 +220,7 @@ class ActionButtons extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.only(top: 16.0),
+      padding: EdgeInsets.only(top: 16.h),
       child: Card(
         color: ZnoonaColors.main(context).withAlpha(150),
         elevation: 2,
@@ -229,14 +229,14 @@ class ActionButtons extends StatelessWidget {
           child: Column(
             children: [
               Text(
-                'Game Complete',
+                ZnoonaTexts.tr(context, LangKeys.gameComplete),
                 style: GoogleFonts.beiruti(
                   fontSize: 18.sp,
                   fontWeight: FontWeight.bold,
                   color: ZnoonaColors.text(context),
                 ),
               ),
-              const SizedBox(height: 12),
+              SizedBox(height: 12.h),
               CustomLinearButton(
                 width: double.infinity,
                 height: 50.h,
@@ -245,10 +245,7 @@ class ActionButtons extends StatelessWidget {
                   Navigator.pop(context);
                 },
                 child: Text(
-                  ZnoonaTexts.tr(
-                    context,
-                    LangKeys.leaveRoom,
-                  ),
+                  ZnoonaTexts.tr(context, LangKeys.leaveRoom),
                   style: const TextStyle(
                     fontSize: 18,
                     fontWeight: FontWeight.bold,

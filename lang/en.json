@@ -196,5 +196,6 @@
     "last_three_seconds": "⚠️ Last 3 seconds!",
   "tap_image_to_zoom": "Tap image to zoom",
   "disable_vibration": "Disable vibration",
-  "enable_vibration": "Enable vibration"
+  "enable_vibration": "Enable vibration",
+  "sound_settings": "Sound Settings"
 }

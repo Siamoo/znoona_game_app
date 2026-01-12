@@ -196,6 +196,7 @@
     "last_three_seconds": "⚠️ آخر 3 ثواني!",
   "tap_image_to_zoom": "اضغط على الصورة للتكبير",
   "disable_vibration": "إيقاف الاهتزاز",
-  "enable_vibration": "تشغيل الاهتزاز"
+  "enable_vibration": "تشغيل الاهتزاز",
+  "sound_settings": "إعدادات الصوت"
 
 }

@@ -444,21 +444,6 @@ class ProfileBody extends StatelessWidget {
     );
   }
 
-  String _formatEmail(String email) {
-    final parts = email.split('@');
-    if (parts.length != 2) return email;
-
-    final username = parts[0];
-    final domain = parts[1];
-
-    // Shorten username if too long
-    final shortenedUsername = username.length > 8
-        ? '${username.substring(0, 8)}...'
-        : username;
-
-    return '$shortenedUsername\n@$domain';
-  }
-
   String _formatDateTime(DateTime date) {
     final now = DateTime.now();
     final difference = now.difference(date);

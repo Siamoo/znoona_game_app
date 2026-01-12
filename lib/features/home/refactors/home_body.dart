@@ -4,7 +4,6 @@ import 'package:medaan_almaarifa/core/helpers/znoona_navigate.dart';
 import 'package:medaan_almaarifa/core/language/lang_keys.dart';
 import 'package:medaan_almaarifa/core/style/images/app_images.dart';
 import 'package:medaan_almaarifa/features/home/screens/quiz_home_screen.dart';
-import 'package:medaan_almaarifa/features/home/screens/test.dart';
 import 'package:medaan_almaarifa/features/home/widgets/custom_game_button.dart';
 import 'package:medaan_almaarifa/features/home/widgets/custom_home_appbar.dart';
 import 'package:medaan_almaarifa/features/home/widgets/custom_section_title.dart';
@@ -57,10 +56,7 @@ class HomeBody extends StatelessWidget {
                           GameButton(
                             image: AppImages.puzzle,
                             langkey: LangKeys.appName,
-                            onPressed: () => ZnoonaNavigate.pushTo(
-                              context,
-                               TestAudioScreen(),
-                            ),
+                            onPressed: () {},
                           ),
                         ],
                       ),

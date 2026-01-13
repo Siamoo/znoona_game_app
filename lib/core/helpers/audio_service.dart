@@ -9,31 +9,31 @@ class AudioService {
 
   AudioPlayer? _soundPlayer;
   AudioPlayer? _musicPlayer;
-  
+
   bool _isInitialized = false;
   AppState? _currentState;
 
   Future<void> initialize() async {
     if (_isInitialized) return;
-    
+
     try {
       print('🎵 Initializing AudioService...');
-      
+
       // Configure audio session for better audio handling
       final session = await AudioSession.instance;
       await session.configure(const AudioSessionConfiguration.music());
-      
+
       // Initialize audio players
       _soundPlayer = AudioPlayer();
       _musicPlayer = AudioPlayer();
-      
+
       // Set up music player
       await _musicPlayer!.setLoopMode(LoopMode.all);
       await _musicPlayer!.setVolume(0.5);
-      
+
       _isInitialized = true;
       print('✅ AudioService initialized successfully');
-      
+
       // Set initial state if it was provided before initialization
       if (_currentState != null) {
         _applyStateToPlayers(_currentState!);
@@ -46,9 +46,19 @@ class AudioService {
 
   void onAppStateChanged(AppState state) {
     _currentState = state;
-    
+
     if (_isInitialized && _soundPlayer != null && _musicPlayer != null) {
       _applyStateToPlayers(state);
+      
+      // Auto-start or stop background music based on settings
+      if (state.isBackgroundMusicEnabled) {
+        // Only start if not already playing
+        if (_musicPlayer?.playerState.playing != true) {
+          startBackgroundMusic();
+        }
+      } else {
+        stopBackgroundMusic();
+      }
     } else {
       print('⚠️ AudioService not ready yet, storing state for later');
     }
@@ -58,7 +68,9 @@ class AudioService {
     try {
       _soundPlayer?.setVolume(state.soundVolume);
       _musicPlayer?.setVolume(state.musicVolume);
-      print('🔊 Audio volume updated: sound=${state.soundVolume}, music=${state.musicVolume}');
+      print(
+        '🔊 Audio volume updated: sound=${state.soundVolume}, music=${state.musicVolume}',
+      );
     } catch (e) {
       print('❌ Error applying audio state: $e');
     }
@@ -69,7 +81,7 @@ class AudioService {
       print('⚠️ Cannot play sound: AudioService not ready or sound disabled');
       return;
     }
-    
+
     try {
       await _soundPlayer?.stop();
       await _soundPlayer?.setAsset(assetPath);
@@ -118,9 +130,16 @@ class AudioService {
     if (!_isInitialized || !(_currentState?.isBackgroundMusicEnabled ?? true)) {
       return;
     }
-    
+
     try {
+      // Check if music is already playing
+      if (_musicPlayer?.playerState.playing == true) {
+        print('🎶 Background music already playing');
+        return;
+      }
+      
       await _musicPlayer?.setAsset('assets/audio/background.mp3');
+      await _musicPlayer?.setVolume(_currentState?.musicVolume ?? 0.5);
       await _musicPlayer?.play();
       print('🎶 Background music started');
     } catch (e) {

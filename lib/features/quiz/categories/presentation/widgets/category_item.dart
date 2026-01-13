@@ -45,59 +45,55 @@ class CategoryItem extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     // Title and badge row
-                    Row(
-                      children: [
-                        // Title with flexible width
-                        Expanded(
-                          child: TextApp(
-                            text: category.arabicName,
-                            textStyle: TextStyle(
-                              fontSize: 26.sp,
-                              fontWeight: FontWeight.w800,
-                              color: ZnoonaColors.text(context),
-                            ),
-                            maxLines: 2,
-                            // Overflow is now handled by TextApp default
-                          ),
-                        ),
-                        if (category.totalQuestionsCount > 0) ...[
-                          SizedBox(width: 8.w),
-                          // Badge
-                          Container(
-                            padding: EdgeInsets.symmetric(
-                              horizontal: 8.w,
-                              vertical: 4.h,
-                            ),
-                            decoration: BoxDecoration(
-                              color: Colors.white.withAlpha(30),
-                              borderRadius: BorderRadius.circular(12.r),
-                            ),
-                            child: TextApp(
-                              text: isLesson
-                                  ? '${category.totalQuestionsCount} س'
-                                  : '${category.totalQuestionsCount} س',
-                              textStyle: TextStyle(
-                                fontSize: 14.sp,
-                                fontWeight: FontWeight.bold,
-                                color: Colors.white,
-                              ),
-                              maxLines:
-                                  1, // Ensure badge text stays in one line
-                            ),
-                          ),
-                        ],
-                      ],
+                    TextApp(
+                      text: category.arabicName,
+                      textStyle: TextStyle(
+                        fontSize: 26.sp,
+                        fontWeight: FontWeight.w800,
+                        color: ZnoonaColors.text(context),
+                      ),
+                      maxLines: 2,
+                      // Overflow is now handled by TextApp default
                     ),
                     SizedBox(height: 4.h),
                     // Description
-                    TextApp(
-                      text: category.discription,
-                      textStyle: TextStyle(
-                        fontSize: 17.sp,
-                        fontWeight: FontWeight.w500,
-                        color: ZnoonaColors.text(context).withAlpha(200),
-                      ),
-                      maxLines: 2,
+                    Row(
+                      children: [
+                        Expanded(
+                          child: TextApp(
+                            text: '${category.discription}',
+                            textStyle: TextStyle(
+                              fontSize: 17.sp,
+                              fontWeight: FontWeight.w500,
+                              color: ZnoonaColors.text(context).withAlpha(200),
+                            ),
+                            maxLines: 2,
+                          ),
+                        ),
+
+                        if (category.totalQuestionsCount > 0) ...[
+                          TextApp(
+                            text: '|',
+                            textStyle: TextStyle(
+                              fontSize: 18.sp,
+                              fontWeight: FontWeight.w500,
+                              color: ZnoonaColors.text(context).withAlpha(200),
+                            ),
+                            maxLines: 2,
+                          ),
+                          TextApp(
+                            text: isLesson
+                                ? '${category.totalQuestionsCount} س'
+                                : '${category.totalQuestionsCount} س',
+                            textStyle: TextStyle(
+                              fontSize: 14.sp,
+                              fontWeight: FontWeight.w500,
+                              color: ZnoonaColors.text(context).withAlpha(200),
+                            ),
+                            maxLines: 1, // Ensure badge text stays in one line
+                          ),
+                        ],
+                      ],
                     ),
                   ],
                 ),

@@ -25,6 +25,7 @@ class EnterCodeOrScan extends StatelessWidget {
         color: ZnoonaColors.text(context),
       ),
       textAlign: TextAlign.center,
+      maxLines: 2,
     );
   }
 }

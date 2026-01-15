@@ -1,6 +1,6 @@
 {
-  "language": "English",
-    "app_name": "لعبة ظنونا",
+  "language": "العربية",
+  "app_name": "ميدان المعرفة",
   "login": "تسجيل الدخول",
   "welcome": "مرحباً! الرجاء إدخال بريدك إلكتروني والبدء.",
   "your_email": "بريدك الالكتروني",
@@ -177,10 +177,10 @@
   "room_code_scanned_success": "تم مسح رمز الغرفة بنجاح!",
   "setting_up_scanner": "جاري إعداد الماسح الضوئي...",
   "scan_six_digit_code": "امسح رموز الغرفة المكونة من 6 أرقام فقط",
-    "no_questions_found": "لا توجد أسئلة لهذه الغرفة",
+  "no_questions_found": "لا توجد أسئلة لهذه الغرفة",
   "failed_to_load_questions": "فشل تحميل الأسئلة",
   "no_questions_available": "لا توجد أسئلة متاحة",
-    "loading_image": "جاري تحميل الصورة...",
+  "loading_image": "جاري تحميل الصورة...",
   "failed_to_load_image": "فشل تحميل الصورة",
   "image_moved_or_deleted": "ربما تم نقل الصورة أو حذفها",
   "pinch_to_zoom": "استخدم الاصابع للتكبير • اضغط مرتين للتصغير",
@@ -193,10 +193,13 @@
   "loading_results": "جاري تحميل النتائج...",
   "something_went_wrong": "حدث خطأ ما",
   "game_complete": "انتهت اللعبة",
-    "last_three_seconds": "⚠️ آخر 3 ثواني!",
+  "last_three_seconds": "⚠️ آخر 3 ثواني!",
   "tap_image_to_zoom": "اضغط على الصورة للتكبير",
   "disable_vibration": "إيقاف الاهتزاز",
   "enable_vibration": "تشغيل الاهتزاز",
-  "sound_settings": "إعدادات الصوت"
+     "sound_settings": "إعدادات الصوت",
+  "volume_percentage": "نسبة الصوت %",
+  "sound_effects_description": "تشغيل/إيقاف المؤثرات الصوتية",
+  "background_music_description": "تشغيل/إيقاف الموسيقى الخلفية"
 
 }

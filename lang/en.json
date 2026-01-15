@@ -1,6 +1,6 @@
 {
-  "language": "العربية",
-  "app_name": "Znoona Game",
+  "language": "English",
+  "app_name": "midan al maarifa",
   "login": "Login",
   "welcome": "Welcome, Please enter your email and get started.",
   "your_email": "Your Email",
@@ -177,10 +177,10 @@
   "room_code_scanned_success": "Room code scanned successfully!",
   "setting_up_scanner": "Setting up scanner...",
   "scan_six_digit_code": "Scan only valid 6-digit room codes",
-    "no_questions_found": "No questions found for this room",
+  "no_questions_found": "No questions found for this room",
   "failed_to_load_questions": "Failed to load questions",
   "no_questions_available": "No questions available",
-    "loading_image": "Loading image...",
+  "loading_image": "Loading image...",
   "failed_to_load_image": "Failed to load image",
   "image_moved_or_deleted": "The image may have been moved or deleted",
   "pinch_to_zoom": "Pinch to zoom • Double tap to reset",
@@ -193,9 +193,12 @@
   "loading_results": "Loading results...",
   "something_went_wrong": "Something went wrong",
   "game_complete": "Game Complete",
-    "last_three_seconds": "⚠️ Last 3 seconds!",
+  "last_three_seconds": "⚠️ Last 3 seconds!",
   "tap_image_to_zoom": "Tap image to zoom",
   "disable_vibration": "Disable vibration",
   "enable_vibration": "Enable vibration",
-  "sound_settings": "Sound Settings"
+    "sound_settings": "Sound Settings",
+  "volume_percentage": "Volume %",
+  "sound_effects_description": "Toggle sound effects on/off",
+  "background_music_description": "Toggle background music on/off"
 }

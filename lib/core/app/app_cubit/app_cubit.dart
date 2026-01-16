@@ -2,6 +2,8 @@ import 'dart:ui';
 
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
+import 'package:medaan_almaarifa/core/di/injcetion_container.dart';
+import 'package:medaan_almaarifa/core/helpers/audio_service.dart';
 import 'package:medaan_almaarifa/core/service/shared_pref/pref_keys.dart';
 import 'package:medaan_almaarifa/core/service/shared_pref/shared_pref.dart';
 
@@ -10,28 +12,28 @@ part 'app_cubit.freezed.dart';
 
 class AppCubit extends Cubit<AppState> {
   AppCubit() : super(AppState.initial()) {
-    // Load settings when cubit is created
     _loadSettings();
   }
 
+  // Add AudioService instance
+  final AudioService _audioService = sl<AudioService>();
+
   /// Load all settings from SharedPreferences
   Future<void> _loadSettings() async {
-    // Load from SharedPreferences
     final isDarkMode = SharedPref().getBoolean(PrefKeys.themeMode) ?? false;
     final languageCode = SharedPref().getString(PrefKeys.language) ?? 'en';
     final isSoundEnabled = SharedPref().getBoolean(PrefKeys.soundEnabled) ?? true;
-    final isVibrationEnabled = SharedPref().getBoolean(PrefKeys.vibrationEnabled) ?? true; // Add this line
+    final isVibrationEnabled = SharedPref().getBoolean(PrefKeys.vibrationEnabled) ?? true;
     final isBackgroundMusicEnabled = 
         SharedPref().getBoolean(PrefKeys.backgroundMusicEnabled) ?? true;
     final soundVolume = SharedPref().getDouble(PrefKeys.soundVolume) ?? 1.0;
     final musicVolume = SharedPref().getDouble(PrefKeys.musicVolume) ?? 0.5;
 
-    // Emit the loaded state
     final loadedState = AppState(
       isDarkMode: isDarkMode,
       locale: Locale(languageCode),
       isSoundEnabled: isSoundEnabled,
-      isVibrationEnabled: isVibrationEnabled, // Add this line
+      isVibrationEnabled: isVibrationEnabled,
       isBackgroundMusicEnabled: isBackgroundMusicEnabled,
       soundVolume: soundVolume,
       musicVolume: musicVolume,
@@ -43,82 +45,100 @@ class AppCubit extends Cubit<AppState> {
   /// Toggle vibration feedback
   Future<void> toggleVibration() async {
     final newValue = !state.isVibrationEnabled;
-    
-    // Save to preferences
     await SharedPref().setBoolean(PrefKeys.vibrationEnabled, newValue);
-    
-    // Update state
     emit(state.copyWith(isVibrationEnabled: newValue));
   }
 
   /// Toggle between light and dark theme
   Future<void> toggleTheme() async {
     final newMode = !state.isDarkMode;
-    
-    // Save to preferences
     await SharedPref().setBoolean(PrefKeys.themeMode, newMode);
-    
-    // Update state
     emit(state.copyWith(isDarkMode: newMode));
   }
 
   /// Change app language
   Future<void> changeLanguage(String languageCode) async {
-    // Save to preferences
     await SharedPref().setString(PrefKeys.language, languageCode);
-    
-    // Update state
     emit(state.copyWith(locale: Locale(languageCode)));
   }
 
-  /// Convenience methods for specific languages
   void toArabic() => changeLanguage('ar');
   void toEnglish() => changeLanguage('en');
 
   /// Toggle sound effects
   Future<void> toggleSound() async {
     final newValue = !state.isSoundEnabled;
-    
     await SharedPref().setBoolean(PrefKeys.soundEnabled, newValue);
     emit(state.copyWith(isSoundEnabled: newValue));
   }
 
-  /// Toggle background music
+  /// Toggle background music - with actual music control
   Future<void> toggleBackgroundMusic() async {
     final newValue = !state.isBackgroundMusicEnabled;
     
-    await SharedPref().setBoolean(PrefKeys.backgroundMusicEnabled, newValue);
-    emit(state.copyWith(isBackgroundMusicEnabled: newValue));
+    try {
+      // Save to preferences first
+      await SharedPref().setBoolean(PrefKeys.backgroundMusicEnabled, newValue);
+      
+      // Update state immediately for UI feedback
+      emit(state.copyWith(isBackgroundMusicEnabled: newValue));
+      
+      // Small delay to ensure state is updated
+      await Future.delayed(const Duration(milliseconds: 100));
+      
+      // Then control the music
+      if (newValue) {
+        // User wants to turn music ON
+        print('🎵 User toggled music ON');
+        await _audioService.startBackgroundMusic();
+        
+        // Verify it's playing
+        if (_audioService.isMusicActuallyPlaying) {
+          print('✅ Music started successfully');
+        } else {
+          print('⚠️ Music may not be playing');
+          // Try one more time after a delay
+          Future.delayed(const Duration(milliseconds: 500), () {
+            if (!_audioService.isMusicActuallyPlaying) {
+              _audioService.startBackgroundMusic();
+            }
+          });
+        }
+      } else {
+        // User wants to turn music OFF
+        print('🎵 User toggled music OFF');
+        await _audioService.stopBackgroundMusic();
+      }
+    } catch (e) {
+      print('❌ Error toggling background music: $e');
+    }
   }
 
-  /// Update sound effects volume (0.0 to 1.0)
+  /// Update sound effects volume
   Future<void> setSoundVolume(double volume) async {
     final clampedVolume = volume.clamp(0.0, 1.0);
-    
     await SharedPref().setDouble(PrefKeys.soundVolume, clampedVolume);
     emit(state.copyWith(soundVolume: clampedVolume));
   }
 
-  /// Update background music volume (0.0 to 1.0)
+  /// Update background music volume
   Future<void> setMusicVolume(double volume) async {
     final clampedVolume = volume.clamp(0.0, 1.0);
-    
     await SharedPref().setDouble(PrefKeys.musicVolume, clampedVolume);
     emit(state.copyWith(musicVolume: clampedVolume));
   }
 
   /// Reset all settings to defaults
   Future<void> resetToDefaults() async {
-    // Clear all preferences
     await SharedPref().removePreference(PrefKeys.themeMode);
     await SharedPref().removePreference(PrefKeys.language);
     await SharedPref().removePreference(PrefKeys.soundEnabled);
-    await SharedPref().removePreference(PrefKeys.vibrationEnabled); // Add this line
+    await SharedPref().removePreference(PrefKeys.vibrationEnabled);
     await SharedPref().removePreference(PrefKeys.backgroundMusicEnabled);
     await SharedPref().removePreference(PrefKeys.soundVolume);
     await SharedPref().removePreference(PrefKeys.musicVolume);
     
-    // Load defaults
     await _loadSettings();
+    _audioService.onAppStateChanged(state);
   }
 }

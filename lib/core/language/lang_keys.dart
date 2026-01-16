@@ -198,4 +198,8 @@ class LangKeys {
   static const String tapImageToZoom = 'tap_image_to_zoom';
   static const String disableVibration = 'disable_vibration';
   static const String enableVibration = 'enable_vibration';
+  static const String volumePercentage = 'volume_percentage';
+  static const String soundEffectsDescription = 'sound_effects_description';
+  static const String backgroundMusicDescription =
+      'background_music_description';
 }

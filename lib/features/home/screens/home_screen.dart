@@ -34,6 +34,8 @@ class _HomeScreenState extends State<HomeScreen> with WidgetsBindingObserver {
 
   @override
   void didChangeAppLifecycleState(AppLifecycleState state) {
+    if (!_audioService.isBackgroundMusicEnabled) return;
+    
     switch (state) {
       case AppLifecycleState.paused:
         _audioService.pauseBackgroundMusic();

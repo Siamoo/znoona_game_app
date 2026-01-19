@@ -71,153 +71,11 @@ class SoundSettingsScreen extends StatelessWidget {
                     ),
                     SizedBox(height: 10.h),
 
-                    Container(
-                      margin: EdgeInsets.symmetric(horizontal: 10.w),
-                      decoration: BoxDecoration(
-                        color: ZnoonaColors.main(context),
-                        borderRadius: BorderRadius.circular(16.r),
-                        border: Border.all(
-                          color: ZnoonaColors.textFormBorder(context),
-                          width: 1.w,
-                        ),
-                        boxShadow: [
-                          BoxShadow(
-                            color: ZnoonaColors.bluePinkDark(
-                              context,
-                            ).withAlpha(200),
-                            blurRadius: 8,
-                            offset: const Offset(0, 2),
-                          ),
-                        ],
-                      ),
-                      child: Padding(
-                        padding: EdgeInsets.all(16.w),
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Row(
-                              children: [
-                                Container(
-                                  padding: EdgeInsets.all(8.w),
-                                  decoration: BoxDecoration(
-                                    gradient: LinearGradient(
-                                      colors: [
-                                        ZnoonaColors.bluePinkDark(context),
-                                        ZnoonaColors.bluePinkLight(context),
-                                      ],
-                                      begin: Alignment.topLeft,
-                                      end: Alignment.bottomRight,
-                                    ),
-                                    borderRadius: BorderRadius.circular(12.r),
-                                  ),
-                                  child: Icon(
-                                    Icons.volume_up,
-                                    color: Colors.white,
-                                    size: 20.sp,
-                                  ),
-                                ),
-                                SizedBox(width: 12.w),
-                                Expanded(
-                                  child: TextApp(
-                                    text: ZnoonaTexts.tr(
-                                      context,
-                                      LangKeys.soundEffects,
-                                    ),
-                                    textStyle: TextStyle(
-                                      fontSize: 16.sp,
-                                      fontWeight: FontWeight.w500,
-                                      color: ZnoonaColors.text(context),
-                                    ),
-                                  ),
-                                ),
-                                Switch(
-                                  value: state.isSoundEnabled,
-                                  onChanged: (_) => cubit.toggleSound(),
-                                  activeThumbColor: ZnoonaColors.bluePinkLight(
-                                    context,
-                                  ),
-                                  activeTrackColor:
-                                      ZnoonaColors.containerLinear1(
-                                        context,
-                                      ),
-                                ),
-                              ],
-                            ),
-                            if (state.isSoundEnabled) ...[
-                              SizedBox(height: 20.h),
-                              Row(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceBetween,
-                                children: [
-                                  TextApp(
-                                    text: ZnoonaTexts.tr(
-                                      context,
-                                      LangKeys.volume,
-                                    ),
-                                    textStyle: TextStyle(
-                                      fontSize: 14.sp,
-                                      color: ZnoonaColors.text(
-                                        context,
-                                      ).withOpacity(0.7),
-                                    ),
-                                  ),
-                                  Container(
-                                    padding: EdgeInsets.symmetric(
-                                      horizontal: 8.w,
-                                      vertical: 4.h,
-                                    ),
-                                    decoration: BoxDecoration(
-                                      color: ZnoonaColors.bluePinkLight(
-                                        context,
-                                      ).withOpacity(0.1),
-                                      borderRadius: BorderRadius.circular(8.r),
-                                    ),
-                                    child: TextApp(
-                                      text:
-                                          '${(state.soundVolume * 100).toInt()}%',
-                                      textStyle: TextStyle(
-                                        fontSize: 14.sp,
-                                        fontWeight: FontWeight.w600,
-                                        color: ZnoonaColors.text(
-                                          context,
-                                        ).withAlpha(200),
-                                      ),
-                                    ),
-                                  ),
-                                ],
-                              ),
-                              SizedBox(height: 8.h),
-                              SliderTheme(
-                                data: SliderThemeData(
-                                  trackHeight: 4.h,
-                                  thumbShape: RoundSliderThumbShape(
-                                    enabledThumbRadius: 10.r,
-                                  ),
-                                  overlayShape: RoundSliderOverlayShape(
-                                    overlayRadius: 18.r,
-                                  ),
-                                ),
-                                child: Slider(
-                                  value: state.soundVolume,
-                                  onChanged: cubit.setSoundVolume,
-                                  onChangeEnd: (value) {
-                                    audioService.playTestSound();
-                                  },
-                                  min: 0.0,
-                                  max: 1.0,
-                                  divisions: 10,
-                                  activeColor: ZnoonaColors.bluePinkLight(
-                                    context,
-                                  ),
-                                  inactiveColor: ZnoonaColors.containerLinear1(
-                                    context,
-                                  ),
-                                ),
-                              ),
-                            ],
-                          ],
-                        ),
-                      ),
+                    _buildSoundEffectsSection(
+                      context,
+                      state,
+                      cubit,
+                      audioService,
                     ),
 
                     SizedBox(height: 20.h),
@@ -231,230 +89,282 @@ class SoundSettingsScreen extends StatelessWidget {
                     ),
                     SizedBox(height: 10.h),
 
-                    Container(
-                      margin: EdgeInsets.symmetric(horizontal: 10.w),
-                      decoration: BoxDecoration(
-                        color: ZnoonaColors.main(context),
-                        borderRadius: BorderRadius.circular(16.r),
-                        border: Border.all(
-                          color: ZnoonaColors.textFormBorder(context),
-                          width: 1.w,
-                        ),
-                        boxShadow: [
-                          BoxShadow(
-                            color: ZnoonaColors.bluePinkDark(
-                              context,
-                            ).withAlpha(200),
-                            blurRadius: 8,
-                            offset: const Offset(0, 2),
-                          ),
-                        ],
-                      ),
-                      child: Padding(
-                        padding: EdgeInsets.all(16.w),
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Row(
-                              children: [
-                                Container(
-                                  padding: EdgeInsets.all(8.w),
-                                  decoration: BoxDecoration(
-                                    gradient: LinearGradient(
-                                      colors: [
-                                        ZnoonaColors.bluePinkDark(context),
-                                        ZnoonaColors.bluePinkLight(context),
-                                      ],
-                                      begin: Alignment.topLeft,
-                                      end: Alignment.bottomRight,
-                                    ),
-                                    borderRadius: BorderRadius.circular(12.r),
-                                  ),
-                                  child: Icon(
-                                    Icons.music_note,
-                                    color: Colors.white,
-                                    size: 20.sp,
-                                  ),
-                                ),
-                                SizedBox(width: 12.w),
-                                Expanded(
-                                  child: TextApp(
-                                    text: ZnoonaTexts.tr(
-                                      context,
-                                      LangKeys.backgroundMusic,
-                                    ),
-                                    textStyle: TextStyle(
-                                      fontSize: 16.sp,
-                                      fontWeight: FontWeight.w500,
-                                      color: ZnoonaColors.text(context),
-                                    ),
-                                  ),
-                                ),
-                                Switch(
-                                  value: state.isBackgroundMusicEnabled,
-                                  onChanged: (_) =>
-                                      cubit.toggleBackgroundMusic(),
-                                  activeThumbColor: ZnoonaColors.bluePinkLight(
-                                    context,
-                                  ),
-                                  activeTrackColor:
-                                      ZnoonaColors.containerLinear1(
-                                        context,
-                                      ),
-                                ),
-                              ],
-                            ),
-                            if (state.isBackgroundMusicEnabled) ...[
-                              SizedBox(height: 20.h),
-                              Row(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceBetween,
-                                children: [
-                                  TextApp(
-                                    text: ZnoonaTexts.tr(
-                                      context,
-                                      LangKeys.volume,
-                                    ),
-                                    textStyle: TextStyle(
-                                      fontSize: 14.sp,
-                                      color: ZnoonaColors.text(
-                                        context,
-                                      ).withOpacity(0.7),
-                                    ),
-                                  ),
-                                  Container(
-                                    padding: EdgeInsets.symmetric(
-                                      horizontal: 8.w,
-                                      vertical: 4.h,
-                                    ),
-                                    decoration: BoxDecoration(
-                                      color: ZnoonaColors.bluePinkLight(
-                                        context,
-                                      ).withOpacity(0.1),
-                                      borderRadius: BorderRadius.circular(8.r),
-                                    ),
-                                    child: TextApp(
-                                      text:
-                                          '${(state.musicVolume * 100).toInt()}%',
-                                      textStyle: TextStyle(
-                                        fontSize: 14.sp,
-                                        fontWeight: FontWeight.w600,
-                                        color: ZnoonaColors.text(
-                                          context,
-                                        ).withAlpha(200),
-                                      ),
-                                    ),
-                                  ),
-                                ],
-                              ),
-                              SizedBox(height: 8.h),
-                              SliderTheme(
-                                data: SliderThemeData(
-                                  trackHeight: 4.h,
-                                  thumbShape: RoundSliderThumbShape(
-                                    enabledThumbRadius: 10.r,
-                                  ),
-                                  overlayShape: RoundSliderOverlayShape(
-                                    overlayRadius: 18.r,
-                                  ),
-                                ),
-                                child: Slider(
-                                  value: state.musicVolume,
-                                  onChanged: cubit.setMusicVolume,
-                                  min: 0.0,
-                                  max: 1.0,
-                                  divisions: 10,
-                                  activeColor: ZnoonaColors.bluePinkLight(
-                                    context,
-                                  ),
-                                  inactiveColor: ZnoonaColors.containerLinear1(
-                                    context,
-                                  ),
-                                ),
-                              ),
-                            ],
-                          ],
-                        ),
-                      ),
+                    _buildBackgroundMusicSection(
+                      context,
+                      state,
+                      cubit,
+                      audioService,
                     ),
-
-                    SizedBox(height: 30.h),
-
-                    // Test Sound Button
-                    Padding(
-                      padding: EdgeInsets.symmetric(horizontal: 10.w),
-                      child: Container(
-                        width: double.infinity,
-                        height: 50.h,
-                        decoration: BoxDecoration(
-                          gradient: LinearGradient(
-                            colors: [
-                              ZnoonaColors.bluePinkDark(context),
-                              ZnoonaColors.bluePinkLight(context),
-                            ],
-                            begin: Alignment.centerLeft,
-                            end: Alignment.centerRight,
-                          ),
-                          borderRadius: BorderRadius.circular(12.r),
-                          boxShadow: [
-                            BoxShadow(
-                              color: ZnoonaColors.bluePinkDark(
-                                context,
-                              ).withOpacity(0.3),
-                              blurRadius: 8,
-                              offset: const Offset(0, 4),
-                            ),
-                          ],
-                        ),
-                        child: Material(
-                          color: Colors.transparent,
-                          child: InkWell(
-                            onTap: () {
-                              audioService.playTestSound();
-                            },
-                            borderRadius: BorderRadius.circular(12.r),
-                            child: Center(
-                              child: Row(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: [
-                                  Container(
-                                    padding: EdgeInsets.all(4.w),
-                                    decoration: BoxDecoration(
-                                      color: Colors.white.withOpacity(0.2),
-                                      shape: BoxShape.circle,
-                                    ),
-                                    child: Icon(
-                                      Icons.volume_up,
-                                      color: Colors.white,
-                                      size: 18.sp,
-                                    ),
-                                  ),
-                                  SizedBox(width: 8.w),
-                                  TextApp(
-                                    text: ZnoonaTexts.tr(
-                                      context,
-                                      LangKeys.testSound,
-                                    ),
-                                    textStyle: TextStyle(
-                                      fontSize: 16.sp,
-                                      fontWeight: FontWeight.w600,
-                                      color: Colors.white,
-                                    ),
-                                  ),
-                                ],
-                              ),
-                            ),
-                          ),
-                        ),
-                      ),
-                    ),
-
-                    SizedBox(height: 20.h),
                   ],
                 );
               },
             ),
           ),
+        ),
+      ),
+    );
+  }
+
+  Widget _buildSoundEffectsSection(
+    BuildContext context,
+    AppState state,
+    AppCubit cubit,
+    AudioService audioService,
+  ) {
+    return Container(
+      margin: EdgeInsets.symmetric(horizontal: 10.w),
+      decoration: BoxDecoration(
+        color: ZnoonaColors.main(context),
+        borderRadius: BorderRadius.circular(16.r),
+        border: Border.all(
+          color: ZnoonaColors.textFormBorder(context),
+          width: 1.w,
+        ),
+        boxShadow: [
+          BoxShadow(
+            color: ZnoonaColors.bluePinkDark(context).withAlpha(200),
+            blurRadius: 8,
+            offset: const Offset(0, 2),
+          ),
+        ],
+      ),
+      child: Padding(
+        padding: EdgeInsets.all(16.w),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Row(
+              children: [
+                Container(
+                  padding: EdgeInsets.all(8.w),
+                  decoration: BoxDecoration(
+                    gradient: LinearGradient(
+                      colors: [
+                        ZnoonaColors.bluePinkDark(context),
+                        ZnoonaColors.bluePinkLight(context),
+                      ],
+                      begin: Alignment.topLeft,
+                      end: Alignment.bottomRight,
+                    ),
+                    borderRadius: BorderRadius.circular(12.r),
+                  ),
+                  child: Icon(
+                    Icons.volume_up,
+                    color: Colors.white,
+                    size: 20.sp,
+                  ),
+                ),
+                SizedBox(width: 12.w),
+                Expanded(
+                  child: TextApp(
+                    text: ZnoonaTexts.tr(context, LangKeys.soundEffects),
+                    textStyle: TextStyle(
+                      fontSize: 16.sp,
+                      fontWeight: FontWeight.w500,
+                      color: ZnoonaColors.text(context),
+                    ),
+                  ),
+                ),
+                Switch(
+                  value: state.isSoundEnabled,
+                  onChanged: (_) => cubit.toggleSound(),
+                  activeThumbColor: ZnoonaColors.bluePinkLight(context),
+                  activeTrackColor: ZnoonaColors.containerLinear1(context),
+                ),
+              ],
+            ),
+            if (state.isSoundEnabled) ...[
+              SizedBox(height: 20.h),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  TextApp(
+                    text: ZnoonaTexts.tr(context, LangKeys.volume),
+                    textStyle: TextStyle(
+                      fontSize: 14.sp,
+                      color: ZnoonaColors.text(context).withOpacity(0.7),
+                    ),
+                  ),
+                  Container(
+                    padding: EdgeInsets.symmetric(
+                      horizontal: 8.w,
+                      vertical: 4.h,
+                    ),
+                    decoration: BoxDecoration(
+                      color: ZnoonaColors.bluePinkLight(
+                        context,
+                      ).withOpacity(0.1),
+                      borderRadius: BorderRadius.circular(8.r),
+                    ),
+                    child: TextApp(
+                      text: '${(state.soundVolume * 100).toInt()}%',
+                      textStyle: TextStyle(
+                        fontSize: 14.sp,
+                        fontWeight: FontWeight.w600,
+                        color: ZnoonaColors.text(context).withAlpha(200),
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+              SizedBox(height: 8.h),
+              SliderTheme(
+                data: SliderThemeData(
+                  trackHeight: 4.h,
+                  thumbShape: RoundSliderThumbShape(enabledThumbRadius: 10.r),
+                  overlayShape: RoundSliderOverlayShape(overlayRadius: 18.r),
+                ),
+                child: Slider(
+                  value: state.soundVolume,
+                  onChanged: cubit.setSoundVolume,
+                  onChangeEnd: (value) {
+                    audioService.playTestSound();
+                  },
+                  min: 0.0,
+                  max: 1.0,
+                  divisions: 10,
+                  activeColor: ZnoonaColors.bluePinkLight(context),
+                  inactiveColor: ZnoonaColors.containerLinear1(context),
+                ),
+              ),
+            ],
+          ],
+        ),
+      ),
+    );
+  }
+
+  Widget _buildBackgroundMusicSection(
+    BuildContext context,
+    AppState state,
+    AppCubit cubit,
+    AudioService audioService,
+  ) {
+    return Container(
+      margin: EdgeInsets.symmetric(horizontal: 10.w),
+      decoration: BoxDecoration(
+        color: ZnoonaColors.main(context),
+        borderRadius: BorderRadius.circular(16.r),
+        border: Border.all(
+          color: ZnoonaColors.textFormBorder(context),
+          width: 1.w,
+        ),
+        boxShadow: [
+          BoxShadow(
+            color: ZnoonaColors.bluePinkDark(context).withAlpha(200),
+            blurRadius: 8,
+            offset: const Offset(0, 2),
+          ),
+        ],
+      ),
+      child: Padding(
+        padding: EdgeInsets.all(16.w),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Row(
+              children: [
+                Container(
+                  padding: EdgeInsets.all(8.w),
+                  decoration: BoxDecoration(
+                    gradient: LinearGradient(
+                      colors: [
+                        ZnoonaColors.bluePinkDark(context),
+                        ZnoonaColors.bluePinkLight(context),
+                      ],
+                      begin: Alignment.topLeft,
+                      end: Alignment.bottomRight,
+                    ),
+                    borderRadius: BorderRadius.circular(12.r),
+                  ),
+                  child: Icon(
+                    Icons.music_note,
+                    color: Colors.white,
+                    size: 20.sp,
+                  ),
+                ),
+                SizedBox(width: 12.w),
+                Expanded(
+                  child: TextApp(
+                    text: ZnoonaTexts.tr(context, LangKeys.backgroundMusic),
+                    textStyle: TextStyle(
+                      fontSize: 16.sp,
+                      fontWeight: FontWeight.w500,
+                      color: ZnoonaColors.text(context),
+                    ),
+                  ),
+                ),
+                // Music Switch with proper control
+                Switch(
+                  value: state.isBackgroundMusicEnabled,
+                  onChanged: (value) async {
+                    // Show loading indicator
+
+                    // Toggle the music
+                    await cubit.toggleBackgroundMusic();
+                  },
+                  activeThumbColor: ZnoonaColors.bluePinkLight(context),
+                  activeTrackColor: ZnoonaColors.containerLinear1(context),
+                ),
+              ],
+            ),
+            if (state.isBackgroundMusicEnabled) ...[
+              SizedBox(height: 20.h),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  TextApp(
+                    text: ZnoonaTexts.tr(context, LangKeys.volume),
+                    textStyle: TextStyle(
+                      fontSize: 14.sp,
+                      color: ZnoonaColors.text(context).withOpacity(0.7),
+                    ),
+                  ),
+                  Container(
+                    padding: EdgeInsets.symmetric(
+                      horizontal: 8.w,
+                      vertical: 4.h,
+                    ),
+                    decoration: BoxDecoration(
+                      color: ZnoonaColors.bluePinkLight(
+                        context,
+                      ).withOpacity(0.1),
+                      borderRadius: BorderRadius.circular(8.r),
+                    ),
+                    child: TextApp(
+                      text: '${(state.musicVolume * 100).toInt()}%',
+                      textStyle: TextStyle(
+                        fontSize: 14.sp,
+                        fontWeight: FontWeight.w600,
+                        color: ZnoonaColors.text(context).withAlpha(200),
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+              SizedBox(height: 8.h),
+              SliderTheme(
+                data: SliderThemeData(
+                  trackHeight: 4.h,
+                  thumbShape: RoundSliderThumbShape(enabledThumbRadius: 10.r),
+                  overlayShape: RoundSliderOverlayShape(overlayRadius: 18.r),
+                ),
+                child: Slider(
+                  value: state.musicVolume,
+                  onChanged: cubit.setMusicVolume,
+                  onChangeEnd: (value) {
+                    // Test with a sound effect when volume changes
+                    audioService.playTestSound();
+                  },
+                  min: 0.0,
+                  max: 1.0,
+                  divisions: 10,
+                  activeColor: ZnoonaColors.bluePinkLight(context),
+                  inactiveColor: ZnoonaColors.containerLinear1(context),
+                ),
+              ),
+            ],
+          ],
         ),
       ),
     );

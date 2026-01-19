@@ -20,7 +20,7 @@
         android:label="ميدان المعرفة"
         android:name="${applicationName}"
         android:icon="@mipmap/launcher_icon"
-        android:usesCleartextTraffic="true"> <!-- Add this for HTTP traffic -->
+        android:usesCleartextTraffic="true">
 
         <!-- Add this meta-data for AudioPlayers plugin -->
         <meta-data
@@ -82,11 +82,46 @@
 
     </application>
 
-    <!-- Required for process text queries -->
+    <!-- UPDATED: Queries section for URL Launcher and other intents -->
     <queries>
+        <!-- For text processing -->
         <intent>
             <action android:name="android.intent.action.PROCESS_TEXT"/>
             <data android:mimeType="text/plain"/>
+        </intent>
+        
+        <!-- For email apps (URL Launcher) -->
+        <intent>
+            <action android:name="android.intent.action.SENDTO" />
+            <data android:scheme="mailto" />
+        </intent>
+        
+        <!-- For browser apps (URL Launcher) -->
+        <intent>
+            <action android:name="android.intent.action.VIEW" />
+            <data android:scheme="http" />
+        </intent>
+        <intent>
+            <action android:name="android.intent.action.VIEW" />
+            <data android:scheme="https" />
+        </intent>
+        
+        <!-- For phone calls (if needed) -->
+        <intent>
+            <action android:name="android.intent.action.DIAL" />
+            <data android:scheme="tel" />
+        </intent>
+        
+        <!-- For SMS (if needed) -->
+        <intent>
+            <action android:name="android.intent.action.VIEW" />
+            <data android:scheme="sms" />
+        </intent>
+        
+        <!-- For maps (if needed) -->
+        <intent>
+            <action android:name="android.intent.action.VIEW" />
+            <data android:scheme="geo" />
         </intent>
     </queries>
 

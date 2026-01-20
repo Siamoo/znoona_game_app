@@ -200,5 +200,12 @@
     "sound_settings": "Sound Settings",
   "volume_percentage": "Volume %",
   "sound_effects_description": "Toggle sound effects on/off",
-  "background_music_description": "Toggle background music on/off"
+  "background_music_description": "Toggle background music on/off",
+    "no_connection": "No Connection",
+  "no_connection_message": "It seems you're offline. Please check your internet connection and try again.",
+  "check_network_settings": "Check your network settings",
+   "error_message": "Sorry, an unexpected error occurred. Please try again or contact support.",
+  "contact_support": "Contact Support",
+    "copy_email": "Copy Support Email",
+  "email_copied": "Email copied to clipboard"
 }

@@ -202,4 +202,12 @@ class LangKeys {
   static const String soundEffectsDescription = 'sound_effects_description';
   static const String backgroundMusicDescription =
       'background_music_description';
+      static const String noConnection = 'no_connection';
+static const String noConnectionMessage = 'no_connection_message';
+static const String checkNetworkSettings = 'check_network_settings';
+static const String errorMessage = 'error_message';
+static const String contactSupport = 'contact_support';
+static const String copyEmail = 'copy_email';
+static const String emailCopied = 'email_copied';
+
 }

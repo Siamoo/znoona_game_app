@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:medaan_almaarifa/core/common/screens/error_screen.dart';
 import 'package:medaan_almaarifa/core/helpers/znoona_navigate.dart';
 import 'package:medaan_almaarifa/core/language/lang_keys.dart';
 import 'package:medaan_almaarifa/core/style/images/app_images.dart';
@@ -56,7 +57,10 @@ class HomeBody extends StatelessWidget {
                           GameButton(
                             image: AppImages.puzzle,
                             langkey: LangKeys.appName,
-                            onPressed: () {},
+                            onPressed: () => ZnoonaNavigate.pushTo(
+                              context,
+                              const ErrorScreen(),
+                            ),
                           ),
                         ],
                       ),

@@ -253,9 +253,9 @@ class RoomRemoteDataSource {
       final nonNullAnswers = verification
           .where((row) => row['selected_answer'] != null)
           .toList();
-      print(
-        ' RESET: Answers after reset - non-null: ${nonNullAnswers.length}',
-      );
+      // print(
+      //   ' RESET: Answers after reset - non-null: ${nonNullAnswers.length}',
+      // );
     } catch (e) {
       throw Exception('Failed to reset answers: $e');
     }
@@ -312,14 +312,14 @@ class RoomRemoteDataSource {
           .eq('user_id', userId)
           .select();
 
-      if (result != null && result.isNotEmpty) {
-        final updatedPlayer = result.first;
-        print(
-          '🔍 Updated player - finished_quiz: ${updatedPlayer['finished_quiz']}, '
-          'finished_at: ${updatedPlayer['finished_at']}, '
-          'avatar_url: ${updatedPlayer['avatar_url']}', // NEW: Log avatar URL
-        );
-      }
+      // if (result != null && result.isNotEmpty) {
+      //   // final updatedPlayer = result.first;
+      //   // print(
+      //   //   '🔍 Updated player - finished_quiz: ${updatedPlayer['finished_quiz']}, '
+      //   //   'finished_at: ${updatedPlayer['finished_at']}, '
+      //   //   'avatar_url: ${updatedPlayer['avatar_url']}', // NEW: Log avatar URL
+      //   // );
+      // }
     } catch (e) {
       rethrow;
     }
@@ -337,12 +337,12 @@ class RoomRemoteDataSource {
           .eq('user_id', userId)
           .single();
 
-      print(
-        '🔧 Checking player state: '
-        'finished_quiz: ${currentData['finished_quiz']}, '
-        'finished_at: ${currentData['finished_at']}, '
-        'avatar_url: ${currentData['avatar_url']}', // NEW: Log avatar URL
-      );
+      // print(
+      //   '🔧 Checking player state: '
+      //   'finished_quiz: ${currentData['finished_quiz']}, '
+      //   'finished_at: ${currentData['finished_at']}, '
+      //   'avatar_url: ${currentData['avatar_url']}', // NEW: Log avatar URL
+      // );
 
       if (currentData['finished_quiz'] == true &&
           currentData['finished_at'] == null) {
@@ -367,27 +367,27 @@ class RoomRemoteDataSource {
         .asyncMap((rows) async {
           await Future.delayed(const Duration(milliseconds: 100));
 
-          for (final row in rows) {
-            print(
-              '👤 Player: ${row['username']}, '
-              'avatar: ${row['avatar_url']}, '
-              'finished_quiz: ${row['finished_quiz']}, '
-              'finished_at: ${row['finished_at']}',
-            );
-          }
+          // for (final row in rows) {
+          //   // print(
+          //   //   '👤 Player: ${row['username']}, '
+          //   //   'avatar: ${row['avatar_url']}, '
+          //   //   'finished_quiz: ${row['finished_quiz']}, '
+          //   //   'finished_at: ${row['finished_at']}',
+          //   // );
+          // }
 
           final players = rows.map((e) => RoomPlayerModel.fromJson(e)).toList();
 
           // Log finished players for debugging
-          final finishedCount = players.where((p) => p.finishedQuiz).length;
-          final finishedWithTimestamp = players
-              .where((p) => p.finishedAt != null)
-              .length;
+          // final finishedCount = players.where((p) => p.finishedQuiz).length;
+          // final finishedWithTimestamp = players
+          //     .where((p) => p.finishedAt != null)
+          //     .length;
 
-          print(
-            '🎯 Stream: $finishedCount/${players.length} players finished, '
-            '$finishedWithTimestamp with timestamp',
-          );
+          // print(
+          //   '🎯 Stream: $finishedCount/${players.length} players finished, '
+          //   '$finishedWithTimestamp with timestamp',
+          // );
 
           return players;
         })

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:medaan_almaarifa/core/common/screens/error_screen.dart';
 import 'package:medaan_almaarifa/core/common/widgets/custom_linear_button.dart';
 import 'package:medaan_almaarifa/core/helpers/znoona.colors.dart';
 import 'package:medaan_almaarifa/core/helpers/znoona_texts.dart';
@@ -54,18 +55,18 @@ class RoomResultsBody extends StatelessWidget {
                   allFinished,
                   userRank,
                 ) {
-              return ProgressiveResultsBody(
-                results: results,
-                finishedPlayers: finishedPlayers,
-                totalPlayers: totalPlayers,
-                allPlayersFinished: allFinished,
-                userRank: userRank,
-                roomId: roomId,
-              );
-            },
+                  return ProgressiveResultsBody(
+                    results: results,
+                    finishedPlayers: finishedPlayers,
+                    totalPlayers: totalPlayers,
+                    allPlayersFinished: allFinished,
+                    userRank: userRank,
+                    roomId: roomId,
+                  );
+                },
             error: (message) {
               return ErrorScreen(
-                message: message,
+                errorMessage: message,
                 onRetry: () {
                   context.read<RoomCubit>().markPlayerFinished(
                     roomId: roomId,
@@ -97,48 +98,6 @@ class LoadingScreen extends StatelessWidget {
           SizedBox(height: 16.h),
           Text(ZnoonaTexts.tr(context, LangKeys.loadingResults)),
         ],
-      ),
-    );
-  }
-}
-
-class ErrorScreen extends StatelessWidget {
-  const ErrorScreen({
-    required this.message,
-    required this.onRetry,
-    super.key,
-  });
-  final String message;
-  final VoidCallback onRetry;
-
-  @override
-  Widget build(BuildContext context) {
-    return Center(
-      child: Padding(
-        padding: EdgeInsets.all(24.w),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            const Icon(Icons.error_outline, size: 64, color: Colors.red),
-            SizedBox(height: 16.h),
-            Text(
-              ZnoonaTexts.tr(context, LangKeys.somethingWentWrong),
-              style: Theme.of(context).textTheme.titleLarge,
-            ),
-            SizedBox(height: 8.h),
-            Text(
-              message,
-              textAlign: TextAlign.center,
-              style: TextStyle(color: Colors.grey.shade600),
-            ),
-            SizedBox(height: 24.h),
-            ElevatedButton.icon(
-              onPressed: onRetry,
-              icon: const Icon(Icons.refresh),
-              label: Text(ZnoonaTexts.tr(context, LangKeys.tryAgain)),
-            ),
-          ],
-        ),
       ),
     );
   }

@@ -1,7 +1,7 @@
 class AppImages {
   //Images
-  static const noNetwork = 'assets/images/core/no_network.jpg';
-  static const pageUnderBuild = 'assets/images/core/page_under_build.jpg';
+  static const noNetwork = 'assets/images/core/no_network.png';
+  static const error = 'assets/images/core/error.png';
 
   // user
   static const userAvatar = 'assets/images/user/user.png';
@@ -23,7 +23,6 @@ class AppImages {
 
   //Svg
   static const mode = 'assets/svg/dark_mode.svg';
-  static const changeLang = 'assets/svg/build_version.svg';
   static const logout = 'assets/svg/logout.svg';
   static const backButton = 'assets/svg/arrow_back.svg';
   static const google = 'assets/svg/google.svg';

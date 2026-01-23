@@ -199,15 +199,12 @@ class LangKeys {
   static const String disableVibration = 'disable_vibration';
   static const String enableVibration = 'enable_vibration';
   static const String volumePercentage = 'volume_percentage';
-  static const String soundEffectsDescription = 'sound_effects_description';
-  static const String backgroundMusicDescription =
-      'background_music_description';
-      static const String noConnection = 'no_connection';
-static const String noConnectionMessage = 'no_connection_message';
-static const String checkNetworkSettings = 'check_network_settings';
-static const String errorMessage = 'error_message';
-static const String contactSupport = 'contact_support';
-static const String copyEmail = 'copy_email';
-static const String emailCopied = 'email_copied';
-
-}
+  static const String noConnection = 'no_connection';
+  static const String noConnectionMessage = 'no_connection_message';
+  static const String checkNetworkSettings = 'check_network_settings';
+  static const String errorMessage = 'error_message';
+  static const String contactSupport = 'contact_support';
+  static const String copyEmail = 'copy_email';
+  static const String emailCopied = 'email_copied';
+  
+  }

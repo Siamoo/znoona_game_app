@@ -59,7 +59,12 @@ class HomeBody extends StatelessWidget {
                             langkey: LangKeys.appName,
                             onPressed: () => ZnoonaNavigate.pushTo(
                               context,
-                              const ErrorScreen(),
+                              ErrorScreen(
+                                errorMessage: 'Puzzle game coming soon!',
+                                onRetry: () {
+                                  ZnoonaNavigate.pop(context);
+                                },
+                              ),
                             ),
                           ),
                         ],

@@ -5,7 +5,8 @@ import 'package:medaan_almaarifa/core/helpers/znoona_texts.dart';
 import 'package:medaan_almaarifa/core/language/lang_keys.dart';
 import 'package:medaan_almaarifa/core/style/images/app_images.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:flutter/services.dart' show Clipboard, ClipboardData;
+import 'package:url_launcher/url_launcher.dart';
+import 'package:mailto/mailto.dart';
 
 class ErrorScreen extends StatelessWidget {
   const ErrorScreen({
@@ -17,16 +18,49 @@ class ErrorScreen extends StatelessWidget {
   final String? errorMessage;
   final VoidCallback? onRetry;
 
-  Future<void> _copyEmail(BuildContext context) async {
-    await Clipboard.setData(const ClipboardData(text: 'walidsyam.f@gmail.com'));
-    if (context.mounted) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(
-          content: Text(ZnoonaTexts.tr(context, LangKeys.emailCopied)),
-          duration: const Duration(seconds: 2),
-          backgroundColor: Colors.green,
-        ),
-      );
+  Future<void> _sendEmail(BuildContext context) async {
+    final mailtoLink = Mailto(
+      to: ['walidsyam.f@gmail.com'],
+      subject: 'App Error Report - Medaan AlMaarifa',
+      body:
+          'Please describe the issue you encountered:\n\n'
+          'Error Details: ${errorMessage ?? 'Unknown error'}\n'
+          'Time: ${DateTime.now().toString()}\n\n'
+          'Description of what happened:\n'
+          '[Please describe the issue here]\n\n'
+          'Steps to reproduce:\n'
+          '1.\n'
+          '2.\n'
+          '3.\n',
+    );
+
+    final Uri emailUri = Uri.parse(mailtoLink.toString());
+
+    try {
+      if (await canLaunchUrl(emailUri)) {
+        await launchUrl(
+          emailUri,
+          mode: LaunchMode.externalApplication,
+        );
+      } else {
+        if (context.mounted) {
+          ScaffoldMessenger.of(context).showSnackBar(
+            const SnackBar(
+              content: Text('Could not open email app'),
+              backgroundColor: Colors.red,
+            ),
+          );
+        }
+      }
+    } catch (e) {
+      if (context.mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(
+            content: Text('Error: Could not open email app'),
+            backgroundColor: Colors.red,
+          ),
+        );
+      }
     }
   }
 
@@ -49,8 +83,8 @@ class ErrorScreen extends StatelessWidget {
                 ),
                 child: Image.asset(
                   AppImages.error,
-                  width: 200.w,
-                  height: 200.h,
+                  width: 120.w,
+                  height: 120.h,
                   errorBuilder: (context, error, stackTrace) {
                     return Icon(
                       Icons.error_outline,
@@ -101,7 +135,7 @@ class ErrorScreen extends StatelessWidget {
 
               SizedBox(height: 32.h),
 
-              // Retry Button
+              // Try Again Button (optional)
               if (onRetry != null)
                 SizedBox(
                   width: double.infinity,
@@ -109,7 +143,7 @@ class ErrorScreen extends StatelessWidget {
                   child: ElevatedButton(
                     onPressed: onRetry,
                     style: ElevatedButton.styleFrom(
-                      backgroundColor: ZnoonaColors.bluePinkDark(context),
+                      backgroundColor: Colors.green,
                       foregroundColor: Colors.white,
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(12.r),
@@ -125,30 +159,28 @@ class ErrorScreen extends StatelessWidget {
                   ),
                 ),
 
-              SizedBox(height: 12.h),
+              if (onRetry != null) SizedBox(height: 12.h),
 
               // Contact Support Button
               SizedBox(
                 width: double.infinity,
                 height: 50.h,
-                child: OutlinedButton(
-                  onPressed: () => _copyEmail(context),
-                  style: OutlinedButton.styleFrom(
-                    foregroundColor: ZnoonaColors.bluePinkDark(context),
-                    side: BorderSide(
-                      color: ZnoonaColors.bluePinkDark(
-                        context,
-                      ).withOpacity(0.3),
-                    ),
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(12.r),
-                    ),
-                  ),
-                  child: Text(
-                    ZnoonaTexts.tr(context, LangKeys.copyEmail),
+                child: ElevatedButton.icon(
+                  onPressed: () => _sendEmail(context),
+                  icon: Icon(Icons.email, color: Colors.white, size: 20.sp),
+                  label: Text(
+                    ZnoonaTexts.tr(context, LangKeys.contactSupport),
                     style: GoogleFonts.beiruti(
                       fontSize: 16.sp,
-                      fontWeight: FontWeight.w500,
+                      fontWeight: FontWeight.bold,
+                      color: Colors.white,
+                    ),
+                  ),
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: Colors.red.shade400,
+                    foregroundColor: Colors.white,
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(12.r),
                     ),
                   ),
                 ),
@@ -157,41 +189,32 @@ class ErrorScreen extends StatelessWidget {
               SizedBox(height: 16.h),
 
               // Email Display
-              GestureDetector(
-                onTap: () => _copyEmail(context),
-                child: Container(
-                  padding: EdgeInsets.symmetric(
-                    horizontal: 12.w,
-                    vertical: 6.h,
-                  ),
-                  decoration: BoxDecoration(
-                    color: Colors.grey.shade200,
-                    borderRadius: BorderRadius.circular(20.r),
-                  ),
-                  child: Row(
-                    mainAxisSize: MainAxisSize.min,
-                    children: [
-                      Icon(
-                        Icons.email,
-                        size: 14.sp,
+              Container(
+                padding: EdgeInsets.symmetric(
+                  horizontal: 12.w,
+                  vertical: 6.h,
+                ),
+                decoration: BoxDecoration(
+                  color: Colors.grey.shade200,
+                  borderRadius: BorderRadius.circular(20.r),
+                ),
+                child: Row(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    Icon(
+                      Icons.email,
+                      size: 14.sp,
+                      color: Colors.grey.shade700,
+                    ),
+                    SizedBox(width: 4.w),
+                    Text(
+                      'walidsyam.f@gmail.com',
+                      style: GoogleFonts.beiruti(
+                        fontSize: 12.sp,
                         color: Colors.grey.shade700,
                       ),
-                      SizedBox(width: 4.w),
-                      Text(
-                        'walidsyam.f@gmail.com',
-                        style: GoogleFonts.beiruti(
-                          fontSize: 12.sp,
-                          color: Colors.grey.shade700,
-                        ),
-                      ),
-                      SizedBox(width: 4.w),
-                      Icon(
-                        Icons.copy,
-                        size: 14.sp,
-                        color: Colors.grey.shade700,
-                      ),
-                    ],
-                  ),
+                    ),
+                  ],
                 ),
               ),
             ],

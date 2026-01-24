@@ -4,7 +4,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:get_it/get_it.dart';
-import 'package:medaan_almaarifa/features/user/auth/presentation/refactors/sound_setting_body.dart';
+import 'package:medaan_almaarifa/core/common/screens/sound_setting_screen.dart';
 import 'package:photo_view/photo_view.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 import 'package:medaan_almaarifa/core/app/app_cubit/app_cubit.dart';

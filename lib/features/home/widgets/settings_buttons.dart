@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:medaan_almaarifa/features/user/auth/presentation/refactors/sound_setting_body.dart';
+import 'package:medaan_almaarifa/core/common/screens/sound_setting_screen.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 import 'package:medaan_almaarifa/core/app/app_cubit/app_cubit.dart';
 import 'package:medaan_almaarifa/core/helpers/znoona_navigate.dart';

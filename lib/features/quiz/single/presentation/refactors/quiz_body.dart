@@ -17,7 +17,7 @@ import 'package:medaan_almaarifa/features/quiz/single/domain/entities/question.d
 import 'package:medaan_almaarifa/features/quiz/single/presentation/cubit/questions_cubit.dart';
 import 'package:medaan_almaarifa/features/quiz/single/presentation/screen/results_screen.dart';
 import 'package:medaan_almaarifa/features/quiz/single/presentation/widgets/option_button.dart';
-import 'package:medaan_almaarifa/features/user/auth/presentation/refactors/sound_setting_body.dart';
+import 'package:medaan_almaarifa/core/common/screens/sound_setting_screen.dart';
 import 'package:photo_view/photo_view.dart';
 import 'package:vibration/vibration.dart';
 

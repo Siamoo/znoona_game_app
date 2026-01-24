@@ -84,7 +84,7 @@ class AppCubit extends Cubit<AppState> {
       emit(state.copyWith(isBackgroundMusicEnabled: newValue));
       
       // Small delay to ensure state is updated
-      await Future.delayed(const Duration(milliseconds: 100));
+      await Future<dynamic>.delayed(const Duration(milliseconds: 100));
       
       // Then control the music
       if (newValue) {

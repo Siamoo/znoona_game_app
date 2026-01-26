@@ -206,5 +206,13 @@ class LangKeys {
   static const String contactSupport = 'contact_support';
   static const String copyEmail = 'copy_email';
   static const String emailCopied = 'email_copied';
-  
-  }
+  static const String close = 'close';
+  static const String contactUs = 'contact_us';
+  static const String howCanWeHelp = 'how_can_we_help';
+  static const String chooseOptionBelow = 'choose_option_below';
+  static const String callUs = 'call_us';
+  static const String emailUs = 'email_us';
+  static const String whatsapp = 'whatsapp';
+  static const String facebook = 'facebook';
+  static const String appVersion = 'app_version';
+}

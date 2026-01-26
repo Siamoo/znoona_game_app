@@ -206,5 +206,14 @@
   "error_message": "Sorry, an unexpected error occurred. Please try again or contact support.",
   "contact_support": "Contact Support",
   "copy_email": "Copy Support Email",
-  "email_copied": "Email copied to clipboard"
+  "email_copied": "Email copied to clipboard",
+  "close": "Close",
+  "contact_us": "Contact Us",
+  "how_can_we_help": "How can we help you",
+  "choose_option_below": "Choose an option below to get in touch with us",
+  "call_us":  "Call Us        ",
+  "email_us": "Email Us   ",
+  "whatsapp": "WhatsApp",
+  "facebook": "Facebook",
+  "app_version": "App Version"
 }

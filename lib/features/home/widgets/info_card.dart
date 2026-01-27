@@ -62,7 +62,7 @@ class InfoCard extends StatelessWidget {
               style: GoogleFonts.beiruti(
                 fontSize: 10.sp,
                 fontWeight: FontWeight.w500,
-                color: ZnoonaColors.text(context)?.withOpacity(0.7),
+                color: ZnoonaColors.text(context).withOpacity(0.7),
               ),
               textAlign: TextAlign.center,
               maxLines: 1,

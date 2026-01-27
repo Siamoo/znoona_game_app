@@ -5,14 +5,16 @@ import 'package:medaan_almaarifa/core/common/widgets/custom_linear_button.dart';
 import 'package:medaan_almaarifa/core/common/widgets/text_app.dart';
 import 'package:medaan_almaarifa/core/helpers/znoona.colors.dart';
 import 'package:medaan_almaarifa/core/helpers/znoona_texts.dart';
-import 'package:medaan_almaarifa/core/language/lang_keys.dart';
-import 'package:medaan_almaarifa/core/style/images/app_images.dart';
 
 class DiscoverButton extends StatelessWidget {
   const DiscoverButton({
-    super.key,
+    required this.langKeys,
+    required this.appImages,
+    super.key, this.onPressed,
   });
-
+  final String appImages;
+  final String langKeys;
+  final void Function()? onPressed;
   @override
   Widget build(BuildContext context) {
     return CustomLinearButton(
@@ -24,7 +26,7 @@ class DiscoverButton extends StatelessWidget {
       ],
       height: 90.h,
       width: double.infinity,
-      onPressed: () {},
+      onPressed: onPressed,
       child: Padding(
         padding: EdgeInsets.only(left: 20.w, right: 10.w),
         child: Row(
@@ -33,7 +35,7 @@ class DiscoverButton extends StatelessWidget {
             SizedBox(
               width: 180.w,
               child: TextApp(
-                text: ZnoonaTexts.tr(context, LangKeys.developSkills),
+                text: ZnoonaTexts.tr(context, langKeys),
                 textStyle: GoogleFonts.beiruti(
                   fontSize: 17.sp,
                   fontWeight: FontWeight.w800,
@@ -42,7 +44,7 @@ class DiscoverButton extends StatelessWidget {
               ),
             ),
             Image.asset(
-              AppImages.discover,
+              appImages,
               height: 80.h,
               width: 80.w,
             ),

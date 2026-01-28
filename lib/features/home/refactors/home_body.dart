@@ -1,3 +1,4 @@
+import 'package:animate_do/animate_do.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:medaan_almaarifa/core/common/screens/contact_us_screen.dart';
@@ -33,7 +34,7 @@ class HomeBody extends StatelessWidget {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  CustomHomeAppBar(profile: profile),
+                  FadeInDown(child: CustomHomeAppBar(profile: profile)),
                   Padding(
                     padding: EdgeInsets.symmetric(
                       horizontal: 10.w,
@@ -42,42 +43,59 @@ class HomeBody extends StatelessWidget {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         SizedBox(height: 30.h),
-                        const CustomSectionTitle(
-                          langkey: LangKeys.letsPlay,
+                        FadeInLeft(
+                          duration: const Duration(milliseconds: 900),
+                          child: const CustomSectionTitle(
+                            langkey: LangKeys.letsPlay,
+                          ),
                         ),
                         SizedBox(height: 10.h),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            GameButton(
-                              image: AppImages.quizGame,
-                              langkey: LangKeys.quizGame,
-                              onPressed: () => ZnoonaNavigate.pushTo(
-                                context,
-                                const QuizHomeScreen(),
+                        FadeInDown(
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              FadeInLeft(
+                                duration: const Duration(milliseconds: 1000),
+                                child: GameButton(
+                                  image: AppImages.quizGame,
+                                  langkey: LangKeys.quizGame,
+                                  onPressed: () => ZnoonaNavigate.pushTo(
+                                    context,
+                                    const QuizHomeScreen(),
+                                  ),
+                                ),
                               ),
-                            ),
-                            GameButton(
-                              image: AppImages.puzzle,
-                              langkey: LangKeys.appName,
-                              onPressed: () => ZnoonaNavigate.pushTo(
-                                context,
-                                const ContactUsScreen(),
+                              FadeInRight(
+                                duration: const Duration(milliseconds: 1000),
+                                child: GameButton(
+                                  image: AppImages.puzzle,
+                                  langkey: LangKeys.appName,
+                                  onPressed: () => ZnoonaNavigate.pushTo(
+                                    context,
+                                    const ContactUsScreen(),
+                                  ),
+                                ),
                               ),
-                            ),
-                          ],
+                            ],
+                          ),
                         ),
                         SizedBox(height: 30.h),
-                        const CustomSectionTitle(
-                          langkey: LangKeys.contactSupport,
+                        FadeInLeft(
+                          duration: const Duration(milliseconds: 900),
+                          child: const CustomSectionTitle(
+                            langkey: LangKeys.contactSupport,
+                          ),
                         ),
                         SizedBox(height: 10.h),
-                        DiscoverButton(
-                          langKeys: LangKeys.contactSupport,
-                          appImages: AppImages.callUs,
-                          onPressed: () => ZnoonaNavigate.pushTo(
-                            context,
-                            const ContactUsScreen(),
+                        FadeInLeft(
+                          duration: const Duration(milliseconds: 900),
+                          child: DiscoverButton(
+                            langKeys: LangKeys.contactSupport,
+                            appImages: AppImages.callUs,
+                            onPressed: () => ZnoonaNavigate.pushTo(
+                              context,
+                              const ContactUsScreen(),
+                            ),
                           ),
                         ),
                       ],
@@ -89,9 +107,11 @@ class HomeBody extends StatelessWidget {
 
             Container(
               alignment: Alignment.centerRight,
-              child: Image.asset(
-                AppImages.redWRightSide,
-                height: 70.h,
+              child: FadeInRight(
+                child: Image.asset(
+                  AppImages.redWRightSide,
+                  height: 70.h,
+                ),
               ),
             ),
 
@@ -103,9 +123,11 @@ class HomeBody extends StatelessWidget {
                   Positioned(
                     left: 0,
                     bottom: 0,
-                    child: Image.asset(
-                      AppImages.yelloWHand,
-                      height: 100.h,
+                    child: FadeInLeft(
+                      child: Image.asset(
+                        AppImages.yelloWHand,
+                        height: 100.h,
+                      ),
                     ),
                   ),
 
@@ -114,7 +136,7 @@ class HomeBody extends StatelessWidget {
                     left: 45.w,
                     right: 0,
                     bottom: 0,
-                    child: Center(
+                    child: FadeInUp(
                       child: Image.asset(
                         AppImages.greenMWake,
                         height: 100.h,

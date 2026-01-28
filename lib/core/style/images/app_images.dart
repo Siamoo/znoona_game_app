@@ -30,6 +30,17 @@ class AppImages {
   static const redWRightSide = 'assets/images/design/r_w_right_side.png';
   static const yelloWHand = 'assets/images/design/y_w_hand.png';
   static const yelloWThink = 'assets/images/design/y_w_think.png';
+  static const redWLeft = 'assets/images/design/red_w_left.png';
+  static const redWTraveler = 'assets/images/design/red_w_traveler.png';
+  static const yelloWChoose = 'assets/images/design/yellow_w_choose.png';
+  static const yelloWMicrophone = 'assets/images/design/yellow_w_microphone.png';
+  static const yelloWTraveler = 'assets/images/design/yellow_w_traveler.png';
+  static const yelloWTraveler2 = 'assets/images/design/yellow_w_traveler2.png';
+  static const yallowWRocket = 'assets/images/design/yallow_w_rocket.png';
+  static const yallowWJump = 'assets/images/design/yallow_w_Jump.png';
+  static const airplane = 'assets/images/design/airplane.png';
+  static const bird = 'assets/images/design/bird.png';
+  static const blackMNo = 'assets/images/design/black_m_no.png';
 
   //Svg
   static const mode = 'assets/svg/dark_mode.svg';

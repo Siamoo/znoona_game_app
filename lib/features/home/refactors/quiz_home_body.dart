@@ -1,3 +1,4 @@
+import 'package:animate_do/animate_do.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:medaan_almaarifa/core/common/widgets/custom_app_bar.dart';
@@ -36,34 +37,46 @@ class QuizHomeBody extends StatelessWidget {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         SizedBox(height: 30.h),
-                        const CustomSectionTitle(
-                          langkey: LangKeys.chooseMode,
+                        FadeInDown(
+                          duration: const Duration(milliseconds: 900),
+                          child: const CustomSectionTitle(
+                            langkey: LangKeys.chooseMode,
+                          ),
                         ),
                         SizedBox(height: 10.h),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            GameButton(
-                              image: AppImages.solo,
-                              langkey: LangKeys.solo,
-                              onPressed: () => ZnoonaNavigate.pushTo(
-                                context,
-                                const CategoryHierarchyBody(
-                                  isRoom: false,
+                        FadeInDown(
+                          duration: const Duration(milliseconds: 1000),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              FadeInLeft(
+                                duration: const Duration(milliseconds: 1000),
+                                child: GameButton(
+                                  image: AppImages.solo,
+                                  langkey: LangKeys.solo,
+                                  onPressed: () => ZnoonaNavigate.pushTo(
+                                    context,
+                                    const CategoryHierarchyBody(
+                                      isRoom: false,
+                                    ),
+                                  ),
                                 ),
                               ),
-                            ),
-                            GameButton(
-                              image: AppImages.multi,
-                              langkey: LangKeys.room,
-                              onPressed: () {
-                                ZnoonaNavigate.pushTo(
-                                  context,
-                                  const RoomScreen(),
-                                );
-                              },
-                            ),
-                          ],
+                              FadeInRight(
+                                duration: const Duration(milliseconds: 1000),
+                                child: GameButton(
+                                  image: AppImages.multi,
+                                  langkey: LangKeys.room,
+                                  onPressed: () {
+                                    ZnoonaNavigate.pushTo(
+                                      context,
+                                      const RoomScreen(),
+                                    );
+                                  },
+                                ),
+                              ),
+                            ],
+                          ),
                         ),
                       ],
                     ),
@@ -80,22 +93,50 @@ class QuizHomeBody extends StatelessWidget {
                 children: [
                   Positioned(
                     left: 0,
-                    bottom: 0,
-                    child: Image.asset(
-                      AppImages.yelloWHand,
-                      height: 100.h,
+                    bottom: 180.h,
+                    child: FadeInLeft(
+                      child: Image.asset(
+                        AppImages.redWLeft,
+                        height: 100.h,
+                      ),
                     ),
                   ),
 
-                  // Wake in center
                   Positioned(
-                    left: 45.w,
+                    left: 20.w,
+                    right: 0,
+                    bottom: 140.h,
+                    child: FadeInUp(
+                      child: Image.asset(
+                        AppImages.yallowWJump,
+                        height: 80.h,
+                      ),
+                    ),
+                  ),
+
+                  Positioned(
+                    left: 0,
+                    right: 170.w,
+                    bottom: 0,
+                    top: 200.h,
+                    child: FadeInLeft(
+                      child: Image.asset(
+                        AppImages.greenMWake2,
+                        height: 100.h,
+                      ),
+                    ),
+                  ),
+
+                  Positioned(
+                    left: 240.w,
                     right: 0,
                     bottom: 0,
-                    child: Center(
-                      child: Image.asset(
-                        AppImages.yelloWThink,
-                        height: 300.h,
+                    child: FadeInUp(
+                      child: Center(
+                        child: Image.asset(
+                          AppImages.yallowWRocket,
+                          height: 120.h,
+                        ),
                       ),
                     ),
                   ),

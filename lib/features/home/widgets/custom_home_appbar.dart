@@ -1,3 +1,4 @@
+import 'package:animate_do/animate_do.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -37,67 +38,73 @@ class CustomHomeAppBar extends StatelessWidget {
         padding: const EdgeInsets.symmetric(horizontal: 10),
         child: Row(
           children: [
-            CircleAvatar(
-              radius: 25,
-              backgroundImage: CachedNetworkImageProvider(
-                profile.avatarUrl!,
+            FadeInLeft(
+              child: CircleAvatar(
+                radius: 25,
+                backgroundImage: CachedNetworkImageProvider(
+                  profile.avatarUrl!,
+                ),
+                backgroundColor: Colors.transparent,
               ),
-              backgroundColor: Colors.transparent,
             ),
             SizedBox(width: 10.w),
-            Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                TextApp(
-                  text: ZnoonaTexts.tr(context, LangKeys.hello),
-                  textStyle: GoogleFonts.beiruti(
-                    fontSize: 16.sp,
-                    fontWeight: FontWeight.bold,
-                    color: ZnoonaColors.text(context).withAlpha(100),
-                  ),
-                  textAlign: TextAlign.center,
-                ),
-                TextApp(
-                  text: profile.fullName,
-                  textStyle: GoogleFonts.beiruti(
-                    fontSize: 16.sp,
-                    fontWeight: FontWeight.bold,
-                    color: ZnoonaColors.text(context),
-                  ),
-                  textAlign: TextAlign.center,
-                ),
-              ],
-            ),
-            const Spacer(),
-            CustomLinearButton(
-              borderRadiusNum: 40,
-              colors: [
-                ZnoonaColors.bluePinkDark(context),
-
-                ZnoonaColors.bluePinkDark(context),
-              ],
-              height: 33.h,
-              width: 75.w,
-              onPressed: () {},
-              child: Row(
-                crossAxisAlignment: CrossAxisAlignment.end,
+            FadeInLeft(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  Image.asset(
-                    AppImages.level,
-                    height: 25.h,
-                    width: 25.w,
+                  TextApp(
+                    text: ZnoonaTexts.tr(context, LangKeys.hello),
+                    textStyle: GoogleFonts.beiruti(
+                      fontSize: 16.sp,
+                      fontWeight: FontWeight.bold,
+                      color: ZnoonaColors.text(context).withAlpha(100),
+                    ),
+                    textAlign: TextAlign.center,
                   ),
                   TextApp(
-                    text: profile.level,
+                    text: profile.fullName,
                     textStyle: GoogleFonts.beiruti(
-                      fontSize: 20.sp,
-                      fontWeight: FontWeight.w800,
-                      color: Colors.white,
+                      fontSize: 16.sp,
+                      fontWeight: FontWeight.bold,
+                      color: ZnoonaColors.text(context),
                     ),
+                    textAlign: TextAlign.center,
                   ),
                 ],
+              ),
+            ),
+            const Spacer(),
+            FadeInRight(
+              child: CustomLinearButton(
+                borderRadiusNum: 40,
+                colors: [
+                  ZnoonaColors.bluePinkDark(context),
+
+                  ZnoonaColors.bluePinkDark(context),
+                ],
+                height: 33.h,
+                width: 75.w,
+                onPressed: () {},
+                child: Row(
+                  crossAxisAlignment: CrossAxisAlignment.end,
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Image.asset(
+                      AppImages.level,
+                      height: 25.h,
+                      width: 25.w,
+                    ),
+                    TextApp(
+                      text: profile.level,
+                      textStyle: GoogleFonts.beiruti(
+                        fontSize: 20.sp,
+                        fontWeight: FontWeight.w800,
+                        color: Colors.white,
+                      ),
+                    ),
+                  ],
+                ),
               ),
             ),
           ],

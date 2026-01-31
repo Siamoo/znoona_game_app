@@ -41,6 +41,8 @@ class AppImages {
   static const airplane = 'assets/images/design/airplane.png';
   static const bird = 'assets/images/design/bird.png';
   static const blackMNo = 'assets/images/design/black_m_no.png';
+  static const balon = 'assets/images/design/balon.png';
+  static const sky = 'assets/images/design/sky.png';
 
   //Svg
   static const mode = 'assets/svg/dark_mode.svg';

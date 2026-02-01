@@ -42,6 +42,7 @@ class AppImages {
   static const bird = 'assets/images/design/bird.png';
   static const blackMNo = 'assets/images/design/black_m_no.png';
   static const balon = 'assets/images/design/balon.png';
+  static const balon2 = 'assets/images/design/balon2.png';
   static const sky = 'assets/images/design/sky.png';
 
   //Svg

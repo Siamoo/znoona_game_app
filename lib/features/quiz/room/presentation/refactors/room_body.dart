@@ -94,11 +94,15 @@ class RoomBody extends StatelessWidget {
                   Positioned(
                     left: 40.w,
                     bottom: 200.h,
-                    child: FadeInLeft(
+                    child: FadeInUp(
                       duration: const Duration(milliseconds: 4000),
-                      child: Image.asset(
-                        AppImages.airplane,
-                        height: 70.h,
+                      from: 50,
+                      child: FadeInLeft(
+                        duration: const Duration(milliseconds: 4000),
+                        child: Image.asset(
+                          AppImages.airplane,
+                          height: 70.h,
+                        ),
                       ),
                     ),
                   ),
@@ -108,7 +112,8 @@ class RoomBody extends StatelessWidget {
                     right: 80.w,
                     bottom: 0,
                     child: FadeInLeft(
-                      duration: const Duration(milliseconds: 1400),
+                      duration: const Duration(milliseconds: 2000),
+                      from: 120,
                       child: Image.asset(
                         AppImages.blackMNo,
                         height: 130.h,

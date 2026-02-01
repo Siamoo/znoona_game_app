@@ -95,6 +95,7 @@ class QuizHomeBody extends StatelessWidget {
                     left: 0,
                     bottom: 180.h,
                     child: FadeInLeft(
+                      duration: const Duration(milliseconds: 2000),
                       child: Image.asset(
                         AppImages.redWLeft,
                         height: 100.h,
@@ -103,13 +104,19 @@ class QuizHomeBody extends StatelessWidget {
                   ),
 
                   Positioned(
-                    left: 20.w,
+                    left: 100.w,
                     right: 0,
-                    bottom: 140.h,
-                    child: FadeInUp(
-                      child: Image.asset(
-                        AppImages.yallowWJump,
-                        height: 80.h,
+                    bottom: 120.h,
+                    child: FadeInLeft(
+                      duration: const Duration(milliseconds: 2370),
+                      child: FadeInUp(
+                        duration: const Duration(milliseconds: 2200),
+                        from: 200,
+                        curve: Curves.easeOutBack,
+                        child: Image.asset(
+                          AppImages.yallowWJump,
+                          height: 70.h,
+                        ),
                       ),
                     ),
                   ),
@@ -120,6 +127,7 @@ class QuizHomeBody extends StatelessWidget {
                     bottom: 0,
                     top: 200.h,
                     child: FadeInLeft(
+                      duration: const Duration(milliseconds: 2000),
                       child: Image.asset(
                         AppImages.greenMWake2,
                         height: 100.h,
@@ -131,11 +139,15 @@ class QuizHomeBody extends StatelessWidget {
                     left: 240.w,
                     right: 0,
                     bottom: 0,
-                    child: FadeInUp(
-                      child: Center(
-                        child: Image.asset(
-                          AppImages.yallowWRocket,
-                          height: 120.h,
+                    child: FadeInRight(
+                      duration: const Duration(milliseconds: 2000),
+                      child: FadeInUp(
+                        duration: const Duration(milliseconds: 2000),
+                        child: Center(
+                          child: Image.asset(
+                            AppImages.yallowWRocket,
+                            height: 130.h,
+                          ),
                         ),
                       ),
                     ),

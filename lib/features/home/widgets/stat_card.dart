@@ -68,7 +68,7 @@ class StatCard extends StatelessWidget {
               style: GoogleFonts.beiruti(
                 fontSize: 10.sp,
                 fontWeight: FontWeight.w600,
-                color: ZnoonaColors.text(context)?.withOpacity(0.8),
+                color: ZnoonaColors.text(context).withOpacity(0.8),
               ),
               textAlign: TextAlign.center,
               maxLines: 2,

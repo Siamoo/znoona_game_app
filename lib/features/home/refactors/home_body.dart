@@ -70,10 +70,7 @@ class HomeBody extends StatelessWidget {
                                 child: GameButton(
                                   image: AppImages.puzzle,
                                   langkey: LangKeys.appName,
-                                  onPressed: () => ZnoonaNavigate.pushTo(
-                                    context,
-                                    const ContactUsScreen(),
-                                  ),
+                                  onPressed: () {},
                                 ),
                               ),
                             ],
@@ -105,21 +102,21 @@ class HomeBody extends StatelessWidget {
               ),
             ),
 
-            Container(
-              alignment: Alignment.centerRight,
-              child: FadeInRight(
-                child: Image.asset(
-                  AppImages.redWRightSide,
-                  height: 70.h,
-                ),
-              ),
-            ),
-
             SizedBox(
-              height: 100.h,
+              height: 200.h,
               width: double.infinity,
               child: Stack(
                 children: [
+                  Positioned(
+                    right: 0,
+                    bottom: 80.h,
+                    child: FadeInUp(
+                      child: Image.asset(
+                        AppImages.redWRightSide,
+                        height: 70.h,
+                      ),
+                    ),
+                  ),
                   Positioned(
                     left: 0,
                     bottom: 0,

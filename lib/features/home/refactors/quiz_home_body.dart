@@ -87,18 +87,23 @@ class QuizHomeBody extends StatelessWidget {
               ),
             ),
             SizedBox(
-              height: 300.h,
+              height: 250.h,
               width: double.infinity,
               child: Stack(
                 children: [
                   Positioned(
                     left: 0,
-                    bottom: 180.h,
-                    child: FadeInLeft(
-                      duration: const Duration(milliseconds: 2000),
-                      child: Image.asset(
-                        AppImages.redWLeft,
-                        height: 100.h,
+                    bottom: 140.h,
+                    child: FadeInDown(
+                      duration: const Duration(milliseconds: 2500),
+                      from: 60.h,
+                      child: FadeInLeft(
+                        duration: const Duration(milliseconds: 2000),
+                        from: 40.w,
+                        child: Image.asset(
+                          AppImages.redWLeft,
+                          height: 100.h,
+                        ),
                       ),
                     ),
                   ),
@@ -122,20 +127,6 @@ class QuizHomeBody extends StatelessWidget {
                   ),
 
                   Positioned(
-                    left: 0,
-                    right: 170.w,
-                    bottom: 0,
-                    top: 200.h,
-                    child: FadeInLeft(
-                      duration: const Duration(milliseconds: 2000),
-                      child: Image.asset(
-                        AppImages.greenMWake2,
-                        height: 100.h,
-                      ),
-                    ),
-                  ),
-
-                  Positioned(
                     left: 240.w,
                     right: 0,
                     bottom: 0,
@@ -149,6 +140,49 @@ class QuizHomeBody extends StatelessWidget {
                             height: 130.h,
                           ),
                         ),
+                      ),
+                    ),
+                  ),
+
+                  Positioned(
+                    left: 0,
+                    right: 110.w,
+                    bottom: 0,
+                    // top: 200.h,
+                    child: FadeInLeft(
+                      duration: const Duration(milliseconds: 2000),
+                      from: 120.w,
+                      child: Image.asset(
+                        AppImages.dog1,
+                        height: 65.h,
+                      ),
+                    ),
+                  ),
+
+                  Positioned(
+                    left: 0,
+                    right: 280.w,
+                    bottom: 0,
+                    child: FadeInLeft(
+                      duration: const Duration(milliseconds: 2200),
+                      from: 200.w,
+                      child: Image.asset(
+                        AppImages.dog2,
+                        height: 30.h,
+                      ),
+                    ),
+                  ),
+
+                  Positioned(
+                    left: 0,
+                    right: 340.w,
+                    bottom: 0,
+                    child: FadeInLeft(
+                      duration: const Duration(milliseconds: 2400),
+                      from: 200.w,
+                      child: Image.asset(
+                        AppImages.dog3,
+                        height: 30.h,
                       ),
                     ),
                   ),

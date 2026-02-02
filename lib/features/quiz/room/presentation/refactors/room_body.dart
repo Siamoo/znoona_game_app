@@ -87,7 +87,7 @@ class RoomBody extends StatelessWidget {
               ),
             ),
             SizedBox(
-              height: 400.h,
+              height: 300.h,
               width: double.infinity,
               child: Stack(
                 children: [

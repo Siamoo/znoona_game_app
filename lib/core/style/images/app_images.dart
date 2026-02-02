@@ -44,6 +44,10 @@ class AppImages {
   static const balon = 'assets/images/design/balon.png';
   static const balon2 = 'assets/images/design/balon2.png';
   static const sky = 'assets/images/design/sky.png';
+  static const dog1 = 'assets/images/design/dog1.png';
+  static const dog2 = 'assets/images/design/dog2.png';
+  static const dog3 = 'assets/images/design/dog3.png';
+  static const yellowWQr = 'assets/images/design/yellow_w_qr.png';
 
   //Svg
   static const mode = 'assets/svg/dark_mode.svg';

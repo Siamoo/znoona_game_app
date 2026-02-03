@@ -33,7 +33,8 @@ class AppImages {
   static const redWLeft = 'assets/images/design/red_w_left.png';
   static const redWTraveler = 'assets/images/design/red_w_traveler.png';
   static const yelloWChoose = 'assets/images/design/yellow_w_choose.png';
-  static const yelloWMicrophone = 'assets/images/design/yellow_w_microphone.png';
+  static const yelloWMicrophone =
+      'assets/images/design/yellow_w_microphone.png';
   static const yelloWTraveler = 'assets/images/design/yellow_w_traveler.png';
   static const yelloWTraveler2 = 'assets/images/design/yellow_w_traveler2.png';
   static const yallowWRocket = 'assets/images/design/yallow_w_rocket.png';
@@ -42,12 +43,14 @@ class AppImages {
   static const bird = 'assets/images/design/bird.png';
   static const blackMNo = 'assets/images/design/black_m_no.png';
   static const balon = 'assets/images/design/balon.png';
-  static const balon2 = 'assets/images/design/balon2.png';
   static const sky = 'assets/images/design/sky.png';
   static const dog1 = 'assets/images/design/dog1.png';
   static const dog2 = 'assets/images/design/dog2.png';
   static const dog3 = 'assets/images/design/dog3.png';
   static const yellowWQr = 'assets/images/design/yellow_w_qr.png';
+  static const blackMHand = 'assets/images/design/black_m_hand.png';
+  static const redWStady = 'assets/images/design/red_w_stady.png';
+  static const blueMSkates = 'assets/images/design/blue_m_skates.png';
 
   //Svg
   static const mode = 'assets/svg/dark_mode.svg';

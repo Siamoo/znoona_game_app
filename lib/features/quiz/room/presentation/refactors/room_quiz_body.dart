@@ -23,7 +23,6 @@ import 'package:medaan_almaarifa/features/quiz/room/presentation/widgets/Quiz/ro
 import 'package:medaan_almaarifa/features/quiz/single/domain/entities/question.dart';
 import 'package:medaan_almaarifa/features/quiz/single/presentation/widgets/option_button.dart';
 import 'package:cached_network_image/cached_network_image.dart';
-import 'package:vibration/vibration.dart';
 import 'package:medaan_almaarifa/features/quiz/room/presentation/widgets/Quiz/players_status.dart';
 
 class RoomQuizBody extends StatefulWidget {
@@ -76,26 +75,7 @@ class _RoomQuizBodyState extends State<RoomQuizBody> {
     }
   }
 
-  // Vibration helper methods
-  Future<void> _vibrateWrongAnswer() async {
-    final appState = context.read<AppCubit>().state;
-    if (appState.isVibrationEnabled) {
-      if (await Vibration.hasVibrator()) {
-        Vibration.vibrate(duration: 200);
-      }
-    }
-  }
-
-  Future<void> _vibrateTimeFinished() async {
-    final appState = context.read<AppCubit>().state;
-    if (appState.isVibrationEnabled) {
-      if (await Vibration.hasVibrator()) {
-        Vibration.vibrate(pattern: [500, 200, 500]);
-      }
-    }
-  }
-
-  // Audio helper methods
+  // Audio helper methods only (vibration removed)
   Future<void> _playCorrectSound() async {
     final appState = context.read<AppCubit>().state;
     if (appState.isSoundEnabled) {
@@ -302,8 +282,7 @@ class _RoomQuizBodyState extends State<RoomQuizBody> {
       if (appState.isSoundEnabled) {
         await _playWrongSound();
       }
-      // Vibrate on wrong answer
-      await _vibrateWrongAnswer();
+      // Vibration removed from wrong answer
     }
 
     _emitQuizState();
@@ -319,10 +298,7 @@ class _RoomQuizBodyState extends State<RoomQuizBody> {
       _showTimerWarning();
     }
 
-    // Check if time finished
-    if (remainingTime == 0) {
-      _vibrateTimeFinished();
-    }
+    // Vibration for time finished removed
   }
 
   void _showTimerWarning() {
@@ -536,7 +512,7 @@ class _RoomQuizBodyState extends State<RoomQuizBody> {
                       ),
                       SizedBox(height: 10.h),
 
-                      _buildSoundVibrationAndTimer(timerColor, remainingTime),
+                      _buildSoundAndTimer(timerColor, remainingTime),
                       SizedBox(height: 10.h),
                     ],
                   ),
@@ -677,8 +653,8 @@ class _RoomQuizBodyState extends State<RoomQuizBody> {
     );
   }
 
-  // New combined control widget with sound, vibration and timer
-  Widget _buildSoundVibrationAndTimer(Color timerColor, int remainingTime) {
+  // New combined control widget with sound and timer only (vibration removed)
+  Widget _buildSoundAndTimer(Color timerColor, int remainingTime) {
     return BlocBuilder<AppCubit, AppState>(
       builder: (context, appState) {
         final audioService = GetIt.I<AudioService>();
@@ -692,16 +668,16 @@ class _RoomQuizBodyState extends State<RoomQuizBody> {
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              // Vibration control
+              // Sound control only (vibration removed)
               IconButton(
                 icon: Icon(
-                  appState.isVibrationEnabled
-                      ? Icons.vibration
-                      : Icons.not_interested,
+                  appState.isSoundEnabled
+                      ? Icons.volume_up
+                      : Icons.volume_off,
                   color: ZnoonaColors.text(context),
                   size: 18.sp,
                 ),
-                onPressed: () => context.read<AppCubit>().toggleVibration(),
+                onPressed: () => context.read<AppCubit>().toggleSound(),
               ),
 
               // Timer display with colored background

@@ -1,3 +1,4 @@
+import 'package:animate_do/animate_do.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -87,8 +88,8 @@ class _RoomJoiningBodyState extends State<RoomJoiningBody> {
                         duration: 850,
                         child: Image.asset(
                           AppImages.join,
-                          height: 250.h,
-                          width: 250.w,
+                          height: 200.h,
+                          width: 200.w,
                         ),
                       ),
                       const SizedBox(height: 24),
@@ -161,13 +162,57 @@ class _RoomJoiningBodyState extends State<RoomJoiningBody> {
                           duration: 400,
                           child: ScanQrButton(),
                         ),
-                        SizedBox(
-                          height: MediaQuery.of(context).viewInsets.bottom > 0
-                              ? 100.h
-                              : 20.h,
-                        ),
                       ],
                     ),
+                  ),
+                ),
+                SizedBox(
+                  height: 200.h,
+                  width: double.infinity,
+                  child: Stack(
+                    children: [
+                      Positioned(
+                        left: 0,
+                        right: 230.w,
+                        bottom: 0,
+                        child: FadeInLeft(
+                          duration: const Duration(milliseconds: 4000),
+                          from: 120,
+                          child: Image.asset(
+                            AppImages.blackMHand,
+                            height: 160.h,
+                          ),
+                        ),
+                      ),
+                      Positioned(
+                        left: 0,
+                        right: 0,
+                        bottom: 0,
+                        child: FadeInLeft(
+                          duration: const Duration(milliseconds: 4000),
+                          from: 180.w,
+                          child: Image.asset(
+                            AppImages.yelloWTraveler,
+                            height: 130.h,
+                          ),
+                        ),
+                      ),
+
+                      Positioned(
+                        left: 250.w,
+                        right: 0,
+                        bottom: 10.h,
+                        child: FadeInRight(
+                          duration: const Duration(milliseconds: 4000),
+                          child: Center(
+                            child: Image.asset(
+                              AppImages.redWStady,
+                              height: 60.h,
+                            ),
+                          ),
+                        ),
+                      ),
+                    ],
                   ),
                 ),
               ],

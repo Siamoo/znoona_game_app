@@ -61,23 +61,31 @@ class _RoomLobbyBodyState extends State<RoomLobbyBody> {
               padding: EdgeInsets.symmetric(
                 horizontal: 16.w,
               ),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.stretch,
-                children: [
-                  CustomAppBar(
-                    title: LangKeys.room,
-                    icon: Icons.close,
-                    onTap: () {
-                      context.read<RoomCubit>().leaveFromAllRooms();
-                    },
-                  ),
-                  RoomInfoCard(room: _getCurrentRoom(state) ?? widget.room),
-                  SizedBox(height: 24.h),
-                  PlayersList(roomId: widget.room.id),
-                  SizedBox(height: 24.h),
-                  StartGameButton(room: _getCurrentRoom(state) ?? widget.room),
-                  SizedBox(height: 24.h),
-                ],
+              child: SingleChildScrollView(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.stretch,
+                  children: [
+                    Column(
+                      children: [
+                        CustomAppBar(
+                          title: LangKeys.room,
+                          icon: Icons.close,
+                          onTap: () {
+                            context.read<RoomCubit>().leaveFromAllRooms();
+                          },
+                        ),
+                        RoomInfoCard(
+                          room: _getCurrentRoom(state) ?? widget.room,
+                        ),
+                        SizedBox(height: 24.h),
+                        PlayersList(roomId: widget.room.id),
+                      ],
+                    ),
+                    StartGameButton(
+                      room: _getCurrentRoom(state) ?? widget.room,
+                    ),
+                  ],
+                ),
               ),
             ),
           );

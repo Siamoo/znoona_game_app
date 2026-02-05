@@ -247,7 +247,7 @@ class RoomInfoCard extends StatelessWidget {
                   ),
                   SizedBox(width: 8.w),
                   Text(
-                    '$playersCount/8',
+                    '$playersCount',
                     style: GoogleFonts.beiruti(
                       fontSize: 18.sp,
                       fontWeight: FontWeight.bold,

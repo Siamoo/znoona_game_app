@@ -47,31 +47,35 @@ class StartGameButton extends StatelessWidget {
           orElse: () => false,
         );
 
-        final canStart = players.length >= 2 && players.length <= 8;
+        final canStart = players.length >= 2 && players.length <= 10;
 
-        return CustomLinearButton(
-          width: double.infinity,
-          height: 50.h,
-          onPressed: canStart
-              ? () async {
-                  await context.read<RoomCubit>().startGame(room.id);
-                }
-              : () async {
-                  await showCanNotStartGameDialog(context, players.length);
-                },
-          child: isLoading
-              ? const CircularProgressIndicator()
-              : Text(
-                  ZnoonaTexts.tr(
-                    context,
-                    LangKeys.startGame,
-                  ),
-                  style: const TextStyle(
-                    fontSize: 18,
-                    fontWeight: FontWeight.bold,
-                    color: Colors.white,
-                  ),
-                ),
+        return Column(
+          children: [
+            CustomLinearButton(
+              width: double.infinity,
+              height: 50.h,
+              onPressed: canStart
+                  ? () async {
+                      await context.read<RoomCubit>().startGame(room.id);
+                    }
+                  : () async {
+                      await showCanNotStartGameDialog(context, players.length);
+                    },
+              child: isLoading
+                  ? const CircularProgressIndicator()
+                  : Text(
+                      ZnoonaTexts.tr(
+                        context,
+                        LangKeys.startGame,
+                      ),
+                      style: const TextStyle(
+                        fontSize: 18,
+                        fontWeight: FontWeight.bold,
+                        color: Colors.white,
+                      ),
+                    ),
+            ),
+          ],
         );
       },
     );
@@ -97,7 +101,7 @@ Future<void> showCanNotStartGameDialog(
           context,
           LangKeys.mustHaveTwoPlayers,
         ),
-        style:const TextStyle(
+        style: const TextStyle(
           fontSize: 18,
           fontWeight: FontWeight.bold,
           color: Colors.white,
@@ -116,7 +120,7 @@ Future<void> showCanNotStartGameDialog(
                 context,
                 LangKeys.ok,
               ),
-              style:const TextStyle(
+              style: const TextStyle(
                 fontSize: 18,
                 fontWeight: FontWeight.bold,
                 color: Colors.white,

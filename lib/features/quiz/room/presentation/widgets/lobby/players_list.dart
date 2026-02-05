@@ -1,3 +1,4 @@
+import 'package:animate_do/animate_do.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -5,6 +6,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:medaan_almaarifa/core/helpers/znoona.colors.dart';
 import 'package:medaan_almaarifa/core/helpers/znoona_texts.dart';
 import 'package:medaan_almaarifa/core/language/lang_keys.dart';
+import 'package:medaan_almaarifa/core/style/images/app_images.dart';
 import 'package:medaan_almaarifa/features/quiz/room/domain/entities/room_player.dart';
 import 'package:medaan_almaarifa/features/quiz/room/presentation/cubit/room_cubit.dart';
 import 'package:medaan_almaarifa/features/quiz/room/presentation/widgets/lobby/player_list_item.dart';
@@ -15,52 +17,80 @@ class PlayersList extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Expanded(
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Text(
-            ZnoonaTexts.tr(context, LangKeys.players),
-            style: GoogleFonts.beiruti(
-              fontSize: 18.sp,
-              fontWeight: FontWeight.bold,
-              color: ZnoonaColors.text(context),
-            ),
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Text(
+          ZnoonaTexts.tr(context, LangKeys.players),
+          style: GoogleFonts.beiruti(
+            fontSize: 18.sp,
+            fontWeight: FontWeight.bold,
+            color: ZnoonaColors.text(context),
           ),
-          const SizedBox(height: 12),
-          Expanded(
-            child: BlocBuilder<RoomCubit, RoomState>(
-              builder: (context, state) {
-                final players = state.maybeWhen(
-                  playersUpdated: (players) => players,
-                  orElse: () => <RoomPlayer>[],
-                );
+        ),
+        const SizedBox(height: 12),
+        SizedBox(
+          height: 420.h,
+          width: double.infinity,
+          child: Stack(
+            children: [
+              Positioned(
+                left: 0,
+                right: 0,
+                bottom: 0,
+                child: FadeInLeft(
+                  duration: const Duration(milliseconds: 2000),
+                  from: 120,
+                  child: Image.asset(
+                    AppImages.yelloWTraveler2,
+                    height: 130.h,
+                  ),
+                ),
+              ),
+              Positioned(
+                left: 0,
+                right: 0,
+                bottom: 0,
+                child: SizedBox(
+                  height: 420.h,
+                  width: double.infinity,
+                  child: BlocBuilder<RoomCubit, RoomState>(
+                    builder: (context, state) {
+                      final players = state.maybeWhen(
+                        playersUpdated: (players) => players,
+                        orElse: () => <RoomPlayer>[],
+                      );
 
-                if (players.isEmpty) {
-                  return Center(
-                    child: Text(
-                      ZnoonaTexts.tr(context, LangKeys.waitingPlayers),
-                      style: GoogleFonts.beiruti(
-                        fontSize: 18.sp,
-                        fontWeight: FontWeight.bold,
-                        color: ZnoonaColors.text(context),
-                      ),
-                    ),
-                  );
-                }
+                      if (players.isEmpty) {
+                        return Center(
+                          child: Text(
+                            ZnoonaTexts.tr(context, LangKeys.waitingPlayers),
+                            style: GoogleFonts.beiruti(
+                              fontSize: 18.sp,
+                              fontWeight: FontWeight.bold,
+                              color: ZnoonaColors.text(context),
+                            ),
+                          ),
+                        );
+                      }
 
-                return ListView.builder(
-                  itemCount: players.length,
-                  itemBuilder: (context, index) {
-                    final player = players[index];
-                    return PlayerListItem(player: player);
-                  },
-                );
-              },
-            ),
+                      return ListView.builder(
+                        itemCount: players.length,
+                        itemBuilder: (context, index) {
+                          final player = players[index];
+                          return FadeInLeft(
+                            child: PlayerListItem(player: player),
+                          );
+                        },
+                      );
+                    },
+                  ),
+                ),
+              ),
+            ],
           ),
-        ],
-      ),
+        ),
+      ],
     );
   }
 }

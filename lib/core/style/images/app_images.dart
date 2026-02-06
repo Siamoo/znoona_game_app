@@ -51,6 +51,8 @@ class AppImages {
   static const blackMHand = 'assets/images/design/black_m_hand.png';
   static const redWStady = 'assets/images/design/red_w_stady.png';
   static const blueMSkates = 'assets/images/design/blue_m_skates.png';
+  static const manFell1 = 'assets/images/design/m_fell1.png';
+  static const manFell4 = 'assets/images/design/m_fell4.png';
 
   //Svg
   static const mode = 'assets/svg/dark_mode.svg';

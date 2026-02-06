@@ -108,7 +108,7 @@ class _OptionButtonState extends State<OptionButton>
           child: Text(
             widget.option,
             style: GoogleFonts.scheherazadeNew(
-              fontSize: 22.sp,
+              fontSize: 22.h,
               fontWeight: FontWeight.w800,
               color: Colors.white,
             ),

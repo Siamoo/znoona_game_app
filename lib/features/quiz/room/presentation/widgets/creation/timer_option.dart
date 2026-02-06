@@ -33,7 +33,7 @@ class TimerOption extends StatelessWidget {
           '$duration ',
           style: TextStyle(
             color: isSelected ? Colors.white : ZnoonaColors.text(context),
-            fontSize: 14.sp,
+            fontSize: 14.h,
             fontWeight: isSelected ? FontWeight.bold : FontWeight.normal,
           ),
         ),

@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -21,13 +20,13 @@ class TopPlayerSection extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       width: double.infinity,
-      padding: EdgeInsets.all(12.sp),
+      padding: EdgeInsets.all(12.h),
       decoration: BoxDecoration(
         color: ZnoonaColors.bluePinkLight(context).withOpacity(0.1),
-        borderRadius: BorderRadius.circular(12.sp),
+        borderRadius: BorderRadius.circular(12.h),
         border: Border.all(
           color: ZnoonaColors.bluePinkLight(context).withOpacity(0.3),
-          width: 1.sp,
+          width: 1.w,
         ),
       ),
       child: Row(
@@ -40,19 +39,19 @@ class TopPlayerSection extends StatelessWidget {
               Icon(
                 Icons.emoji_events,
                 color: Colors.amber,
-                size: 24.sp,
+                size: 24.h,
               ),
-              SizedBox(width: 8.sp),
+              SizedBox(width: 8.w),
 
               // Avatar
               Container(
-                width: 40.sp,
-                height: 40.sp,
+                width: 40.w,
+                height: 40.h,
                 decoration: BoxDecoration(
                   shape: BoxShape.circle,
                   border: Border.all(
                     color: ZnoonaColors.bluePinkLight(context),
-                    width: 2.sp,
+                    width: 2.w,
                   ),
                 ),
                 child: ClipOval(
@@ -65,26 +64,26 @@ class TopPlayerSection extends StatelessWidget {
                           errorBuilder: (context, error, stackTrace) {
                             return Icon(
                               Icons.person,
-                              size: 20.sp,
+                              size: 20.h,
                               color: ZnoonaColors.bluePinkLight(context),
                             );
                           },
                         )
                       : Icon(
                           Icons.person,
-                          size: 20.sp,
+                          size: 20.h,
                           color: ZnoonaColors.bluePinkLight(context),
                         ),
                 ),
               ),
-              SizedBox(width: 12.sp),
+              SizedBox(width: 12.w),
               Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
                     '🎯 Top Player',
                     style: GoogleFonts.beiruti(
-                      fontSize: 12.sp,
+                      fontSize: 12.h,
                       fontWeight: FontWeight.bold,
                       color: ZnoonaColors.bluePinkLight(context),
                     ),
@@ -92,7 +91,7 @@ class TopPlayerSection extends StatelessWidget {
                   Text(
                     isCurrentUser ? 'You!' : topPlayer.username,
                     style: GoogleFonts.beiruti(
-                      fontSize: 14.sp,
+                      fontSize: 14.h,
                       fontWeight: FontWeight.bold,
                       color: ZnoonaColors.text(context),
                     ),
@@ -104,23 +103,23 @@ class TopPlayerSection extends StatelessWidget {
 
           // Score
           Container(
-            padding: EdgeInsets.symmetric(horizontal: 12.sp, vertical: 6.sp),
+            padding: EdgeInsets.symmetric(horizontal: 12.h, vertical: 6.h),
             decoration: BoxDecoration(
               color: ZnoonaColors.bluePinkLight(context),
-              borderRadius: BorderRadius.circular(20.sp),
+              borderRadius: BorderRadius.circular(20.h),
             ),
             child: Row(
               children: [
                 Icon(
                   Icons.star,
                   color: Colors.white,
-                  size: 16.sp,
+                  size: 16.h,
                 ),
-                SizedBox(width: 4.sp),
+                SizedBox(width: 4.w),
                 Text(
                   '${topPlayer.score}',
                   style: GoogleFonts.beiruti(
-                    fontSize: 14.sp,
+                    fontSize: 14.h,
                     fontWeight: FontWeight.bold,
                     color: Colors.white,
                   ),

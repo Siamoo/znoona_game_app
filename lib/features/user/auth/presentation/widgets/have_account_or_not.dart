@@ -8,10 +8,11 @@ import 'package:medaan_almaarifa/core/helpers/znoona.colors.dart';
 class HaveAccountOrNot extends StatelessWidget {
   const HaveAccountOrNot({
     required this.text,
-    required this.onPressed, super.key,
+    required this.onPressed,
+    super.key,
   });
   final String text;
-  final  void Function() onPressed;
+  final void Function() onPressed;
 
   @override
   Widget build(BuildContext context) {
@@ -22,7 +23,7 @@ class HaveAccountOrNot extends StatelessWidget {
         child: TextApp(
           text: text,
           textStyle: GoogleFonts.beiruti(
-            fontSize: 20.sp,
+            fontSize: 20.h,
             color: ZnoonaColors.bluePinkLight(context),
             fontWeight: FontWeight.w500,
           ),

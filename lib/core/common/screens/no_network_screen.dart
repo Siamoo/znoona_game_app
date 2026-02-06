@@ -14,7 +14,7 @@ class NoNetworkScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
-    
+
     return Scaffold(
       backgroundColor: ZnoonaColors.main(context),
       body: SafeArea(
@@ -47,55 +47,54 @@ class NoNetworkScreen extends StatelessWidget {
                   );
                 },
               ),
-              
+
               SizedBox(height: 40.h),
-              
+
               // Title
               Text(
                 ZnoonaTexts.tr(context, LangKeys.noConnection),
                 style: GoogleFonts.beiruti(
-                  fontSize: 28.sp,
+                  fontSize: 28.h,
                   fontWeight: FontWeight.bold,
                   color: ZnoonaColors.bluePinkDark(context),
                 ),
                 textAlign: TextAlign.center,
               ),
-              
+
               SizedBox(height: 16.h),
-              
+
               // Description
               Text(
                 ZnoonaTexts.tr(context, LangKeys.noConnectionMessage),
                 style: GoogleFonts.beiruti(
-                  fontSize: 16.sp,
+                  fontSize: 16.h,
                   color: ZnoonaColors.text(context).withOpacity(0.7),
                   height: 1.5,
                 ),
                 textAlign: TextAlign.center,
               ),
-              
+
               SizedBox(height: 48.h),
-              
+
               // Retry Button (if provided)
-              if (onRetry != null)
-                _buildRetryButton(context),
-              
+              if (onRetry != null) _buildRetryButton(context),
+
               // Check settings suggestion
               SizedBox(height: 24.h),
-              
+
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   Icon(
                     Icons.settings,
-                    size: 16.sp,
+                    size: 16.h,
                     color: ZnoonaColors.text(context).withOpacity(0.5),
                   ),
                   SizedBox(width: 8.w),
                   Text(
                     ZnoonaTexts.tr(context, LangKeys.checkNetworkSettings),
                     style: GoogleFonts.beiruti(
-                      fontSize: 14.sp,
+                      fontSize: 14.h,
                       color: ZnoonaColors.text(context).withOpacity(0.5),
                     ),
                   ),
@@ -140,13 +139,13 @@ class NoNetworkScreen extends StatelessWidget {
                 Icon(
                   Icons.refresh,
                   color: Colors.white,
-                  size: 24.sp,
+                  size: 24.h,
                 ),
                 SizedBox(width: 8.w),
                 Text(
                   ZnoonaTexts.tr(context, LangKeys.tryAgain),
                   style: GoogleFonts.beiruti(
-                    fontSize: 18.sp,
+                    fontSize: 18.h,
                     fontWeight: FontWeight.bold,
                     color: Colors.white,
                   ),

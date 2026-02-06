@@ -1,10 +1,12 @@
 import 'dart:async';
+import 'package:animate_do/animate_do.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:get_it/get_it.dart';
 import 'package:medaan_almaarifa/core/common/screens/sound_setting_screen.dart';
+import 'package:medaan_almaarifa/core/style/images/app_images.dart';
 import 'package:photo_view/photo_view.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 import 'package:medaan_almaarifa/core/app/app_cubit/app_cubit.dart';
@@ -164,7 +166,7 @@ class _RoomQuizBodyState extends State<RoomQuizBody> {
                       ZnoonaTexts.tr(context, LangKeys.loadingImage),
                       style: TextStyle(
                         color: Colors.white,
-                        fontSize: 14.sp,
+                        fontSize: 14.h,
                       ),
                     ),
                   ],
@@ -177,7 +179,7 @@ class _RoomQuizBodyState extends State<RoomQuizBody> {
                     children: [
                       Icon(
                         Icons.broken_image,
-                        size: 60.sp,
+                        size: 60.h,
                         color: Colors.white54,
                       ),
                       SizedBox(height: 20.h),
@@ -185,7 +187,7 @@ class _RoomQuizBodyState extends State<RoomQuizBody> {
                         ZnoonaTexts.tr(context, LangKeys.failedToLoadImage),
                         style: TextStyle(
                           color: Colors.white70,
-                          fontSize: 16.sp,
+                          fontSize: 16.h,
                         ),
                       ),
                       SizedBox(height: 10.h),
@@ -193,7 +195,7 @@ class _RoomQuizBodyState extends State<RoomQuizBody> {
                         ZnoonaTexts.tr(context, LangKeys.imageMovedOrDeleted),
                         style: TextStyle(
                           color: Colors.white54,
-                          fontSize: 12.sp,
+                          fontSize: 12.h,
                         ),
                         textAlign: TextAlign.center,
                       ),
@@ -220,7 +222,7 @@ class _RoomQuizBodyState extends State<RoomQuizBody> {
                   icon: Icon(
                     Icons.close,
                     color: Colors.white,
-                    size: 28.sp,
+                    size: 28.h,
                   ),
                   onPressed: () => Navigator.of(context).pop(),
                 ),
@@ -236,7 +238,7 @@ class _RoomQuizBodyState extends State<RoomQuizBody> {
                     ZnoonaTexts.tr(context, LangKeys.pinchToZoom),
                     style: TextStyle(
                       color: Colors.white70,
-                      fontSize: 12.sp,
+                      fontSize: 12.h,
                     ),
                   ),
                   SizedBox(height: 5.h),
@@ -244,7 +246,7 @@ class _RoomQuizBodyState extends State<RoomQuizBody> {
                     ZnoonaTexts.tr(context, LangKeys.rotateDevice),
                     style: TextStyle(
                       color: Colors.white54,
-                      fontSize: 11.sp,
+                      fontSize: 11.h,
                       fontStyle: FontStyle.italic,
                     ),
                   ),
@@ -533,7 +535,7 @@ class _RoomQuizBodyState extends State<RoomQuizBody> {
                         Text(
                           ZnoonaTexts.tr(context, LangKeys.tapImageToZoom),
                           style: TextStyle(
-                            fontSize: 12.sp,
+                            fontSize: 12.h,
                             color: ZnoonaColors.text(context).withOpacity(0.7),
                             fontStyle: FontStyle.italic,
                           ),
@@ -567,7 +569,7 @@ class _RoomQuizBodyState extends State<RoomQuizBody> {
                                         children: [
                                           Icon(
                                             Icons.image_not_supported,
-                                            size: 50.sp,
+                                            size: 50.h,
                                             color: ZnoonaColors.text(
                                               context,
                                             ).withOpacity(0.5),
@@ -579,7 +581,7 @@ class _RoomQuizBodyState extends State<RoomQuizBody> {
                                               LangKeys.imageNotAvailable,
                                             ),
                                             style: TextStyle(
-                                              fontSize: 12.sp,
+                                              fontSize: 12.h,
                                               color: ZnoonaColors.text(
                                                 context,
                                               ).withOpacity(0.5),
@@ -594,7 +596,7 @@ class _RoomQuizBodyState extends State<RoomQuizBody> {
                             ),
                           ),
                         ),
-                        SizedBox(height: 20.sp),
+                        SizedBox(height: 20.h),
                       ],
                     ),
                   Column(
@@ -605,15 +607,15 @@ class _RoomQuizBodyState extends State<RoomQuizBody> {
                         question.question,
                         style: GoogleFonts.scheherazadeNew(
                           fontSize: imageUrl != null && imageUrl.isNotEmpty
-                              ? 20.sp
-                              : 22.sp,
+                              ? 20.h
+                              : 22.h,
                           fontWeight: FontWeight.bold,
                           color: ZnoonaColors.text(context),
                           height: 1.4,
                         ),
                         textAlign: TextAlign.center,
                       ),
-                      SizedBox(height: 20.sp),
+                      SizedBox(height: 20.h),
                       ...question.options.map((option) {
                         final isSelected = option == selectedAnswer;
                         final isCorrect = option == question.correctAnswer;
@@ -629,7 +631,28 @@ class _RoomQuizBodyState extends State<RoomQuizBody> {
                           remainingTime: remainingTime,
                         );
                       }),
-                      SizedBox(height: 250.sp),
+                      SizedBox(
+                        height: 250.h,
+                        width: double.infinity,
+                        child: Stack(
+                          children: [
+                            Positioned(
+                              left: 0,
+                              right: 0,
+                              bottom: 60.h,
+                              child: FadeInDown(
+                                duration: const Duration(milliseconds: 3000),
+                                child: Center(
+                                  child: Image.asset(
+                                    AppImages.manFell1,
+                                    height: 140.h,
+                                  ),
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
 
                       // Players Status moved to the bottom
                       PlayersStatus(
@@ -641,7 +664,7 @@ class _RoomQuizBodyState extends State<RoomQuizBody> {
                         totalConnected: totalConnected,
                       ),
 
-                      SizedBox(height: 40.sp),
+                      SizedBox(height: 40.h),
                     ],
                   ),
                 ],
@@ -671,11 +694,9 @@ class _RoomQuizBodyState extends State<RoomQuizBody> {
               // Sound control only (vibration removed)
               IconButton(
                 icon: Icon(
-                  appState.isSoundEnabled
-                      ? Icons.volume_up
-                      : Icons.volume_off,
+                  appState.isSoundEnabled ? Icons.volume_up : Icons.volume_off,
                   color: ZnoonaColors.text(context),
-                  size: 18.sp,
+                  size: 18.h,
                 ),
                 onPressed: () => context.read<AppCubit>().toggleSound(),
               ),
@@ -690,7 +711,7 @@ class _RoomQuizBodyState extends State<RoomQuizBody> {
                 child: Text(
                   _formatTime(remainingTime),
                   style: GoogleFonts.beiruti(
-                    fontSize: 20.sp,
+                    fontSize: 20.h,
                     fontWeight: FontWeight.bold,
                     color: timerColor,
                   ),
@@ -702,7 +723,7 @@ class _RoomQuizBodyState extends State<RoomQuizBody> {
                 icon: Icon(
                   Icons.settings,
                   color: ZnoonaColors.text(context),
-                  size: 18.sp,
+                  size: 18.h,
                 ),
                 onPressed: () {
                   Navigator.push(

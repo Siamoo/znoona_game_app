@@ -60,13 +60,13 @@ class RoomGameHeader extends StatelessWidget {
 
     return Container(
       width: double.infinity,
-      padding: EdgeInsets.all(12.sp),
+      padding: EdgeInsets.all(12.h),
       decoration: BoxDecoration(
         color: ZnoonaColors.bluePinkLight(context).withOpacity(0.1),
-        borderRadius: BorderRadius.circular(12.sp),
+        borderRadius: BorderRadius.circular(12.h),
         border: Border.all(
           color: ZnoonaColors.bluePinkLight(context).withOpacity(0.3),
-          width: 1.sp,
+          width: 1.w,
         ),
       ),
       child: Row(
@@ -77,13 +77,13 @@ class RoomGameHeader extends StatelessWidget {
             children: [
               // My Avatar
               Container(
-                width: 40.sp,
-                height: 40.sp,
+                width: 40.w,
+                height: 40.h,
                 decoration: BoxDecoration(
                   shape: BoxShape.circle,
                   border: Border.all(
                     color: ZnoonaColors.main(context),
-                    width: 2.sp,
+                    width: 2.w,
                   ),
                 ),
                 child: ClipOval(
@@ -96,19 +96,19 @@ class RoomGameHeader extends StatelessWidget {
                           errorBuilder: (context, error, stackTrace) {
                             return Icon(
                               Icons.person,
-                              size: 20.sp,
+                              size: 20.h,
                               color: ZnoonaColors.main(context),
                             );
                           },
                         )
                       : Icon(
                           Icons.person,
-                          size: 20.sp,
+                          size: 20.h,
                           color: ZnoonaColors.main(context),
                         ),
                 ),
               ),
-              SizedBox(width: 8.sp),
+              SizedBox(width: 8.w),
 
               // My Username and Label
               Column(
@@ -119,16 +119,16 @@ class RoomGameHeader extends StatelessWidget {
                       Text(
                         '👤 You',
                         style: GoogleFonts.beiruti(
-                          fontSize: 10.sp,
+                          fontSize: 10.h,
                           fontWeight: FontWeight.bold,
                           color: ZnoonaColors.bluePinkLight(context),
                         ),
                       ),
-                      SizedBox(width: 12.sp),
+                      SizedBox(width: 12.w),
                       Text(
                         '$myScore',
                         style: GoogleFonts.beiruti(
-                          fontSize: 14.sp,
+                          fontSize: 14.h,
                           fontWeight: FontWeight.bold,
                           color: ZnoonaColors.text(context),
                         ),
@@ -138,7 +138,7 @@ class RoomGameHeader extends StatelessWidget {
                   Text(
                     currentPlayer?.username ?? 'Player',
                     style: GoogleFonts.beiruti(
-                      fontSize: 14.sp,
+                      fontSize: 14.h,
                       fontWeight: FontWeight.bold,
                       color: ZnoonaColors.text(context),
                     ),
@@ -167,16 +167,16 @@ class RoomGameHeader extends StatelessWidget {
                       Text(
                         '$topPlayerScore',
                         style: GoogleFonts.beiruti(
-                          fontSize: 14.sp,
+                          fontSize: 14.h,
                           fontWeight: FontWeight.bold,
                           color: ZnoonaColors.text(context),
                         ),
                       ),
-                      SizedBox(width: 12.sp),
+                      SizedBox(width: 12.w),
                       Text(
                         '🏆 Top Player',
                         style: GoogleFonts.beiruti(
-                          fontSize: 10.sp,
+                          fontSize: 10.h,
                           fontWeight: FontWeight.bold,
                           color: ZnoonaColors.bluePinkLight(context),
                         ),
@@ -186,24 +186,24 @@ class RoomGameHeader extends StatelessWidget {
                   Text(
                     topPlayer?.username ?? 'No player',
                     style: GoogleFonts.beiruti(
-                      fontSize: 14.sp,
+                      fontSize: 14.h,
                       fontWeight: FontWeight.bold,
                       color: ZnoonaColors.text(context),
                     ),
                   ),
                 ],
               ),
-              SizedBox(width: 8.sp),
+              SizedBox(width: 8.w),
 
               // Top Player Avatar
               Container(
-                width: 40.sp,
-                height: 40.sp,
+                width: 40.w,
+                height: 40.h,
                 decoration: BoxDecoration(
                   shape: BoxShape.circle,
                   border: Border.all(
                     color: ZnoonaColors.bluePinkLight(context),
-                    width: 2.sp,
+                    width: 2.w,
                   ),
                 ),
                 child: ClipOval(
@@ -216,14 +216,14 @@ class RoomGameHeader extends StatelessWidget {
                           errorBuilder: (context, error, stackTrace) {
                             return Icon(
                               Icons.person,
-                              size: 20.sp,
+                              size: 20.h,
                               color: ZnoonaColors.bluePinkLight(context),
                             );
                           },
                         )
                       : Icon(
                           Icons.person,
-                          size: 20.sp,
+                          size: 20.h,
                           color: ZnoonaColors.bluePinkLight(context),
                         ),
                 ),

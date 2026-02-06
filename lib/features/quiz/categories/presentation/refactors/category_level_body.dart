@@ -41,7 +41,7 @@ class CategoryLevelBody extends StatelessWidget {
           TextApp(
             text: 'Error: $message',
             textStyle: TextStyle(
-              fontSize: 16.sp,
+              fontSize: 16.h,
               color: Colors.red,
             ),
           ),
@@ -72,7 +72,7 @@ class CategoryLevelBody extends StatelessWidget {
             TextApp(
               text: 'No categories available',
               textStyle: TextStyle(
-                fontSize: 18.sp,
+                fontSize: 18.h,
                 color: Colors.grey,
                 fontWeight: FontWeight.w500,
               ),

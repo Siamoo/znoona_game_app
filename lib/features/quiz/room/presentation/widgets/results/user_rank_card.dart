@@ -52,7 +52,7 @@ class UserRankCard extends StatelessWidget {
                   Text(
                     userResult.username,
                     style: GoogleFonts.beiruti(
-                      fontSize: 18.sp,
+                      fontSize: 18.h,
                       fontWeight: FontWeight.bold,
                       color: ZnoonaColors.text(context),
                     ),
@@ -61,7 +61,7 @@ class UserRankCard extends StatelessWidget {
                   Text(
                     '${ZnoonaTexts.tr(context, LangKeys.yourRank)} : ${userResult.rank}',
                     style: GoogleFonts.beiruti(
-                      fontSize: 18.sp,
+                      fontSize: 18.h,
                       fontWeight: FontWeight.bold,
                       color: ZnoonaColors.text(context).withAlpha(170),
                     ),
@@ -69,7 +69,7 @@ class UserRankCard extends StatelessWidget {
                   Text(
                     '${ZnoonaTexts.tr(context, LangKeys.youScore)} ${userResult.correctAnswers}  ${ZnoonaTexts.tr(context, LangKeys.from)}  ${userResult.totalQuestions}  ${ZnoonaTexts.tr(context, LangKeys.question)}',
                     style: GoogleFonts.beiruti(
-                      fontSize: 14.sp,
+                      fontSize: 14.h,
                       fontWeight: FontWeight.bold,
                       color: ZnoonaColors.text(context).withAlpha(170),
                     ),
@@ -79,7 +79,7 @@ class UserRankCard extends StatelessWidget {
                     Text(
                       ZnoonaTexts.tr(context, LangKeys.tiedPlayers),
                       style: GoogleFonts.beiruti(
-                        fontSize: 14.sp,
+                        fontSize: 14.h,
                         fontWeight: FontWeight.bold,
                         color: ZnoonaColors.text(context).withAlpha(170),
                       ),

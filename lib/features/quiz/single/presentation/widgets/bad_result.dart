@@ -6,6 +6,7 @@ import 'package:medaan_almaarifa/core/helpers/znoona.colors.dart';
 import 'package:medaan_almaarifa/core/helpers/znoona_texts.dart';
 import 'package:medaan_almaarifa/core/language/lang_keys.dart';
 import 'package:medaan_almaarifa/core/style/images/app_images.dart';
+
 class BadResultBody extends StatelessWidget {
   const BadResultBody({
     super.key,
@@ -18,7 +19,7 @@ class BadResultBody extends StatelessWidget {
         TextApp(
           text: ZnoonaTexts.tr(context, LangKeys.badReslut),
           textStyle: GoogleFonts.beiruti(
-            fontSize: 38.sp,
+            fontSize: 38.h,
             fontWeight: FontWeight.bold,
             color: ZnoonaColors.text(context),
           ),
@@ -36,7 +37,7 @@ class BadResultBody extends StatelessWidget {
         TextApp(
           text: ZnoonaTexts.tr(context, LangKeys.tryAgain),
           textStyle: GoogleFonts.beiruti(
-            fontSize: 38.sp,
+            fontSize: 38.h,
             fontWeight: FontWeight.bold,
             color: ZnoonaColors.text(context),
           ),

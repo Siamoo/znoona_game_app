@@ -17,13 +17,13 @@ class QuestionTimerTitle extends StatelessWidget {
         Icon(
           Icons.timer,
           color: ZnoonaColors.bluePinkDark(context),
-          size: 24.sp,
+          size: 24.h,
         ),
         SizedBox(width: 8.w),
         Text(
           ZnoonaTexts.tr(context, LangKeys.questionTimer),
           style: GoogleFonts.beiruti(
-            fontSize: 18.sp,
+            fontSize: 18.h,
             fontWeight: FontWeight.bold,
             color: ZnoonaColors.text(context),
           ),

@@ -18,7 +18,7 @@ class EmptyQuizBody extends StatelessWidget {
         child: Column(
           children: [
             CustomAppBar(title: 'Room $roomCode'),
-            SizedBox(height: 300.sp),
+            SizedBox(height: 300.h),
             const Center(child: Text('No questions found.')),
           ],
         ),

@@ -95,7 +95,7 @@ class _QRScannerBodyState extends State<QRScannerBody> {
           ZnoonaTexts.tr(context, LangKeys.cameraPermission),
           style: TextStyle(
             color: Colors.white,
-            fontSize: 20.sp,
+            fontSize: 20.h,
             fontWeight: FontWeight.bold,
           ),
         ),
@@ -103,7 +103,7 @@ class _QRScannerBodyState extends State<QRScannerBody> {
           ZnoonaTexts.tr(context, LangKeys.cameraPermissionRequired),
           style: TextStyle(
             color: Colors.white70,
-            fontSize: 16.sp,
+            fontSize: 16.h,
           ),
         ),
         actions: [
@@ -113,7 +113,7 @@ class _QRScannerBodyState extends State<QRScannerBody> {
               ZnoonaTexts.tr(context, LangKeys.cancel),
               style: TextStyle(
                 color: Colors.grey[400],
-                fontSize: 16.sp,
+                fontSize: 16.h,
               ),
             ),
           ),
@@ -132,7 +132,7 @@ class _QRScannerBodyState extends State<QRScannerBody> {
               ZnoonaTexts.tr(context, LangKeys.settings),
               style: TextStyle(
                 color: Colors.white,
-                fontSize: 16.sp,
+                fontSize: 16.h,
               ),
             ),
           ),
@@ -152,7 +152,7 @@ class _QRScannerBodyState extends State<QRScannerBody> {
     if (code.length == 6 && int.tryParse(code) != null) {
       // Show success feedback
       _showScanSuccessFeedback();
-      
+
       // Join room with the scanned code
       context.read<RoomCubit>().joinRoom(code: code).catchError((error) {
         _showErrorFeedback();
@@ -173,7 +173,7 @@ class _QRScannerBodyState extends State<QRScannerBody> {
               child: Text(
                 ZnoonaTexts.tr(context, LangKeys.roomCodeScannedSuccess),
                 style: TextStyle(
-                  fontSize: 16.sp,
+                  fontSize: 16.h,
                   fontWeight: FontWeight.w500,
                 ),
               ),
@@ -200,7 +200,7 @@ class _QRScannerBodyState extends State<QRScannerBody> {
               child: Text(
                 ZnoonaTexts.tr(context, LangKeys.invalidQrCode),
                 style: TextStyle(
-                  fontSize: 16.sp,
+                  fontSize: 16.h,
                   fontWeight: FontWeight.w500,
                 ),
               ),
@@ -253,7 +253,7 @@ class _QRScannerBodyState extends State<QRScannerBody> {
           ZnoonaTexts.tr(context, LangKeys.scanQr),
           style: TextStyle(
             color: Colors.white,
-            fontSize: 22.sp,
+            fontSize: 22.h,
             fontWeight: FontWeight.bold,
             shadows: [
               Shadow(
@@ -309,8 +309,8 @@ class _QRScannerBodyState extends State<QRScannerBody> {
         _isCheckingPermission
             ? _buildLoadingView()
             : !_hasPermission
-                ? _buildPermissionDeniedView()
-                : _buildScannerView(),
+            ? _buildPermissionDeniedView()
+            : _buildScannerView(),
 
         // Bottom Instructions
         if (_hasPermission) _buildBottomInstructions(),
@@ -334,7 +334,7 @@ class _QRScannerBodyState extends State<QRScannerBody> {
             ZnoonaTexts.tr(context, LangKeys.settingUpScanner),
             style: TextStyle(
               color: Colors.white,
-              fontSize: 18.sp,
+              fontSize: 18.h,
               fontWeight: FontWeight.w500,
             ),
           ),
@@ -407,7 +407,7 @@ class _QRScannerBodyState extends State<QRScannerBody> {
       child: Center(
         child: Container(
           width: 280.w,
-          height: 280.w,
+          height: 280.h,
           decoration: BoxDecoration(
             border: Border.all(
               color: ZnoonaColors.main(context).withOpacity(0.8),
@@ -497,7 +497,7 @@ class _QRScannerBodyState extends State<QRScannerBody> {
       right: right,
       child: Container(
         width: 25.w,
-        height: 25.w,
+        height: 25.h,
         child: CustomPaint(
           painter: _CornerPainter(
             color: ZnoonaColors.main(context),
@@ -528,7 +528,7 @@ class _QRScannerBodyState extends State<QRScannerBody> {
                   ],
                 ),
               ),
-              SizedBox(height: 280.w),
+              SizedBox(height: 280.h),
               Expanded(
                 child: Row(
                   children: [
@@ -567,7 +567,7 @@ class _QRScannerBodyState extends State<QRScannerBody> {
                 ZnoonaTexts.tr(context, LangKeys.scanRoomQr),
                 style: TextStyle(
                   color: Colors.white,
-                  fontSize: 18.sp,
+                  fontSize: 18.h,
                   fontWeight: FontWeight.w600,
                   letterSpacing: 0.5,
                 ),
@@ -578,7 +578,7 @@ class _QRScannerBodyState extends State<QRScannerBody> {
                 ZnoonaTexts.tr(context, LangKeys.alignQrInFrame),
                 style: TextStyle(
                   color: Colors.white70,
-                  fontSize: 14.sp,
+                  fontSize: 14.h,
                   fontWeight: FontWeight.w400,
                 ),
                 textAlign: TextAlign.center,
@@ -609,7 +609,7 @@ class _QRScannerBodyState extends State<QRScannerBody> {
                       ZnoonaTexts.tr(context, LangKeys.scanSixDigitCode),
                       style: TextStyle(
                         color: Colors.white.withOpacity(0.7),
-                        fontSize: 12.sp,
+                        fontSize: 12.h,
                       ),
                     ),
                   ],
@@ -639,7 +639,7 @@ class _QRScannerBodyState extends State<QRScannerBody> {
             Text(
               ZnoonaTexts.tr(context, LangKeys.cameraPermissionDenied),
               style: TextStyle(
-                fontSize: 22.sp,
+                fontSize: 22.h,
                 fontWeight: FontWeight.bold,
                 color: Colors.white,
               ),
@@ -649,7 +649,7 @@ class _QRScannerBodyState extends State<QRScannerBody> {
             Text(
               ZnoonaTexts.tr(context, LangKeys.enableCameraToScan),
               style: TextStyle(
-                fontSize: 16.sp,
+                fontSize: 16.h,
                 color: Colors.white70,
                 height: 1.5,
               ),
@@ -677,7 +677,7 @@ class _QRScannerBodyState extends State<QRScannerBody> {
                       Text(
                         ZnoonaTexts.tr(context, LangKeys.retry),
                         style: TextStyle(
-                          fontSize: 16.sp,
+                          fontSize: 16.h,
                           fontWeight: FontWeight.w600,
                         ),
                       ),
@@ -707,7 +707,7 @@ class _QRScannerBodyState extends State<QRScannerBody> {
                       Text(
                         ZnoonaTexts.tr(context, LangKeys.openSettings),
                         style: TextStyle(
-                          fontSize: 16.sp,
+                          fontSize: 16.h,
                           fontWeight: FontWeight.w600,
                         ),
                       ),

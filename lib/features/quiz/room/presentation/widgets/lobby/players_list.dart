@@ -23,7 +23,7 @@ class PlayersList extends StatelessWidget {
         Text(
           ZnoonaTexts.tr(context, LangKeys.players),
           style: GoogleFonts.beiruti(
-            fontSize: 18.sp,
+            fontSize: 18.h,
             fontWeight: FontWeight.bold,
             color: ZnoonaColors.text(context),
           ),
@@ -66,7 +66,7 @@ class PlayersList extends StatelessWidget {
                           child: Text(
                             ZnoonaTexts.tr(context, LangKeys.waitingPlayers),
                             style: GoogleFonts.beiruti(
-                              fontSize: 18.sp,
+                              fontSize: 18.h,
                               fontWeight: FontWeight.bold,
                               color: ZnoonaColors.text(context),
                             ),

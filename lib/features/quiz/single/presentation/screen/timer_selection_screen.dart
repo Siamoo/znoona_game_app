@@ -70,7 +70,7 @@ class _TimerSelectionScreenState extends State<TimerSelectionScreen> {
               Text(
                 ZnoonaTexts.tr(context, LangKeys.chooseTimeForEachQuestion),
                 style: TextStyle(
-                  fontSize: 20.sp,
+                  fontSize: 20.h,
                   fontWeight: FontWeight.bold,
                   color: Theme.of(context).primaryColor,
                 ),
@@ -81,7 +81,7 @@ class _TimerSelectionScreenState extends State<TimerSelectionScreen> {
               Text(
                 ZnoonaTexts.tr(context, LangKeys.timerSelectionDescription),
                 style: TextStyle(
-                  fontSize: 14.sp,
+                  fontSize: 14.h,
                   color: Colors.grey[600],
                 ),
                 textAlign: TextAlign.center,
@@ -133,13 +133,13 @@ class _TimerSelectionScreenState extends State<TimerSelectionScreen> {
                                     color: isSelected
                                         ? Theme.of(context).primaryColor
                                         : Colors.grey[600],
-                                    size: 24.sp,
+                                    size: 24.h,
                                   ),
                                   SizedBox(width: 16.w),
                                   Text(
                                     _formatTimerDuration(duration),
                                     style: TextStyle(
-                                      fontSize: 18.sp,
+                                      fontSize: 18.h,
                                       fontWeight: FontWeight.w600,
                                       color: isSelected
                                           ? Theme.of(context).primaryColor
@@ -152,7 +152,7 @@ class _TimerSelectionScreenState extends State<TimerSelectionScreen> {
                                 Icon(
                                   Icons.check_circle,
                                   color: Theme.of(context).primaryColor,
-                                  size: 24.sp,
+                                  size: 24.h,
                                 ),
                             ],
                           ),
@@ -192,7 +192,7 @@ class _TimerSelectionScreenState extends State<TimerSelectionScreen> {
                   child: Text(
                     ZnoonaTexts.tr(context, LangKeys.startGame),
                     style: TextStyle(
-                      fontSize: 18.sp,
+                      fontSize: 18.h,
                       fontWeight: FontWeight.bold,
                     ),
                   ),

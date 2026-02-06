@@ -73,7 +73,7 @@ class _ProfileEditBodyState extends State<ProfileEditBody> {
               Text(
                 ZnoonaTexts.tr(context, LangKeys.chooseImageSource),
                 style: GoogleFonts.beiruti(
-                  fontSize: 18.sp,
+                  fontSize: 18.h,
                   fontWeight: FontWeight.bold,
                   color: ZnoonaColors.text(context),
                 ),
@@ -100,7 +100,7 @@ class _ProfileEditBodyState extends State<ProfileEditBody> {
                 child: Text(
                   ZnoonaTexts.tr(context, LangKeys.cancel),
                   style: TextStyle(
-                    fontSize: 16.sp,
+                    fontSize: 16.h,
                     color: ZnoonaColors.bluePinkDark(context),
                   ),
                 ),
@@ -160,7 +160,7 @@ class _ProfileEditBodyState extends State<ProfileEditBody> {
           child: IconButton(
             icon: Icon(
               icon,
-              size: 32.sp,
+              size: 32.h,
               color: ZnoonaColors.bluePinkLight(context),
             ),
             onPressed: () => Navigator.pop(context, source),
@@ -170,7 +170,7 @@ class _ProfileEditBodyState extends State<ProfileEditBody> {
         Text(
           label,
           style: TextStyle(
-            fontSize: 12.sp,
+            fontSize: 12.h,
             color: ZnoonaColors.text(context),
           ),
         ),
@@ -241,7 +241,7 @@ class _ProfileEditBodyState extends State<ProfileEditBody> {
                       : Icon(
                           Icons.camera_alt,
                           color: Colors.white,
-                          size: 24.sp,
+                          size: 24.h,
                         ),
                 ),
               ),
@@ -255,7 +255,7 @@ class _ProfileEditBodyState extends State<ProfileEditBody> {
         Text(
           ZnoonaTexts.tr(context, LangKeys.tapToChangePhoto),
           style: TextStyle(
-            fontSize: 14.sp,
+            fontSize: 14.h,
             color: ZnoonaColors.text(context).withOpacity(0.7),
           ),
         ),
@@ -293,7 +293,7 @@ class _ProfileEditBodyState extends State<ProfileEditBody> {
   Widget _buildDefaultAvatar() {
     return Icon(
       Icons.person,
-      size: 60.sp,
+      size: 60.h,
       color: ZnoonaColors.bluePinkDark(context).withOpacity(0.5),
     );
   }
@@ -335,7 +335,7 @@ class _ProfileEditBodyState extends State<ProfileEditBody> {
                           TextApp(
                             text: ZnoonaTexts.tr(context, LangKeys.fullName),
                             textStyle: TextStyle(
-                              fontSize: 16.sp,
+                              fontSize: 16.h,
                               fontWeight: FontWeight.w600,
                               color: ZnoonaColors.text(context),
                             ),
@@ -389,7 +389,7 @@ class _ProfileEditBodyState extends State<ProfileEditBody> {
                           TextApp(
                             text: ZnoonaTexts.tr(context, LangKeys.username),
                             textStyle: TextStyle(
-                              fontSize: 16.sp,
+                              fontSize: 16.h,
                               fontWeight: FontWeight.w600,
                               color: ZnoonaColors.text(context),
                             ),
@@ -400,7 +400,7 @@ class _ProfileEditBodyState extends State<ProfileEditBody> {
                               LangKeys.usernameHint,
                             ),
                             textStyle: TextStyle(
-                              fontSize: 14.sp,
+                              fontSize: 14.h,
                               color: ZnoonaColors.text(
                                 context,
                               ).withOpacity(0.7),
@@ -514,7 +514,7 @@ class _ProfileEditBodyState extends State<ProfileEditBody> {
                               child: Text(
                                 ZnoonaTexts.tr(context, LangKeys.saveChanges),
                                 style: GoogleFonts.beiruti(
-                                  fontSize: 18.sp,
+                                  fontSize: 18.h,
                                   fontWeight: FontWeight.bold,
                                   color: Colors.white,
                                 ),
@@ -540,7 +540,7 @@ class _ProfileEditBodyState extends State<ProfileEditBody> {
         children: [
           Icon(
             valid ? Icons.check_circle : Icons.circle,
-            size: 16.sp,
+            size: 16.h,
             color: valid ? Colors.green : Colors.grey,
           ),
           SizedBox(width: 8.w),
@@ -548,7 +548,7 @@ class _ProfileEditBodyState extends State<ProfileEditBody> {
             child: Text(
               text,
               style: TextStyle(
-                fontSize: 12.sp,
+                fontSize: 12.h,
                 color: ZnoonaColors.text(context).withOpacity(0.7),
               ),
             ),

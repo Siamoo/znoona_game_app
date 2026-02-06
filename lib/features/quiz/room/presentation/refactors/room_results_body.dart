@@ -184,13 +184,13 @@ class ActionButtons extends StatelessWidget {
         color: ZnoonaColors.main(context).withAlpha(150),
         elevation: 2,
         child: Padding(
-          padding: EdgeInsets.all(16.sp),
+          padding: EdgeInsets.all(16.h),
           child: Column(
             children: [
               Text(
                 ZnoonaTexts.tr(context, LangKeys.gameComplete),
                 style: GoogleFonts.beiruti(
-                  fontSize: 18.sp,
+                  fontSize: 18.h,
                   fontWeight: FontWeight.bold,
                   color: ZnoonaColors.text(context),
                 ),

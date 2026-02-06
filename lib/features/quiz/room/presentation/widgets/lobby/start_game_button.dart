@@ -21,7 +21,7 @@ class StartGameButton extends StatelessWidget {
 
     if (!isHost) {
       return Padding(
-        padding: EdgeInsets.symmetric(vertical: 16.sp),
+        padding: EdgeInsets.symmetric(vertical: 16.h),
         child: Column(
           children: [
             const Icon(Icons.hourglass_empty, size: 40, color: Colors.grey),
@@ -47,7 +47,7 @@ class StartGameButton extends StatelessWidget {
           orElse: () => false,
         );
 
-        final canStart = players.length >= 2 && players.length <= 10;
+        final canStart = players.length >= 2;
 
         return Column(
           children: [

@@ -6,6 +6,7 @@ import 'package:medaan_almaarifa/core/helpers/znoona_texts.dart';
 import 'package:medaan_almaarifa/core/language/lang_keys.dart';
 import 'package:medaan_almaarifa/features/quiz/room/data/models/player_result.dart';
 import 'package:medaan_almaarifa/features/quiz/room/presentation/widgets/results/player_result_tile.dart';
+
 class ResultsList extends StatelessWidget {
   const ResultsList({
     required this.rankedGroups,
@@ -43,7 +44,7 @@ class ResultsList extends StatelessWidget {
                 Text(
                   ZnoonaTexts.tr(context, LangKeys.leaderBoard),
                   style: GoogleFonts.beiruti(
-                    fontSize: 18.sp,
+                    fontSize: 18.h,
                     fontWeight: FontWeight.bold,
                     color: ZnoonaColors.text(context),
                   ),
@@ -52,7 +53,7 @@ class ResultsList extends StatelessWidget {
                 Text(
                   '$finishedPlayers/$totalPlayers ${ZnoonaTexts.tr(context, LangKeys.finished)}',
                   style: GoogleFonts.beiruti(
-                    fontSize: 14.sp,
+                    fontSize: 14.h,
                     fontWeight: FontWeight.bold,
                     color: ZnoonaColors.text(context).withAlpha(170),
                   ),
@@ -74,8 +75,8 @@ class ResultsList extends StatelessWidget {
                           child: Row(
                             children: [
                               Container(
-                                width: 32,
-                                height: 32,
+                                width: 32.w,
+                                height: 32.h,
                                 decoration: BoxDecoration(
                                   color: _getRankColor(rank),
                                   shape: BoxShape.circle,
@@ -95,7 +96,7 @@ class ResultsList extends StatelessWidget {
                               Text(
                                 _getRankText(rank, context, players.length),
                                 style: GoogleFonts.beiruti(
-                                  fontSize: 16.sp,
+                                  fontSize: 16.h,
                                   fontWeight: FontWeight.bold,
                                   color: ZnoonaColors.text(context),
                                 ),
@@ -118,7 +119,7 @@ class ResultsList extends StatelessWidget {
                       padding: EdgeInsets.symmetric(vertical: 8.h),
                       child: Text(
                         ZnoonaTexts.tr(context, LangKeys.unranked),
-                        style: const  TextStyle(
+                        style: const TextStyle(
                           fontSize: 16,
                           fontWeight: FontWeight.bold,
                           color: Colors.orange,

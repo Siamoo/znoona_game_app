@@ -13,11 +13,10 @@ import 'package:mailto/mailto.dart';
 class ContactUsScreen extends StatelessWidget {
   const ContactUsScreen({super.key});
 
-  final  phoneNumber = '+201066036288';
+  final phoneNumber = '+201066036288';
   final String email = 'walidsyam.f@gmail.com';
   final String whatsappNumber = '201206611795'; // Without +
-  final String facebookUrl =
-      'https://www.facebook.com/walid'; 
+  final String facebookUrl = 'https://www.facebook.com/walid';
 
   Future<void> _callUs(BuildContext context) async {
     final Uri phoneUri = Uri(scheme: 'tel', path: phoneNumber);
@@ -139,7 +138,7 @@ class ContactUsScreen extends StatelessWidget {
                         child: TextApp(
                           text: ZnoonaTexts.tr(context, LangKeys.contactUs),
                           textStyle: GoogleFonts.beiruti(
-                            fontSize: 26.sp,
+                            fontSize: 26.h,
                             fontWeight: FontWeight.bold,
                             color: ZnoonaColors.text(context),
                           ),
@@ -149,7 +148,7 @@ class ContactUsScreen extends StatelessWidget {
                     IconButton(
                       icon: Icon(
                         Icons.close,
-                        size: 30.sp,
+                        size: 30.h,
                         color: ZnoonaColors.text(context),
                       ),
                       onPressed: () => Navigator.of(context).pop(),
@@ -167,7 +166,7 @@ class ContactUsScreen extends StatelessWidget {
                     errorBuilder: (context, error, stackTrace) {
                       return Icon(
                         Icons.support_agent,
-                        size: 80.sp,
+                        size: 80.h,
                         color: ZnoonaColors.bluePinkDark(context),
                       );
                     },
@@ -180,7 +179,7 @@ class ContactUsScreen extends StatelessWidget {
                 TextApp(
                   text: ZnoonaTexts.tr(context, LangKeys.howCanWeHelp),
                   textStyle: GoogleFonts.beiruti(
-                    fontSize: 24.sp,
+                    fontSize: 24.h,
                     fontWeight: FontWeight.bold,
                     color: ZnoonaColors.text(context),
                   ),
@@ -192,7 +191,7 @@ class ContactUsScreen extends StatelessWidget {
                 TextApp(
                   text: ZnoonaTexts.tr(context, LangKeys.chooseOptionBelow),
                   textStyle: GoogleFonts.beiruti(
-                    fontSize: 18.sp,
+                    fontSize: 18.h,
                     color: Colors.grey.shade600,
                   ),
                 ),
@@ -222,7 +221,7 @@ class ContactUsScreen extends StatelessWidget {
                             return Icon(
                               Icons.phone,
                               color: Colors.white,
-                              size: 30.sp,
+                              size: 30.h,
                             );
                           },
                         ),
@@ -230,7 +229,7 @@ class ContactUsScreen extends StatelessWidget {
                         TextApp(
                           text: ZnoonaTexts.tr(context, LangKeys.callUs),
                           textStyle: GoogleFonts.beiruti(
-                            fontSize: 22.sp,
+                            fontSize: 22.h,
                             fontWeight: FontWeight.w800,
                             color: Colors.white,
                           ),
@@ -265,7 +264,7 @@ class ContactUsScreen extends StatelessWidget {
                             return Icon(
                               Icons.email,
                               color: Colors.white,
-                              size: 30.sp,
+                              size: 30.h,
                             );
                           },
                         ),
@@ -273,7 +272,7 @@ class ContactUsScreen extends StatelessWidget {
                         TextApp(
                           text: ZnoonaTexts.tr(context, LangKeys.emailUs),
                           textStyle: GoogleFonts.beiruti(
-                            fontSize: 22.sp,
+                            fontSize: 22.h,
                             fontWeight: FontWeight.w800,
                             color: Colors.white,
                           ),
@@ -308,7 +307,7 @@ class ContactUsScreen extends StatelessWidget {
                             return Icon(
                               Icons.message,
                               color: Colors.white,
-                              size: 30.sp,
+                              size: 30.h,
                             );
                           },
                         ),
@@ -316,7 +315,7 @@ class ContactUsScreen extends StatelessWidget {
                         TextApp(
                           text: ZnoonaTexts.tr(context, LangKeys.whatsapp),
                           textStyle: GoogleFonts.beiruti(
-                            fontSize: 22.sp,
+                            fontSize: 22.h,
                             fontWeight: FontWeight.w800,
                             color: Colors.white,
                           ),
@@ -351,7 +350,7 @@ class ContactUsScreen extends StatelessWidget {
                             return Icon(
                               Icons.facebook,
                               color: Colors.white,
-                              size: 30.sp,
+                              size: 30.h,
                             );
                           },
                         ),
@@ -359,7 +358,7 @@ class ContactUsScreen extends StatelessWidget {
                         TextApp(
                           text: ZnoonaTexts.tr(context, LangKeys.facebook),
                           textStyle: GoogleFonts.beiruti(
-                            fontSize: 22.sp,
+                            fontSize: 22.h,
                             fontWeight: FontWeight.w800,
                             color: Colors.white,
                           ),
@@ -375,7 +374,7 @@ class ContactUsScreen extends StatelessWidget {
                 TextApp(
                   text: '${ZnoonaTexts.tr(context, LangKeys.appVersion)} 1.0.0',
                   textStyle: GoogleFonts.beiruti(
-                    fontSize: 12.sp,
+                    fontSize: 12.h,
                     color: ZnoonaColors.text(context).withOpacity(0.7),
                   ),
                 ),

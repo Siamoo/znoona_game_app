@@ -42,7 +42,7 @@ class GameButton extends StatelessWidget {
           TextApp(
             text: ZnoonaTexts.tr(context, langkey),
             textStyle: GoogleFonts.beiruti(
-              fontSize: 26.sp,
+              fontSize: 26.h,
               fontWeight: FontWeight.w800,
               color: ZnoonaColors.text(context),
             ),

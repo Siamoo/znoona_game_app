@@ -43,7 +43,7 @@ class ResultBody extends StatelessWidget {
                 text:
                     '${ZnoonaTexts.tr(context, LangKeys.youScore)} $correctAnswers  ${ZnoonaTexts.tr(context, LangKeys.from)}  $totalQuestions  ${ZnoonaTexts.tr(context, LangKeys.question)}',
                 textStyle: GoogleFonts.beiruti(
-                  fontSize: 25.sp,
+                  fontSize: 25.h,
                   fontWeight: FontWeight.bold,
                   color: ZnoonaColors.text(context),
                 ),
@@ -59,7 +59,7 @@ class ResultBody extends StatelessWidget {
                 child: TextApp(
                   text: ZnoonaTexts.tr(context, LangKeys.back),
                   textStyle: GoogleFonts.beiruti(
-                    fontSize: 24.sp,
+                    fontSize: 24.h,
                   ),
                 ),
               ),

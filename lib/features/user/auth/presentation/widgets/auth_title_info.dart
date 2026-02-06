@@ -24,7 +24,7 @@ class AuthTitleInfo extends StatelessWidget {
           TextApp(
             text: title,
             textStyle: GoogleFonts.beiruti(
-              fontSize: 30.sp,
+              fontSize: 30.h,
               fontWeight: FontWeight.bold,
               color: ZnoonaColors.text(context),
             ),
@@ -32,7 +32,7 @@ class AuthTitleInfo extends StatelessWidget {
           TextApp(
             text: description,
             textStyle: GoogleFonts.beiruti(
-              fontSize: 20.sp,
+              fontSize: 20.h,
               fontWeight: FontWeight.w400,
               color: ZnoonaColors.text(context),
             ),

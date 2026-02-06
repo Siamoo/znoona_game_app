@@ -41,7 +41,7 @@ class SoundSettingsScreen extends StatelessWidget {
                             icon: Icon(
                               Icons.arrow_back_ios,
                               color: ZnoonaColors.text(context),
-                              size: 20.sp,
+                              size: 20.h,
                             ),
                           ),
                           SizedBox(width: 8.w),
@@ -51,7 +51,7 @@ class SoundSettingsScreen extends StatelessWidget {
                               LangKeys.soundSettings,
                             ),
                             textStyle: TextStyle(
-                              fontSize: 20.sp,
+                              fontSize: 20.h,
                               fontWeight: FontWeight.bold,
                               color: ZnoonaColors.text(context),
                             ),
@@ -151,7 +151,7 @@ class SoundSettingsScreen extends StatelessWidget {
                   child: Icon(
                     Icons.volume_up,
                     color: Colors.white,
-                    size: 20.sp,
+                    size: 20.h,
                   ),
                 ),
                 SizedBox(width: 12.w),
@@ -159,7 +159,7 @@ class SoundSettingsScreen extends StatelessWidget {
                   child: TextApp(
                     text: ZnoonaTexts.tr(context, LangKeys.soundEffects),
                     textStyle: TextStyle(
-                      fontSize: 16.sp,
+                      fontSize: 16.h,
                       fontWeight: FontWeight.w500,
                       color: ZnoonaColors.text(context),
                     ),
@@ -181,7 +181,7 @@ class SoundSettingsScreen extends StatelessWidget {
                   TextApp(
                     text: ZnoonaTexts.tr(context, LangKeys.volume),
                     textStyle: TextStyle(
-                      fontSize: 14.sp,
+                      fontSize: 14.h,
                       color: ZnoonaColors.text(context).withOpacity(0.7),
                     ),
                   ),
@@ -199,7 +199,7 @@ class SoundSettingsScreen extends StatelessWidget {
                     child: TextApp(
                       text: '${(state.soundVolume * 100).toInt()}%',
                       textStyle: TextStyle(
-                        fontSize: 14.sp,
+                        fontSize: 14.h,
                         fontWeight: FontWeight.w600,
                         color: ZnoonaColors.text(context).withAlpha(200),
                       ),
@@ -280,7 +280,7 @@ class SoundSettingsScreen extends StatelessWidget {
                   child: Icon(
                     Icons.music_note,
                     color: Colors.white,
-                    size: 20.sp,
+                    size: 20.h,
                   ),
                 ),
                 SizedBox(width: 12.w),
@@ -288,7 +288,7 @@ class SoundSettingsScreen extends StatelessWidget {
                   child: TextApp(
                     text: ZnoonaTexts.tr(context, LangKeys.backgroundMusic),
                     textStyle: TextStyle(
-                      fontSize: 16.sp,
+                      fontSize: 16.h,
                       fontWeight: FontWeight.w500,
                       color: ZnoonaColors.text(context),
                     ),
@@ -316,7 +316,7 @@ class SoundSettingsScreen extends StatelessWidget {
                   TextApp(
                     text: ZnoonaTexts.tr(context, LangKeys.volume),
                     textStyle: TextStyle(
-                      fontSize: 14.sp,
+                      fontSize: 14.h,
                       color: ZnoonaColors.text(context).withOpacity(0.7),
                     ),
                   ),
@@ -334,7 +334,7 @@ class SoundSettingsScreen extends StatelessWidget {
                     child: TextApp(
                       text: '${(state.musicVolume * 100).toInt()}%',
                       textStyle: TextStyle(
-                        fontSize: 14.sp,
+                        fontSize: 14.h,
                         fontWeight: FontWeight.w600,
                         color: ZnoonaColors.text(context).withAlpha(200),
                       ),

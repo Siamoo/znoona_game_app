@@ -10,7 +10,8 @@ class DiscoverButton extends StatelessWidget {
   const DiscoverButton({
     required this.langKeys,
     required this.appImages,
-    super.key, this.onPressed,
+    super.key,
+    this.onPressed,
   });
   final String appImages;
   final String langKeys;
@@ -37,7 +38,7 @@ class DiscoverButton extends StatelessWidget {
               child: TextApp(
                 text: ZnoonaTexts.tr(context, langKeys),
                 textStyle: GoogleFonts.beiruti(
-                  fontSize: 17.sp,
+                  fontSize: 17.h,
                   fontWeight: FontWeight.w800,
                   color: ZnoonaColors.text(context),
                 ),

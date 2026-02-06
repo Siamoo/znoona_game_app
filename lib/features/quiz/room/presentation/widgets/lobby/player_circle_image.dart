@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:medaan_almaarifa/core/helpers/znoona.colors.dart';
 import 'package:medaan_almaarifa/features/quiz/room/domain/entities/room_player.dart';
 
@@ -22,8 +23,8 @@ class PlayerCircleImage extends StatelessWidget {
               ? ClipOval(
                   child: Image.network(
                     player.avatarUrl!,
-                    width: 40,
-                    height: 40,
+                    width: 40.w,
+                    height: 40.h,
                     fit: BoxFit.cover,
                     errorBuilder: (context, error, stackTrace) {
                       return Icon(

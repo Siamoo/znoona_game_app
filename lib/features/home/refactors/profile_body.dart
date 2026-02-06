@@ -116,7 +116,7 @@ class ProfileBody extends StatelessWidget {
                   icon: Icon(
                     Icons.arrow_back,
                     color: ZnoonaColors.text(context),
-                    size: 24.sp,
+                    size: 24.h,
                   ),
                   onPressed: () => Navigator.pop(context),
                 ),
@@ -125,7 +125,7 @@ class ProfileBody extends StatelessWidget {
                     child: Text(
                       ZnoonaTexts.tr(context, LangKeys.profile),
                       style: GoogleFonts.beiruti(
-                        fontSize: 22.sp,
+                        fontSize: 22.h,
                         fontWeight: FontWeight.bold,
                         color: ZnoonaColors.text(context),
                       ),
@@ -187,13 +187,13 @@ class ProfileBody extends StatelessWidget {
                                       errorWidget: (context, url, error) =>
                                           Icon(
                                             Icons.person,
-                                            size: 40.sp,
+                                            size: 40.h,
                                             color: ZnoonaColors.text(context),
                                           ),
                                     )
                                   : Icon(
                                       Icons.person,
-                                      size: 40.sp,
+                                      size: 40.h,
                                       color: ZnoonaColors.text(context),
                                     ),
                             ),
@@ -228,7 +228,7 @@ class ProfileBody extends StatelessWidget {
                                 Text(
                                   '${profile.streakDays}',
                                   style: GoogleFonts.beiruti(
-                                    fontSize: 12.sp,
+                                    fontSize: 12.h,
                                     fontWeight: FontWeight.bold,
                                     color: Colors.white,
                                   ),
@@ -236,7 +236,7 @@ class ProfileBody extends StatelessWidget {
                                 SizedBox(width: 4.w),
                                 Icon(
                                   Icons.local_fire_department,
-                                  size: 14.sp,
+                                  size: 14.h,
                                   color: Colors.white,
                                 ),
                               ],
@@ -256,7 +256,7 @@ class ProfileBody extends StatelessWidget {
                         Text(
                           '@${profile.username}',
                           style: GoogleFonts.beiruti(
-                            fontSize: 16.sp,
+                            fontSize: 16.h,
                             fontWeight: FontWeight.w600,
                             color: ZnoonaColors.bluePinkDark(context),
                           ),
@@ -268,7 +268,7 @@ class ProfileBody extends StatelessWidget {
                   Text(
                     profile.fullName,
                     style: GoogleFonts.beiruti(
-                      fontSize: 24.sp,
+                      fontSize: 24.h,
                       fontWeight: FontWeight.bold,
                       color: ZnoonaColors.bluePinkDark(context),
                     ),
@@ -295,7 +295,7 @@ class ProfileBody extends StatelessWidget {
                     child: Text(
                       '${ZnoonaTexts.tr(context, LangKeys.level)}  ${profile.level}',
                       style: GoogleFonts.beiruti(
-                        fontSize: 14.sp,
+                        fontSize: 14.h,
                         fontWeight: FontWeight.w600,
                         color: Colors.white,
                       ),
@@ -319,7 +319,7 @@ class ProfileBody extends StatelessWidget {
           Text(
             ZnoonaTexts.tr(context, LangKeys.statistics),
             style: GoogleFonts.beiruti(
-              fontSize: 20.sp,
+              fontSize: 20.h,
               fontWeight: FontWeight.bold,
               color: ZnoonaColors.text(context),
             ),
@@ -413,7 +413,7 @@ class ProfileBody extends StatelessWidget {
           Text(
             ZnoonaTexts.tr(context, LangKeys.playerInfo),
             style: GoogleFonts.beiruti(
-              fontSize: 20.sp,
+              fontSize: 20.h,
               fontWeight: FontWeight.bold,
               color: ZnoonaColors.text(context),
             ),

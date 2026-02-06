@@ -103,7 +103,7 @@ class HomeBody extends StatelessWidget {
             ),
 
             SizedBox(
-              height: 200.h,
+              height: 150.h,
               width: double.infinity,
               child: Stack(
                 children: [

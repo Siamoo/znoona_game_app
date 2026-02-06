@@ -19,7 +19,7 @@ class GoodResultBody extends StatelessWidget {
         TextApp(
           text: ZnoonaTexts.tr(context, LangKeys.good),
           textStyle: GoogleFonts.beiruti(
-            fontSize: 38.sp,
+            fontSize: 38.h,
             fontWeight: FontWeight.bold,
             color: ZnoonaColors.text(context),
           ),
@@ -37,7 +37,7 @@ class GoodResultBody extends StatelessWidget {
         TextApp(
           text: ZnoonaTexts.tr(context, LangKeys.train),
           textStyle: GoogleFonts.beiruti(
-            fontSize: 38.sp,
+            fontSize: 38.h,
             fontWeight: FontWeight.bold,
             color: ZnoonaColors.text(context),
           ),

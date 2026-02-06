@@ -32,7 +32,7 @@ class CustomAppBar extends StatelessWidget {
             child: Icon(
               icon ?? Icons.arrow_back_ios_new,
               color: ZnoonaColors.text(context),
-              size: 24.sp,
+              size: 24.h,
             ),
           ),
         ),
@@ -51,7 +51,7 @@ class CustomAppBar extends StatelessWidget {
                   otherText!,
                 ),
                 textStyle: GoogleFonts.beiruti(
-                  fontSize: 18.sp,
+                  fontSize: 18.h,
                   fontWeight: FontWeight.w800,
                   color: ZnoonaColors.text(context),
                 ),
@@ -72,7 +72,7 @@ class CustomAppBar extends StatelessWidget {
                 title,
               ),
               textStyle: GoogleFonts.beiruti(
-                fontSize: 26.sp,
+                fontSize: 26.h,
                 fontWeight: FontWeight.w800,
                 color: ZnoonaColors.text(context),
               ),

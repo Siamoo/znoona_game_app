@@ -29,7 +29,7 @@ class CustomSettingButton extends StatelessWidget {
               title,
             ),
             textStyle: GoogleFonts.beiruti(
-              fontSize: 22.sp,
+              fontSize: 22.h,
               fontWeight: FontWeight.bold,
               color: Colors.black,
             ),
@@ -39,7 +39,7 @@ class CustomSettingButton extends StatelessWidget {
             imageUrl,
             width: 20.w,
             height: 20.h,
-            colorFilter: const  ColorFilter.mode(
+            colorFilter: const ColorFilter.mode(
               Colors.black,
               BlendMode.srcIn,
             ), // optional to colorize

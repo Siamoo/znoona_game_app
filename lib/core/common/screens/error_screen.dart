@@ -88,7 +88,7 @@ class ErrorScreen extends StatelessWidget {
                   errorBuilder: (context, error, stackTrace) {
                     return Icon(
                       Icons.error_outline,
-                      size: 80.sp,
+                      size: 80.h,
                       color: Colors.red.shade300,
                     );
                   },
@@ -101,7 +101,7 @@ class ErrorScreen extends StatelessWidget {
               Text(
                 ZnoonaTexts.tr(context, LangKeys.somethingWentWrong),
                 style: GoogleFonts.beiruti(
-                  fontSize: 24.sp,
+                  fontSize: 24.h,
                   fontWeight: FontWeight.bold,
                   color: Colors.red.shade700,
                 ),
@@ -115,7 +115,7 @@ class ErrorScreen extends StatelessWidget {
                 Text(
                   errorMessage!,
                   style: GoogleFonts.beiruti(
-                    fontSize: 14.sp,
+                    fontSize: 14.h,
                     color: Colors.grey.shade600,
                   ),
                   textAlign: TextAlign.center,
@@ -127,7 +127,7 @@ class ErrorScreen extends StatelessWidget {
               Text(
                 ZnoonaTexts.tr(context, LangKeys.errorMessage),
                 style: GoogleFonts.beiruti(
-                  fontSize: 14.sp,
+                  fontSize: 14.h,
                   color: Colors.grey.shade600,
                 ),
                 textAlign: TextAlign.center,
@@ -152,7 +152,7 @@ class ErrorScreen extends StatelessWidget {
                     child: Text(
                       ZnoonaTexts.tr(context, LangKeys.tryAgain),
                       style: GoogleFonts.beiruti(
-                        fontSize: 16.sp,
+                        fontSize: 16.h,
                         fontWeight: FontWeight.bold,
                       ),
                     ),
@@ -167,11 +167,11 @@ class ErrorScreen extends StatelessWidget {
                 height: 50.h,
                 child: ElevatedButton.icon(
                   onPressed: () => _sendEmail(context),
-                  icon: Icon(Icons.email, color: Colors.white, size: 20.sp),
+                  icon: Icon(Icons.email, color: Colors.white, size: 20.h),
                   label: Text(
                     ZnoonaTexts.tr(context, LangKeys.contactSupport),
                     style: GoogleFonts.beiruti(
-                      fontSize: 16.sp,
+                      fontSize: 16.h,
                       fontWeight: FontWeight.bold,
                       color: Colors.white,
                     ),
@@ -203,14 +203,14 @@ class ErrorScreen extends StatelessWidget {
                   children: [
                     Icon(
                       Icons.email,
-                      size: 14.sp,
+                      size: 14.h,
                       color: Colors.grey.shade700,
                     ),
                     SizedBox(width: 4.w),
                     Text(
                       'walidsyam.f@gmail.com',
                       style: GoogleFonts.beiruti(
-                        fontSize: 12.sp,
+                        fontSize: 12.h,
                         color: Colors.grey.shade700,
                       ),
                     ),

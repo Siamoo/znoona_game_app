@@ -6,6 +6,7 @@ import 'package:medaan_almaarifa/core/helpers/znoona.colors.dart';
 import 'package:medaan_almaarifa/core/helpers/znoona_texts.dart';
 import 'package:medaan_almaarifa/core/language/lang_keys.dart';
 import 'package:medaan_almaarifa/features/quiz/room/presentation/refactors/room_creation_body.dart';
+
 class RoomAbout extends StatelessWidget {
   const RoomAbout({
     required this.widget,
@@ -20,7 +21,7 @@ class RoomAbout extends StatelessWidget {
       text:
           '${ZnoonaTexts.tr(context, LangKeys.roomAbout)} ${ZnoonaTexts.tr(context, widget.categoryName)}',
       textStyle: GoogleFonts.beiruti(
-        fontSize: 24.sp,
+        fontSize: 24.h,
         fontWeight: FontWeight.bold,
         color: ZnoonaColors.text(context),
       ),

@@ -18,7 +18,7 @@ class LoginOrSignUpWithGoogle extends StatelessWidget {
     super.key,
   });
   final String text;
-  final bool isLoading; 
+  final bool isLoading;
 
   @override
   Widget build(BuildContext context) {
@@ -27,12 +27,12 @@ class LoginOrSignUpWithGoogle extends StatelessWidget {
       child: CustomLinearButton(
         height: 50.h,
         width: double.infinity,
-        onPressed: isLoading 
-            ? null 
+        onPressed: isLoading
+            ? null
             : () async {
-          await context.read<AuthCubit>().loginWithGoogle();
-        },
-        child: isLoading 
+                await context.read<AuthCubit>().loginWithGoogle();
+              },
+        child: isLoading
             ? SizedBox(
                 height: 24.h,
                 width: 24.w,
@@ -42,28 +42,28 @@ class LoginOrSignUpWithGoogle extends StatelessWidget {
                 ),
               )
             : Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            SvgPicture.asset(
-              AppImages.google,
-              height: 24.h,
-              width: 24.w,
-              colorFilter: const ColorFilter.mode(
-                Colors.white,
-                BlendMode.srcIn,
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  SvgPicture.asset(
+                    AppImages.google,
+                    height: 24.h,
+                    width: 24.w,
+                    colorFilter: const ColorFilter.mode(
+                      Colors.white,
+                      BlendMode.srcIn,
+                    ),
+                  ),
+                  SizedBox(width: 10.w),
+                  TextApp(
+                    text: '$text ${ZnoonaTexts.tr(context, LangKeys.google)}',
+                    textStyle: GoogleFonts.beiruti(
+                      fontSize: 22.h,
+                      fontWeight: FontWeight.w600,
+                      color: Colors.white,
+                    ),
+                  ),
+                ],
               ),
-            ),
-            SizedBox(width: 10.w),
-            TextApp(
-              text: '$text ${ZnoonaTexts.tr(context, LangKeys.google)}',
-              textStyle: GoogleFonts.beiruti(
-                fontSize: 22.sp,
-                fontWeight: FontWeight.w600,
-                color: Colors.white,
-              ),
-            ),
-          ],
-        ),
       ),
     );
   }

@@ -40,14 +40,14 @@ class InfoCard extends StatelessWidget {
             Icon(
               icon,
               color: color,
-              size: 20.sp,
+              size: 20.h,
             ),
             SizedBox(height: 6.h),
             // Value
             Text(
               value,
               style: GoogleFonts.beiruti(
-                fontSize: 12.sp,
+                fontSize: 12.h,
                 fontWeight: FontWeight.w600,
                 color: ZnoonaColors.text(context),
               ),
@@ -60,7 +60,7 @@ class InfoCard extends StatelessWidget {
             Text(
               title,
               style: GoogleFonts.beiruti(
-                fontSize: 10.sp,
+                fontSize: 10.h,
                 fontWeight: FontWeight.w500,
                 color: ZnoonaColors.text(context).withOpacity(0.7),
               ),

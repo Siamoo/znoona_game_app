@@ -47,13 +47,13 @@ class StatCard extends StatelessWidget {
                 Icon(
                   icon,
                   color: color,
-                  size: 18.sp,
+                  size: 18.h,
                 ),
                 SizedBox(width: 4.w),
                 Text(
                   value,
                   style: GoogleFonts.beiruti(
-                    fontSize: 16.sp,
+                    fontSize: 16.h,
                     fontWeight: FontWeight.bold,
                     color: ZnoonaColors.text(context),
                   ),
@@ -66,7 +66,7 @@ class StatCard extends StatelessWidget {
             Text(
               title,
               style: GoogleFonts.beiruti(
-                fontSize: 10.sp,
+                fontSize: 10.h,
                 fontWeight: FontWeight.w600,
                 color: ZnoonaColors.text(context).withOpacity(0.8),
               ),

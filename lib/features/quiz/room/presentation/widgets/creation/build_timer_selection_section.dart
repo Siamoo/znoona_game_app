@@ -1,4 +1,3 @@
-
 import 'package:flutter/widgets.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:medaan_almaarifa/core/helpers/znoona.colors.dart';
@@ -37,7 +36,7 @@ class BuildTimerSelectionSection extends StatelessWidget {
           Text(
             ZnoonaTexts.tr(context, LangKeys.selectTimerDuration),
             style: TextStyle(
-              fontSize: 14.sp,
+              fontSize: 14.h,
               color: ZnoonaColors.text(context).withAlpha(150),
             ),
           ),

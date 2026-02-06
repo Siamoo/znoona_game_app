@@ -56,7 +56,7 @@ class CustomHomeAppBar extends StatelessWidget {
                   TextApp(
                     text: ZnoonaTexts.tr(context, LangKeys.hello),
                     textStyle: GoogleFonts.beiruti(
-                      fontSize: 16.sp,
+                      fontSize: 16.h,
                       fontWeight: FontWeight.bold,
                       color: ZnoonaColors.text(context).withAlpha(100),
                     ),
@@ -65,7 +65,7 @@ class CustomHomeAppBar extends StatelessWidget {
                   TextApp(
                     text: profile.fullName,
                     textStyle: GoogleFonts.beiruti(
-                      fontSize: 16.sp,
+                      fontSize: 16.h,
                       fontWeight: FontWeight.bold,
                       color: ZnoonaColors.text(context),
                     ),
@@ -98,7 +98,7 @@ class CustomHomeAppBar extends StatelessWidget {
                     TextApp(
                       text: profile.level,
                       textStyle: GoogleFonts.beiruti(
-                        fontSize: 20.sp,
+                        fontSize: 20.h,
                         fontWeight: FontWeight.w800,
                         color: Colors.white,
                       ),

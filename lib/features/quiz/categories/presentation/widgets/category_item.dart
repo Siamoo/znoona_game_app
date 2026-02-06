@@ -48,7 +48,7 @@ class CategoryItem extends StatelessWidget {
                     TextApp(
                       text: category.arabicName,
                       textStyle: TextStyle(
-                        fontSize: 26.sp,
+                        fontSize: 26.h,
                         fontWeight: FontWeight.w800,
                         color: ZnoonaColors.text(context),
                       ),
@@ -63,7 +63,7 @@ class CategoryItem extends StatelessWidget {
                           child: TextApp(
                             text: '${category.discription}',
                             textStyle: TextStyle(
-                              fontSize: 17.sp,
+                              fontSize: 17.h,
                               fontWeight: FontWeight.w500,
                               color: ZnoonaColors.text(context).withAlpha(200),
                             ),
@@ -75,7 +75,7 @@ class CategoryItem extends StatelessWidget {
                           TextApp(
                             text: '|',
                             textStyle: TextStyle(
-                              fontSize: 18.sp,
+                              fontSize: 18.h,
                               fontWeight: FontWeight.w500,
                               color: ZnoonaColors.text(context).withAlpha(200),
                             ),
@@ -86,7 +86,7 @@ class CategoryItem extends StatelessWidget {
                                 ? '${category.totalQuestionsCount} س'
                                 : '${category.totalQuestionsCount} س',
                             textStyle: TextStyle(
-                              fontSize: 14.sp,
+                              fontSize: 14.h,
                               fontWeight: FontWeight.w500,
                               color: ZnoonaColors.text(context).withAlpha(200),
                             ),

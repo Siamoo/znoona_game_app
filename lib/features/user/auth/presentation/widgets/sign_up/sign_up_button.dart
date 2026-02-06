@@ -42,7 +42,7 @@ class SignUpButton extends StatelessWidget {
         child: TextApp(
           text: ZnoonaTexts.tr(context, LangKeys.signUp),
           textStyle: GoogleFonts.beiruti(
-            fontSize: 22.sp,
+            fontSize: 22.h,
             fontWeight: FontWeight.w600,
             color: Colors.white,
           ),

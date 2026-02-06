@@ -30,37 +30,37 @@ class PlayersStatus extends StatelessWidget {
         // Progress bar
         Container(
           width: double.infinity,
-          height: 8.sp,
+          height: 8.h,
           decoration: BoxDecoration(
             color: Colors.grey.shade300,
-            borderRadius: BorderRadius.circular(4.sp),
+            borderRadius: BorderRadius.circular(4.h),
           ),
           child: Stack(
             children: [
               Container(
                 width: double.infinity,
-                height: 8.sp,
+                height: 8.h,
                 decoration: BoxDecoration(
                   color: Colors.grey.shade300,
-                  borderRadius: BorderRadius.circular(4.sp),
+                  borderRadius: BorderRadius.circular(4.h),
                 ),
               ),
               AnimatedContainer(
                 duration: const Duration(milliseconds: 300),
                 width: MediaQuery.of(context).size.width * progress,
-                height: 8.sp,
+                height: 8.h,
                 decoration: BoxDecoration(
                   color: _getProgressColor(progress),
-                  borderRadius: BorderRadius.circular(4.sp),
+                  borderRadius: BorderRadius.circular(4.h),
                 ),
               ),
             ],
           ),
         ),
-        SizedBox(height: 8.sp),
+        SizedBox(height: 8.h),
 
         Wrap(
-          spacing: 8.sp,
+          spacing: 8.h,
           children: players.where((p) => p.isConnected).map((player) {
             final hasAnswered = player.selectedAnswer != null;
             final isCorrect = player.isCorrect ?? false;
@@ -89,14 +89,14 @@ class PlayersStatus extends StatelessWidget {
                   player.username,
                   style: TextStyle(
                     color: Colors.white,
-                    fontSize: 12.sp,
+                    fontSize: 12.h,
                     fontWeight: FontWeight.bold,
                   ),
                 ),
                 backgroundColor: backgroundColor,
                 avatar: Icon(
                   icon,
-                  size: 16.sp,
+                  size: 16.h,
                   color: Colors.white,
                 ),
               ),
@@ -108,7 +108,7 @@ class PlayersStatus extends StatelessWidget {
         Text(
           '$answeredPlayers/$totalConnected players answered',
           style: TextStyle(
-            fontSize: 12.sp,
+            fontSize: 12.h,
             color: Colors.grey.shade600,
             fontWeight: FontWeight.w500,
           ),

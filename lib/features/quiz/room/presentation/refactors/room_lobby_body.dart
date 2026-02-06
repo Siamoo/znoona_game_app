@@ -72,6 +72,7 @@ class _RoomLobbyBodyState extends State<RoomLobbyBody> {
                           icon: Icons.close,
                           onTap: () {
                             context.read<RoomCubit>().leaveFromAllRooms();
+                            Navigator.pop(context);
                           },
                         ),
                         RoomInfoCard(

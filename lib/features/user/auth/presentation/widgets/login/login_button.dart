@@ -39,7 +39,7 @@ class LoginButton extends StatelessWidget {
         child: TextApp(
           text: ZnoonaTexts.tr(context, LangKeys.login),
           textStyle: GoogleFonts.beiruti(
-            fontSize: 22.sp,
+            fontSize: 22.h,
             fontWeight: FontWeight.w600,
             color: Colors.white,
           ),

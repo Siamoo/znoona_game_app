@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -7,6 +6,7 @@ import 'package:medaan_almaarifa/core/helpers/znoona.colors.dart';
 import 'package:medaan_almaarifa/core/helpers/znoona_texts.dart';
 import 'package:medaan_almaarifa/core/language/lang_keys.dart';
 import 'package:medaan_almaarifa/core/style/images/app_images.dart';
+
 class WonCupBody extends StatelessWidget {
   const WonCupBody({
     super.key,
@@ -19,7 +19,7 @@ class WonCupBody extends StatelessWidget {
         TextApp(
           text: ZnoonaTexts.tr(context, LangKeys.congratulations),
           textStyle: GoogleFonts.beiruti(
-            fontSize: 38.sp,
+            fontSize: 38.h,
             fontWeight: FontWeight.bold,
             color: ZnoonaColors.text(context),
           ),
@@ -37,7 +37,7 @@ class WonCupBody extends StatelessWidget {
         TextApp(
           text: ZnoonaTexts.tr(context, LangKeys.won),
           textStyle: GoogleFonts.beiruti(
-            fontSize: 38.sp,
+            fontSize: 38.h,
             fontWeight: FontWeight.bold,
             color: ZnoonaColors.text(context),
           ),

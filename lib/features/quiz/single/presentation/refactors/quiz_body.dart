@@ -243,7 +243,7 @@ class _QuizBodyState extends State<QuizBody> {
                       ZnoonaTexts.tr(context, LangKeys.loadingImage),
                       style: TextStyle(
                         color: Colors.white,
-                        fontSize: 14.sp,
+                        fontSize: 14.h,
                       ),
                     ),
                   ],
@@ -256,7 +256,7 @@ class _QuizBodyState extends State<QuizBody> {
                     children: [
                       Icon(
                         Icons.broken_image,
-                        size: 60.sp,
+                        size: 60.h,
                         color: Colors.white54,
                       ),
                       SizedBox(height: 20.h),
@@ -264,7 +264,7 @@ class _QuizBodyState extends State<QuizBody> {
                         ZnoonaTexts.tr(context, LangKeys.failedToLoadImage),
                         style: TextStyle(
                           color: Colors.white70,
-                          fontSize: 16.sp,
+                          fontSize: 16.h,
                         ),
                       ),
                       SizedBox(height: 10.h),
@@ -272,7 +272,7 @@ class _QuizBodyState extends State<QuizBody> {
                         ZnoonaTexts.tr(context, LangKeys.imageMovedOrDeleted),
                         style: TextStyle(
                           color: Colors.white54,
-                          fontSize: 12.sp,
+                          fontSize: 12.h,
                         ),
                         textAlign: TextAlign.center,
                       ),
@@ -299,7 +299,7 @@ class _QuizBodyState extends State<QuizBody> {
                   icon: Icon(
                     Icons.close,
                     color: Colors.white,
-                    size: 28.sp,
+                    size: 28.h,
                   ),
                   onPressed: () => Navigator.of(context).pop(),
                 ),
@@ -315,7 +315,7 @@ class _QuizBodyState extends State<QuizBody> {
                     ZnoonaTexts.tr(context, LangKeys.pinchToZoom),
                     style: TextStyle(
                       color: Colors.white70,
-                      fontSize: 12.sp,
+                      fontSize: 12.h,
                     ),
                   ),
                   SizedBox(height: 5.h),
@@ -323,7 +323,7 @@ class _QuizBodyState extends State<QuizBody> {
                     ZnoonaTexts.tr(context, LangKeys.rotateDevice),
                     style: TextStyle(
                       color: Colors.white54,
-                      fontSize: 11.sp,
+                      fontSize: 11.h,
                       fontStyle: FontStyle.italic,
                     ),
                   ),
@@ -385,7 +385,7 @@ class _QuizBodyState extends State<QuizBody> {
                       CustomAppBar(
                         title: widget.categoryName,
                       ),
-                      SizedBox(height: 300.sp),
+                      SizedBox(height: 300.h),
                       Center(
                         child: Text(
                           ZnoonaTexts.tr(context, LangKeys.noQuestionsFound),
@@ -440,7 +440,7 @@ class _QuizBodyState extends State<QuizBody> {
                           _buildSoundAndVibrationControl(),
                         ],
                       ),
-                      SizedBox(height: 20.sp),
+                      SizedBox(height: 20.h),
 
                       if (imageUrl != null && imageUrl.isNotEmpty)
                         Column(
@@ -448,7 +448,7 @@ class _QuizBodyState extends State<QuizBody> {
                             Text(
                               ZnoonaTexts.tr(context, LangKeys.tapImageToZoom),
                               style: TextStyle(
-                                fontSize: 12.sp,
+                                fontSize: 12.h,
                                 color: ZnoonaColors.text(
                                   context,
                                 ).withOpacity(0.7),
@@ -484,7 +484,7 @@ class _QuizBodyState extends State<QuizBody> {
                                             children: [
                                               Icon(
                                                 Icons.image_not_supported,
-                                                size: 50.sp,
+                                                size: 50.h,
                                                 color: ZnoonaColors.text(
                                                   context,
                                                 ).withOpacity(0.5),
@@ -496,7 +496,7 @@ class _QuizBodyState extends State<QuizBody> {
                                                   LangKeys.imageNotAvailable,
                                                 ),
                                                 style: TextStyle(
-                                                  fontSize: 12.sp,
+                                                  fontSize: 12.h,
                                                   color: ZnoonaColors.text(
                                                     context,
                                                   ).withOpacity(0.5),
@@ -511,7 +511,7 @@ class _QuizBodyState extends State<QuizBody> {
                                 ),
                               ),
                             ),
-                            SizedBox(height: 20.sp),
+                            SizedBox(height: 20.h),
                           ],
                         ),
                       Column(
@@ -522,14 +522,14 @@ class _QuizBodyState extends State<QuizBody> {
                             question.question,
                             style: GoogleFonts.scheherazadeNew(
                               fontSize: imageUrl != null && imageUrl.isNotEmpty
-                                  ? 18.sp
-                                  : 22.sp,
+                                  ? 18.h
+                                  : 22.h,
                               fontWeight: FontWeight.bold,
                               color: ZnoonaColors.text(context),
                             ),
                             textAlign: TextAlign.center,
                           ),
-                          SizedBox(height: 20.sp),
+                          SizedBox(height: 20.h),
                           ...question.options.map((option) {
                             final isSelected = option == selectedAnswer;
                             final isCorrect = option == question.correctAnswer;
@@ -544,7 +544,7 @@ class _QuizBodyState extends State<QuizBody> {
                               remainingTime: remainingTime,
                             );
                           }),
-                          SizedBox(height: 20.sp),
+                          SizedBox(height: 20.h),
 
                           // Updated sound and vibration control
                         ],
@@ -581,7 +581,7 @@ class _QuizBodyState extends State<QuizBody> {
                       ? Icons.vibration
                       : Icons.not_interested,
                   color: ZnoonaColors.text(context),
-                  size: 18.sp,
+                  size: 18.h,
                 ),
                 onPressed: () => context.read<AppCubit>().toggleVibration(),
               ),
@@ -599,7 +599,7 @@ class _QuizBodyState extends State<QuizBody> {
                 child: Text(
                   _formatTime(remainingTime),
                   style: GoogleFonts.beiruti(
-                    fontSize: 20.sp,
+                    fontSize: 20.h,
                     fontWeight: FontWeight.bold,
                     color: remainingTime > widget.timerDuration * 0.3
                         ? Colors.green
@@ -614,7 +614,7 @@ class _QuizBodyState extends State<QuizBody> {
                 icon: Icon(
                   Icons.settings,
                   color: ZnoonaColors.text(context),
-                  size: 18.sp,
+                  size: 18.h,
                 ),
                 onPressed: () {
                   Navigator.push(

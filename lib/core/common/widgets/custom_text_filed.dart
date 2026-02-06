@@ -47,7 +47,7 @@ class CustomTextField extends StatelessWidget {
       controller: controller,
       cursorColor: ZnoonaColors.text(context),
       style: TextStyle(
-        fontSize: 18.sp,
+        fontSize: 18.h,
         fontWeight: FontWeight.w500,
         color: ZnoonaColors.text(context),
       ),
@@ -98,13 +98,13 @@ class CustomTextField extends StatelessWidget {
             GoogleFonts.beiruti(
               color: ZnoonaColors.text(context),
               fontWeight: FontWeight.w400,
-              fontSize: 18.sp,
+              fontSize: 18.h,
             ),
 
         errorStyle: GoogleFonts.beiruti(
           color: Colors.red,
           fontWeight: FontWeight.w400,
-          fontSize: 18.sp,
+          fontSize: 18.h,
         ),
       ),
     );

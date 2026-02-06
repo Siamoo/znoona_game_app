@@ -4,7 +4,8 @@ import 'package:medaan_almaarifa/core/helpers/znoona.colors.dart';
 
 class SelectedTimerDisplay extends StatelessWidget {
   const SelectedTimerDisplay({
-    required this.selectedTimerDuration, super.key,
+    required this.selectedTimerDuration,
+    super.key,
   });
 
   final int selectedTimerDuration;
@@ -23,14 +24,14 @@ class SelectedTimerDisplay extends StatelessWidget {
           Icon(
             Icons.access_time,
             color: Colors.white,
-            size: 18.sp,
+            size: 18.h,
           ),
           SizedBox(width: 8.w),
           Text(
             '$selectedTimerDuration ',
             style: TextStyle(
               color: Colors.white,
-              fontSize: 14.sp,
+              fontSize: 14.h,
               fontWeight: FontWeight.bold,
             ),
           ),

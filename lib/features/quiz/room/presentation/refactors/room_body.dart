@@ -87,18 +87,19 @@ class RoomBody extends StatelessWidget {
               ),
             ),
             SizedBox(
-              height: 270.h,
+              height: 370.h,
               width: double.infinity,
               child: Stack(
                 children: [
                   Positioned(
-                    left: 40.w,
-                    bottom: 200.h,
+                    left: 100.w,
+                    bottom: 300.h,
                     child: FadeInUp(
-                      duration: const Duration(milliseconds: 4000),
-                      from: 50,
+                      duration: const Duration(seconds: 6),
+                      from: 50.h,
                       child: FadeInLeft(
-                        duration: const Duration(milliseconds: 4000),
+                        duration: const Duration(seconds: 6),
+                        from: 200.w,
                         child: Image.asset(
                           AppImages.airplane,
                           height: 70.h,
@@ -108,11 +109,24 @@ class RoomBody extends StatelessWidget {
                   ),
 
                   Positioned(
+                    left: 10.w,
+                    bottom: 180.h,
+                    child: FadeInDown(
+                      duration: const Duration(seconds: 6),
+                      from: 60.w,
+                      child: Image.asset(
+                        AppImages.manFell1,
+                        height: 30.h,
+                      ),
+                    ),
+                  ),
+
+                  Positioned(
                     left: 0,
                     right: 80.w,
                     bottom: 0,
                     child: FadeInLeft(
-                      duration: const Duration(milliseconds: 2000),
+                      duration: const Duration(seconds: 2),
                       from: 120,
                       child: Image.asset(
                         AppImages.blackMNo,

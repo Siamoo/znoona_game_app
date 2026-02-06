@@ -74,6 +74,7 @@ class _RoomJoiningBodyState extends State<RoomJoiningBody> {
               horizontal: 10.w,
             ),
             child: Column(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 CustomAppBar(title: ZnoonaTexts.tr(context, LangKeys.joinRoom)),
                 SizedBox(height: 50.h),
@@ -167,20 +168,20 @@ class _RoomJoiningBodyState extends State<RoomJoiningBody> {
                   ),
                 ),
                 SizedBox(
-                  height: 200.h,
+                  height: 160.h,
                   width: double.infinity,
                   child: Stack(
                     children: [
                       Positioned(
                         left: 0,
-                        right: 230.w,
+                        right: 200.w,
                         bottom: 0,
                         child: FadeInLeft(
                           duration: const Duration(milliseconds: 4000),
                           from: 120,
                           child: Image.asset(
                             AppImages.blackMHand,
-                            height: 160.h,
+                            height: 140.h,
                           ),
                         ),
                       ),
@@ -201,7 +202,7 @@ class _RoomJoiningBodyState extends State<RoomJoiningBody> {
                       Positioned(
                         left: 250.w,
                         right: 0,
-                        bottom: 10.h,
+                        bottom: 0,
                         child: FadeInRight(
                           duration: const Duration(milliseconds: 4000),
                           child: Center(

@@ -39,13 +39,13 @@ class PlayerResultTile extends StatelessWidget {
             Text(
               result.username,
               style: GoogleFonts.beiruti(
-                fontSize: 16.sp,
+                fontSize: 16.h,
                 fontWeight: FontWeight.bold,
                 color: ZnoonaColors.text(context),
               ),
             ),
             if (result.isCurrentUser) ...[
-              SizedBox(width: 8.h),
+              SizedBox(width: 8.w),
               Container(
                 padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 2),
                 decoration: BoxDecoration(
@@ -67,7 +67,7 @@ class PlayerResultTile extends StatelessWidget {
         subtitle: Text(
           ' ${result.correctAnswers}/${result.totalQuestions}     ${ZnoonaTexts.tr(context, LangKeys.score)} :  ${result.score} ',
           style: GoogleFonts.beiruti(
-            fontSize: 12.sp,
+            fontSize: 12.h,
             fontWeight: FontWeight.bold,
             color: ZnoonaColors.text(context).withAlpha(170),
           ),
@@ -76,23 +76,23 @@ class PlayerResultTile extends StatelessWidget {
           mainAxisSize: MainAxisSize.min,
           children: [
             if (result.finishedQuiz) ...[
-              Icon(Icons.flag, color: Colors.green, size: 18.sp),
+              Icon(Icons.flag, color: Colors.green, size: 18.h),
               const SizedBox(width: 4),
               Text(
                 ZnoonaTexts.tr(context, LangKeys.finished),
                 style: GoogleFonts.beiruti(
-                  fontSize: 12.sp,
+                  fontSize: 12.h,
                   fontWeight: FontWeight.bold,
                   color: Colors.green,
                 ),
               ),
             ] else ...[
-              Icon(Icons.play_arrow, color: Colors.orange, size: 18.sp),
+              Icon(Icons.play_arrow, color: Colors.orange, size: 18.h),
               const SizedBox(width: 4),
               Text(
                 ZnoonaTexts.tr(context, LangKeys.play),
                 style: GoogleFonts.beiruti(
-                  fontSize: 12.sp,
+                  fontSize: 12.h,
                   fontWeight: FontWeight.bold,
                   color: Colors.orange,
                 ),

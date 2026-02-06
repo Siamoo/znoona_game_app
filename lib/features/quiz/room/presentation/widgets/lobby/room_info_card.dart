@@ -25,7 +25,7 @@ class RoomInfoCard extends StatelessWidget {
       ),
       color: ZnoonaColors.bluePinkDark(context),
       child: Padding(
-        padding: EdgeInsets.all(20.sp),
+        padding: EdgeInsets.all(20.h),
         child: Column(
           children: [
             // Room Code Row
@@ -50,7 +50,7 @@ class RoomInfoCard extends StatelessWidget {
           child: Text(
             ZnoonaTexts.tr(context, LangKeys.roomCode),
             style: GoogleFonts.beiruti(
-              fontSize: 18.sp,
+              fontSize: 18.h,
               fontWeight: FontWeight.bold,
               color: Colors.white,
             ),
@@ -63,7 +63,7 @@ class RoomInfoCard extends StatelessWidget {
             InkWell(
               onTap: () => _showModernQRCodeDialog(context, room.code),
               child: Container(
-                padding: EdgeInsets.all(10.sp),
+                padding: EdgeInsets.all(10.h),
                 decoration: BoxDecoration(
                   gradient: LinearGradient(
                     colors: [
@@ -86,7 +86,7 @@ class RoomInfoCard extends StatelessWidget {
                 child: Icon(
                   Icons.qr_code_2,
                   color: ZnoonaColors.text(context),
-                  size: 22.sp,
+                  size: 22.h,
                 ),
               ),
             ),
@@ -111,13 +111,13 @@ class RoomInfoCard extends StatelessWidget {
                     Icon(
                       Icons.copy,
                       color: Colors.white,
-                      size: 16.sp,
+                      size: 16.h,
                     ),
                     SizedBox(width: 8.w),
                     Text(
                       room.code,
                       style: GoogleFonts.beiruti(
-                        fontSize: 18.sp,
+                        fontSize: 18.h,
                         fontWeight: FontWeight.bold,
                         color: Colors.white,
                         letterSpacing: 1.2,
@@ -141,7 +141,7 @@ class RoomInfoCard extends StatelessWidget {
           child: Text(
             ZnoonaTexts.tr(context, LangKeys.status),
             style: GoogleFonts.beiruti(
-              fontSize: 18.sp,
+              fontSize: 18.h,
               fontWeight: FontWeight.bold,
               color: Colors.white,
             ),
@@ -179,7 +179,7 @@ class RoomInfoCard extends StatelessWidget {
                 children: [
                   Container(
                     width: 8.w,
-                    height: 8.w,
+                    height: 8.h,
                     decoration: BoxDecoration(
                       color: Colors.white,
                       shape: BoxShape.circle,
@@ -192,7 +192,7 @@ class RoomInfoCard extends StatelessWidget {
                       currentRoom.status,
                     ).toUpperCase(),
                     style: GoogleFonts.beiruti(
-                      fontSize: 14.sp,
+                      fontSize: 14.h,
                       fontWeight: FontWeight.bold,
                       color: Colors.white,
                     ),
@@ -214,7 +214,7 @@ class RoomInfoCard extends StatelessWidget {
           child: Text(
             ZnoonaTexts.tr(context, LangKeys.players),
             style: GoogleFonts.beiruti(
-              fontSize: 18.sp,
+              fontSize: 18.h,
               fontWeight: FontWeight.bold,
               color: Colors.white,
             ),
@@ -243,13 +243,13 @@ class RoomInfoCard extends StatelessWidget {
                   Icon(
                     Icons.people,
                     color: Colors.white,
-                    size: 18.sp,
+                    size: 18.h,
                   ),
                   SizedBox(width: 8.w),
                   Text(
                     '$playersCount',
                     style: GoogleFonts.beiruti(
-                      fontSize: 18.sp,
+                      fontSize: 18.h,
                       fontWeight: FontWeight.bold,
                       color: Colors.white,
                     ),
@@ -317,7 +317,7 @@ class RoomInfoCard extends StatelessWidget {
                             child: Text(
                               ZnoonaTexts.tr(context, LangKeys.roomQrCode),
                               style: GoogleFonts.beiruti(
-                                fontSize: 24.sp,
+                                fontSize: 24.h,
                                 fontWeight: FontWeight.bold,
                                 color: Colors.white,
                               ),
@@ -326,7 +326,7 @@ class RoomInfoCard extends StatelessWidget {
                           IconButton(
                             onPressed: () => Navigator.pop(context),
                             icon: Container(
-                              padding: EdgeInsets.all(6.sp),
+                              padding: EdgeInsets.all(6.h),
                               decoration: BoxDecoration(
                                 color: Colors.white.withOpacity(0.1),
                                 shape: BoxShape.circle,
@@ -334,7 +334,7 @@ class RoomInfoCard extends StatelessWidget {
                               child: Icon(
                                 Icons.close,
                                 color: Colors.white,
-                                size: 20.sp,
+                                size: 20.h,
                               ),
                             ),
                           ),
@@ -406,7 +406,7 @@ class RoomInfoCard extends StatelessWidget {
                               child: Text(
                                 ZnoonaTexts.tr(context, LangKeys.cancel),
                                 style: GoogleFonts.beiruti(
-                                  fontSize: 16.sp,
+                                  fontSize: 16.h,
                                   fontWeight: FontWeight.w600,
                                 ),
                               ),
@@ -480,14 +480,14 @@ class RoomInfoCard extends StatelessWidget {
             Icon(
               Icons.check_circle,
               color: ZnoonaColors.text(context),
-              size: 22.sp,
+              size: 22.h,
             ),
             SizedBox(width: 12.w),
             Expanded(
               child: Text(
                 'Room code $code copied to clipboard',
                 style: GoogleFonts.beiruti(
-                  fontSize: 14.sp,
+                  fontSize: 14.h,
                   color: ZnoonaColors.text(context),
                 ),
               ),

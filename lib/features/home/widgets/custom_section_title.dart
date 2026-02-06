@@ -18,7 +18,7 @@ class CustomSectionTitle extends StatelessWidget {
     return TextApp(
       text: ZnoonaTexts.tr(context, langkey),
       textStyle: GoogleFonts.beiruti(
-        fontSize: 26.sp,
+        fontSize: 26.h,
         fontWeight: FontWeight.bold,
         color: ZnoonaColors.text(context),
       ),

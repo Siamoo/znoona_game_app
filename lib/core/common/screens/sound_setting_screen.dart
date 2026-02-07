@@ -354,7 +354,7 @@ class SoundSettingsScreen extends StatelessWidget {
                   onChanged: cubit.setMusicVolume,
                   onChangeEnd: (value) {
                     // Test with a sound effect when volume changes
-                    audioService.pauseBackgroundMusic();
+                    audioService.playBackgroundMusic(); 
                   },
                   min: 0.0,
                   max: 1.0,

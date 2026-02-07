@@ -104,16 +104,14 @@ class AudioService {
   }
 
   Future<void> playGoodResultSound() async {
-    await _playAsset('assets/audio/good.mp3');
+    await _playAsset('assets/audio/win.mp3');
   }
 
   Future<void> playBadResultSound() async {
     await _playAsset('assets/audio/bad.mp3');
   }
 
-  Future<void> playTestSound() async {
-    await _playAsset('assets/audio/test.mp3');
-  }
+
 
   // Background music methods - using ONLY local file
   Future<void> startBackgroundMusic() async {

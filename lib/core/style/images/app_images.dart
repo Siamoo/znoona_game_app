@@ -53,6 +53,12 @@ class AppImages {
   static const blueMSkates = 'assets/images/design/blue_m_skates.png';
   static const manFell1 = 'assets/images/design/m_fell1.png';
   static const manFell4 = 'assets/images/design/m_fell4.png';
+  static const gold = 'assets/images/user/Gold.png';
+  static const silver = 'assets/images/user/Silver.png';
+  static const bronze = 'assets/images/user/Bronze.png';
+  static const rank1 = 'assets/images/user/rank1.png';
+  static const rank2 = 'assets/images/user/rank2.png';
+  static const rank3 = 'assets/images/user/rank3.png';
 
   //Svg
   static const mode = 'assets/svg/dark_mode.svg';

@@ -19,7 +19,6 @@ import 'package:medaan_almaarifa/features/quiz/single/presentation/screen/result
 import 'package:medaan_almaarifa/features/quiz/single/presentation/widgets/option_button.dart';
 import 'package:medaan_almaarifa/core/common/screens/sound_setting_screen.dart';
 import 'package:photo_view/photo_view.dart';
-import 'package:vibration/vibration.dart';
 
 class QuizBody extends StatefulWidget {
   const QuizBody({
@@ -79,28 +78,9 @@ class _QuizBodyState extends State<QuizBody> {
         }
       } else {
         t.cancel();
-        _vibrateTimeFinished(); // Add vibration when time finishes
         goToNextQuestion();
       }
     });
-  }
-
-  Future<void> _vibrateWrongAnswer() async {
-    final appState = context.read<AppCubit>().state;
-    if (appState.isVibrationEnabled) {
-      if (await Vibration.hasVibrator()) {
-        Vibration.vibrate(duration: 200); // Short vibration for wrong answer
-      }
-    }
-  }
-
-  Future<void> _vibrateTimeFinished() async {
-    final appState = context.read<AppCubit>().state;
-    if (appState.isVibrationEnabled) {
-      if (await Vibration.hasVibrator()) {
-        Vibration.vibrate(pattern: [500, 200, 500]);
-      }
-    }
   }
 
   void _showTimerWarning() {
@@ -167,11 +147,10 @@ class _QuizBodyState extends State<QuizBody> {
           _playCorrectSound();
         }
       } else {
-        // Wrong answer - play sound and vibrate
+        // Wrong answer - play sound only (vibration removed)
         if (appState.isSoundEnabled) {
           _playWrongSound();
         }
-        _vibrateWrongAnswer(); // Add vibration for wrong answer
       }
     });
     timer?.cancel();
@@ -437,7 +416,7 @@ class _QuizBodyState extends State<QuizBody> {
                             borderRadius: BorderRadius.circular(4.r),
                           ),
                           SizedBox(height: 10.h),
-                          _buildSoundAndVibrationControl(),
+                          _buildSoundControl(),
                         ],
                       ),
                       SizedBox(height: 20.h),
@@ -545,8 +524,6 @@ class _QuizBodyState extends State<QuizBody> {
                             );
                           }),
                           SizedBox(height: 20.h),
-
-                          // Updated sound and vibration control
                         ],
                       ),
                     ],
@@ -560,8 +537,8 @@ class _QuizBodyState extends State<QuizBody> {
     );
   }
 
-  // Updated method to include vibration control
-  Widget _buildSoundAndVibrationControl() {
+  // Updated method with sound control only (vibration removed)
+  Widget _buildSoundControl() {
     return BlocBuilder<AppCubit, AppState>(
       builder: (context, appState) {
         final audioService = GetIt.I<AudioService>();
@@ -575,15 +552,16 @@ class _QuizBodyState extends State<QuizBody> {
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
+              // Sound control (replaced vibration icon)
               IconButton(
                 icon: Icon(
-                  appState.isVibrationEnabled
-                      ? Icons.vibration
-                      : Icons.not_interested,
+                  appState.isSoundEnabled
+                      ? Icons.volume_up
+                      : Icons.volume_off,
                   color: ZnoonaColors.text(context),
                   size: 18.h,
                 ),
-                onPressed: () => context.read<AppCubit>().toggleVibration(),
+                onPressed: () => context.read<AppCubit>().toggleSound(),
               ),
               // Timer
               Container(

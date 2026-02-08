@@ -406,7 +406,7 @@ class _RoomQuizBodyState extends State<RoomQuizBody> {
 
     if (scorePercentage >= 70) {
       await _playWinSound();
-    } else if (scorePercentage >= 50) {
+    } else if (scorePercentage >= 10) {
       await _playGoodResultSound();
     } else {
       await _playBadResultSound();

@@ -9,7 +9,7 @@ import 'package:medaan_almaarifa/features/quiz/categories/presentation/cubit/cat
 import 'package:medaan_almaarifa/features/quiz/categories/presentation/refactors/category_level_body.dart';
 import 'package:medaan_almaarifa/features/quiz/categories/presentation/widgets/category_level_class.dart';
 import 'package:medaan_almaarifa/features/quiz/room/presentation/screen/room_creation_screen.dart';
-import 'package:medaan_almaarifa/features/quiz/single/presentation/screen/timer_selection_screen.dart';
+import 'package:medaan_almaarifa/features/quiz/single/presentation/refactors/timer_selection_screen.dart';
 
 class CategoryHierarchyBody extends StatefulWidget {
   const CategoryHierarchyBody({required this.isRoom, super.key});

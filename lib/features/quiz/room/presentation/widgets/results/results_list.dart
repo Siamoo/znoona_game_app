@@ -4,6 +4,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:medaan_almaarifa/core/helpers/znoona.colors.dart';
 import 'package:medaan_almaarifa/core/helpers/znoona_texts.dart';
 import 'package:medaan_almaarifa/core/language/lang_keys.dart';
+import 'package:medaan_almaarifa/core/style/images/app_images.dart';
 import 'package:medaan_almaarifa/features/quiz/room/data/models/player_result.dart';
 import 'package:medaan_almaarifa/features/quiz/room/presentation/widgets/results/player_result_tile.dart';
 
@@ -74,23 +75,10 @@ class ResultsList extends StatelessWidget {
                           padding: EdgeInsets.symmetric(vertical: 8.h),
                           child: Row(
                             children: [
-                              Container(
-                                width: 32.w,
-                                height: 32.h,
-                                decoration: BoxDecoration(
-                                  color: _getRankColor(rank),
-                                  shape: BoxShape.circle,
-                                ),
-                                child: Center(
-                                  child: Text(
-                                    '$rank',
-                                    style: const TextStyle(
-                                      color: Colors.black,
-                                      fontWeight: FontWeight.bold,
-                                      fontSize: 14,
-                                    ),
-                                  ),
-                                ),
+                              Image.asset(
+                                _getRankColor(rank),
+                                width: 40.w,
+                                height: 40.h,
                               ),
                               const SizedBox(width: 8),
                               Text(
@@ -142,11 +130,17 @@ class ResultsList extends StatelessWidget {
     );
   }
 
-  Color _getRankColor(int rank) {
-    if (rank == 1) return const Color(0xFFFFD700);
-    if (rank == 2) return Colors.blueGrey;
-    if (rank == 3) return const Color(0xFFC0C0C0);
-    return const Color.fromARGB(255, 224, 29, 29);
+  String _getRankColor(int rank) {
+    if (rank == 1) {
+      return AppImages.rank1;
+    }
+    if (rank == 2) {
+      return AppImages.rank2;
+    }
+    if (rank == 3) {
+      return AppImages.rank3;
+    }
+    return AppImages.dog2;
   }
 
   String _getRankText(int rank, BuildContext context, int tiedCount) {

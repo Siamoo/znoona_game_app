@@ -4,6 +4,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:medaan_almaarifa/core/helpers/znoona.colors.dart';
 import 'package:medaan_almaarifa/core/helpers/znoona_texts.dart';
 import 'package:medaan_almaarifa/core/language/lang_keys.dart';
+import 'package:medaan_almaarifa/core/style/images/app_images.dart';
 import 'package:medaan_almaarifa/features/quiz/room/data/models/player_result.dart';
 
 class UserRankCard extends StatelessWidget {
@@ -88,10 +89,10 @@ class UserRankCard extends StatelessWidget {
                 ],
               ),
             ),
-            Icon(
-              _getTrophyIcon(userResult.rank),
-              color: Colors.white,
-              size: 40,
+            Image.asset(
+              _getTrophyImages(userResult.rank),
+              width: 40.w,
+              height: 40.h,
             ),
           ],
         ),
@@ -103,10 +104,11 @@ class UserRankCard extends StatelessWidget {
     return results.where((r) => r.rank == rank).length > 1;
   }
 
-  IconData _getTrophyIcon(int rank) {
-    if (rank == 1) return Icons.emoji_events;
-    if (rank == 2) return Icons.workspace_premium;
-    if (rank == 3) return Icons.military_tech;
-    return Icons.star;
+  String _getTrophyImages(int rank) {
+    if (rank == 1) return AppImages.cup;
+    if (rank == 2) return AppImages.silver;
+
+    if (rank == 3) return AppImages.bronze;
+    return AppImages.dog2;
   }
 }

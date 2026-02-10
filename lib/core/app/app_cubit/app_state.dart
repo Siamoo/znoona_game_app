@@ -11,7 +11,6 @@ class AppState with _$AppState {
     
     // Audio Settings
     required bool isSoundEnabled,
-    required bool isVibrationEnabled,
     required bool isBackgroundMusicEnabled,
     required double soundVolume,
     required double musicVolume,
@@ -22,7 +21,6 @@ class AppState with _$AppState {
     isDarkMode: false,
     locale: Locale('en'),
     isSoundEnabled: true,
-    isVibrationEnabled: true, 
     isBackgroundMusicEnabled: true,
     soundVolume: 1.0,
     musicVolume: 0.5,

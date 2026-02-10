@@ -77,7 +77,6 @@ class _RoomQuizBodyState extends State<RoomQuizBody> {
     }
   }
 
-  // Audio helper methods only (vibration removed)
   Future<void> _playCorrectSound() async {
     final appState = context.read<AppCubit>().state;
     if (appState.isSoundEnabled) {
@@ -284,7 +283,6 @@ class _RoomQuizBodyState extends State<RoomQuizBody> {
       if (appState.isSoundEnabled) {
         await _playWrongSound();
       }
-      // Vibration removed from wrong answer
     }
 
     _emitQuizState();
@@ -300,7 +298,6 @@ class _RoomQuizBodyState extends State<RoomQuizBody> {
       _showTimerWarning();
     }
 
-    // Vibration for time finished removed
   }
 
   void _showTimerWarning() {
@@ -676,7 +673,6 @@ class _RoomQuizBodyState extends State<RoomQuizBody> {
     );
   }
 
-  // New combined control widget with sound and timer only (vibration removed)
   Widget _buildSoundAndTimer(Color timerColor, int remainingTime) {
     return BlocBuilder<AppCubit, AppState>(
       builder: (context, appState) {
@@ -691,7 +687,6 @@ class _RoomQuizBodyState extends State<RoomQuizBody> {
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              // Sound control only (vibration removed)
               IconButton(
                 icon: Icon(
                   appState.isSoundEnabled ? Icons.volume_up : Icons.volume_off,

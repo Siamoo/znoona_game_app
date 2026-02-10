@@ -17,7 +17,6 @@ class AudioService {
   bool get isSoundEnabled => _currentState?.isSoundEnabled ?? true;
   bool get isBackgroundMusicEnabled =>
       _currentState?.isBackgroundMusicEnabled ?? true;
-  bool get isVibrationEnabled => _currentState?.isVibrationEnabled ?? true;
   double get soundVolume => _currentState?.soundVolume ?? 1.0;
   double get musicVolume => _currentState?.musicVolume ?? 0.5;
   bool get isMusicActuallyPlaying =>

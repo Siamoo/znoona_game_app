@@ -67,157 +67,157 @@ class _RoomJoiningBodyState extends State<RoomJoiningBody> {
           );
         },
         child: SafeArea(
-          child: SingleChildScrollView(
-            controller: _scrollController,
-            padding: EdgeInsets.symmetric(
-              vertical: 10.h,
-              horizontal: 10.w,
-            ),
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                CustomAppBar(title: ZnoonaTexts.tr(context, LangKeys.joinRoom)),
-                SizedBox(height: 50.h),
-                Padding(
-                  padding: EdgeInsets.symmetric(
-                    horizontal: 14.w,
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+
+            children: [
+              Column(
+                children: [
+                  CustomAppBar(
+                    title: ZnoonaTexts.tr(context, LangKeys.joinRoom),
                   ),
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      CustomFadeInDown(
-                        duration: 850,
-                        child: Image.asset(
-                          AppImages.join,
-                          height: 200.h,
-                          width: 200.w,
-                        ),
-                      ),
-                      const SizedBox(height: 24),
-                      const CustomFadeInDown(
-                        duration: 700,
-                        child: EnterCodeOrScan(),
-                      ),
-                    ],
-                  ),
-                ),
-                SizedBox(height: 20.h),
-                Form(
-                  key: _formKey,
-                  child: Padding(
+                  SizedBox(height: 50.h),
+                  Padding(
                     padding: EdgeInsets.symmetric(
                       horizontal: 14.w,
                     ),
                     child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         CustomFadeInDown(
-                          duration: 600,
-                          child: CustomTextField(
-                            controller: _codeController,
-                            hintText: ZnoonaTexts.tr(
-                              context,
-                              LangKeys.enterRoomCode,
-                            ),
-                            keyboardType: TextInputType.number,
-                            validator: (value) {
-                              if (value == null || value.isEmpty) {
-                                return ZnoonaTexts.tr(
-                                  context,
-                                  LangKeys.pleaseEnterRoomCode,
-                                );
-                              }
-                              if (value.length != 6) {
-                                return ZnoonaTexts.tr(
-                                  context,
-                                  LangKeys.roomCodeMustBe6,
-                                );
-                              }
-                              return null;
-                            },
-                            suffixIcon: const Icon(Icons.key),
-                            onTap: _ensureTextFieldVisible, // Add this
+                          duration: 850,
+                          child: Image.asset(
+                            AppImages.join,
+                            height: 200.h,
+                            width: 200.w,
                           ),
                         ),
-                        SizedBox(height: 10.h),
-                        BlocBuilder<RoomCubit, RoomState>(
-                          builder: (context, state) {
-                            final isLoading = state.maybeMap(
-                              loading: (_) => true,
-                              orElse: () => false,
-                            );
-                            return SizedBox(
-                              width: double.infinity,
-                              child: CustomFadeInDown(
-                                duration: 500,
-                                child: JoinRoomButton(
-                                  isLoading: isLoading,
-                                  formKey: _formKey,
-                                  codeController: _codeController,
-                                ),
-                              ),
-                            );
-                          },
-                        ),
-                        SizedBox(height: 10.h),
+                        const SizedBox(height: 24),
                         const CustomFadeInDown(
-                          duration: 400,
-                          child: ScanQrButton(),
+                          duration: 700,
+                          child: EnterCodeOrScan(),
                         ),
                       ],
                     ),
                   ),
-                ),
-                SizedBox(
-                  height: 160.h,
-                  width: double.infinity,
-                  child: Stack(
-                    children: [
-                      Positioned(
-                        left: 0,
-                        right: 200.w,
-                        bottom: 0,
-                        child: FadeInLeft(
-                          duration: const Duration(milliseconds: 4000),
-                          from: 120,
-                          child: Image.asset(
-                            AppImages.blackMHand,
-                            height: 140.h,
-                          ),
-                        ),
+                  SizedBox(height: 20.h),
+                  Form(
+                    key: _formKey,
+                    child: Padding(
+                      padding: EdgeInsets.symmetric(
+                        horizontal: 14.w,
                       ),
-                      Positioned(
-                        left: 0,
-                        right: 0,
-                        bottom: 0,
-                        child: FadeInLeft(
-                          duration: const Duration(milliseconds: 4000),
-                          from: 180.w,
-                          child: Image.asset(
-                            AppImages.yelloWTraveler,
-                            height: 130.h,
-                          ),
-                        ),
-                      ),
-
-                      Positioned(
-                        left: 250.w,
-                        right: 0,
-                        bottom: 0,
-                        child: FadeInRight(
-                          duration: const Duration(milliseconds: 4000),
-                          child: Center(
-                            child: Image.asset(
-                              AppImages.redWStady,
-                              height: 60.h,
+                      child: Column(
+                        children: [
+                          CustomFadeInDown(
+                            duration: 600,
+                            child: CustomTextField(
+                              controller: _codeController,
+                              hintText: ZnoonaTexts.tr(
+                                context,
+                                LangKeys.enterRoomCode,
+                              ),
+                              keyboardType: TextInputType.number,
+                              validator: (value) {
+                                if (value == null || value.isEmpty) {
+                                  return ZnoonaTexts.tr(
+                                    context,
+                                    LangKeys.pleaseEnterRoomCode,
+                                  );
+                                }
+                                if (value.length != 6) {
+                                  return ZnoonaTexts.tr(
+                                    context,
+                                    LangKeys.roomCodeMustBe6,
+                                  );
+                                }
+                                return null;
+                              },
+                              suffixIcon: const Icon(Icons.key),
+                              onTap: _ensureTextFieldVisible, // Add this
                             ),
                           ),
+                          SizedBox(height: 10.h),
+                          BlocBuilder<RoomCubit, RoomState>(
+                            builder: (context, state) {
+                              final isLoading = state.maybeMap(
+                                loading: (_) => true,
+                                orElse: () => false,
+                              );
+                              return SizedBox(
+                                width: double.infinity,
+                                child: CustomFadeInDown(
+                                  duration: 500,
+                                  child: JoinRoomButton(
+                                    isLoading: isLoading,
+                                    formKey: _formKey,
+                                    codeController: _codeController,
+                                  ),
+                                ),
+                              );
+                            },
+                          ),
+                          SizedBox(height: 10.h),
+                          const CustomFadeInDown(
+                            duration: 400,
+                            child: ScanQrButton(),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+              SizedBox(
+                height: 160.h,
+                width: double.infinity,
+                child: Stack(
+                  children: [
+                    Positioned(
+                      left: 0,
+                      right: 200.w,
+                      bottom: 0,
+                      child: FadeInLeft(
+                        duration: const Duration(milliseconds: 4000),
+                        from: 120,
+                        child: Image.asset(
+                          AppImages.blackMHand,
+                          height: 140.h,
                         ),
                       ),
-                    ],
-                  ),
+                    ),
+                    Positioned(
+                      left: 0,
+                      right: 0,
+                      bottom: 0,
+                      child: FadeInLeft(
+                        duration: const Duration(milliseconds: 4000),
+                        from: 180.w,
+                        child: Image.asset(
+                          AppImages.yelloWTraveler,
+                          height: 130.h,
+                        ),
+                      ),
+                    ),
+
+                    Positioned(
+                      left: 250.w,
+                      right: 0,
+                      bottom: 0,
+                      child: FadeInRight(
+                        duration: const Duration(milliseconds: 4000),
+                        child: Center(
+                          child: Image.asset(
+                            AppImages.redWStady,
+                            height: 60.h,
+                          ),
+                        ),
+                      ),
+                    ),
+                  ],
                 ),
-              ],
-            ),
+              ),
+            ],
           ),
         ),
       ),

@@ -21,7 +21,6 @@ mixin _$AppState {
   bool get isDarkMode => throw _privateConstructorUsedError; // Language
   Locale get locale => throw _privateConstructorUsedError; // Audio Settings
   bool get isSoundEnabled => throw _privateConstructorUsedError;
-  bool get isVibrationEnabled => throw _privateConstructorUsedError;
   bool get isBackgroundMusicEnabled => throw _privateConstructorUsedError;
   double get soundVolume => throw _privateConstructorUsedError;
   double get musicVolume => throw _privateConstructorUsedError;
@@ -42,7 +41,6 @@ abstract class $AppStateCopyWith<$Res> {
     bool isDarkMode,
     Locale locale,
     bool isSoundEnabled,
-    bool isVibrationEnabled,
     bool isBackgroundMusicEnabled,
     double soundVolume,
     double musicVolume,
@@ -67,7 +65,6 @@ class _$AppStateCopyWithImpl<$Res, $Val extends AppState>
     Object? isDarkMode = null,
     Object? locale = null,
     Object? isSoundEnabled = null,
-    Object? isVibrationEnabled = null,
     Object? isBackgroundMusicEnabled = null,
     Object? soundVolume = null,
     Object? musicVolume = null,
@@ -85,10 +82,6 @@ class _$AppStateCopyWithImpl<$Res, $Val extends AppState>
             isSoundEnabled: null == isSoundEnabled
                 ? _value.isSoundEnabled
                 : isSoundEnabled // ignore: cast_nullable_to_non_nullable
-                      as bool,
-            isVibrationEnabled: null == isVibrationEnabled
-                ? _value.isVibrationEnabled
-                : isVibrationEnabled // ignore: cast_nullable_to_non_nullable
                       as bool,
             isBackgroundMusicEnabled: null == isBackgroundMusicEnabled
                 ? _value.isBackgroundMusicEnabled
@@ -121,7 +114,6 @@ abstract class _$$AppStateImplCopyWith<$Res>
     bool isDarkMode,
     Locale locale,
     bool isSoundEnabled,
-    bool isVibrationEnabled,
     bool isBackgroundMusicEnabled,
     double soundVolume,
     double musicVolume,
@@ -145,7 +137,6 @@ class __$$AppStateImplCopyWithImpl<$Res>
     Object? isDarkMode = null,
     Object? locale = null,
     Object? isSoundEnabled = null,
-    Object? isVibrationEnabled = null,
     Object? isBackgroundMusicEnabled = null,
     Object? soundVolume = null,
     Object? musicVolume = null,
@@ -163,10 +154,6 @@ class __$$AppStateImplCopyWithImpl<$Res>
         isSoundEnabled: null == isSoundEnabled
             ? _value.isSoundEnabled
             : isSoundEnabled // ignore: cast_nullable_to_non_nullable
-                  as bool,
-        isVibrationEnabled: null == isVibrationEnabled
-            ? _value.isVibrationEnabled
-            : isVibrationEnabled // ignore: cast_nullable_to_non_nullable
                   as bool,
         isBackgroundMusicEnabled: null == isBackgroundMusicEnabled
             ? _value.isBackgroundMusicEnabled
@@ -192,7 +179,6 @@ class _$AppStateImpl implements _AppState {
     required this.isDarkMode,
     required this.locale,
     required this.isSoundEnabled,
-    required this.isVibrationEnabled,
     required this.isBackgroundMusicEnabled,
     required this.soundVolume,
     required this.musicVolume,
@@ -208,8 +194,6 @@ class _$AppStateImpl implements _AppState {
   @override
   final bool isSoundEnabled;
   @override
-  final bool isVibrationEnabled;
-  @override
   final bool isBackgroundMusicEnabled;
   @override
   final double soundVolume;
@@ -218,7 +202,7 @@ class _$AppStateImpl implements _AppState {
 
   @override
   String toString() {
-    return 'AppState(isDarkMode: $isDarkMode, locale: $locale, isSoundEnabled: $isSoundEnabled, isVibrationEnabled: $isVibrationEnabled, isBackgroundMusicEnabled: $isBackgroundMusicEnabled, soundVolume: $soundVolume, musicVolume: $musicVolume)';
+    return 'AppState(isDarkMode: $isDarkMode, locale: $locale, isSoundEnabled: $isSoundEnabled, isBackgroundMusicEnabled: $isBackgroundMusicEnabled, soundVolume: $soundVolume, musicVolume: $musicVolume)';
   }
 
   @override
@@ -231,8 +215,6 @@ class _$AppStateImpl implements _AppState {
             (identical(other.locale, locale) || other.locale == locale) &&
             (identical(other.isSoundEnabled, isSoundEnabled) ||
                 other.isSoundEnabled == isSoundEnabled) &&
-            (identical(other.isVibrationEnabled, isVibrationEnabled) ||
-                other.isVibrationEnabled == isVibrationEnabled) &&
             (identical(
                   other.isBackgroundMusicEnabled,
                   isBackgroundMusicEnabled,
@@ -250,7 +232,6 @@ class _$AppStateImpl implements _AppState {
     isDarkMode,
     locale,
     isSoundEnabled,
-    isVibrationEnabled,
     isBackgroundMusicEnabled,
     soundVolume,
     musicVolume,
@@ -270,7 +251,6 @@ abstract class _AppState implements AppState {
     required final bool isDarkMode,
     required final Locale locale,
     required final bool isSoundEnabled,
-    required final bool isVibrationEnabled,
     required final bool isBackgroundMusicEnabled,
     required final double soundVolume,
     required final double musicVolume,
@@ -283,8 +263,6 @@ abstract class _AppState implements AppState {
   Locale get locale; // Audio Settings
   @override
   bool get isSoundEnabled;
-  @override
-  bool get isVibrationEnabled;
   @override
   bool get isBackgroundMusicEnabled;
   @override

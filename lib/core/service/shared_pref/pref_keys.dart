@@ -7,7 +7,6 @@ class PrefKeys {
   
   // Audio
   static const soundEnabled = 'soundEnabled';
-    static const vibrationEnabled = 'vibrationEnabled';
 
   static const backgroundMusicEnabled = 'backgroundMusicEnabled';
   static const soundVolume = 'soundVolume';

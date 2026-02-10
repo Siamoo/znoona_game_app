@@ -147,7 +147,6 @@ class _QuizBodyState extends State<QuizBody> {
           _playCorrectSound();
         }
       } else {
-        // Wrong answer - play sound only (vibration removed)
         if (appState.isSoundEnabled) {
           _playWrongSound();
         }
@@ -537,7 +536,6 @@ class _QuizBodyState extends State<QuizBody> {
     );
   }
 
-  // Updated method with sound control only (vibration removed)
   Widget _buildSoundControl() {
     return BlocBuilder<AppCubit, AppState>(
       builder: (context, appState) {
@@ -552,7 +550,6 @@ class _QuizBodyState extends State<QuizBody> {
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              // Sound control (replaced vibration icon)
               IconButton(
                 icon: Icon(
                   appState.isSoundEnabled

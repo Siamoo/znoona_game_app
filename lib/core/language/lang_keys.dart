@@ -196,8 +196,6 @@ class LangKeys {
   static const String gameComplete = 'game_complete';
   static const String lastThreeSeconds = 'last_three_seconds';
   static const String tapImageToZoom = 'tap_image_to_zoom';
-  static const String disableVibration = 'disable_vibration';
-  static const String enableVibration = 'enable_vibration';
   static const String volumePercentage = 'volume_percentage';
   static const String noConnection = 'no_connection';
   static const String noConnectionMessage = 'no_connection_message';

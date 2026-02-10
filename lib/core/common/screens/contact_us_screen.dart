@@ -1,22 +1,23 @@
+import 'package:animate_do/animate_do.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:google_fonts/google_fonts.dart';
+import 'package:mailto/mailto.dart';
 import 'package:medaan_almaarifa/core/common/widgets/custom_linear_button.dart';
 import 'package:medaan_almaarifa/core/common/widgets/text_app.dart';
 import 'package:medaan_almaarifa/core/helpers/znoona.colors.dart';
 import 'package:medaan_almaarifa/core/helpers/znoona_texts.dart';
 import 'package:medaan_almaarifa/core/language/lang_keys.dart';
 import 'package:medaan_almaarifa/core/style/images/app_images.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:url_launcher/url_launcher.dart';
-import 'package:mailto/mailto.dart';
 
 class ContactUsScreen extends StatelessWidget {
   const ContactUsScreen({super.key});
 
-  final phoneNumber = '+201066036288';
-  final String email = 'walidsyam.f@gmail.com';
-  final String whatsappNumber = '201206611795'; // Without +
-  final String facebookUrl = 'https://www.facebook.com/walid';
+  final phoneNumber = '+201206611795';
+  final email = 'medaanalmaarifa@gmail.com';
+  final whatsappNumber = '201206611795';
+  final facebookUrl = 'https://www.facebook.com/walidA.siam?locale=ar_AR';
 
   Future<void> _callUs(BuildContext context) async {
     final Uri phoneUri = Uri(scheme: 'tel', path: phoneNumber);
@@ -129,112 +130,140 @@ class ContactUsScreen extends StatelessWidget {
           child: SingleChildScrollView(
             child: Column(
               children: [
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    SizedBox(width: 40.w),
-                    Expanded(
-                      child: Center(
-                        child: TextApp(
-                          text: ZnoonaTexts.tr(context, LangKeys.contactUs),
-                          textStyle: GoogleFonts.beiruti(
-                            fontSize: 26.h,
-                            fontWeight: FontWeight.bold,
-                            color: ZnoonaColors.text(context),
+                FadeInLeft(
+                  duration: const Duration(milliseconds: 2200),
+                  child: FadeInDown(
+                    duration: const Duration(milliseconds: 1500),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        SizedBox(width: 40.w),
+                        Center(
+                          child: TextApp(
+                            text: ZnoonaTexts.tr(context, LangKeys.contactUs),
+                            textStyle: GoogleFonts.beiruti(
+                              fontSize: 26.h,
+                              fontWeight: FontWeight.bold,
+                              color: ZnoonaColors.text(context),
+                            ),
                           ),
                         ),
-                      ),
+                        IconButton(
+                          icon: Icon(
+                            Icons.close,
+                            size: 30.h,
+                            color: ZnoonaColors.text(context),
+                          ),
+                          onPressed: () => Navigator.of(context).pop(),
+                        ),
+                      ],
                     ),
-                    IconButton(
-                      icon: Icon(
-                        Icons.close,
-                        size: 30.h,
-                        color: ZnoonaColors.text(context),
-                      ),
-                      onPressed: () => Navigator.of(context).pop(),
-                    ),
-                  ],
+                  ),
                 ),
                 SizedBox(height: 20.h),
 
                 // Header Image
-                Center(
-                  child: Image.asset(
-                    AppImages.callUs,
-                    height: 150.h,
-                    width: 150.w,
-                    errorBuilder: (context, error, stackTrace) {
-                      return Icon(
-                        Icons.support_agent,
-                        size: 80.h,
-                        color: ZnoonaColors.bluePinkDark(context),
-                      );
-                    },
+                FadeInLeft(
+                  duration: const Duration(milliseconds: 2100),
+                  child: FadeInDown(
+                    duration: const Duration(milliseconds: 1500),
+                    child: Center(
+                      child: Image.asset(
+                        AppImages.callUs,
+                        height: 150.h,
+                        width: 150.w,
+                        errorBuilder: (context, error, stackTrace) {
+                          return Icon(
+                            Icons.support_agent,
+                            size: 80.h,
+                            color: ZnoonaColors.bluePinkDark(context),
+                          );
+                        },
+                      ),
+                    ),
                   ),
                 ),
 
                 SizedBox(height: 16.h),
 
                 // Title
-                TextApp(
-                  text: ZnoonaTexts.tr(context, LangKeys.howCanWeHelp),
-                  textStyle: GoogleFonts.beiruti(
-                    fontSize: 24.h,
-                    fontWeight: FontWeight.bold,
-                    color: ZnoonaColors.text(context),
+                FadeInLeft(
+                  duration: const Duration(milliseconds: 2000),
+                  child: FadeInDown(
+                    duration: const Duration(milliseconds: 1300),
+                    child: TextApp(
+                      text: ZnoonaTexts.tr(context, LangKeys.howCanWeHelp),
+                      textStyle: GoogleFonts.beiruti(
+                        fontSize: 24.h,
+                        fontWeight: FontWeight.bold,
+                        color: ZnoonaColors.text(context),
+                      ),
+                    ),
                   ),
                 ),
 
                 SizedBox(height: 8.h),
 
                 // Subtitle
-                TextApp(
-                  text: ZnoonaTexts.tr(context, LangKeys.chooseOptionBelow),
-                  textStyle: GoogleFonts.beiruti(
-                    fontSize: 18.h,
-                    color: Colors.grey.shade600,
+                FadeInLeft(
+                  duration: const Duration(milliseconds: 1900),
+                  child: FadeInDown(
+                    duration: const Duration(milliseconds: 1200),
+                    child: TextApp(
+                      text: ZnoonaTexts.tr(context, LangKeys.chooseOptionBelow),
+                      textStyle: GoogleFonts.beiruti(
+                        fontSize: 18.h,
+                        color: Colors.grey.shade600,
+                      ),
+                    ),
                   ),
                 ),
 
                 SizedBox(height: 30.h),
 
                 // Call Button
-                CustomLinearButton(
-                  borderRadiusNum: 20,
-                  colors: [
-                    Colors.deepPurpleAccent.shade200,
-                    Colors.deepPurple.shade800,
-                  ],
-                  height: 70.h,
-                  width: double.infinity,
-                  onPressed: () => _callUs(context),
-                  child: Padding(
-                    padding: EdgeInsets.symmetric(horizontal: 16.w),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Image.asset(
-                          AppImages.callUs,
-                          height: 50.h,
-                          width: 50.w,
-                          errorBuilder: (context, error, stackTrace) {
-                            return Icon(
-                              Icons.phone,
-                              color: Colors.white,
-                              size: 30.h,
-                            );
-                          },
-                        ),
-                        SizedBox(width: 10.w),
-                        TextApp(
-                          text: ZnoonaTexts.tr(context, LangKeys.callUs),
-                          textStyle: GoogleFonts.beiruti(
-                            fontSize: 22.h,
-                            fontWeight: FontWeight.w800,
-                            color: Colors.white,
-                          ),
-                        ),
+                FadeInLeft(
+                  duration: const Duration(milliseconds: 1700),
+                  child: FadeInDown(
+                    duration: const Duration(milliseconds: 1000),
+                    child: CustomLinearButton(
+                      borderRadiusNum: 20,
+                      colors: [
+                        Colors.deepPurpleAccent.shade200,
+                        Colors.deepPurple.shade800,
                       ],
+                      height: 70.h,
+                      width: double.infinity,
+                      onPressed: () => _callUs(context),
+                      child: Padding(
+                        padding: EdgeInsets.symmetric(horizontal: 16.w),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Image.asset(
+                              AppImages.callUs,
+                              height: 50.h,
+                              width: 50.w,
+                              errorBuilder: (context, error, stackTrace) {
+                                return Icon(
+                                  Icons.phone,
+                                  color: Colors.white,
+                                  size: 30.h,
+                                );
+                              },
+                            ),
+                            SizedBox(width: 10.w),
+                            TextApp(
+                              text: ZnoonaTexts.tr(context, LangKeys.callUs),
+                              textStyle: GoogleFonts.beiruti(
+                                fontSize: 22.h,
+                                fontWeight: FontWeight.w800,
+                                color: Colors.white,
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
                     ),
                   ),
                 ),
@@ -242,42 +271,48 @@ class ContactUsScreen extends StatelessWidget {
                 SizedBox(height: 10.h),
 
                 // Email Button
-                CustomLinearButton(
-                  borderRadiusNum: 20,
-                  colors: [
-                    Colors.yellow.shade700,
-                    Colors.deepOrange.shade700,
-                  ],
-                  height: 70.h,
-                  width: double.infinity,
-                  onPressed: () => _sendEmail(context),
-                  child: Padding(
-                    padding: EdgeInsets.symmetric(horizontal: 16.w),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Image.asset(
-                          AppImages.email,
-                          height: 50.h,
-                          width: 50.w,
-                          errorBuilder: (context, error, stackTrace) {
-                            return Icon(
-                              Icons.email,
-                              color: Colors.white,
-                              size: 30.h,
-                            );
-                          },
-                        ),
-                        SizedBox(width: 10.w),
-                        TextApp(
-                          text: ZnoonaTexts.tr(context, LangKeys.emailUs),
-                          textStyle: GoogleFonts.beiruti(
-                            fontSize: 22.h,
-                            fontWeight: FontWeight.w800,
-                            color: Colors.white,
-                          ),
-                        ),
+                FadeInLeft(
+                  duration: const Duration(milliseconds: 1500),
+                  child: FadeInDown(
+                    duration: const Duration(milliseconds: 900),
+                    child: CustomLinearButton(
+                      borderRadiusNum: 20,
+                      colors: [
+                        Colors.yellow.shade700,
+                        Colors.deepOrange.shade700,
                       ],
+                      height: 70.h,
+                      width: double.infinity,
+                      onPressed: () => _sendEmail(context),
+                      child: Padding(
+                        padding: EdgeInsets.symmetric(horizontal: 16.w),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Image.asset(
+                              AppImages.email,
+                              height: 50.h,
+                              width: 50.w,
+                              errorBuilder: (context, error, stackTrace) {
+                                return Icon(
+                                  Icons.email,
+                                  color: Colors.white,
+                                  size: 30.h,
+                                );
+                              },
+                            ),
+                            SizedBox(width: 10.w),
+                            TextApp(
+                              text: ZnoonaTexts.tr(context, LangKeys.emailUs),
+                              textStyle: GoogleFonts.beiruti(
+                                fontSize: 22.h,
+                                fontWeight: FontWeight.w800,
+                                color: Colors.white,
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
                     ),
                   ),
                 ),
@@ -285,42 +320,48 @@ class ContactUsScreen extends StatelessWidget {
                 SizedBox(height: 10.h),
 
                 // WhatsApp Button
-                CustomLinearButton(
-                  borderRadiusNum: 20,
-                  colors: [
-                    Colors.green.shade600,
-                    Colors.green.shade900,
-                  ],
-                  height: 70.h,
-                  width: double.infinity,
-                  onPressed: () => _openWhatsApp(context),
-                  child: Padding(
-                    padding: EdgeInsets.symmetric(horizontal: 16.w),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Image.asset(
-                          AppImages.whatsapp,
-                          height: 50.h,
-                          width: 50.w,
-                          errorBuilder: (context, error, stackTrace) {
-                            return Icon(
-                              Icons.message,
-                              color: Colors.white,
-                              size: 30.h,
-                            );
-                          },
-                        ),
-                        SizedBox(width: 10.w),
-                        TextApp(
-                          text: ZnoonaTexts.tr(context, LangKeys.whatsapp),
-                          textStyle: GoogleFonts.beiruti(
-                            fontSize: 22.h,
-                            fontWeight: FontWeight.w800,
-                            color: Colors.white,
-                          ),
-                        ),
+                FadeInLeft(
+                  duration: const Duration(milliseconds: 1300),
+                  child: FadeInDown(
+                    duration: const Duration(milliseconds: 700),
+                    child: CustomLinearButton(
+                      borderRadiusNum: 20,
+                      colors: [
+                        Colors.green.shade600,
+                        Colors.green.shade900,
                       ],
+                      height: 70.h,
+                      width: double.infinity,
+                      onPressed: () => _openWhatsApp(context),
+                      child: Padding(
+                        padding: EdgeInsets.symmetric(horizontal: 16.w),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Image.asset(
+                              AppImages.whatsapp,
+                              height: 50.h,
+                              width: 50.w,
+                              errorBuilder: (context, error, stackTrace) {
+                                return Icon(
+                                  Icons.message,
+                                  color: Colors.white,
+                                  size: 30.h,
+                                );
+                              },
+                            ),
+                            SizedBox(width: 10.w),
+                            TextApp(
+                              text: ZnoonaTexts.tr(context, LangKeys.whatsapp),
+                              textStyle: GoogleFonts.beiruti(
+                                fontSize: 22.h,
+                                fontWeight: FontWeight.w800,
+                                color: Colors.white,
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
                     ),
                   ),
                 ),
@@ -328,42 +369,49 @@ class ContactUsScreen extends StatelessWidget {
                 SizedBox(height: 10.h),
 
                 // Facebook Button
-                CustomLinearButton(
-                  borderRadiusNum: 20,
-                  colors: [
-                    Colors.blue.shade700,
-                    Colors.blue.shade900,
-                  ],
-                  height: 70.h,
-                  width: double.infinity,
-                  onPressed: () => _openFacebook(context),
-                  child: Padding(
-                    padding: EdgeInsets.symmetric(horizontal: 16.w),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Image.asset(
-                          AppImages.facebook,
-                          height: 50.h,
-                          width: 50.w,
-                          errorBuilder: (context, error, stackTrace) {
-                            return Icon(
-                              Icons.facebook,
-                              color: Colors.white,
-                              size: 30.h,
-                            );
-                          },
-                        ),
-                        SizedBox(width: 10.w),
-                        TextApp(
-                          text: ZnoonaTexts.tr(context, LangKeys.facebook),
-                          textStyle: GoogleFonts.beiruti(
-                            fontSize: 22.h,
-                            fontWeight: FontWeight.w800,
-                            color: Colors.white,
-                          ),
-                        ),
+                FadeInLeft(
+                  duration: const Duration(milliseconds: 1100),
+
+                  child: FadeInDown(
+                    duration: const Duration(milliseconds: 500),
+                    child: CustomLinearButton(
+                      borderRadiusNum: 20,
+                      colors: [
+                        Colors.blue.shade700,
+                        Colors.blue.shade900,
                       ],
+                      height: 70.h,
+                      width: double.infinity,
+                      onPressed: () => _openFacebook(context),
+                      child: Padding(
+                        padding: EdgeInsets.symmetric(horizontal: 16.w),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Image.asset(
+                              AppImages.facebook,
+                              height: 50.h,
+                              width: 50.w,
+                              errorBuilder: (context, error, stackTrace) {
+                                return Icon(
+                                  Icons.facebook,
+                                  color: Colors.white,
+                                  size: 30.h,
+                                );
+                              },
+                            ),
+                            SizedBox(width: 10.w),
+                            TextApp(
+                              text: ZnoonaTexts.tr(context, LangKeys.facebook),
+                              textStyle: GoogleFonts.beiruti(
+                                fontSize: 22.h,
+                                fontWeight: FontWeight.w800,
+                                color: Colors.white,
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
                     ),
                   ),
                 ),

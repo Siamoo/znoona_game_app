@@ -2,6 +2,7 @@ import 'package:animate_do/animate_do.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:medaan_almaarifa/core/common/screens/contact_us_screen.dart';
+import 'package:medaan_almaarifa/core/common/screens/give_suggestion_screen.dart';
 import 'package:medaan_almaarifa/core/helpers/znoona_navigate.dart';
 import 'package:medaan_almaarifa/core/language/lang_keys.dart';
 import 'package:medaan_almaarifa/core/style/images/app_images.dart';
@@ -69,8 +70,11 @@ class HomeBody extends StatelessWidget {
                                 duration: const Duration(milliseconds: 1000),
                                 child: GameButton(
                                   image: AppImages.puzzle,
-                                  langkey: LangKeys.appName,
-                                  onPressed: () {},
+                                  langkey: LangKeys.suggestions,
+                                  onPressed: () => ZnoonaNavigate.pushTo(
+                                    context,
+                                    const GiveSuggestionScreen(),
+                                  ),
                                 ),
                               ),
                             ],
@@ -87,7 +91,7 @@ class HomeBody extends StatelessWidget {
                         FadeInLeft(
                           duration: const Duration(milliseconds: 900),
                           child: DiscoverButton(
-                            langKeys: LangKeys.contactSupport,
+                            langKeys: LangKeys.howCanWeHelp,
                             appImages: AppImages.callUs,
                             onPressed: () => ZnoonaNavigate.pushTo(
                               context,

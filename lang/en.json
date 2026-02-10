@@ -1,6 +1,6 @@
 {
   "language": "English",
-  "app_name": "midan al maarifa",
+  "app_name": "medaan al maarifa",
   "login": "Login",
   "welcome": "Welcome, Please enter your email and get started.",
   "your_email": "Your Email",
@@ -213,5 +213,7 @@
   "email_us": "Email Us   ",
   "whatsapp": "WhatsApp",
   "facebook": "Facebook",
-  "app_version": "App Version"
+  "app_version": "App Version",
+  "suggestions": "Suggestions",
+  "new_app_suggestions": "If You Have Any Suggestions For New Features Or Improvements For The App, Please Let Us Know! We Value Your Feedback And Are Always Looking To Enhance The User Experience. Feel Free To Share Your Ideas With Us!"
 }

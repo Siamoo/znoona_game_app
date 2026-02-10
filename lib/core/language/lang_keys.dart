@@ -213,4 +213,6 @@ class LangKeys {
   static const String whatsapp = 'whatsapp';
   static const String facebook = 'facebook';
   static const String appVersion = 'app_version';
+  static const String suggestions = 'suggestions';
+  static const String newAppSuggestions = 'new_app_suggestions';
 }

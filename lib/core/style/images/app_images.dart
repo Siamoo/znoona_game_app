@@ -59,6 +59,8 @@ class AppImages {
   static const rank1 = 'assets/images/user/rank1.png';
   static const rank2 = 'assets/images/user/rank2.png';
   static const rank3 = 'assets/images/user/rank3.png';
+  static const birds = 'assets/images/design/birds.png';
+  static const manBirds = 'assets/images/design/man_birds.png';
 
   //Svg
   static const mode = 'assets/svg/dark_mode.svg';

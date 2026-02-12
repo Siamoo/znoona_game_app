@@ -22,4 +22,7 @@ class EnvVariables {
 
   String get supabaseUrl => dotenv.env['SUPABASE_URL'] ?? '';
   String get supabaseAnonKey => dotenv.env['SUPABASE_ANON_KEY'] ?? '';
+  String get phoneNumber => dotenv.env['PHONE_NUMBER'] ?? '';
+  String get contactEmail => dotenv.env['CONTACT_EMAIL'] ?? '';
+  String get facebookLink => dotenv.env['FACEBOOK_LINK'] ?? '';
 }

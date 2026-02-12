@@ -5,10 +5,10 @@ class AppState with _$AppState {
   const factory AppState({
     // Theme
     required bool isDarkMode,
-    
+
     // Language
     required Locale locale,
-    
+
     // Audio Settings
     required bool isSoundEnabled,
     required bool isBackgroundMusicEnabled,
@@ -19,7 +19,7 @@ class AppState with _$AppState {
   // Factory for initial state
   factory AppState.initial() => const AppState(
     isDarkMode: true,
-    locale: Locale('en'),
+    locale: Locale('ar'),
     isSoundEnabled: true,
     isBackgroundMusicEnabled: true,
     soundVolume: 1.0,

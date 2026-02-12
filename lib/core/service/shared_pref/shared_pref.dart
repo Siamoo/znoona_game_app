@@ -1,81 +1,133 @@
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:logger/logger.dart';
 
+/// Injectable SharedPreferences service with proper error handling
 class SharedPref {
-  factory SharedPref() {
-    return preferences;
+  final SharedPreferences _prefs;
+  final Logger _logger;
+  
+  // Private constructor for factory method
+  SharedPref._(this._prefs, this._logger);
+  
+  /// Factory method to create instance with dependencies
+  static Future<SharedPref> create() async {
+    final prefs = await SharedPreferences.getInstance();
+    final logger = Logger();
+    return SharedPref._(prefs, logger);
+  }
+  
+  /// For testing - allow injection of mock SharedPreferences
+  factory SharedPref.fromPrefs(SharedPreferences prefs, {Logger? logger}) {
+    return SharedPref._(prefs, logger ?? Logger());
   }
 
-  SharedPref._internal();
-  static final SharedPref preferences = SharedPref._internal();
-
-  static late SharedPreferences sharedPreferences;
-
-  ///Below method is to initialize the SharedPreference instance.
-  Future<dynamic> instantiatePreferences() async {
-    sharedPreferences = await SharedPreferences.getInstance();
-  }
-
-  ///Below method is to return the SharedPreference instance.
-  SharedPreferences getPreferenceInstance() {
-    return sharedPreferences;
-  }
-
-  ///Below method is to set the string value in the SharedPreferences.
-  Future<dynamic> setString(String key, String stringValue) async {
-    await sharedPreferences.setString(key, stringValue);
-  }
-
-  ///Below method is to get the string value from the SharedPreferences.
-  String? getString(String key) {
-    return sharedPreferences.getString(key);
-  }
-
-  ///Below method is to set the boolean value in the SharedPreferences.
-  Future<dynamic> setBoolean(String key, bool booleanValue) async {
-    await sharedPreferences.setBool(key, booleanValue);
-  }
-
-  ///Below method is to get the boolean value from the SharedPreferences.
-  bool? getBoolean(String key) {
-    return sharedPreferences.getBool(key);
-  }
-
-  ///Below method is to set the double value in the SharedPreferences.
-  Future<dynamic> setDouble(String key, double doubleValue) async {
-    await sharedPreferences.setDouble(key, doubleValue);
-  }
-
-  ///Below method is to set the double value from the SharedPreferences.
-  double? getDouble(String key) {
-    return sharedPreferences.getDouble(key);
-  }
-
-  ///Below method is to set the int value in the SharedPreferences.
-  Future<dynamic> setInt(String key, int intValue) async {
-    await sharedPreferences.setInt(key, intValue);
-  }
-
-  ///Below method is to get the int value from the SharedPreferences.
-  int? getInt(String key) {
-    return sharedPreferences.getInt(key);
-  }
-
-  ///Below method is to remove the received preference.
-  Future<dynamic> removePreference(String key) async {
-    await sharedPreferences.remove(key);
-  }
-
-  ///Below method is to check the availability of the received preference .
-  bool containPreference(String key) {
-    if (sharedPreferences.get(key) == null) {
+  /// Set string value with error handling
+  Future<bool> setString(String key, String value) async {
+    try {
+      return await _prefs.setString(key, value);
+    } catch (e, stackTrace) {
+      _logger.e('Failed to set string for key: $key', error: e, stackTrace: stackTrace);
       return false;
-    } else {
-      return true;
     }
   }
 
-  ///Below method is to clear the SharedPreference.
-  Future<dynamic> clearPreferences() async {
-    await sharedPreferences.clear();
+  /// Get string value with fallback
+  String? getString(String key, {String? defaultValue}) {
+    try {
+      return _prefs.getString(key) ?? defaultValue;
+    } catch (e, stackTrace) {
+      _logger.e('Failed to get string for key: $key', error: e, stackTrace: stackTrace);
+      return defaultValue;
+    }
+  }
+
+  /// Set boolean value with error handling
+  Future<bool> setBoolean(String key, bool value) async {
+    try {
+      return await _prefs.setBool(key, value);
+    } catch (e, stackTrace) {
+      _logger.e('Failed to set boolean for key: $key', error: e, stackTrace: stackTrace);
+      return false;
+    }
+  }
+
+  /// Get boolean value with fallback
+  bool? getBoolean(String key, {bool? defaultValue}) {
+    try {
+      return _prefs.getBool(key) ?? defaultValue;
+    } catch (e, stackTrace) {
+      _logger.e('Failed to get boolean for key: $key', error: e, stackTrace: stackTrace);
+      return defaultValue;
+    }
+  }
+
+  /// Set double value with error handling
+  Future<bool> setDouble(String key, double value) async {
+    try {
+      return await _prefs.setDouble(key, value);
+    } catch (e, stackTrace) {
+      _logger.e('Failed to set double for key: $key', error: e, stackTrace: stackTrace);
+      return false;
+    }
+  }
+
+  /// Get double value with fallback
+  double? getDouble(String key, {double? defaultValue}) {
+    try {
+      return _prefs.getDouble(key) ?? defaultValue;
+    } catch (e, stackTrace) {
+      _logger.e('Failed to get double for key: $key', error: e, stackTrace: stackTrace);
+      return defaultValue;
+    }
+  }
+
+  /// Set int value with error handling
+  Future<bool> setInt(String key, int value) async {
+    try {
+      return await _prefs.setInt(key, value);
+    } catch (e, stackTrace) {
+      _logger.e('Failed to set int for key: $key', error: e, stackTrace: stackTrace);
+      return false;
+    }
+  }
+
+  /// Get int value with fallback
+  int? getInt(String key, {int? defaultValue}) {
+    try {
+      return _prefs.getInt(key) ?? defaultValue;
+    } catch (e, stackTrace) {
+      _logger.e('Failed to get int for key: $key', error: e, stackTrace: stackTrace);
+      return defaultValue;
+    }
+  }
+
+  /// Check if key exists
+  bool containsKey(String key) {
+    try {
+      return _prefs.containsKey(key);
+    } catch (e, stackTrace) {
+      _logger.e('Failed to check key: $key', error: e, stackTrace: stackTrace);
+      return false;
+    }
+  }
+
+  /// Remove preference with error handling
+  Future<bool> remove(String key) async {
+    try {
+      return await _prefs.remove(key);
+    } catch (e, stackTrace) {
+      _logger.e('Failed to remove key: $key', error: e, stackTrace: stackTrace);
+      return false;
+    }
+  }
+
+  /// Clear all preferences with error handling
+  Future<bool> clear() async {
+    try {
+      return await _prefs.clear();
+    } catch (e, stackTrace) {
+      _logger.e('Failed to clear preferences', error: e, stackTrace: stackTrace);
+      return false;
+    }
   }
 }

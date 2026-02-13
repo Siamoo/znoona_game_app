@@ -1,8 +1,11 @@
 import 'package:get_it/get_it.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
+import 'package:logger/logger.dart';
 
 // App Core
 import 'package:medaan_almaarifa/core/app/app_cubit/app_cubit.dart';
+import 'package:medaan_almaarifa/core/service/shared_pref/shared_pref.dart';
+import 'package:medaan_almaarifa/core/helpers/audio_service.dart';
 import 'package:medaan_almaarifa/features/quiz/categories/domain/usecases/get_main_categories_usecase.dart';
 import 'package:medaan_almaarifa/features/quiz/categories/domain/usecases/get_sub_categories_usecase.dart';
 import 'package:medaan_almaarifa/features/quiz/room/data/datasources/room_remote_data_source.dart';
@@ -49,24 +52,35 @@ import 'package:medaan_almaarifa/features/quiz/categories/data/repositories/cate
 import 'package:medaan_almaarifa/features/quiz/categories/domain/repositories/categories_repository.dart';
 import 'package:medaan_almaarifa/features/quiz/categories/presentation/cubit/categories_cubit.dart';
 
-// Add AudioService import
-import 'package:medaan_almaarifa/core/helpers/audio_service.dart';
-
-// ---------------- MULTIPLAYER ROOM ----------------
-
 final GetIt sl = GetIt.instance;
 
-Future<void> setupInjector() async {
-  /// Core
+Future<void> setupInjector({SharedPref? sharedPref}) async {
+  /// Core Services
+  final prefs = sharedPref ?? await SharedPref.create();
+  final logger = Logger();
+  final audioService = AudioService();
+  
+  // Initialize audio service
+  await audioService.initialize();
+
+  /// Register core singletons
   sl
-    ..registerFactory(AppCubit.new)
+    ..registerSingleton<SharedPref>(prefs)
+    ..registerSingleton<Logger>(logger)
+    ..registerSingleton<AudioService>(audioService)
+    
     /// External
     ..registerLazySingleton(() => Supabase.instance.client)
-    // ---------------- AUDIO SERVICE ----------------
-    /// Audio Service (Singleton) - SIMPLIFIED REGISTRATION
-    ..registerSingleton<AudioService>(
-      AudioService(),
+    
+    // ---------------- APP CUBIT ----------------
+    ..registerFactory(
+      () => AppCubit(
+        sharedPref: sl<SharedPref>(),
+        audioService: sl<AudioService>(),
+        logger: sl<Logger>(),
+      ),
     )
+    
     // ---------------- AUTH ----------------
     /// Datasources
     ..registerLazySingleton<AuthRemoteDataSource>(
@@ -80,7 +94,7 @@ Future<void> setupInjector() async {
     ..registerLazySingleton(() => LogoutUseCase(sl()))
     ..registerLazySingleton(() => LoginWithGoogleUseCase(sl()))
     ..registerLazySingleton(() => GetCurrentUserUseCase(sl()))
-    /// Cubits - UPDATED TO INCLUDE AUTHREPOSITORY
+    /// Cubits
     ..registerFactory(
       () => AuthCubit(
         loginUseCase: sl(),
@@ -88,9 +102,10 @@ Future<void> setupInjector() async {
         loginWithGoogleUseCase: sl(),
         logoutUseCase: sl(),
         getCurrentUserUseCase: sl(),
-        authRepository: sl(), // ADD THIS
+        authRepository: sl(),
       ),
     )
+    
     // ---------------- CATEGORIES ----------------
     /// Datasources
     ..registerLazySingleton<CategoriesRemoteDataSource>(
@@ -110,6 +125,7 @@ Future<void> setupInjector() async {
         getSubCategoriesUseCase: sl(),
       ),
     )
+    
     // ---------------- QUESTIONS (Single Player) ----------------
     /// Datasources
     ..registerLazySingleton<QuestionsRemoteDataSource>(
@@ -123,6 +139,7 @@ Future<void> setupInjector() async {
     ..registerLazySingleton(() => GetQuestionsByCategoryUseCase(sl()))
     /// Cubits
     ..registerFactory(() => QuestionsCubit(sl()))
+    
     // ---------------- MULTIPLAYER ROOM ----------------
     /// Datasources
     ..registerLazySingleton<RoomRemoteDataSource>(

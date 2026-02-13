@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:mailto/mailto.dart';
+import 'package:medaan_almaarifa/core/app/env.variables.dart';
 import 'package:medaan_almaarifa/core/helpers/znoona.colors.dart';
 import 'package:medaan_almaarifa/core/helpers/znoona_texts.dart';
 import 'package:medaan_almaarifa/core/language/lang_keys.dart';
@@ -20,7 +21,7 @@ class ErrorScreen extends StatelessWidget {
 
   Future<void> _sendEmail(BuildContext context) async {
     final mailtoLink = Mailto(
-      to: ['walidsyam.f@gmail.com'],
+      to: [EnvVariables.instance.contactEmail],
       subject: 'App Error Report - Medaan AlMaarifa',
       body:
           'Please describe the issue you encountered:\n\n'
@@ -208,7 +209,7 @@ class ErrorScreen extends StatelessWidget {
                     ),
                     SizedBox(width: 4.w),
                     Text(
-                      'walidsyam.f@gmail.com',
+                      EnvVariables.instance.contactEmail,
                       style: GoogleFonts.beiruti(
                         fontSize: 12.h,
                         color: Colors.grey.shade700,

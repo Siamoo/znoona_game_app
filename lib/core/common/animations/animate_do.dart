@@ -5,7 +5,7 @@ import 'package:medaan_almaarifa/core/common/animations/animation_constants.dart
 class CustomFadeInDown extends StatelessWidget {
   const CustomFadeInDown({
     required this.child,
-    this.duration = AnimationDurations.normal,
+    this.duration = AnimationDurations.medium,
     this.delay = AnimationDelays.medium,
     super.key,
   });
@@ -28,7 +28,7 @@ class CustomFadeInDown extends StatelessWidget {
 class CustomFadeInUp extends StatelessWidget {
   const CustomFadeInUp({
     required this.child,
-    this.duration = AnimationDurations.normal,
+    this.duration = AnimationDurations.medium,
     this.delay = AnimationDelays.medium,
     super.key,
   });
@@ -51,7 +51,7 @@ class CustomFadeInUp extends StatelessWidget {
 class CustomFadeInLeft extends StatelessWidget {
   const CustomFadeInLeft({
     required this.child,
-    this.duration = AnimationDurations.normal,
+    this.duration = AnimationDurations.medium,
     this.delay = AnimationDelays.medium,
     super.key,
   });
@@ -84,7 +84,7 @@ class CustomFadeInLeft extends StatelessWidget {
 class CustomFadeInRight extends StatelessWidget {
   const CustomFadeInRight({
     required this.child,
-    this.duration = AnimationDurations.normal,
+    this.duration = AnimationDurations.medium,
     this.delay = AnimationDelays.medium,
     super.key,
   });

@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:mailto/mailto.dart';
+import 'package:medaan_almaarifa/core/app/env.variables.dart';
 import 'package:medaan_almaarifa/core/common/widgets/custom_linear_button.dart';
 import 'package:medaan_almaarifa/core/common/widgets/text_app.dart';
 import 'package:medaan_almaarifa/core/helpers/znoona.colors.dart';
@@ -14,13 +15,11 @@ import 'package:url_launcher/url_launcher.dart';
 class ContactUsScreen extends StatelessWidget {
   const ContactUsScreen({super.key});
 
-  final phoneNumber = '+201206611795';
-  final email = 'medaanalmaarifa@gmail.com';
-  final whatsappNumber = '201206611795';
-  final facebookUrl = 'https://www.facebook.com/walidA.siam?locale=ar_AR';
-
   Future<void> _callUs(BuildContext context) async {
-    final Uri phoneUri = Uri(scheme: 'tel', path: phoneNumber);
+    final phoneUri = Uri(
+      scheme: 'tel',
+      path: '+${EnvVariables.instance.phoneNumber}',
+    );
 
     try {
       if (await canLaunchUrl(phoneUri)) {
@@ -39,12 +38,12 @@ class ContactUsScreen extends StatelessWidget {
 
   Future<void> _sendEmail(BuildContext context) async {
     final mailtoLink = Mailto(
-      to: [email],
+      to: [EnvVariables.instance.contactEmail],
       subject: 'Contact Us - Medaan AlMaarifa',
       body: 'Hello,\n\nI would like to inquire about...\n\n',
     );
 
-    final Uri emailUri = Uri.parse(mailtoLink.toString());
+    final emailUri = Uri.parse(mailtoLink.toString());
 
     try {
       if (await canLaunchUrl(emailUri)) {
@@ -66,9 +65,11 @@ class ContactUsScreen extends StatelessWidget {
 
   Future<void> _openWhatsApp(BuildContext context) async {
     final message = Uri.encodeComponent(
-      "Hello, I need help with Medaan AlMaarifa app",
+      'Hello, I need help with Medaan AlMaarifa app',
     );
-    final url = Uri.parse("https://wa.me/$whatsappNumber?text=$message");
+    final url = Uri.parse(
+      'https://wa.me/${EnvVariables.instance.phoneNumber}?text=$message',
+    );
 
     try {
       if (await canLaunchUrl(url)) {
@@ -89,7 +90,7 @@ class ContactUsScreen extends StatelessWidget {
   }
 
   Future<void> _openFacebook(BuildContext context) async {
-    final Uri facebookUri = Uri.parse(facebookUrl);
+    final Uri facebookUri = Uri.parse(EnvVariables.instance.facebookLink);
 
     try {
       if (await canLaunchUrl(facebookUri)) {

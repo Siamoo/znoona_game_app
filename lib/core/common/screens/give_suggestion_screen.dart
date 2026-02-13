@@ -193,25 +193,6 @@ class GiveSuggestionScreen extends StatelessWidget {
                 child: Stack(
                   children: [
                     Positioned(
-                      right: 100.w,
-                      bottom: 200.h,
-                      child: FadeInDown(
-                        duration: const Duration(seconds: 6),
-                        from: 50.h,
-                        curve: Curves.elasticOut,
-                        child: FadeInRight(
-                          duration: const Duration(seconds: 6),
-                          // curve: Curves.elasticOut,
-                          from: 200.w,
-                          child: Image.asset(
-                            AppImages.bird,
-                            height: 30.h,
-                          ),
-                        ),
-                      ),
-                    ),
-
-                    Positioned(
                       left: 10.w,
                       bottom: 180.h,
                       child: FadeInLeft(
@@ -223,6 +204,25 @@ class GiveSuggestionScreen extends StatelessWidget {
                           from: 60.w,
                           child: Image.asset(
                             AppImages.birds,
+                            height: 30.h,
+                          ),
+                        ),
+                      ),
+                    ),
+
+                    Positioned(
+                      right: 100.w,
+                      bottom: 150.h,
+                      child: FadeInDown(
+                        duration: const Duration(seconds: 6),
+                        from: 20.h,
+                        curve: Curves.elasticInOut,
+                        child: FadeInRight(
+                          duration: const Duration(seconds: 6),
+                          // curve: Curves.elasticOut,
+                          from: 150.w,
+                          child: Image.asset(
+                            AppImages.bird,
                             height: 30.h,
                           ),
                         ),

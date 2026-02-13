@@ -1,24 +1,25 @@
 import 'package:animate_do/animate_do.dart';
 import 'package:flutter/material.dart';
-import 'package:medaan_almaarifa/core/service/shared_pref/pref_keys.dart';
-import 'package:medaan_almaarifa/core/service/shared_pref/shared_pref.dart';
+import 'package:medaan_almaarifa/core/common/animations/animation_constants.dart';
 
 class CustomFadeInDown extends StatelessWidget {
   const CustomFadeInDown({
     required this.child,
-    required this.duration,
+    this.duration = AnimationDurations.normal,
+    this.delay = AnimationDelays.medium,
     super.key,
   });
 
   final Widget child;
-
-  final int duration;
+  final Duration duration;
+  final Duration delay;
 
   @override
   Widget build(BuildContext context) {
     return FadeInDown(
-      delay: const Duration(milliseconds: 300),
-      duration: Duration(milliseconds: duration),
+      delay: delay,
+      duration: duration,
+      curve: AnimationCurves.defaultCurve,
       child: child,
     );
   }
@@ -27,19 +28,21 @@ class CustomFadeInDown extends StatelessWidget {
 class CustomFadeInUp extends StatelessWidget {
   const CustomFadeInUp({
     required this.child,
-    required this.duration,
+    this.duration = AnimationDurations.normal,
+    this.delay = AnimationDelays.medium,
     super.key,
   });
 
   final Widget child;
-
-  final int duration;
+  final Duration duration;
+  final Duration delay;
 
   @override
   Widget build(BuildContext context) {
     return FadeInUp(
-      delay: const Duration(milliseconds: 300),
-      duration: Duration(milliseconds: duration),
+      delay: delay,
+      duration: duration,
+      curve: AnimationCurves.defaultCurve,
       child: child,
     );
   }
@@ -48,25 +51,31 @@ class CustomFadeInUp extends StatelessWidget {
 class CustomFadeInLeft extends StatelessWidget {
   const CustomFadeInLeft({
     required this.child,
-    required this.duration,
+    this.duration = AnimationDurations.normal,
+    this.delay = AnimationDelays.medium,
     super.key,
   });
 
   final Widget child;
-
-  final int duration;
+  final Duration duration;
+  final Duration delay;
 
   @override
   Widget build(BuildContext context) {
-    return SharedPref().getString(PrefKeys.language) == 'ar'
-        ? FadeInLeft(
-            delay: const Duration(milliseconds: 300),
-            duration: Duration(milliseconds: duration),
+    // Get language once and cache it
+    final isRtl = Localizations.localeOf(context).languageCode == 'ar';
+    
+    return isRtl
+        ? FadeInRight(
+            delay: delay,
+            duration: duration,
+            curve: AnimationCurves.defaultCurve,
             child: child,
           )
-        : FadeInRight(
-            delay: const Duration(milliseconds: 300),
-            duration: Duration(milliseconds: duration),
+        : FadeInLeft(
+            delay: delay,
+            duration: duration,
+            curve: AnimationCurves.defaultCurve,
             child: child,
           );
   }
@@ -75,25 +84,30 @@ class CustomFadeInLeft extends StatelessWidget {
 class CustomFadeInRight extends StatelessWidget {
   const CustomFadeInRight({
     required this.child,
-    required this.duration,
+    this.duration = AnimationDurations.normal,
+    this.delay = AnimationDelays.medium,
     super.key,
   });
 
   final Widget child;
-
-  final int duration;
+  final Duration duration;
+  final Duration delay;
 
   @override
   Widget build(BuildContext context) {
-    return SharedPref().getString(PrefKeys.language) == 'ar'
-        ? FadeInRight(
-            delay: const Duration(milliseconds: 300),
-            duration: Duration(milliseconds: duration),
+    final isRtl = Localizations.localeOf(context).languageCode == 'ar';
+    
+    return isRtl
+        ? FadeInLeft(
+            delay: delay,
+            duration: duration,
+            curve: AnimationCurves.defaultCurve,
             child: child,
           )
-        : FadeInLeft(
-            delay: const Duration(milliseconds: 300),
-            duration: Duration(milliseconds: duration),
+        : FadeInRight(
+            delay: delay,
+            duration: duration,
+            curve: AnimationCurves.defaultCurve,
             child: child,
           );
   }

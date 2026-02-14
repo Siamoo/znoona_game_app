@@ -1,8 +1,10 @@
+import 'dart:async';
 import 'dart:ui';
 
+import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
-import 'package:medaan_almaarifa/core/di/injcetion_container.dart';
+import 'package:logger/logger.dart';
 import 'package:medaan_almaarifa/core/helpers/audio_service.dart';
 import 'package:medaan_almaarifa/core/service/shared_pref/pref_keys.dart';
 import 'package:medaan_almaarifa/core/service/shared_pref/shared_pref.dart';
@@ -11,139 +13,262 @@ part 'app_state.dart';
 part 'app_cubit.freezed.dart';
 
 class AppCubit extends Cubit<AppState> {
-  AppCubit() : super(AppState.initial()) {
+  final SharedPref _sharedPref;
+  final AudioService _audioService;
+  final Logger _logger;
+  
+  // Debouncer for frequent operations
+  Timer? _debounceTimer;
+  bool _isLoading = false;
+  
+  // Cache for preferences to reduce disk reads
+  final Map<String, dynamic> _prefCache = {};
+
+  AppCubit({
+    required SharedPref sharedPref,
+    required AudioService audioService,
+    Logger? logger,
+  })  : _sharedPref = sharedPref,
+        _audioService = audioService,
+        _logger = logger ?? Logger(),
+        super(AppState.initial()) {
     _loadSettings();
   }
 
-  // Add AudioService instance
-  final AudioService _audioService = sl<AudioService>();
+  Future<void> _loadSettings() async {
+    // Prevent multiple simultaneous loads
+    if (_isLoading) return;
+    _isLoading = true;
 
-  /// Load all settings from SharedPreferences
-/// Load all settings from SharedPreferences
-Future<void> _loadSettings() async {
-  // Check if this is first launch by seeing if theme preference exists
-  final hasThemePref = SharedPref().containPreference(PrefKeys.themeMode);
-  
-  // If first launch, use dark mode (true)
-  // Otherwise load saved preference (default to true if somehow null)
-  final isDarkMode = hasThemePref 
-      ? (SharedPref().getBoolean(PrefKeys.themeMode) ?? true)
-      : true; // First time users get dark mode
-  
-  final languageCode = SharedPref().getString(PrefKeys.language) ?? 'en';
-  final isSoundEnabled = SharedPref().getBoolean(PrefKeys.soundEnabled) ?? true;
-  final isBackgroundMusicEnabled = 
-      SharedPref().getBoolean(PrefKeys.backgroundMusicEnabled) ?? true;
-  final soundVolume = SharedPref().getDouble(PrefKeys.soundVolume) ?? 1.0;
-  final musicVolume = SharedPref().getDouble(PrefKeys.musicVolume) ?? 0.5;
+    try {
+      // Load all preferences with proper fallbacks
+      final loadTasks = await Future.wait([
+        _loadThemeMode(),
+        _loadLanguage(),
+        _loadSoundEnabled(),
+        _loadBackgroundMusicEnabled(),
+        _loadSoundVolume(),
+        _loadMusicVolume(),
+      ]);
 
-  final loadedState = AppState(
-    isDarkMode: isDarkMode,
-    locale: Locale(languageCode),
-    isSoundEnabled: isSoundEnabled,
-    isBackgroundMusicEnabled: isBackgroundMusicEnabled,
-    soundVolume: soundVolume,
-    musicVolume: musicVolume,
-  );
-  
-  emit(loadedState);
-  
-  // If this was first launch, explicitly save dark mode to preferences
-  if (!hasThemePref) {
-    await SharedPref().setBoolean(PrefKeys.themeMode, true);
+      final themeMode = loadTasks[0] as bool;
+      final languageCode = loadTasks[1] as String;
+      final isSoundEnabled = loadTasks[2] as bool;
+      final isBackgroundMusicEnabled = loadTasks[3] as bool;
+      final soundVolume = loadTasks[4] as double;
+      final musicVolume = loadTasks[5] as double;
+
+      // Cache loaded values
+      _updateCache({
+        PrefKeys.themeMode: themeMode,
+        PrefKeys.language: languageCode,
+        PrefKeys.soundEnabled: isSoundEnabled,
+        PrefKeys.backgroundMusicEnabled: isBackgroundMusicEnabled,
+        PrefKeys.soundVolume: soundVolume,
+        PrefKeys.musicVolume: musicVolume,
+      });
+
+      final loadedState = AppState(
+        isDarkMode: themeMode,
+        locale: Locale(languageCode),
+        isSoundEnabled: isSoundEnabled,
+        isBackgroundMusicEnabled: isBackgroundMusicEnabled,
+        soundVolume: soundVolume,
+        musicVolume: musicVolume,
+      );
+
+      if (!isClosed) {
+        emit(loadedState);
+        _audioService.onAppStateChanged(loadedState);
+      }
+    } catch (e, stackTrace) {
+      _logger.e('Failed to load app settings', error: e, stackTrace: stackTrace);
+      
+      // Emit initial state as fallback
+      if (!isClosed) {
+        emit(AppState.initial());
+        _audioService.onAppStateChanged(AppState.initial());
+      }
+    } finally {
+      _isLoading = false;
+    }
   }
-}
 
+  Future<bool> _loadThemeMode() async {
+    final value = _sharedPref.getBoolean(PrefKeys.themeMode);
+    return value ?? true; // Default to dark mode
+  }
 
-  /// Toggle between light and dark theme
+  Future<String> _loadLanguage() async {
+    final value = _sharedPref.getString(PrefKeys.language);
+    return value ?? 'ar'; // Default to Arabic
+  }
+
+  Future<bool> _loadSoundEnabled() async {
+    final value = _sharedPref.getBoolean(PrefKeys.soundEnabled);
+    return value ?? true;
+  }
+
+  Future<bool> _loadBackgroundMusicEnabled() async {
+    final value = _sharedPref.getBoolean(PrefKeys.backgroundMusicEnabled);
+    return value ?? true;
+  }
+
+  Future<double> _loadSoundVolume() async {
+    final value = _sharedPref.getDouble(PrefKeys.soundVolume);
+    return value?.clamp(0.0, 1.0) ?? 1.0;
+  }
+
+  Future<double> _loadMusicVolume() async {
+    final value = _sharedPref.getDouble(PrefKeys.musicVolume);
+    return value?.clamp(0.0, 1.0) ?? 0.5;
+  }
+
+  void _updateCache(Map<String, dynamic> values) {
+    _prefCache.addAll(values);
+  }
+
+  // T? _getFromCache<T>(String key) {
+  //   return _prefCache[key] as T?;
+  // }
+
   Future<void> toggleTheme() async {
-    final newMode = !state.isDarkMode;
-    await SharedPref().setBoolean(PrefKeys.themeMode, newMode);
-    emit(state.copyWith(isDarkMode: newMode));
+    try {
+      final newMode = !state.isDarkMode;
+      
+      // Update cache first for immediate response
+      _updateCache({PrefKeys.themeMode: newMode});
+      
+      // Save to preferences (don't await to avoid blocking UI)
+      unawaited(_sharedPref.setBoolean(PrefKeys.themeMode, newMode));
+      
+      if (!isClosed) {
+        emit(state.copyWith(isDarkMode: newMode));
+      }
+    } catch (e, stackTrace) {
+      _logger.e('Failed to toggle theme', error: e, stackTrace: stackTrace);
+    }
   }
 
-  /// Change app language
   Future<void> changeLanguage(String languageCode) async {
-    await SharedPref().setString(PrefKeys.language, languageCode);
-    emit(state.copyWith(locale: Locale(languageCode)));
+    try {
+      _updateCache({PrefKeys.language: languageCode});
+      unawaited(_sharedPref.setString(PrefKeys.language, languageCode));
+      
+      if (!isClosed) {
+        emit(state.copyWith(locale: Locale(languageCode)));
+      }
+    } catch (e, stackTrace) {
+      _logger.e('Failed to change language', error: e, stackTrace: stackTrace);
+    }
   }
 
   void toArabic() => changeLanguage('ar');
   void toEnglish() => changeLanguage('en');
 
-  /// Toggle sound effects
   Future<void> toggleSound() async {
-    final newValue = !state.isSoundEnabled;
-    await SharedPref().setBoolean(PrefKeys.soundEnabled, newValue);
-    emit(state.copyWith(isSoundEnabled: newValue));
-  }
-
-  /// Toggle background music - with actual music control
-  Future<void> toggleBackgroundMusic() async {
-    final newValue = !state.isBackgroundMusicEnabled;
-    
     try {
-      // Save to preferences first
-      await SharedPref().setBoolean(PrefKeys.backgroundMusicEnabled, newValue);
+      final newValue = !state.isSoundEnabled;
       
-      // Update state immediately for UI feedback
-      emit(state.copyWith(isBackgroundMusicEnabled: newValue));
+      _updateCache({PrefKeys.soundEnabled: newValue});
+      unawaited(_sharedPref.setBoolean(PrefKeys.soundEnabled, newValue));
       
-      // Small delay to ensure state is updated
-      await Future<dynamic>.delayed(const Duration(milliseconds: 100));
-      
-      // Then control the music
-      if (newValue) {
-        // User wants to turn music ON
-         
-        await _audioService.startBackgroundMusic();
-        
-        // Verify it's playing
-        if (_audioService.isMusicActuallyPlaying) {
-           
-        } else {
-           
-          // Try one more time after a delay
-          Future.delayed(const Duration(milliseconds: 500), () {
-            if (!_audioService.isMusicActuallyPlaying) {
-              _audioService.startBackgroundMusic();
-            }
-          });
-        }
-      } else {
-        // User wants to turn music OFF
-         
-        await _audioService.stopBackgroundMusic();
+      if (!isClosed) {
+        emit(state.copyWith(isSoundEnabled: newValue));
       }
-    } catch (e) {
-       
+    } catch (e, stackTrace) {
+      _logger.e('Failed to toggle sound', error: e, stackTrace: stackTrace);
     }
   }
 
-  /// Update sound effects volume
+  Future<void> toggleBackgroundMusic() async {
+    try {
+      final newValue = !state.isBackgroundMusicEnabled;
+
+      _updateCache({PrefKeys.backgroundMusicEnabled: newValue});
+      await _sharedPref.setBoolean(PrefKeys.backgroundMusicEnabled, newValue);
+
+      if (!isClosed) {
+        emit(state.copyWith(isBackgroundMusicEnabled: newValue));
+      }
+
+      // Small delay to ensure state is updated
+      await Future<dynamic>.delayed(const Duration(milliseconds: 100));
+
+      if (newValue) {
+        await _audioService.startBackgroundMusic();
+      } else {
+        await _audioService.stopBackgroundMusic();
+      }
+    } catch (e, stackTrace) {
+      _logger.e('Failed to toggle background music', error: e, stackTrace: stackTrace);
+    }
+  }
+
   Future<void> setSoundVolume(double volume) async {
-    final clampedVolume = volume.clamp(0.0, 1.0);
-    await SharedPref().setDouble(PrefKeys.soundVolume, clampedVolume);
-    emit(state.copyWith(soundVolume: clampedVolume));
+    try {
+      final clampedVolume = volume.clamp(0.0, 1.0);
+      
+      // Debounce rapid volume changes
+      _debounceTimer?.cancel();
+      _debounceTimer = Timer(const Duration(milliseconds: 100), () async {
+        _updateCache({PrefKeys.soundVolume: clampedVolume});
+        await _sharedPref.setDouble(PrefKeys.soundVolume, clampedVolume);
+        await _audioService.updateSoundVolume(clampedVolume);
+      });
+      
+      if (!isClosed) {
+        emit(state.copyWith(soundVolume: clampedVolume));
+      }
+    } catch (e, stackTrace) {
+      _logger.e('Failed to set sound volume', error: e, stackTrace: stackTrace);
+    }
   }
 
-  /// Update background music volume
   Future<void> setMusicVolume(double volume) async {
-    final clampedVolume = volume.clamp(0.0, 1.0);
-    await SharedPref().setDouble(PrefKeys.musicVolume, clampedVolume);
-    emit(state.copyWith(musicVolume: clampedVolume));
+    try {
+      final clampedVolume = volume.clamp(0.0, 1.0);
+      
+      _debounceTimer?.cancel();
+      _debounceTimer = Timer(const Duration(milliseconds: 100), () async {
+        _updateCache({PrefKeys.musicVolume: clampedVolume});
+        await _sharedPref.setDouble(PrefKeys.musicVolume, clampedVolume);
+        await _audioService.updateMusicVolume(clampedVolume);
+      });
+      
+      if (!isClosed) {
+        emit(state.copyWith(musicVolume: clampedVolume));
+      }
+    } catch (e, stackTrace) {
+      _logger.e('Failed to set music volume', error: e, stackTrace: stackTrace);
+    }
   }
 
-  /// Reset all settings to defaults
   Future<void> resetToDefaults() async {
-    await SharedPref().removePreference(PrefKeys.themeMode);
-    await SharedPref().removePreference(PrefKeys.language);
-    await SharedPref().removePreference(PrefKeys.soundEnabled);
-    await SharedPref().removePreference(PrefKeys.backgroundMusicEnabled);
-    await SharedPref().removePreference(PrefKeys.soundVolume);
-    await SharedPref().removePreference(PrefKeys.musicVolume);
-    
-    await _loadSettings();
-    _audioService.onAppStateChanged(state);
+    try {
+      // Clear all preferences
+      await Future.wait([
+        _sharedPref.remove(PrefKeys.themeMode),
+        _sharedPref.remove(PrefKeys.language),
+        _sharedPref.remove(PrefKeys.soundEnabled),
+        _sharedPref.remove(PrefKeys.backgroundMusicEnabled),
+        _sharedPref.remove(PrefKeys.soundVolume),
+        _sharedPref.remove(PrefKeys.musicVolume),
+      ]);
+
+      // Clear cache
+      _prefCache.clear();
+      
+      // Reload settings
+      await _loadSettings();
+    } catch (e, stackTrace) {
+      _logger.e('Failed to reset settings', error: e, stackTrace: stackTrace);
+    }
+  }
+
+  @override
+  Future<void> close() {
+    _debounceTimer?.cancel();
+    return super.close();
   }
 }

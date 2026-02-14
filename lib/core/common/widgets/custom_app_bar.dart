@@ -26,7 +26,7 @@ class CustomAppBar extends StatelessWidget {
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
         CustomFadeInRight(
-          duration: const Duration(milliseconds: 500),
+          // duration: const Duration(milliseconds: 800),
           child: InkWell(
             onTap: onTap ?? () => Navigator.pop(context),
             child: Icon(
@@ -40,7 +40,6 @@ class CustomAppBar extends StatelessWidget {
           const SizedBox()
         else
           CustomFadeInLeft(
-            duration: const Duration(milliseconds: 500),
             child: Container(
               constraints: BoxConstraints(
                 maxWidth: 150.w,
@@ -61,7 +60,6 @@ class CustomAppBar extends StatelessWidget {
             ),
           ),
         CustomFadeInLeft(
-          duration: const Duration(milliseconds: 500),
           child: Container(
             constraints: BoxConstraints(
               maxWidth: 200.w,

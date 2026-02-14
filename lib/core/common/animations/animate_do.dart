@@ -63,8 +63,8 @@ class CustomFadeInLeft extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     // Get language once and cache it
-    final isRtl = Localizations.localeOf(context).languageCode == 'ar';
-    
+    final isRtl = Localizations.localeOf(context).languageCode == 'en';
+
     return isRtl
         ? FadeInRight(
             delay: delay,
@@ -95,8 +95,8 @@ class CustomFadeInRight extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final isRtl = Localizations.localeOf(context).languageCode == 'ar';
-    
+    final isRtl = Localizations.localeOf(context).languageCode == 'en';
+
     return isRtl
         ? FadeInLeft(
             delay: delay,

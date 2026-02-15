@@ -3,7 +3,9 @@ import 'package:medaan_almaarifa/core/style/theme/my_colors_extension.dart';
 
 class ZnoonaColors {
   static MyColors of(BuildContext context) {
-    return Theme.of(context).extension<MyColors>()!;
+    final colors = Theme.of(context).extension<MyColors>();
+    assert(colors != null, 'MyColors extension not found in theme');
+    return colors ?? const MyColors.dark(); // Return default as fallback
   }
 
   static Color main(BuildContext context) => of(context).mainColor!;
@@ -31,9 +33,7 @@ class ZnoonaColors {
 
   static Color containerLinear1(BuildContext context) =>
       of(context).containerLinear1!;
-
+      
   static Color containerLinear2(BuildContext context) =>
       of(context).containerLinear2!;
-
-
 }

@@ -66,7 +66,7 @@ class _RoomCreationBodyState extends State<RoomCreationBody> {
                     SizedBox(height: 20.h),
                     // Category Info
                     CustomFadeInDown(
-                      duration: 850,
+                      duration: const Duration(milliseconds: 850),
                       child: CachedNetworkImage(
                         imageUrl: widget.imageUrl,
                         placeholder: (context, url) =>
@@ -80,14 +80,14 @@ class _RoomCreationBodyState extends State<RoomCreationBody> {
                     ),
                     SizedBox(height: 5.h),
                     CustomFadeInDown(
-                      duration: 700,
+                      duration: const Duration(milliseconds: 700),
                       child: RoomAbout(widget: widget),
                     ),
 
                     SizedBox(height: 40.h),
                     // Timer Selection Section
                     CustomFadeInDown(
-                      duration: 600,
+                      duration: const Duration(milliseconds: 600),
                       child: BuildTimerSelectionSection(
                         selectedTimerDuration: _selectedTimerDuration,
                         onSelected: (selectedDuration) {
@@ -100,7 +100,7 @@ class _RoomCreationBodyState extends State<RoomCreationBody> {
                     SizedBox(height: 40.h),
                     // Create Room Button
                     CustomFadeInDown(
-                      duration: 400,
+                      duration: const Duration(milliseconds: 400),
                       child: CreateRoomButton(
                         selectedTimerDuration: _selectedTimerDuration,
                         state: state,

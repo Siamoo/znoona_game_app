@@ -18,7 +18,7 @@ class AuthTitleInfo extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return CustomFadeInDown(
-      duration: 400,
+      duration: const Duration(milliseconds: 400),
       child: Column(
         children: [
           TextApp(

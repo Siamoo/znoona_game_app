@@ -8,7 +8,7 @@ class UserAvatarImage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return const CustomFadeInDown(
-      duration: 500,
+      duration: const Duration(milliseconds: 500),
       child: CircleAvatar(
         radius: 38,
         backgroundImage: AssetImage(AppImages.userAvatar),

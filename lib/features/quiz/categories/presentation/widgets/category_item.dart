@@ -39,7 +39,7 @@ class CategoryItem extends StatelessWidget {
             Expanded(
               flex: 3,
               child: CustomFadeInRight(
-                duration: 700,
+                duration: const Duration(milliseconds: 700),
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -104,7 +104,7 @@ class CategoryItem extends StatelessWidget {
 
             // Right side - Image
             CustomFadeInLeft(
-              duration: 700,
+              duration: const Duration(milliseconds: 700),
               child: Container(
                 width: 90.w,
                 height: 90.h,

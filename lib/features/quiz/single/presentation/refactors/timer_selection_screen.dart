@@ -75,7 +75,7 @@ class _TimerSelectionScreenState extends State<TimerSelectionScreen> {
 
                 // Title
                 CustomFadeInDown(
-                  duration: 850,
+                  duration: const Duration(milliseconds: 850),
                   child: Column(
                     children: [
                       Text(
@@ -110,7 +110,7 @@ class _TimerSelectionScreenState extends State<TimerSelectionScreen> {
 
                 // Timer Selection Section
                 CustomFadeInDown(
-                  duration: 700,
+                  duration: const Duration(milliseconds: 700),
                   child: Container(
                     padding: EdgeInsets.all(16.w),
                     decoration: BoxDecoration(
@@ -188,7 +188,7 @@ class _TimerSelectionScreenState extends State<TimerSelectionScreen> {
 
                 // Start Quiz Button
                 CustomFadeInDown(
-                  duration: 400,
+                  duration: const Duration(milliseconds: 400),
                   child: Padding(
                     padding: EdgeInsets.symmetric(horizontal: 20.w),
                     child: CustomLinearButton(

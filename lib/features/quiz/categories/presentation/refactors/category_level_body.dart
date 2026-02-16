@@ -90,7 +90,7 @@ class CategoryLevelBody extends StatelessWidget {
         itemBuilder: (context, index) {
           final category = categories[index];
           return CustomFadeInDown(
-            duration: 600 + (index * 10),
+            duration: Duration(milliseconds: 600 + (index * 10)),
             child: CategoryItem(
               category: category,
               onPressed: () => onCategorySelected(category),

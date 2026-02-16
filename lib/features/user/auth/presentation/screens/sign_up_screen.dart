@@ -12,7 +12,7 @@ class SignUpScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       bottomNavigationBar: CustomFadeInUp(
-        duration: 800,
+        duration: const Duration(milliseconds: 800),
         child: CustomPaint(
           size: Size(MediaQuery.of(context).size.width, 140.h),
           painter: AuthCustomPainter(
@@ -27,7 +27,7 @@ class SignUpScreen extends StatelessWidget {
           ),
         ),
       ),
-      body:  SafeArea(bottom: false, child: SignUpBody()),
+      body: SafeArea(bottom: false, child: SignUpBody()),
     );
   }
 }

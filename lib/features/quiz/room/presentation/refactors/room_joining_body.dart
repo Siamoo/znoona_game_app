@@ -85,7 +85,7 @@ class _RoomJoiningBodyState extends State<RoomJoiningBody> {
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         CustomFadeInDown(
-                          duration: 850,
+                          duration: const Duration(milliseconds: 850),
                           child: Image.asset(
                             AppImages.join,
                             height: 200.h,
@@ -94,7 +94,7 @@ class _RoomJoiningBodyState extends State<RoomJoiningBody> {
                         ),
                         const SizedBox(height: 24),
                         const CustomFadeInDown(
-                          duration: 700,
+                          duration: const Duration(milliseconds: 700),
                           child: EnterCodeOrScan(),
                         ),
                       ],
@@ -110,7 +110,7 @@ class _RoomJoiningBodyState extends State<RoomJoiningBody> {
                       child: Column(
                         children: [
                           CustomFadeInDown(
-                            duration: 600,
+                            duration: const Duration(milliseconds: 600),
                             child: CustomTextField(
                               controller: _codeController,
                               hintText: ZnoonaTexts.tr(
@@ -147,7 +147,7 @@ class _RoomJoiningBodyState extends State<RoomJoiningBody> {
                               return SizedBox(
                                 width: double.infinity,
                                 child: CustomFadeInDown(
-                                  duration: 500,
+                                  duration: const Duration(milliseconds: 500),
                                   child: JoinRoomButton(
                                     isLoading: isLoading,
                                     formKey: _formKey,
@@ -159,7 +159,7 @@ class _RoomJoiningBodyState extends State<RoomJoiningBody> {
                           ),
                           SizedBox(height: 10.h),
                           const CustomFadeInDown(
-                            duration: 400,
+                            duration: const Duration(milliseconds: 400),
                             child: ScanQrButton(),
                           ),
                         ],

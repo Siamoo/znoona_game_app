@@ -17,7 +17,7 @@ class HaveAccountOrNot extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return CustomFadeInDown(
-      duration: 400,
+      duration: const Duration(milliseconds: 400),
       child: TextButton(
         onPressed: onPressed,
         child: TextApp(

@@ -23,7 +23,7 @@ class DarkAndLangButtons extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             CustomFadeInLeft(
-              duration: 400,
+              duration: const Duration(milliseconds: 400),
               child: CustomLinearButton(
                 onPressed: () async {
                   await cubit.toggleTheme(); // Use toggleTheme instead
@@ -39,7 +39,7 @@ class DarkAndLangButtons extends StatelessWidget {
               ),
             ),
             CustomFadeInRight(
-              duration: 400,
+              duration: const Duration(milliseconds: 400),
               child: CustomLinearButton(
                 onPressed: () {
                   if (state.locale.languageCode == 'en') {

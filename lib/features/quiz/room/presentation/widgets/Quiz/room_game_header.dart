@@ -1,11 +1,8 @@
-
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:medaan_almaarifa/core/helpers/znoona.colors.dart';
 import 'package:medaan_almaarifa/features/quiz/room/domain/entities/room_player.dart';
-import 'package:medaan_almaarifa/features/quiz/room/presentation/widgets/Quiz/players_status.dart';
-import 'package:medaan_almaarifa/features/quiz/room/presentation/widgets/Quiz/top_player_section.dart';
 
 class RoomGameHeader extends StatelessWidget {
   const RoomGameHeader({
@@ -44,69 +41,197 @@ class RoomGameHeader extends StatelessWidget {
     return sortedPlayers.first;
   }
 
+  RoomPlayer? _getCurrentPlayer(List<RoomPlayer> players) {
+    try {
+      return players.firstWhere((player) => player.userId == currentUserId);
+    } catch (e) {
+      return null;
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     final connectedPlayers = players.where((p) => p.isConnected).toList();
-    final answeredPlayers = connectedPlayers
-        .where(
-          (p) =>
-              playerAnswers.containsKey(p.userId) &&
-              playerAnswers[p.userId] != null,
-        )
-        .length;
-    final totalConnected = connectedPlayers.length;
-    final progress = totalConnected > 0
-        ? answeredPlayers / totalConnected
-        : 0.0;
-
     final topPlayer = _getTopPlayer(connectedPlayers);
+    final currentPlayer = _getCurrentPlayer(connectedPlayers);
 
-    return Column(
-      children: [
-        if (topPlayer != null)
-          TopPlayerSection(
-            context: context,
-            topPlayer: topPlayer,
-            isCurrentUser: topPlayer.userId == currentUserId,
-          ),
-        SizedBox(height: 16.sp),
+    final int myScore = currentPlayer?.score ?? correctCount;
+    final int topPlayerScore = topPlayer?.score ?? 0;
 
-        Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            Column(
-              children: [
-                Text(
-                  '$remainingTime',
-                  style: GoogleFonts.beiruti(
-                    fontSize: 18.sp,
-                    fontWeight: FontWeight.bold,
-                    color: ZnoonaColors.text(context),
+    return Container(
+      width: double.infinity,
+      padding: EdgeInsets.all(12.sp),
+      decoration: BoxDecoration(
+        color: ZnoonaColors.bluePinkLight(context).withOpacity(0.1),
+        borderRadius: BorderRadius.circular(12.sp),
+        border: Border.all(
+          color: ZnoonaColors.bluePinkLight(context).withOpacity(0.3),
+          width: 1.sp,
+        ),
+      ),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          // My Info (Left side)
+          Row(
+            children: [
+              // My Avatar
+              Container(
+                width: 40.sp,
+                height: 40.sp,
+                decoration: BoxDecoration(
+                  shape: BoxShape.circle,
+                  border: Border.all(
+                    color: ZnoonaColors.main(context),
+                    width: 2.sp,
                   ),
                 ),
-              ],
-            ),
-            Text(
-              'Score: $correctCount/$totalQuestions',
-              style: GoogleFonts.beiruti(
-                fontSize: 18.sp,
-                fontWeight: FontWeight.bold,
-                color: ZnoonaColors.text(context),
+                child: ClipOval(
+                  child:
+                      currentPlayer?.avatarUrl != null &&
+                          currentPlayer!.avatarUrl!.isNotEmpty
+                      ? Image.network(
+                          currentPlayer.avatarUrl!,
+                          fit: BoxFit.cover,
+                          errorBuilder: (context, error, stackTrace) {
+                            return Icon(
+                              Icons.person,
+                              size: 20.sp,
+                              color: ZnoonaColors.main(context),
+                            );
+                          },
+                        )
+                      : Icon(
+                          Icons.person,
+                          size: 20.sp,
+                          color: ZnoonaColors.main(context),
+                        ),
+                ),
               ),
-            ),
-          ],
-        ),
-        SizedBox(height: 16.sp),
+              SizedBox(width: 8.sp),
 
-        PlayersStatus(
-          context: context,
-          playerAnswers: playerAnswers,
-          players: players,
-          progress: progress,
-          answeredPlayers: answeredPlayers,
-          totalConnected: totalConnected,
-        ),
-      ],
+              // My Username and Label
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Row(
+                    children: [
+                      Text(
+                        '👤 You',
+                        style: GoogleFonts.beiruti(
+                          fontSize: 10.sp,
+                          fontWeight: FontWeight.bold,
+                          color: ZnoonaColors.bluePinkLight(context),
+                        ),
+                      ),
+                      SizedBox(width: 12.sp),
+                      Text(
+                        '$myScore',
+                        style: GoogleFonts.beiruti(
+                          fontSize: 14.sp,
+                          fontWeight: FontWeight.bold,
+                          color: ZnoonaColors.text(context),
+                        ),
+                      ),
+                    ],
+                  ),
+                  Text(
+                    currentPlayer?.username ?? 'Player',
+                    style: GoogleFonts.beiruti(
+                      fontSize: 14.sp,
+                      fontWeight: FontWeight.bold,
+                      color: ZnoonaColors.text(context),
+                    ),
+                  ),
+                ],
+              ),
+            ],
+          ),
+
+          // VS Divider
+          Container(
+            height: 30.h,
+            width: 1.w,
+            color: ZnoonaColors.text(context).withOpacity(0.2),
+          ),
+
+          // Top Player Info (Right side)
+          Row(
+            children: [
+              // Top Player Username and Label
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.end,
+                children: [
+                  Row(
+                    children: [
+                      Text(
+                        '$topPlayerScore',
+                        style: GoogleFonts.beiruti(
+                          fontSize: 14.sp,
+                          fontWeight: FontWeight.bold,
+                          color: ZnoonaColors.text(context),
+                        ),
+                      ),
+                      SizedBox(width: 12.sp),
+                      Text(
+                        '🏆 Top Player',
+                        style: GoogleFonts.beiruti(
+                          fontSize: 10.sp,
+                          fontWeight: FontWeight.bold,
+                          color: ZnoonaColors.bluePinkLight(context),
+                        ),
+                      ),
+                    ],
+                  ),
+                  Text(
+                    topPlayer?.username ?? 'No player',
+                    style: GoogleFonts.beiruti(
+                      fontSize: 14.sp,
+                      fontWeight: FontWeight.bold,
+                      color: ZnoonaColors.text(context),
+                    ),
+                  ),
+                ],
+              ),
+              SizedBox(width: 8.sp),
+
+              // Top Player Avatar
+              Container(
+                width: 40.sp,
+                height: 40.sp,
+                decoration: BoxDecoration(
+                  shape: BoxShape.circle,
+                  border: Border.all(
+                    color: ZnoonaColors.bluePinkLight(context),
+                    width: 2.sp,
+                  ),
+                ),
+                child: ClipOval(
+                  child:
+                      topPlayer?.avatarUrl != null &&
+                          topPlayer!.avatarUrl!.isNotEmpty
+                      ? Image.network(
+                          topPlayer.avatarUrl!,
+                          fit: BoxFit.cover,
+                          errorBuilder: (context, error, stackTrace) {
+                            return Icon(
+                              Icons.person,
+                              size: 20.sp,
+                              color: ZnoonaColors.bluePinkLight(context),
+                            );
+                          },
+                        )
+                      : Icon(
+                          Icons.person,
+                          size: 20.sp,
+                          color: ZnoonaColors.bluePinkLight(context),
+                        ),
+                ),
+              ),
+            ],
+          ),
+        ],
+      ),
     );
   }
 }

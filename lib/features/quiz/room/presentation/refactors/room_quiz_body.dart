@@ -22,6 +22,9 @@ import 'package:medaan_almaarifa/features/quiz/room/presentation/widgets/Quiz/ro
 import 'package:medaan_almaarifa/features/quiz/single/domain/entities/question.dart';
 import 'package:medaan_almaarifa/features/quiz/single/presentation/widgets/option_button.dart';
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:vibration/vibration.dart';
+// Add this import
+import 'package:medaan_almaarifa/features/quiz/room/presentation/widgets/Quiz/players_status.dart';
 
 class RoomQuizBody extends StatefulWidget {
   const RoomQuizBody({
@@ -52,6 +55,44 @@ class _RoomQuizBodyState extends State<RoomQuizBody> {
     _currentPlayers = [];
     context.read<RoomCubit>().startQuiz(widget.questions);
     context.read<RoomCubit>().watchPlayerAnswers(widget.room.id);
+  }
+
+  String _formatTime(int seconds) {
+    if (seconds >= 60) {
+      final minutes = seconds ~/ 60;
+      final remainingSeconds = seconds % 60;
+      return '${minutes.toString().padLeft(2, '0')}:${remainingSeconds.toString().padLeft(2, '0')}';
+    }
+    return seconds.toString().padLeft(2, '0');
+  }
+
+  Color _getTimerColor(int remainingTime, int totalDuration) {
+    if (remainingTime > totalDuration * 0.3) {
+      return Colors.green;
+    } else if (remainingTime > totalDuration * 0.1) {
+      return Colors.orange;
+    } else {
+      return Colors.red;
+    }
+  }
+
+  // Vibration helper methods
+  Future<void> _vibrateWrongAnswer() async {
+    final appState = context.read<AppCubit>().state;
+    if (appState.isVibrationEnabled) {
+      if (await Vibration.hasVibrator()) {
+        Vibration.vibrate(duration: 200);
+      }
+    }
+  }
+
+  Future<void> _vibrateTimeFinished() async {
+    final appState = context.read<AppCubit>().state;
+    if (appState.isVibrationEnabled) {
+      if (await Vibration.hasVibrator()) {
+        Vibration.vibrate(pattern: [500, 200, 500]);
+      }
+    }
   }
 
   // Audio helper methods
@@ -114,7 +155,6 @@ class _RoomQuizBodyState extends State<RoomQuizBody> {
   }
 
   void _showFullScreenImage(String imageUrl) {
-    // Check if the image URL is valid before showing
     if (imageUrl.isEmpty) return;
 
     showDialog<void>(
@@ -262,6 +302,8 @@ class _RoomQuizBodyState extends State<RoomQuizBody> {
       if (appState.isSoundEnabled) {
         await _playWrongSound();
       }
+      // Vibrate on wrong answer
+      await _vibrateWrongAnswer();
     }
 
     _emitQuizState();
@@ -274,7 +316,23 @@ class _RoomQuizBodyState extends State<RoomQuizBody> {
     if (remainingTime <= 3 && remainingTime > 0 && !_hasPlayedTimerWarning) {
       _hasPlayedTimerWarning = true;
       _playTimerWarningSound();
+      _showTimerWarning();
     }
+
+    // Check if time finished
+    if (remainingTime == 0) {
+      _vibrateTimeFinished();
+    }
+  }
+
+  void _showTimerWarning() {
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(
+        content: Text(ZnoonaTexts.tr(context, LangKeys.lastThreeSeconds)),
+        duration: const Duration(seconds: 1),
+        backgroundColor: Colors.orange,
+      ),
+    );
   }
 
   @override
@@ -293,14 +351,14 @@ class _RoomQuizBodyState extends State<RoomQuizBody> {
                 isWaitingForPlayers,
                 players,
               ) {
-                // **FIX: Reset timer warning flag when question index changes**
+                // Reset timer warning flag when question index changes
                 if (_currentQuestionIndex != currentQuestionIndex) {
                   _hasPlayedTimerWarning = false;
                 }
-                
+
                 // Check for timer warning
                 _checkTimerWarning(remainingTime);
-                
+
                 final mutablePlayerAnswers = Map<String, String?>.from(
                   playerAnswers,
                 );
@@ -313,7 +371,6 @@ class _RoomQuizBodyState extends State<RoomQuizBody> {
                   _currentPlayers = players;
                 });
               },
-
           quizFinished: (totalQuestions, correctAnswers, players) {
             // Play result sound based on performance
             _playQuizFinishedSound(correctAnswers, totalQuestions);
@@ -360,12 +417,15 @@ class _RoomQuizBodyState extends State<RoomQuizBody> {
     );
   }
 
-  Future<void> _playQuizFinishedSound(int correctAnswers, int totalQuestions) async {
+  Future<void> _playQuizFinishedSound(
+    int correctAnswers,
+    int totalQuestions,
+  ) async {
     final appState = context.read<AppCubit>().state;
     if (!appState.isSoundEnabled) return;
-    
+
     final double scorePercentage = correctAnswers / totalQuestions * 100;
-    
+
     if (scorePercentage >= 70) {
       await _playWinSound();
     } else if (scorePercentage >= 50) {
@@ -416,6 +476,21 @@ class _RoomQuizBodyState extends State<RoomQuizBody> {
         playerAnswers.containsKey(currentUserId) &&
         playerAnswers[currentUserId] != null;
     final imageUrl = _convertGoogleDriveUrl(question.image);
+    final timerColor = _getTimerColor(remainingTime, widget.room.timerDuration);
+
+    // Calculate progress for PlayersStatus
+    final connectedPlayers = players.where((p) => p.isConnected).toList();
+    final answeredPlayers = connectedPlayers
+        .where(
+          (p) =>
+              playerAnswers.containsKey(p.userId) &&
+              playerAnswers[p.userId] != null,
+        )
+        .length;
+    final totalConnected = connectedPlayers.length;
+    final progress = totalConnected > 0
+        ? answeredPlayers / totalConnected
+        : 0.0;
 
     return Scaffold(
       body: Column(
@@ -436,17 +511,34 @@ class _RoomQuizBodyState extends State<RoomQuizBody> {
                     otherText:
                         '${currentQuestionIndex + 1}  ${ZnoonaTexts.tr(context, LangKeys.from)}  ${questions.length}  ${ZnoonaTexts.tr(context, LangKeys.question)}',
                   ),
+                  // Timer and controls section - NEW DESIGN
+                  SizedBox(height: 10.h),
+                  Column(
+                    children: [
+                      RoomGameHeader(
+                        context: context,
+                        remainingTime: remainingTime,
+                        playerAnswers: playerAnswers,
+                        players: players,
+                        correctCount: correctCount,
+                        totalQuestions: questions.length,
+                        currentUserId: currentUserId,
+                      ),
+                      SizedBox(height: 10.h),
+                      LinearProgressIndicator(
+                        value: remainingTime / widget.room.timerDuration,
+                        backgroundColor: Colors.grey[300],
+                        valueColor: AlwaysStoppedAnimation<Color>(
+                          timerColor,
+                        ),
+                        minHeight: 8.h,
+                        borderRadius: BorderRadius.circular(4.r),
+                      ),
+                      SizedBox(height: 10.h),
 
-                  RoomGameHeader(
-                    context: context,
-                    remainingTime: remainingTime,
-                    playerAnswers: playerAnswers,
-                    players: players,
-                    correctCount: correctCount,
-                    totalQuestions: questions.length,
-                    currentUserId: currentUserId,
+                      _buildSoundVibrationAndTimer(timerColor, remainingTime),
+                    ],
                   ),
-                  SizedBox(height: 20.sp),
                 ],
               ),
             ),
@@ -461,6 +553,16 @@ class _RoomQuizBodyState extends State<RoomQuizBody> {
                   if (imageUrl != null && imageUrl.isNotEmpty)
                     Column(
                       children: [
+                        Text(
+                          ZnoonaTexts.tr(context, LangKeys.tapImageToZoom),
+                          style: TextStyle(
+                            fontSize: 12.sp,
+                            color: ZnoonaColors.text(context).withOpacity(0.7),
+                            fontStyle: FontStyle.italic,
+                          ),
+                          textAlign: TextAlign.center,
+                        ),
+                        SizedBox(height: 5.h),
                         GestureDetector(
                           onTap: () => _showFullScreenImage(imageUrl),
                           child: Hero(
@@ -495,7 +597,10 @@ class _RoomQuizBodyState extends State<RoomQuizBody> {
                                           ),
                                           SizedBox(height: 10.h),
                                           Text(
-                                            ZnoonaTexts.tr(context, LangKeys.imageNotAvailable),
+                                            ZnoonaTexts.tr(
+                                              context,
+                                              LangKeys.imageNotAvailable,
+                                            ),
                                             style: TextStyle(
                                               fontSize: 12.sp,
                                               color: ZnoonaColors.text(
@@ -547,12 +652,19 @@ class _RoomQuizBodyState extends State<RoomQuizBody> {
                           remainingTime: remainingTime,
                         );
                       }),
-                      SizedBox(height: 20.sp),
-                      
-                      // Add sound control at bottom
-                      _buildSoundControl(),
-                      
-                      SizedBox(height: 20.sp),
+                      SizedBox(height: 250.sp),
+
+                      // Players Status moved to the bottom
+                      PlayersStatus(
+                        context: context,
+                        playerAnswers: playerAnswers,
+                        players: players,
+                        progress: progress,
+                        answeredPlayers: answeredPlayers,
+                        totalConnected: totalConnected,
+                      ),
+
+                      SizedBox(height: 40.sp),
                     ],
                   ),
                 ],
@@ -564,12 +676,12 @@ class _RoomQuizBodyState extends State<RoomQuizBody> {
     );
   }
 
-  Widget _buildSoundControl() {
+  // New combined control widget with sound, vibration and timer
+  Widget _buildSoundVibrationAndTimer(Color timerColor, int remainingTime) {
     return BlocBuilder<AppCubit, AppState>(
       builder: (context, appState) {
         return Container(
-          margin: EdgeInsets.only(top: 10.h),
-          padding: EdgeInsets.symmetric(vertical: 8.h, horizontal: 16.w),
+          padding: EdgeInsets.symmetric(vertical: 10.h, horizontal: 10.w),
           decoration: BoxDecoration(
             color: ZnoonaColors.main(context).withOpacity(0.1),
             borderRadius: BorderRadius.circular(12.r),
@@ -577,40 +689,112 @@ class _RoomQuizBodyState extends State<RoomQuizBody> {
           child: Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              Icon(
-                appState.isSoundEnabled ? Icons.volume_up : Icons.volume_off,
-                color: ZnoonaColors.text(context),
-                size: 18.sp,
-              ),
-              SizedBox(width: 8.w),
-              Text(
-                appState.isSoundEnabled 
-                    ? ZnoonaTexts.tr(context, LangKeys.soundEnabled)
-                    : ZnoonaTexts.tr(context, LangKeys.soundDisabled),
-                style: TextStyle(
-                  fontSize: 12.sp,
-                  color: ZnoonaColors.text(context),
+              // Vibration control
+              Expanded(
+                child: GestureDetector(
+                  onTap: () => context.read<AppCubit>().toggleVibration(),
+                  child: Container(
+                    padding: EdgeInsets.symmetric(
+                      horizontal: 8.w,
+                    ),
+                    decoration: BoxDecoration(
+                      color: ZnoonaColors.main(context),
+                      borderRadius: BorderRadius.circular(8.r),
+                    ),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Icon(
+                          appState.isVibrationEnabled
+                              ? Icons.vibration
+                              : Icons.not_interested,
+                          color: Colors.white,
+                          size: 16.sp,
+                        ),
+                        // SizedBox(width: 8.w),
+                        Expanded(
+                          child: Text(
+                            appState.isVibrationEnabled
+                                ? ZnoonaTexts.tr(
+                                    context,
+                                    LangKeys.disableVibration,
+                                  )
+                                : ZnoonaTexts.tr(
+                                    context,
+                                    LangKeys.enableVibration,
+                                  ),
+                            style: TextStyle(
+                              fontSize: 11.sp,
+                              color: Colors.white,
+                            ),
+                            textAlign: TextAlign.center,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
                 ),
               ),
-              const Spacer(),
-              GestureDetector(
-                onTap: () => context.read<AppCubit>().toggleSound(),
-                child: Container(
-                  padding: EdgeInsets.symmetric(
-                    horizontal: 12.w,
-                    vertical: 6.h,
+
+              SizedBox(width: 10.w),
+
+              // Timer display
+              Expanded(
+                child: Text(
+                  _formatTime(remainingTime),
+                  style: GoogleFonts.beiruti(
+                    fontSize: 24.sp,
+                    fontWeight: FontWeight.bold,
+                    color: timerColor,
                   ),
-                  decoration: BoxDecoration(
-                    color: ZnoonaColors.main(context),
-                    borderRadius: BorderRadius.circular(8.r),
-                  ),
-                  child: Text(
-                    appState.isSoundEnabled 
-                        ? ZnoonaTexts.tr(context, LangKeys.disableSound)
-                        : ZnoonaTexts.tr(context, LangKeys.enableSound),
-                    style: TextStyle(
-                      fontSize: 11.sp,
-                      color: Colors.white,
+                  textAlign: TextAlign.center,
+                ),
+              ),
+
+              SizedBox(width: 10.w),
+
+              // Sound control
+              Expanded(
+                child: GestureDetector(
+                  onTap: () => context.read<AppCubit>().toggleSound(),
+                  child: Container(
+                    padding: EdgeInsets.symmetric(
+                      horizontal: 8.w,
+                    ),
+                    decoration: BoxDecoration(
+                      color: ZnoonaColors.main(context),
+                      borderRadius: BorderRadius.circular(8.r),
+                    ),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Icon(
+                          appState.isSoundEnabled
+                              ? Icons.volume_up
+                              : Icons.volume_off,
+                          color: Colors.white,
+                          size: 16.sp,
+                        ),
+                        // SizedBox(width: 8.w),
+                        Expanded(
+                          child: Text(
+                            appState.isSoundEnabled
+                                ? ZnoonaTexts.tr(
+                                    context,
+                                    LangKeys.disableSound,
+                                  )
+                                : ZnoonaTexts.tr(
+                                    context,
+                                    LangKeys.enableSound,
+                                  ),
+                            style: TextStyle(
+                              fontSize: 11.sp,
+                              color: Colors.white,
+                            ),
+                            textAlign: TextAlign.center,
+                          ),
+                        ),
+                      ],
                     ),
                   ),
                 ),

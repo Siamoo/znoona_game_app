@@ -98,7 +98,6 @@ class RoomCubit extends Cubit<RoomState> {
     result.fold(
       (failure) {
         emit(RoomState.error(failure));
-        print('Create room failed: $failure');
       },
       (room) async {
         _currentRoomId = room.id;
@@ -340,7 +339,7 @@ class RoomCubit extends Cubit<RoomState> {
         _emitQuizState();
       } else {
         timer.cancel();
-        print('⏰ Time finished - moving to next question');
+
         _handleTimeUp();
       }
     });
@@ -443,9 +442,7 @@ class RoomCubit extends Cubit<RoomState> {
         (failure) => print('Failed to reset answers: $failure'),
         (_) => print('Answers reset for new question'),
       );
-    } catch (e) {
-      print('Reset failed: $e, continuing anyway');
-    }
+    } catch (e) {}
   }
 
   void _emitQuizState() {
@@ -527,8 +524,6 @@ class RoomCubit extends Cubit<RoomState> {
     }
 
     try {
-      print('🎯 Starting markPlayerFinished for user: $user');
-
       // STEP 1: First try to fix any broken state
       await _fixPlayerState(roomId, user);
 
@@ -543,7 +538,6 @@ class RoomCubit extends Cubit<RoomState> {
 
       result.fold(
         (failure) {
-          print('❌ Failed to mark player finished: $failure');
           // Try emergency fix
           _emergencyMarkFinished(
             roomId,
@@ -554,8 +548,6 @@ class RoomCubit extends Cubit<RoomState> {
           );
         },
         (_) {
-          print('✅ Player marked as finished, starting results stream...');
-
           // STEP 3: Verify the update worked
           Future.delayed(const Duration(milliseconds: 500), () {
             if (isClosed) return;
@@ -569,7 +561,6 @@ class RoomCubit extends Cubit<RoomState> {
         },
       );
     } catch (e) {
-      print('❌ Error in markPlayerFinished: $e');
       // Emergency fallback
       _emergencyMarkFinished(
         roomId,
@@ -588,8 +579,6 @@ class RoomCubit extends Cubit<RoomState> {
     int totalQuestions,
     int correctAnswers,
   ) {
-    print('🚨 Using emergency mark finished for user: $userId');
-
     _startProgressiveResultsStream(roomId, totalQuestions);
     _emitInitialFinishedState(roomId, totalQuestions, correctAnswers);
   }
@@ -606,7 +595,6 @@ class RoomCubit extends Cubit<RoomState> {
 
       playersResult.fold(
         (failure) {
-          print('⚠️ Could not verify player state: $failure');
           // Start anyway
           _startProgressiveResultsStream(roomId, totalQuestions);
           _emitInitialFinishedState(roomId, totalQuestions, correctAnswers);
@@ -623,7 +611,6 @@ class RoomCubit extends Cubit<RoomState> {
           );
 
           if (!currentPlayer.finishedQuiz || currentPlayer.finishedAt == null) {
-            print('🚨 Player not properly finished! Retrying...');
             // Retry the marking
             markPlayerFinishedUseCase(
               roomId: roomId,
@@ -641,7 +628,6 @@ class RoomCubit extends Cubit<RoomState> {
         },
       );
     } catch (e) {
-      print('❌ Error in verification: $e');
       // Start anyway
       _startProgressiveResultsStream(roomId, totalQuestions);
       _emitInitialFinishedState(roomId, totalQuestions, correctAnswers);
@@ -649,11 +635,7 @@ class RoomCubit extends Cubit<RoomState> {
   }
 
   Future<void> _fixPlayerState(String roomId, String userId) async {
-    try {
-      print('🔧 Preparing to fix player state for: $userId');
-    } catch (e) {
-      print('⚠️ Error in fixPlayerState: $e');
-    }
+    try {} catch (e) {}
   }
 
   void _startProgressiveResultsStream(String roomId, int totalQuestions) {
@@ -691,9 +673,7 @@ class RoomCubit extends Cubit<RoomState> {
           },
         );
       },
-      onError: (dynamic error) {
-        print('Results stream onError: $error');
-      },
+      onError: (dynamic error) {},
     );
   }
 
@@ -851,9 +831,7 @@ class RoomCubit extends Cubit<RoomState> {
     return userResult.rank;
   }
 
-  void _handleAllPlayersFinished(String roomId) {
-    print('🎉 All players finished! Room: $roomId');
-  }
+  void _handleAllPlayersFinished(String roomId) {}
 
   @override
   Future<void> close() async {

@@ -15,25 +15,24 @@ class QuestionModel {
 
   factory QuestionModel.fromJson(Map<String, dynamic> json) {
     // Load options
-    final opts = (json['options'] as List<dynamic>?)
-            ?.map((e) => e as String)
-            .toList() ??
+    final opts =
+        (json['options'] as List<dynamic>?)?.map((e) => e as String).toList() ??
         [];
 
     // randomize
     opts.shuffle(Random());
 
-        return QuestionModel(
+    return QuestionModel(
       id: json['id'] as String,
       categoryId: json['category_id'] as String,
       question: json['question'] as String,
       options: opts,
       correctAnswer: json['correct_answer'] as String,
       image: json['image'] as String?, // This should now work
-      goodQuestion: json['good_question'] != null 
-          ? (json['good_question'] is int 
-              ? json['good_question'] as int
-              : int.tryParse(json['good_question'].toString()) ?? 0)
+      goodQuestion: json['good_question'] != null
+          ? (json['good_question'] is int
+                ? json['good_question'] as int
+                : int.tryParse(json['good_question'].toString()) ?? 0)
           : null,
       createdAt: json['created_at'] != null
           ? DateTime.parse(json['created_at'] as String)
@@ -66,8 +65,6 @@ class QuestionModel {
 
 extension QuestionModelX on QuestionModel {
   Question toEntity() {
-        print('Converting to entity - Question: $question, Image: $image');
-
     return Question(
       id: id,
       categoryId: categoryId,

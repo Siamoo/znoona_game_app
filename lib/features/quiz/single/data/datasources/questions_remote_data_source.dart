@@ -17,27 +17,24 @@ class QuestionsRemoteDataSourceImpl implements QuestionsRemoteDataSource {
         'get_random_questions',
         params: {
           'p_category_id': categoryId, // matches SQL parameter
-          'p_limit_count': 15,         // matches SQL parameter
+          'p_limit_count': 15, // matches SQL parameter
         },
       );
 
       // DEBUG: Print the response to check if image exists
-      print('Raw response from Supabase: $response');
-      
+
       // Map the result to QuestionModel
-      final data = response
-          .map((e) {
-            // DEBUG: Print each item's image field
-            final json = e as Map<String, dynamic>;
-            print('Question ${json['question']} has image: ${json['image']}');
-            return QuestionModel.fromJson(json);
-          })
-          .toList();
+      final data = response.map((e) {
+        // DEBUG: Print each item's image field
+        final json = e as Map<String, dynamic>;
+
+        return QuestionModel.fromJson(json);
+      }).toList();
 
       return data;
     } catch (e) {
       // Optional: handle errors gracefully
-      print('Error fetching questions: $e');
+
       return [];
     }
   }

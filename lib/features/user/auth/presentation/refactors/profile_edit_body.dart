@@ -599,11 +599,8 @@ class _ProfileEditBodyState extends State<ProfileEditBody> {
       // Get public URL
       final publicUrl = supabase.storage.from('avatars').getPublicUrl(filename);
 
-      print('✅ Image uploaded successfully: $publicUrl');
       return publicUrl;
     } catch (e) {
-      print('❌ Image upload error: $e');
-
       // More specific error messages
       if (e.toString().contains('Bucket not found')) {
         throw Exception(

@@ -19,7 +19,6 @@ class QuestionsCubit extends Cubit<QuestionsState> {
 
     result.fold(
       (failure) {
-        print(failure);
         emit(QuestionsState.error(failure));
       },
       (questions) => emit(QuestionsState.loaded(questions)),

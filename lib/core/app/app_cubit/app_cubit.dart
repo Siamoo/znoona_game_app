@@ -89,14 +89,14 @@ class AppCubit extends Cubit<AppState> {
       // Then control the music
       if (newValue) {
         // User wants to turn music ON
-        print('🎵 User toggled music ON');
+         
         await _audioService.startBackgroundMusic();
         
         // Verify it's playing
         if (_audioService.isMusicActuallyPlaying) {
-          print('✅ Music started successfully');
+           
         } else {
-          print('⚠️ Music may not be playing');
+           
           // Try one more time after a delay
           Future.delayed(const Duration(milliseconds: 500), () {
             if (!_audioService.isMusicActuallyPlaying) {
@@ -106,11 +106,11 @@ class AppCubit extends Cubit<AppState> {
         }
       } else {
         // User wants to turn music OFF
-        print('🎵 User toggled music OFF');
+         
         await _audioService.stopBackgroundMusic();
       }
     } catch (e) {
-      print('❌ Error toggling background music: $e');
+       
     }
   }
 

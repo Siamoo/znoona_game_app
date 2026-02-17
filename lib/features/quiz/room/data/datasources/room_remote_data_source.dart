@@ -4,6 +4,7 @@ import 'package:medaan_almaarifa/features/quiz/room/data/models/room_player_mode
 import 'package:medaan_almaarifa/features/quiz/room/data/models/room_question_model.dart';
 import 'package:medaan_almaarifa/features/quiz/single/data/models/question_model.dart';
 import 'package:medaan_almaarifa/features/quiz/single/domain/entities/question.dart';
+
 class RoomRemoteDataSource {
   RoomRemoteDataSource(this.supabase);
   final SupabaseClient supabase;
@@ -29,8 +30,6 @@ class RoomRemoteDataSource {
       },
     );
 
-    print('RPC result: $result');
-
     // Handle the table return type properly
     if (result == null || (result as List).isEmpty) {
       throw Exception('Failed to create room: empty result');
@@ -46,8 +45,6 @@ class RoomRemoteDataSource {
       throw Exception('Invalid room data returned: $roomData');
     }
 
-    print('Created room - ID: $roomId, Code: $roomCode');
-
     // Fetch the complete room data
     final data = await supabase
         .from('rooms')
@@ -59,7 +56,6 @@ class RoomRemoteDataSource {
       throw Exception('Room not found after creation (ID: $roomId)');
     }
 
-    print('room json: $data');
     return RoomModel.fromJson(data);
   }
 
@@ -117,11 +113,7 @@ class RoomRemoteDataSource {
 
     try {
       await supabase.rpc('leave_all_rooms', params: {'p_user_id': user.id});
-
-      print('✅ User successfully removed from all rooms via function');
     } catch (e) {
-      print('❌ Function not available, using disconnect method: $e');
-
       // marking the user disconnected
       await supabase
           .from('room_players')
@@ -130,13 +122,10 @@ class RoomRemoteDataSource {
             'is_host': false,
           })
           .eq('user_id', user.id);
-
-      print('✅ User marked as disconnected (fallback)');
     }
   }
 
   Stream<List<RoomModel>> getRoomsStream() {
-    print('getRoomsStream');
     return supabase
         .from('rooms')
         .stream(primaryKey: ['id'])
@@ -146,7 +135,6 @@ class RoomRemoteDataSource {
   }
 
   Stream<List<RoomPlayerModel>> getRoomPlayersStream(String roomId) {
-    print(' getRoomPlayersStream roomId: $roomId');
     return supabase
         .from('room_players')
         .stream(primaryKey: ['id'])
@@ -163,20 +151,16 @@ class RoomRemoteDataSource {
         .eq('room_id', roomId)
         .order('order_index', ascending: true);
 
-    print(' getRoomQuestions data: $data');
-
     return (data as List)
         .map((e) => RoomQuestionModel.fromJson(e as Map<String, dynamic>))
         .toList();
   }
 
   Future<void> startGame(String roomId) async {
-    print(' startGame roomId: $roomId');
     await supabase.from('rooms').update({'status': 'playing'}).eq('id', roomId);
   }
 
   Stream<RoomModel?> watchRoom(String roomId) {
-    print(' watchRoom roomId: $roomId');
     return supabase
         .from('rooms')
         .stream(primaryKey: ['id'])
@@ -195,14 +179,9 @@ class RoomRemoteDataSource {
         )
         .inFilter('id', questionIds);
 
-    print('📋 getQuestions data: $data');
-
     // Debug output
     for (var item in data) {
       final json = item as Map<String, dynamic>;
-      print('❓ Question: ${json['question']}');
-      print('🏷️ Category ID: ${json['category_id']}');
-      print('🖼️ Image: ${json['image']}');
     }
 
     return (data as List)
@@ -255,8 +234,6 @@ class RoomRemoteDataSource {
   }
 
   Future<void> resetAnswersForNewQuestion(String roomId) async {
-    print(' RESET: Resetting answers for room: $roomId');
-
     try {
       final result = await supabase
           .from('room_players')
@@ -267,9 +244,6 @@ class RoomRemoteDataSource {
           })
           .eq('room_id', roomId)
           .select();
-
-      print(' RESET: Database update completed');
-      print(' RESET: Affected rows: ${result.length}');
 
       final verification = await supabase
           .from('room_players')
@@ -283,7 +257,6 @@ class RoomRemoteDataSource {
         ' RESET: Answers after reset - non-null: ${nonNullAnswers.length}',
       );
     } catch (e) {
-      print(' RESET ERROR: $e');
       throw Exception('Failed to reset answers: $e');
     }
   }
@@ -326,7 +299,6 @@ class RoomRemoteDataSource {
     required int finalScore,
   }) async {
     final finishedAt = DateTime.now().toIso8601String();
-    print('🕒 Setting finished_at: $finishedAt');
 
     try {
       final result = await supabase
@@ -340,8 +312,6 @@ class RoomRemoteDataSource {
           .eq('user_id', userId)
           .select();
 
-      print('✅ Database update result: $result');
-
       if (result != null && result.isNotEmpty) {
         final updatedPlayer = result.first;
         print(
@@ -351,7 +321,6 @@ class RoomRemoteDataSource {
         );
       }
     } catch (e) {
-      print('❌ Database update error: $e');
       rethrow;
     }
   }
@@ -378,7 +347,6 @@ class RoomRemoteDataSource {
       if (currentData['finished_quiz'] == true &&
           currentData['finished_at'] == null) {
         final fixedTime = DateTime.now().toIso8601String();
-        print('🛠️ Fixing broken finished_at: $fixedTime');
 
         await supabase
             .from('room_players')
@@ -387,24 +355,16 @@ class RoomRemoteDataSource {
             })
             .eq('room_id', roomId)
             .eq('user_id', userId);
-
-        print('✅ Fixed broken finished_at');
       }
-    } catch (e) {
-      print('❌ Error fixing broken finished_at: $e');
-    }
+    } catch (e) {}
   }
 
   Stream<List<RoomPlayerModel>> getRoomPlayersStreamForResults(String roomId) {
-    print('🔍 Starting synchronized room players stream - Room: $roomId');
-
     return supabase
         .from('room_players')
         .stream(primaryKey: ['id'])
         .eq('room_id', roomId)
         .asyncMap((rows) async {
-          print('📨 Stream received ${rows.length} players');
-
           await Future.delayed(const Duration(milliseconds: 100));
 
           for (final row in rows) {
@@ -432,7 +392,6 @@ class RoomRemoteDataSource {
           return players;
         })
         .handleError((error) {
-          print('❌ Stream error: $error');
           throw Exception('Stream error: $error');
         });
   }

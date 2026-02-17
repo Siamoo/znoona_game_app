@@ -62,11 +62,9 @@ class _ZnoonaGameAppState extends State<ZnoonaGameApp> {
                     final audioService = sl<AudioService>();
                     // Check if audio service is ready before updating
                     audioService.onAppStateChanged(state);
-                  } catch (e) {
-                    print('⚠️ Error updating AudioService with state: $e');
-                  }
+                  } catch (e) {}
                 });
-                
+
                 return MaterialApp(
                   debugShowCheckedModeBanner: false,
                   title: 'Znoona Game App',
@@ -98,8 +96,8 @@ class _ZnoonaGameAppState extends State<ZnoonaGameApp> {
                   home: !value
                       ? const NoNetworkScreen()
                       : session != null
-                          ? const HomeScreen()
-                          : const LoginScreen(),
+                      ? const HomeScreen()
+                      : const LoginScreen(),
                 );
               },
             ),

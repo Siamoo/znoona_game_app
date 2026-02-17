@@ -23,15 +23,13 @@ Future<void> main() async {
 
   // Initialize SharedPreferences
   await SharedPref().instantiatePreferences();
-  
+
   // Setup dependency injection (includes AudioService initialization)
   await setupInjector();
-    // **IMPORTANT: Initialize AudioService AFTER DI setup**
+  // **IMPORTANT: Initialize AudioService AFTER DI setup**
   try {
     await sl<AudioService>().initialize();
-    print('✅ AudioService initialized in main()');
   } catch (e) {
-    print('⚠️ AudioService initialization failed: $e');
     // Continue without audio - don't crash the app
   }
   // Setup Bloc observer

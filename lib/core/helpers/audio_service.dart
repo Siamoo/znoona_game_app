@@ -27,8 +27,6 @@ class AudioService {
     if (_isInitialized) return;
 
     try {
-      print('🎵 Initializing AudioService...');
-
       // Configure audio session for better audio handling
       final session = await AudioSession.instance;
       await session.configure(const AudioSessionConfiguration.music());
@@ -44,20 +42,15 @@ class AudioService {
       // Preload the background music file
       try {
         await _musicPlayer!.setAsset('assets/audio/background.mp3');
-        print('✅ Background music file loaded successfully');
-      } catch (e) {
-        print('⚠️ Could not preload background music: $e');
-      }
+      } catch (e) {}
 
       _isInitialized = true;
-      print('✅ AudioService initialized successfully');
 
       // Set initial state if it was provided before initialization
       if (_currentState != null) {
         _applyStateToPlayers(_currentState!);
       }
     } catch (e) {
-      print('❌ AudioService initialization error: $e');
       _isInitialized = false;
     }
   }
@@ -67,26 +60,18 @@ class AudioService {
 
     if (_isInitialized && _soundPlayer != null && _musicPlayer != null) {
       _applyStateToPlayers(state);
-    } else {
-      print('⚠️ AudioService not ready yet, storing state for later');
-    }
+    } else {}
   }
 
   void _applyStateToPlayers(AppState state) {
     try {
       _soundPlayer?.setVolume(state.soundVolume);
       _musicPlayer?.setVolume(state.musicVolume);
-      print(
-        '🔊 Audio volume updated: sound=${state.soundVolume}, music=${state.musicVolume}',
-      );
-    } catch (e) {
-      print('❌ Error applying audio state: $e');
-    }
+    } catch (e) {}
   }
 
   Future<void> _playAsset(String assetPath) async {
     if (!_isInitialized || !(_currentState?.isSoundEnabled ?? true)) {
-      print('⚠️ Cannot play sound: AudioService not ready or sound disabled');
       return;
     }
 
@@ -94,10 +79,7 @@ class AudioService {
       await _soundPlayer?.stop();
       await _soundPlayer?.setAsset(assetPath);
       await _soundPlayer?.play();
-      print('🎵 Playing: $assetPath');
-    } catch (e) {
-      print('❌ Play asset error: $e - Asset: $assetPath');
-    }
+    } catch (e) {}
   }
 
   // Sound effect methods
@@ -136,33 +118,25 @@ class AudioService {
   // Background music methods - using ONLY local file
   Future<void> startBackgroundMusic() async {
     if (!_isInitialized) {
-      print('⚠️ AudioService not initialized, attempting to initialize...');
       await initialize();
     }
-    
+
     if (!(_currentState?.isBackgroundMusicEnabled ?? true)) {
-      print('⚠️ Background music disabled in settings');
       return;
     }
-    
+
     if (_isMusicPlaying || _musicPlayer?.playerState.playing == true) {
-      print('🎶 Background music already playing');
       return;
     }
-    
+
     try {
-      print('🎵 Starting background music from local file...');
-      
       // Set the audio source to your local file
       await _musicPlayer?.setAsset('assets/audio/background.mp3');
       await _musicPlayer?.setVolume(_currentState?.musicVolume ?? 0.5);
       await _musicPlayer?.play();
-      
+
       _isMusicPlaying = true;
-      print('✅ Background music started successfully from local file');
     } catch (e) {
-      print('❌ Failed to start background music: $e');
-      print('⚠️ Please check that assets/audio/background.mp3 exists');
       _isMusicPlaying = false;
     }
   }
@@ -171,20 +145,14 @@ class AudioService {
     try {
       await _musicPlayer?.stop();
       _isMusicPlaying = false;
-      print('🎶 Background music stopped');
-    } catch (e) {
-      print('❌ Stop background music error: $e');
-    }
+    } catch (e) {}
   }
 
   Future<void> pauseBackgroundMusic() async {
     try {
       await _musicPlayer?.pause();
       _isMusicPlaying = false;
-      print('🎶 Background music paused');
-    } catch (e) {
-      print('❌ Pause background music error: $e');
-    }
+    } catch (e) {}
   }
 
   Future<void> resumeBackgroundMusic() async {
@@ -192,9 +160,7 @@ class AudioService {
       try {
         await _musicPlayer?.play();
         _isMusicPlaying = true;
-        print('🎶 Background music resumed');
       } catch (e) {
-        print('❌ Resume background music error: $e');
         // If resume fails, try starting fresh
         await startBackgroundMusic();
       }
@@ -206,10 +172,7 @@ class AudioService {
       await _soundPlayer?.stop();
       await _musicPlayer?.stop();
       _isMusicPlaying = false;
-      print('🔇 All sounds stopped');
-    } catch (e) {
-      print('❌ Stop all sounds error: $e');
-    }
+    } catch (e) {}
   }
 
   void dispose() {
@@ -219,6 +182,5 @@ class AudioService {
     _musicPlayer = null;
     _isInitialized = false;
     _isMusicPlaying = false;
-    print('🗑️ AudioService disposed');
   }
 }

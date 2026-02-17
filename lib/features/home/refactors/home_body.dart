@@ -1,6 +1,7 @@
 import 'package:animate_do/animate_do.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:medaan_almaarifa/core/common/animations/animate_do.dart';
 import 'package:medaan_almaarifa/core/common/screens/contact_us_screen.dart';
 import 'package:medaan_almaarifa/core/common/screens/give_suggestion_screen.dart';
 import 'package:medaan_almaarifa/core/helpers/znoona_navigate.dart';
@@ -44,9 +45,8 @@ class HomeBody extends StatelessWidget {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         SizedBox(height: 30.h),
-                        FadeInLeft(
-                          duration: const Duration(milliseconds: 900),
-                          child: const CustomSectionTitle(
+                        const CustomFadeInRight(
+                          child: CustomSectionTitle(
                             langkey: LangKeys.letsPlay,
                           ),
                         ),
@@ -55,7 +55,7 @@ class HomeBody extends StatelessWidget {
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
-                              FadeInLeft(
+                              CustomFadeInRight(
                                 duration: const Duration(milliseconds: 1000),
                                 child: GameButton(
                                   image: AppImages.quizGame,
@@ -66,7 +66,7 @@ class HomeBody extends StatelessWidget {
                                   ),
                                 ),
                               ),
-                              FadeInRight(
+                              CustomFadeInLeft(
                                 duration: const Duration(milliseconds: 1000),
                                 child: GameButton(
                                   image: AppImages.puzzle,

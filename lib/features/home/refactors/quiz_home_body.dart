@@ -1,6 +1,7 @@
 import 'package:animate_do/animate_do.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:medaan_almaarifa/core/common/animations/animate_do.dart';
 import 'package:medaan_almaarifa/core/common/widgets/custom_app_bar.dart';
 import 'package:medaan_almaarifa/core/helpers/znoona_navigate.dart';
 import 'package:medaan_almaarifa/core/language/lang_keys.dart';
@@ -37,9 +38,8 @@ class QuizHomeBody extends StatelessWidget {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         SizedBox(height: 30.h),
-                        FadeInDown(
-                          duration: const Duration(milliseconds: 900),
-                          child: const CustomSectionTitle(
+                        const CustomFadeInRight(
+                          child: CustomSectionTitle(
                             langkey: LangKeys.chooseMode,
                           ),
                         ),
@@ -49,7 +49,7 @@ class QuizHomeBody extends StatelessWidget {
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
-                              FadeInLeft(
+                              CustomFadeInRight(
                                 duration: const Duration(milliseconds: 1000),
                                 child: GameButton(
                                   image: AppImages.solo,
@@ -62,7 +62,7 @@ class QuizHomeBody extends StatelessWidget {
                                   ),
                                 ),
                               ),
-                              FadeInRight(
+                              CustomFadeInLeft(
                                 duration: const Duration(milliseconds: 1000),
                                 child: GameButton(
                                   image: AppImages.multi,

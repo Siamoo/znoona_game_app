@@ -1,3 +1,4 @@
+import 'package:animate_do/animate_do.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -11,11 +12,13 @@ class CategoryItem extends StatelessWidget {
   const CategoryItem({
     required this.category,
     required this.onPressed,
+    required this.durationMs,
     super.key,
   });
 
   final Category category;
   final VoidCallback onPressed;
+  final int durationMs;
 
   @override
   Widget build(BuildContext context) {
@@ -39,7 +42,7 @@ class CategoryItem extends StatelessWidget {
             Expanded(
               flex: 3,
               child: CustomFadeInRight(
-                duration: const Duration(milliseconds: 700),
+                duration: Duration(milliseconds: durationMs),
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -104,8 +107,8 @@ class CategoryItem extends StatelessWidget {
 
             // Right side - Image
             CustomFadeInLeft(
-              duration: const Duration(milliseconds: 700),
-              child: Container(
+              duration: Duration(milliseconds: durationMs),
+              child: SizedBox(
                 width: 90.w,
                 height: 90.h,
                 child: CachedNetworkImage(

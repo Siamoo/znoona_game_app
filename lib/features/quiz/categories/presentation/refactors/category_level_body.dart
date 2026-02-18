@@ -1,3 +1,4 @@
+import 'package:animate_do/animate_do.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -89,11 +90,13 @@ class CategoryLevelBody extends StatelessWidget {
         separatorBuilder: (context, index) => SizedBox(height: 12.h),
         itemBuilder: (context, index) {
           final category = categories[index];
+          int durationMs = 800 + (index * 50);
           return CustomFadeInDown(
-            duration: Duration(milliseconds: 600 + (index * 10)),
+            duration: Duration(milliseconds: durationMs),
             child: CategoryItem(
               category: category,
               onPressed: () => onCategorySelected(category),
+              durationMs: durationMs,
             ),
           );
         },

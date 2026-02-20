@@ -5,11 +5,70 @@ import 'package:medaan_almaarifa/core/helpers/znoona_texts.dart';
 import 'package:medaan_almaarifa/core/language/lang_keys.dart';
 import 'package:medaan_almaarifa/core/style/images/app_images.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:connectivity_plus/connectivity_plus.dart';
 
-class NoNetworkScreen extends StatelessWidget {
+class NoNetworkScreen extends StatefulWidget {
   const NoNetworkScreen({super.key, this.onRetry});
 
   final VoidCallback? onRetry;
+
+  @override
+  State<NoNetworkScreen> createState() => _NoNetworkScreenState();
+}
+
+class _NoNetworkScreenState extends State<NoNetworkScreen> {
+  bool _isRetrying = false;
+
+  Future<void> _handleRetry() async {
+    if (_isRetrying) return;
+    
+    setState(() {
+      _isRetrying = true;
+    });
+
+    try {
+      // Check connectivity
+      final results = await Connectivity().checkConnectivity();
+      final hasConnection = results.any((r) =>
+          r == ConnectivityResult.mobile ||
+          r == ConnectivityResult.wifi ||
+          r == ConnectivityResult.ethernet);
+
+      if (hasConnection) {
+        if (widget.onRetry != null) {
+          widget.onRetry!();
+        } else {
+          // If no onRetry provided, try to restart the app
+          // You might want to implement app restart logic here
+        }
+      } else {
+        // Show error message
+        if (mounted) {
+          ScaffoldMessenger.of(context).showSnackBar(
+            const SnackBar(
+              content: Text('Still no internet connection'),
+              backgroundColor: Colors.red,
+            ),
+          );
+        }
+      }
+    } catch (e) {
+      if (mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Text('Error checking connection: $e'),
+            backgroundColor: Colors.red,
+          ),
+        );
+      }
+    } finally {
+      if (mounted) {
+        setState(() {
+          _isRetrying = false;
+        });
+      }
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -42,6 +101,13 @@ class NoNetworkScreen extends StatelessWidget {
                         width: 200.w,
                         height: 200.h,
                         fit: BoxFit.contain,
+                        errorBuilder: (context, error, stackTrace) {
+                          return Icon(
+                            Icons.wifi_off,
+                            size: 100.h,
+                            color: ZnoonaColors.bluePinkDark(context),
+                          );
+                        },
                       ),
                     ),
                   );
@@ -76,8 +142,8 @@ class NoNetworkScreen extends StatelessWidget {
 
               SizedBox(height: 48.h),
 
-              // Retry Button (if provided)
-              if (onRetry != null) _buildRetryButton(context),
+              // Retry Button
+              _buildRetryButton(context),
 
               // Check settings suggestion
               SizedBox(height: 24.h),
@@ -130,20 +196,32 @@ class NoNetworkScreen extends StatelessWidget {
       child: Material(
         color: Colors.transparent,
         child: InkWell(
-          onTap: onRetry,
+          onTap: _isRetrying ? null : _handleRetry,
           borderRadius: BorderRadius.circular(16.r),
           child: Center(
             child: Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                Icon(
-                  Icons.refresh,
-                  color: Colors.white,
-                  size: 24.h,
-                ),
+                if (_isRetrying)
+                  SizedBox(
+                    width: 24.h,
+                    height: 24.h,
+                    child: CircularProgressIndicator(
+                      color: Colors.white,
+                      strokeWidth: 2.w,
+                    ),
+                  )
+                else
+                  Icon(
+                    Icons.refresh,
+                    color: Colors.white,
+                    size: 24.h,
+                  ),
                 SizedBox(width: 8.w),
                 Text(
-                  ZnoonaTexts.tr(context, LangKeys.tryAgain),
+                  _isRetrying 
+                      ? 'Checking...' 
+                      : ZnoonaTexts.tr(context, LangKeys.tryAgain),
                   style: GoogleFonts.beiruti(
                     fontSize: 18.h,
                     fontWeight: FontWeight.bold,

@@ -1,6 +1,8 @@
+import 'dart:async';
 import 'package:audio_session/audio_session.dart';
 import 'package:flutter/material.dart';
 import 'package:just_audio/just_audio.dart';
+import 'package:logger/logger.dart';
 import 'package:medaan_almaarifa/core/app/app_cubit/app_cubit.dart';
 
 class AudioService with WidgetsBindingObserver {
@@ -10,24 +12,33 @@ class AudioService with WidgetsBindingObserver {
 
   AudioPlayer? _soundPlayer;
   AudioPlayer? _musicPlayer;
-
+  final Logger _logger = Logger();
+  
   bool _isInitialized = false;
   AppState? _currentState;
-  bool _isMusicPlaying = false;
+  // Add to AudioService class
+bool get isBackgroundMusicEnabled => _currentState?.isBackgroundMusicEnabled ?? true;
   
   // Track lifecycle state
   bool _isAppPaused = false;
   bool _isDisposed = false;
+  
+  // Stream subscriptions for cleanup
+  StreamSubscription<PlaybackEvent>? _soundEventSubscription;
+  StreamSubscription<PlaybackEvent>? _musicEventSubscription;
+  StreamSubscription<PlayerState>? _soundStateSubscription;
+  StreamSubscription<PlayerState>? _musicStateSubscription;
+  
+  // Audio session
+  AudioSession? _audioSession;
+  
+  // Cache for asset readiness
+  bool _backgroundMusicReady = false;
+  
+  // Getter for state
+  bool get isInitialized => _isInitialized;
+  bool get isMusicPlaying => _musicPlayer?.playing ?? false;
 
-  bool get isSoundEnabled => _currentState?.isSoundEnabled ?? true;
-  bool get isBackgroundMusicEnabled =>
-      _currentState?.isBackgroundMusicEnabled ?? true;
-  double get soundVolume => _currentState?.soundVolume ?? 1.0;
-  double get musicVolume => _currentState?.musicVolume ?? 0.5;
-  bool get isMusicActuallyPlaying =>
-      _isInitialized && _musicPlayer?.playerState.playing == true;
-
-  // Initialize with lifecycle observer
   Future<void> initialize() async {
     if (_isInitialized || _isDisposed) return;
 
@@ -36,72 +47,111 @@ class AudioService with WidgetsBindingObserver {
       WidgetsBinding.instance.addObserver(this);
       
       // Configure audio session for better audio handling
-      final session = await AudioSession.instance;
-      await session.configure(const AudioSessionConfiguration.music());
+      _audioSession = await AudioSession.instance;
+      await _audioSession!.configure(const AudioSessionConfiguration.music());
+      
+      // Activate audio session
+      await _audioSession!.setActive(true);
 
       // Initialize audio players with error handling
-      _soundPlayer = AudioPlayer()..playbackEventStream.listen(_handleSoundEvents);
-      _musicPlayer = AudioPlayer()..playbackEventStream.listen(_handleMusicEvents);
+      _soundPlayer = AudioPlayer();
+      _musicPlayer = AudioPlayer();
+
+      // Set up listeners with proper cleanup
+      _setupPlayerListeners();
 
       // Set up music player
       await _musicPlayer!.setLoopMode(LoopMode.all);
       await _musicPlayer!.setVolume(0.5);
 
-      // Preload the background music file - FIXED: Don't try to modify any maps
-      try {
-        // Just set the asset, don't try to verify or modify anything else
-        await _musicPlayer!.setAsset('assets/audio/background.mp3');
-        debugPrint('✅ Background music preloaded successfully');
-      } catch (e) {
-        debugPrint('⚠️ Could not preload background music: $e');
-        // Continue initialization even if preload fails
-      }
+      // Preload background music
+      await _preloadBackgroundMusic();
 
       _isInitialized = true;
-      debugPrint('✅ AudioService initialized successfully');
+      _logger.i('✅ AudioService initialized successfully');
 
-      // Set initial state if it was provided before initialization
+      // Apply any pending state
       if (_currentState != null) {
         _applyStateToPlayers(_currentState!);
       }
     } catch (e, stackTrace) {
-      debugPrint('❌ Failed to initialize AudioService: $e');
-      debugPrint('Stack trace: $stackTrace');
+      _logger.e('❌ Failed to initialize AudioService', error: e, stackTrace: stackTrace);
       _isInitialized = false;
+      await _cleanup();
+    }
+  }
+
+  void _setupPlayerListeners() {
+    // Sound player listeners
+    _soundEventSubscription = _soundPlayer?.playbackEventStream.listen(
+      _handleSoundEvents,
+      onError: (e) => _logger.e('Sound player error', error: e),
+    );
+    
+    _soundStateSubscription = _soundPlayer?.playerStateStream.listen(
+      (state) => _logger.d('Sound state: ${state.playing}'),
+      onError: (e) => _logger.e('Sound state error', error: e),
+    );
+
+    // Music player listeners
+    _musicEventSubscription = _musicPlayer?.playbackEventStream.listen(
+      _handleMusicEvents,
+      onError: (e) => _logger.e('Music player error', error: e),
+    );
+    
+    _musicStateSubscription = _musicPlayer?.playerStateStream.listen(
+      (state) {
+        _logger.d('Music state: ${state.playing}');
+        if (state.processingState == ProcessingState.completed) {
+          _logger.d('Music completed, restarting');
+          _musicPlayer?.seek(Duration.zero);
+          if (_currentState?.isBackgroundMusicEnabled ?? false) {
+            _musicPlayer?.play();
+          }
+        }
+      },
+      onError: (e) => _logger.e('Music state error', error: e),
+    );
+  }
+
+  Future<void> _preloadBackgroundMusic() async {
+    try {
+      await _musicPlayer!.setAsset('assets/audio/background.mp3');
+      _backgroundMusicReady = true;
+      _logger.i('✅ Background music preloaded');
+    } catch (e) {
+      _backgroundMusicReady = false;
+      _logger.w('⚠️ Could not preload background music: $e');
     }
   }
 
   void _handleSoundEvents(PlaybackEvent event) {
-    // Handle sound playback events if needed
+    // Handle sound events if needed
   }
 
   void _handleMusicEvents(PlaybackEvent event) {
-    // Update music playing state based on actual playback
-    if (_musicPlayer != null) {
-      _isMusicPlaying = _musicPlayer!.playerState.playing;
-    }
+    // Handle music events if needed
   }
 
   @override
   void didChangeAppLifecycleState(AppLifecycleState state) {
+    if (_isDisposed) return;
+    
     switch (state) {
       case AppLifecycleState.paused:
         _isAppPaused = true;
-        // Pause music when app goes to background
-        if (isBackgroundMusicEnabled) {
-          pauseBackgroundMusic();
-        }
+        pauseBackgroundMusic();
         break;
       case AppLifecycleState.resumed:
         _isAppPaused = false;
-        // Resume music if it was playing and should be enabled
-        if (isBackgroundMusicEnabled) {
-          resumeBackgroundMusic();
-        }
+        resumeBackgroundMusic();
         break;
       case AppLifecycleState.detached:
-        // App is being destroyed
         dispose();
+        break;
+      case AppLifecycleState.inactive:
+        // App is inactive (e.g., phone call)
+        pauseBackgroundMusic();
         break;
       default:
         break;
@@ -110,38 +160,36 @@ class AudioService with WidgetsBindingObserver {
 
   void onAppStateChanged(AppState state) {
     _currentState = state;
-
-    if (_isInitialized && _soundPlayer != null && _musicPlayer != null) {
+    if (_isInitialized && !_isDisposed) {
       _applyStateToPlayers(state);
     }
   }
 
-  void _applyStateToPlayers(AppState state) {
+  Future<void> _applyStateToPlayers(AppState state) async {
     try {
-      _soundPlayer?.setVolume(state.soundVolume);
-      _musicPlayer?.setVolume(state.musicVolume);
+      // Update volumes
+      await _soundPlayer?.setVolume(state.soundVolume);
+      await _musicPlayer?.setVolume(state.musicVolume);
       
       // Handle music playback based on state
       if (state.isBackgroundMusicEnabled && !_isAppPaused) {
-        if (!_isMusicPlaying) {
-          startBackgroundMusic();
-        }
+        await startBackgroundMusic();
       } else {
-        if (_isMusicPlaying) {
-          pauseBackgroundMusic();
-        }
+        await pauseBackgroundMusic();
       }
     } catch (e) {
-      debugPrint('Error applying state to players: $e');
+      _logger.e('Error applying state to players', error: e);
     }
   }
 
   Future<void> _playAsset(String assetPath) async {
+    if (_isDisposed) return;
+    
     if (!_isInitialized) {
       await initialize();
     }
     
-    if (!(_currentState?.isSoundEnabled ?? true)) {
+    if (!(_currentState?.isSoundEnabled ?? true) || _isAppPaused) {
       return;
     }
 
@@ -150,136 +198,97 @@ class AudioService with WidgetsBindingObserver {
       await _soundPlayer?.setAsset(assetPath);
       await _soundPlayer?.setVolume(_currentState?.soundVolume ?? 1.0);
       await _soundPlayer?.play();
-      debugPrint('✅ Playing sound: $assetPath');
     } catch (e) {
-      debugPrint('❌ Failed to play sound asset $assetPath: $e');
+      _logger.e('❌ Failed to play sound asset $assetPath', error: e);
     }
   }
 
-  // Sound effect methods
-  Future<void> playCorrectSound() async {
-    await _playAsset('assets/audio/correct.mp3');
-  }
+  // Public sound methods
+  Future<void> playCorrectSound() => _playAsset('assets/audio/correct.mp3');
+  Future<void> playWrongSound() => _playAsset('assets/audio/wrong.mp3');
+  Future<void> playTimerWarningSound() => _playAsset('assets/audio/timer_warning.mp3');
+  Future<void> playTimerCriticalSound() => _playAsset('assets/audio/timer_critical.mp3');
+  Future<void> playWinSound() => _playAsset('assets/audio/win.mp3');
+  Future<void> playGoodResultSound() => _playAsset('assets/audio/win.mp3');
+  Future<void> playBadResultSound() => _playAsset('assets/audio/bad.mp3');
 
-  Future<void> playWrongSound() async {
-    await _playAsset('assets/audio/wrong.mp3');
-  }
-
-  Future<void> playTimerWarningSound() async {
-    await _playAsset('assets/audio/timer_warning.mp3');
-  }
-
-  Future<void> playTimerCriticalSound() async {
-    await _playAsset('assets/audio/timer_critical.mp3');
-  }
-
-  Future<void> playWinSound() async {
-    await _playAsset('assets/audio/win.mp3');
-  }
-
-  Future<void> playGoodResultSound() async {
-    await _playAsset('assets/audio/win.mp3');
-  }
-
-  Future<void> playBadResultSound() async {
-    await _playAsset('assets/audio/bad.mp3');
-  }
-
-  // Background music methods
   Future<void> startBackgroundMusic() async {
-    if (_isDisposed) return;
+    if (_isDisposed || _isAppPaused) return;
     
     if (!_isInitialized) {
       await initialize();
     }
 
-    if (!(_isInitialized)) {
-      debugPrint('❌ Cannot start music: AudioService not initialized');
+    if (!_isInitialized || !_backgroundMusicReady) {
       return;
     }
 
-    if (!(_currentState?.isBackgroundMusicEnabled ?? true) || _isAppPaused) {
-      return;
-    }
-
-    if (_isMusicPlaying || _musicPlayer?.playerState.playing == true) {
-      return;
-    }
+    if (_musicPlayer?.playing == true) return;
 
     try {
-      await _musicPlayer?.setAsset('assets/audio/background.mp3');
-      await _musicPlayer?.setVolume(_currentState?.musicVolume ?? 0.5);
-      await _musicPlayer?.play();
-      _isMusicPlaying = true;
-      debugPrint('✅ Background music started');
+      if (!_backgroundMusicReady) {
+        await _musicPlayer!.setAsset('assets/audio/background.mp3');
+        _backgroundMusicReady = true;
+      }
+      await _musicPlayer!.setVolume(_currentState?.musicVolume ?? 0.5);
+      await _musicPlayer!.play();
+      _logger.i('✅ Background music started');
     } catch (e) {
-      _isMusicPlaying = false;
-      debugPrint('❌ Failed to start background music: $e');
-    }
-  }
-
-  Future<void> stopBackgroundMusic() async {
-    try {
-      await _musicPlayer?.stop();
-      _isMusicPlaying = false;
-      debugPrint('⏹️ Background music stopped');
-    } catch (e) {
-      debugPrint('❌ Failed to stop background music: $e');
+      _logger.e('❌ Failed to start background music', error: e);
     }
   }
 
   Future<void> pauseBackgroundMusic() async {
     try {
       await _musicPlayer?.pause();
-      _isMusicPlaying = false;
-      debugPrint('⏸️ Background music paused');
+      _logger.i('⏸️ Background music paused');
     } catch (e) {
-      debugPrint('❌ Failed to pause background music: $e');
+      _logger.e('❌ Failed to pause background music', error: e);
     }
   }
 
   Future<void> resumeBackgroundMusic() async {
     if (_isDisposed || _isAppPaused) return;
     
-    if (_currentState?.isBackgroundMusicEnabled ?? true) {
+    if (_currentState?.isBackgroundMusicEnabled ?? false) {
       try {
         await _musicPlayer?.play();
-        _isMusicPlaying = true;
-        debugPrint('▶️ Background music resumed');
+        _logger.i('▶️ Background music resumed');
       } catch (e) {
-        debugPrint('❌ Failed to resume background music: $e');
+        _logger.e('❌ Failed to resume background music', error: e);
         await startBackgroundMusic();
       }
     }
   }
 
-  /// Update music volume without restarting playback
-  Future<void> updateMusicVolume(double volume) async {
-    if (!_isInitialized) {
-      await initialize();
+  Future<void> stopBackgroundMusic() async {
+    try {
+      await _musicPlayer?.stop();
+      _logger.i('⏹️ Background music stopped');
+    } catch (e) {
+      _logger.e('❌ Failed to stop background music', error: e);
     }
+  }
+
+  Future<void> updateMusicVolume(double volume) async {
+    if (_isDisposed) return;
     
     try {
       final clampedVolume = volume.clamp(0.0, 1.0);
       await _musicPlayer?.setVolume(clampedVolume);
-      debugPrint('🔊 Music volume updated to: $clampedVolume');
     } catch (e) {
-      debugPrint('❌ Failed to update music volume: $e');
+      _logger.e('❌ Failed to update music volume', error: e);
     }
   }
 
-  /// Update sound effects volume
   Future<void> updateSoundVolume(double volume) async {
-    if (!_isInitialized) {
-      await initialize();
-    }
+    if (_isDisposed) return;
     
     try {
       final clampedVolume = volume.clamp(0.0, 1.0);
       await _soundPlayer?.setVolume(clampedVolume);
-      debugPrint('🔊 Sound volume updated to: $clampedVolume');
     } catch (e) {
-      debugPrint('❌ Failed to update sound volume: $e');
+      _logger.e('❌ Failed to update sound volume', error: e);
     }
   }
 
@@ -287,31 +296,48 @@ class AudioService with WidgetsBindingObserver {
     try {
       await _soundPlayer?.stop();
       await _musicPlayer?.stop();
-      _isMusicPlaying = false;
-      debugPrint('⏹️ All sounds stopped');
+      _logger.i('⏹️ All sounds stopped');
     } catch (e) {
-      debugPrint('❌ Error stopping all sounds: $e');
+      _logger.e('❌ Error stopping all sounds', error: e);
     }
+  }
+
+  Future<void> _cleanup() async {
+    // Cancel all subscriptions
+    await _soundEventSubscription?.cancel();
+    await _musicEventSubscription?.cancel();
+    await _soundStateSubscription?.cancel();
+    await _musicStateSubscription?.cancel();
+    
+    // Dispose players
+    await _soundPlayer?.dispose();
+    await _musicPlayer?.dispose();
+    
+    // Deactivate audio session
+    await _audioSession?.setActive(false);
+    
+    // Clear references
+    _soundPlayer = null;
+    _musicPlayer = null;
+    _audioSession = null;
+    _soundEventSubscription = null;
+    _musicEventSubscription = null;
+    _soundStateSubscription = null;
+    _musicStateSubscription = null;
   }
 
   @mustCallSuper
   void dispose() {
     if (_isDisposed) return;
     
+    _isDisposed = true;
     WidgetsBinding.instance.removeObserver(this);
     
-    try {
-      _soundPlayer?.dispose();
-      _musicPlayer?.dispose();
-      debugPrint('✅ AudioService disposed');
-    } catch (e) {
-      debugPrint('❌ Error disposing audio players: $e');
-    } finally {
-      _soundPlayer = null;
-      _musicPlayer = null;
+    _cleanup().then((_) {
       _isInitialized = false;
-      _isMusicPlaying = false;
-      _isDisposed = true;
-    }
+      _logger.i('✅ AudioService disposed');
+    }).catchError((e) {
+      _logger.e('❌ Error during AudioService disposal', error: e);
+    });
   }
 }

@@ -1,6 +1,8 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
+import 'package:flutter/foundation.dart';
 
+/// A slider that debounces rapid changes to prevent excessive updates
 class DebouncedSlider extends StatefulWidget {
   final double value;
   final ValueChanged<double> onChanged;
@@ -11,10 +13,9 @@ class DebouncedSlider extends StatefulWidget {
   final Color? activeColor;
   final Color? inactiveColor;
   final Duration debounceDuration;
-  
-  // Fixed: This should be SemanticFormatterCallback type, not String?
   final SemanticFormatterCallback? semanticFormatterCallback;
-
+  final bool useThrottle; // false for debounce, true for throttle
+  
   const DebouncedSlider({
     super.key,
     required this.value,
@@ -26,7 +27,8 @@ class DebouncedSlider extends StatefulWidget {
     this.activeColor,
     this.inactiveColor,
     this.debounceDuration = const Duration(milliseconds: 100),
-    this.semanticFormatterCallback, // Now correct type
+    this.semanticFormatterCallback,
+    this.useThrottle = false, // Default to debounce
   });
 
   @override
@@ -35,52 +37,118 @@ class DebouncedSlider extends StatefulWidget {
 
 class _DebouncedSliderState extends State<DebouncedSlider> {
   Timer? _debounceTimer;
+  DateTime? _lastThrottleTime;
   late double _localValue;
   
-  // Track if we're currently debouncing
-  bool _isDebouncing = false;
+  // Track if we're currently debouncing/throttling
+  bool _isProcessing = false;
+  
+  // Track if external update is pending
+  bool _hasPendingExternalUpdate = false;
 
   @override
   void initState() {
     super.initState();
-    _localValue = widget.value;
+    _localValue = widget.value.clamp(widget.min, widget.max);
   }
 
   @override
   void didUpdateWidget(DebouncedSlider oldWidget) {
     super.didUpdateWidget(oldWidget);
-    // Only update if the value changed externally and we're not in the middle of debouncing
-    if (oldWidget.value != widget.value && !_isDebouncing) {
+    
+    // Handle external value changes
+    if (oldWidget.value != widget.value && !_isProcessing) {
       setState(() {
-        _localValue = widget.value;
+        _localValue = widget.value.clamp(widget.min, widget.max);
+      });
+    } else if (oldWidget.value != widget.value) {
+      // Mark that we have a pending external update
+      _hasPendingExternalUpdate = true;
+    }
+    
+    // Re-clamp if min/max changed
+    if (oldWidget.min != widget.min || oldWidget.max != widget.max) {
+      setState(() {
+        _localValue = _localValue.clamp(widget.min, widget.max);
       });
     }
   }
 
   void _handleChanged(double value) {
-    setState(() {
-      _localValue = value;
-    });
-
-    _isDebouncing = true;
+    // Stop any existing debounce timer
     _debounceTimer?.cancel();
-    _debounceTimer = Timer(widget.debounceDuration, () {
-      _isDebouncing = false;
-      widget.onChanged(value);
+    
+    setState(() {
+      _localValue = value.clamp(widget.min, widget.max);
     });
+    
+    _isProcessing = true;
+    
+    if (widget.useThrottle) {
+      _handleThrottledChange(value);
+    } else {
+      _handleDebouncedChange(value);
+    }
+  }
+
+  void _handleDebouncedChange(double value) {
+    _debounceTimer = Timer(widget.debounceDuration, () {
+      _finalizeChange(value);
+    });
+  }
+
+  void _handleThrottledChange(double value) {
+    final now = DateTime.now();
+    final shouldThrottle = _lastThrottleTime != null &&
+        now.difference(_lastThrottleTime!) < widget.debounceDuration;
+    
+    if (!shouldThrottle) {
+      _lastThrottleTime = now;
+      _finalizeChange(value);
+    } else {
+      // Schedule for later if needed
+      _debounceTimer?.cancel();
+      _debounceTimer = Timer(widget.debounceDuration, () {
+        _finalizeChange(value);
+      });
+    }
+  }
+
+  void _finalizeChange(double value) {
+    if (!mounted) return;
+    
+    _isProcessing = false;
+    
+    // Check if there's a pending external update
+    if (_hasPendingExternalUpdate) {
+      setState(() {
+        _localValue = widget.value.clamp(widget.min, widget.max);
+      });
+      _hasPendingExternalUpdate = false;
+    }
+    
+    widget.onChanged(value.clamp(widget.min, widget.max));
   }
 
   void _handleChangeEnd(double value) {
     _debounceTimer?.cancel();
-    _isDebouncing = false;
-    widget.onChanged(value);
-    widget.onChangedEnd?.call(value);
+    _isProcessing = false;
+    
+    final clampedValue = value.clamp(widget.min, widget.max);
+    
+    // Ensure final value is set
+    setState(() {
+      _localValue = clampedValue;
+    });
+    
+    widget.onChanged(clampedValue);
+    widget.onChangedEnd?.call(clampedValue);
   }
 
   @override
   Widget build(BuildContext context) {
     return Slider(
-      value: _localValue.clamp(widget.min, widget.max),
+      value: _localValue,
       onChanged: _handleChanged,
       onChangeEnd: _handleChangeEnd,
       min: widget.min,
@@ -88,7 +156,7 @@ class _DebouncedSliderState extends State<DebouncedSlider> {
       divisions: widget.divisions,
       activeColor: widget.activeColor,
       inactiveColor: widget.inactiveColor,
-      semanticFormatterCallback: widget.semanticFormatterCallback, // Now correctly typed
+      semanticFormatterCallback: widget.semanticFormatterCallback,
     );
   }
 
@@ -96,5 +164,29 @@ class _DebouncedSliderState extends State<DebouncedSlider> {
   void dispose() {
     _debounceTimer?.cancel();
     super.dispose();
+  }
+}
+
+/// Extension for easier usage
+extension DebouncedSliderExtension on DebouncedSlider {
+  /// Creates a volume slider with common settings
+  static DebouncedSlider volume({
+    required double value,
+    required ValueChanged<double> onChanged,
+    ValueChanged<double>? onChangedEnd,
+    Color? activeColor,
+    Color? inactiveColor,
+  }) {
+    return DebouncedSlider(
+      value: value,
+      onChanged: onChanged,
+      onChangedEnd: onChangedEnd,
+      min: 0.0,
+      max: 1.0,
+      divisions: 10,
+      activeColor: activeColor,
+      inactiveColor: inactiveColor,
+      debounceDuration: const Duration(milliseconds: 50),
+    );
   }
 }

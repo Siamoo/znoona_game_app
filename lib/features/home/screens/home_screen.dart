@@ -1,4 +1,4 @@
-import 'package:flutter/widgets.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:medaan_almaarifa/core/di/injcetion_container.dart';
 import 'package:medaan_almaarifa/core/helpers/audio_service.dart';
@@ -34,7 +34,7 @@ class _HomeScreenState extends State<HomeScreen> with WidgetsBindingObserver {
 
   @override
   void didChangeAppLifecycleState(AppLifecycleState state) {
-    if (!_audioService.isBackgroundMusicEnabled) return;
+    if (!_audioService.isInitialized) return;
     
     switch (state) {
       case AppLifecycleState.paused:

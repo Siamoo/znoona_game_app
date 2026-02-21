@@ -1,7 +1,5 @@
 import 'dart:async';
 import 'dart:ui';
-
-import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:logger/logger.dart';
@@ -19,10 +17,21 @@ class AppCubit extends Cubit<AppState> {
   
   // Debouncer for frequent operations
   Timer? _debounceTimer;
-  bool _isLoading = false;
   
-  // Cache for preferences to reduce disk reads
+  // Throttle for very frequent operations
+  DateTime? _lastSaveTime;
+  static const Duration _saveThrottleDuration = Duration(milliseconds: 200);
+  
+  // Batch updates
+  final List<Future<void> Function()> _pendingOperations = [];
+  Timer? _batchTimer;
+  
+  // Cache for preferences
   final Map<String, dynamic> _prefCache = {};
+  
+  // Track loading state
+  bool _isLoading = false;
+  bool _isInitialized = false;
 
   AppCubit({
     required SharedPref sharedPref,
@@ -32,33 +41,41 @@ class AppCubit extends Cubit<AppState> {
         _audioService = audioService,
         _logger = logger ?? Logger(),
         super(AppState.initial()) {
-    _loadSettings();
+    _initialize();
+  }
+
+  Future<void> _initialize() async {
+    if (_isInitialized) return;
+    await _loadSettings();
+    _isInitialized = true;
   }
 
   Future<void> _loadSettings() async {
-    // Prevent multiple simultaneous loads
     if (_isLoading) return;
     _isLoading = true;
 
     try {
-      // Load all preferences with proper fallbacks
-      final loadTasks = await Future.wait([
-        _loadThemeMode(),
-        _loadLanguage(),
-        _loadSoundEnabled(),
-        _loadBackgroundMusicEnabled(),
-        _loadSoundVolume(),
-        _loadMusicVolume(),
-      ]);
+      // Load all preferences in parallel with timeout
+      final results = await Future.wait([
+        _loadWithTimeout(() => _loadThemeMode()),
+        _loadWithTimeout(() => _loadLanguage()),
+        _loadWithTimeout(() => _loadSoundEnabled()),
+        _loadWithTimeout(() => _loadBackgroundMusicEnabled()),
+        _loadWithTimeout(() => _loadSoundVolume()),
+        _loadWithTimeout(() => _loadMusicVolume()),
+      ], eagerError: false).timeout(
+        const Duration(seconds: 3),
+        onTimeout: () => _getDefaultValues(),
+      );
 
-      final themeMode = loadTasks[0] as bool;
-      final languageCode = loadTasks[1] as String;
-      final isSoundEnabled = loadTasks[2] as bool;
-      final isBackgroundMusicEnabled = loadTasks[3] as bool;
-      final soundVolume = loadTasks[4] as double;
-      final musicVolume = loadTasks[5] as double;
+      final themeMode = results[0] as bool;
+      final languageCode = results[1] as String;
+      final isSoundEnabled = results[2] as bool;
+      final isBackgroundMusicEnabled = results[3] as bool;
+      final soundVolume = results[4] as double;
+      final musicVolume = results[5] as double;
 
-      // Cache loaded values
+      // Update cache
       _updateCache({
         PrefKeys.themeMode: themeMode,
         PrefKeys.language: languageCode,
@@ -84,7 +101,6 @@ class AppCubit extends Cubit<AppState> {
     } catch (e, stackTrace) {
       _logger.e('Failed to load app settings', error: e, stackTrace: stackTrace);
       
-      // Emit initial state as fallback
       if (!isClosed) {
         emit(AppState.initial());
         _audioService.onAppStateChanged(AppState.initial());
@@ -94,33 +110,52 @@ class AppCubit extends Cubit<AppState> {
     }
   }
 
+  Future<dynamic> _loadWithTimeout(Future<dynamic> Function() loader) async {
+    try {
+      return await loader().timeout(const Duration(seconds: 1));
+    } catch (e) {
+      return null;
+    }
+  }
+
+  List<dynamic> _getDefaultValues() {
+    return [
+      true, // themeMode
+      'ar', // language
+      true, // soundEnabled
+      true, // backgroundMusicEnabled
+      1.0,  // soundVolume
+      0.5,  // musicVolume
+    ];
+  }
+
   Future<bool> _loadThemeMode() async {
-    final value = _sharedPref.getBoolean(PrefKeys.themeMode);
-    return value ?? true; // Default to dark mode
+    final value = await _sharedPref.getBoolean(PrefKeys.themeMode);
+    return value ?? true;
   }
 
   Future<String> _loadLanguage() async {
-    final value = _sharedPref.getString(PrefKeys.language);
-    return value ?? 'ar'; // Default to Arabic
+    final value = await _sharedPref.getString(PrefKeys.language);
+    return value ?? 'ar';
   }
 
   Future<bool> _loadSoundEnabled() async {
-    final value = _sharedPref.getBoolean(PrefKeys.soundEnabled);
+    final value = await _sharedPref.getBoolean(PrefKeys.soundEnabled);
     return value ?? true;
   }
 
   Future<bool> _loadBackgroundMusicEnabled() async {
-    final value = _sharedPref.getBoolean(PrefKeys.backgroundMusicEnabled);
+    final value = await _sharedPref.getBoolean(PrefKeys.backgroundMusicEnabled);
     return value ?? true;
   }
 
   Future<double> _loadSoundVolume() async {
-    final value = _sharedPref.getDouble(PrefKeys.soundVolume);
+    final value = await _sharedPref.getDouble(PrefKeys.soundVolume);
     return value?.clamp(0.0, 1.0) ?? 1.0;
   }
 
   Future<double> _loadMusicVolume() async {
-    final value = _sharedPref.getDouble(PrefKeys.musicVolume);
+    final value = await _sharedPref.getDouble(PrefKeys.musicVolume);
     return value?.clamp(0.0, 1.0) ?? 0.5;
   }
 
@@ -128,23 +163,59 @@ class AppCubit extends Cubit<AppState> {
     _prefCache.addAll(values);
   }
 
-  // T? _getFromCache<T>(String key) {
-  //   return _prefCache[key] as T?;
-  // }
+  Future<void> _saveWithThrottle(String key, Future<bool> Function() saveOp) async {
+    final now = DateTime.now();
+    
+    if (_lastSaveTime == null || 
+        now.difference(_lastSaveTime!) > _saveThrottleDuration) {
+      // Execute immediately
+      _lastSaveTime = now;
+      try {
+        await saveOp();
+      } catch (e) {
+        _logger.e('Failed to save $key', error: e);
+      }
+    } else {
+      // Queue for later
+      _pendingOperations.add(() async {
+        try {
+          await saveOp();
+        } catch (e) {
+          _logger.e('Failed to save $key (queued)', error: e);
+        }
+      });
+      
+      // Schedule batch processing
+      _batchTimer ??= Timer(_saveThrottleDuration, _processBatch);
+    }
+  }
 
+  Future<void> _processBatch() async {
+    final operations = List.from(_pendingOperations);
+    _pendingOperations.clear();
+    _batchTimer = null;
+    
+    for (final op in operations) {
+      await op();
+    }
+  }
+
+  // Public methods with optimized saving
   Future<void> toggleTheme() async {
     try {
       final newMode = !state.isDarkMode;
       
-      // Update cache first for immediate response
-      _updateCache({PrefKeys.themeMode: newMode});
-      
-      // Save to preferences (don't await to avoid blocking UI)
-      unawaited(_sharedPref.setBoolean(PrefKeys.themeMode, newMode));
-      
+      // Update UI immediately
       if (!isClosed) {
         emit(state.copyWith(isDarkMode: newMode));
       }
+      
+      // Save with throttling
+      unawaited(_saveWithThrottle(
+        PrefKeys.themeMode,
+        () => _sharedPref.setBoolean(PrefKeys.themeMode, newMode),
+      ));
+      
     } catch (e, stackTrace) {
       _logger.e('Failed to toggle theme', error: e, stackTrace: stackTrace);
     }
@@ -152,12 +223,15 @@ class AppCubit extends Cubit<AppState> {
 
   Future<void> changeLanguage(String languageCode) async {
     try {
-      _updateCache({PrefKeys.language: languageCode});
-      unawaited(_sharedPref.setString(PrefKeys.language, languageCode));
-      
       if (!isClosed) {
         emit(state.copyWith(locale: Locale(languageCode)));
       }
+      
+      unawaited(_saveWithThrottle(
+        PrefKeys.language,
+        () => _sharedPref.setString(PrefKeys.language, languageCode),
+      ));
+      
     } catch (e, stackTrace) {
       _logger.e('Failed to change language', error: e, stackTrace: stackTrace);
     }
@@ -170,12 +244,15 @@ class AppCubit extends Cubit<AppState> {
     try {
       final newValue = !state.isSoundEnabled;
       
-      _updateCache({PrefKeys.soundEnabled: newValue});
-      unawaited(_sharedPref.setBoolean(PrefKeys.soundEnabled, newValue));
-      
       if (!isClosed) {
         emit(state.copyWith(isSoundEnabled: newValue));
       }
+      
+      unawaited(_saveWithThrottle(
+        PrefKeys.soundEnabled,
+        () => _sharedPref.setBoolean(PrefKeys.soundEnabled, newValue),
+      ));
+      
     } catch (e, stackTrace) {
       _logger.e('Failed to toggle sound', error: e, stackTrace: stackTrace);
     }
@@ -185,21 +262,23 @@ class AppCubit extends Cubit<AppState> {
     try {
       final newValue = !state.isBackgroundMusicEnabled;
 
-      _updateCache({PrefKeys.backgroundMusicEnabled: newValue});
-      await _sharedPref.setBoolean(PrefKeys.backgroundMusicEnabled, newValue);
-
       if (!isClosed) {
         emit(state.copyWith(isBackgroundMusicEnabled: newValue));
       }
 
-      // Small delay to ensure state is updated
-      await Future<dynamic>.delayed(const Duration(milliseconds: 100));
+      // Save with throttling
+      unawaited(_saveWithThrottle(
+        PrefKeys.backgroundMusicEnabled,
+        () => _sharedPref.setBoolean(PrefKeys.backgroundMusicEnabled, newValue),
+      ));
 
+      // Handle audio
       if (newValue) {
         await _audioService.startBackgroundMusic();
       } else {
         await _audioService.stopBackgroundMusic();
       }
+      
     } catch (e, stackTrace) {
       _logger.e('Failed to toggle background music', error: e, stackTrace: stackTrace);
     }
@@ -209,17 +288,23 @@ class AppCubit extends Cubit<AppState> {
     try {
       final clampedVolume = volume.clamp(0.0, 1.0);
       
-      // Debounce rapid volume changes
-      _debounceTimer?.cancel();
-      _debounceTimer = Timer(const Duration(milliseconds: 100), () async {
-        _updateCache({PrefKeys.soundVolume: clampedVolume});
-        await _sharedPref.setDouble(PrefKeys.soundVolume, clampedVolume);
-        await _audioService.updateSoundVolume(clampedVolume);
-      });
-      
+      // Update UI immediately
       if (!isClosed) {
         emit(state.copyWith(soundVolume: clampedVolume));
       }
+      
+      // Debounce the audio update
+      _debounceTimer?.cancel();
+      _debounceTimer = Timer(const Duration(milliseconds: 50), () async {
+        await _audioService.updateSoundVolume(clampedVolume);
+      });
+      
+      // Save with throttling
+      unawaited(_saveWithThrottle(
+        PrefKeys.soundVolume,
+        () => _sharedPref.setDouble(PrefKeys.soundVolume, clampedVolume),
+      ));
+      
     } catch (e, stackTrace) {
       _logger.e('Failed to set sound volume', error: e, stackTrace: stackTrace);
     }
@@ -229,16 +314,23 @@ class AppCubit extends Cubit<AppState> {
     try {
       final clampedVolume = volume.clamp(0.0, 1.0);
       
-      _debounceTimer?.cancel();
-      _debounceTimer = Timer(const Duration(milliseconds: 100), () async {
-        _updateCache({PrefKeys.musicVolume: clampedVolume});
-        await _sharedPref.setDouble(PrefKeys.musicVolume, clampedVolume);
-        await _audioService.updateMusicVolume(clampedVolume);
-      });
-      
+      // Update UI immediately
       if (!isClosed) {
         emit(state.copyWith(musicVolume: clampedVolume));
       }
+      
+      // Debounce the audio update
+      _debounceTimer?.cancel();
+      _debounceTimer = Timer(const Duration(milliseconds: 50), () async {
+        await _audioService.updateMusicVolume(clampedVolume);
+      });
+      
+      // Save with throttling
+      unawaited(_saveWithThrottle(
+        PrefKeys.musicVolume,
+        () => _sharedPref.setDouble(PrefKeys.musicVolume, clampedVolume),
+      ));
+      
     } catch (e, stackTrace) {
       _logger.e('Failed to set music volume', error: e, stackTrace: stackTrace);
     }
@@ -261,6 +353,7 @@ class AppCubit extends Cubit<AppState> {
       
       // Reload settings
       await _loadSettings();
+      
     } catch (e, stackTrace) {
       _logger.e('Failed to reset settings', error: e, stackTrace: stackTrace);
     }
@@ -269,6 +362,8 @@ class AppCubit extends Cubit<AppState> {
   @override
   Future<void> close() {
     _debounceTimer?.cancel();
+    _batchTimer?.cancel();
+    _pendingOperations.clear();
     return super.close();
   }
 }

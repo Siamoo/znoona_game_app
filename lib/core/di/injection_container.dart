@@ -1,13 +1,16 @@
 import 'package:get_it/get_it.dart';
-import 'package:supabase_flutter/supabase_flutter.dart';
 import 'package:logger/logger.dart';
-
 // App Core
 import 'package:medaan_almaarifa/core/app/app_cubit/app_cubit.dart';
-import 'package:medaan_almaarifa/core/service/shared_pref/shared_pref.dart';
 import 'package:medaan_almaarifa/core/helpers/audio_service.dart';
+import 'package:medaan_almaarifa/core/service/shared_pref/shared_pref.dart';
+// ---------------- CATEGORIES ----------------
+import 'package:medaan_almaarifa/features/quiz/categories/data/datasources/categories_remote_data_source.dart';
+import 'package:medaan_almaarifa/features/quiz/categories/data/repositories/categories_repository_impl.dart';
+import 'package:medaan_almaarifa/features/quiz/categories/domain/repositories/categories_repository.dart';
 import 'package:medaan_almaarifa/features/quiz/categories/domain/usecases/get_main_categories_usecase.dart';
 import 'package:medaan_almaarifa/features/quiz/categories/domain/usecases/get_sub_categories_usecase.dart';
+import 'package:medaan_almaarifa/features/quiz/categories/presentation/cubit/categories_cubit.dart';
 import 'package:medaan_almaarifa/features/quiz/room/data/datasources/room_remote_data_source.dart';
 import 'package:medaan_almaarifa/features/quiz/room/data/repositories/room_repository_impl.dart';
 import 'package:medaan_almaarifa/features/quiz/room/domain/repositories/room_repository.dart';
@@ -27,14 +30,12 @@ import 'package:medaan_almaarifa/features/quiz/room/domain/usecases/submit_answe
 import 'package:medaan_almaarifa/features/quiz/room/domain/usecases/watch_player_answers_usecase.dart';
 import 'package:medaan_almaarifa/features/quiz/room/domain/usecases/watch_room_usecase.dart';
 import 'package:medaan_almaarifa/features/quiz/room/presentation/cubit/room_cubit.dart';
-
 // ---------------- QUIZ (Single Player) ----------------
 import 'package:medaan_almaarifa/features/quiz/single/data/datasources/questions_remote_data_source.dart';
 import 'package:medaan_almaarifa/features/quiz/single/data/repositories/questions_repository_impl.dart';
 import 'package:medaan_almaarifa/features/quiz/single/domain/repositories/questions_repository.dart';
 import 'package:medaan_almaarifa/features/quiz/single/domain/usecases/get_questions_by_category_usecase.dart';
 import 'package:medaan_almaarifa/features/quiz/single/presentation/cubit/questions_cubit.dart';
-
 // ---------------- AUTH ----------------
 import 'package:medaan_almaarifa/features/user/auth/data/datasources/auth_remote_data_source.dart';
 import 'package:medaan_almaarifa/features/user/auth/data/repositories/auth_repository_impl.dart';
@@ -45,12 +46,7 @@ import 'package:medaan_almaarifa/features/user/auth/domain/usecases/login_with_g
 import 'package:medaan_almaarifa/features/user/auth/domain/usecases/logout_usecase.dart';
 import 'package:medaan_almaarifa/features/user/auth/domain/usecases/sign_up_usecase.dart';
 import 'package:medaan_almaarifa/features/user/auth/presentation/cubit/auth_cubit.dart';
-
-// ---------------- CATEGORIES ----------------
-import 'package:medaan_almaarifa/features/quiz/categories/data/datasources/categories_remote_data_source.dart';
-import 'package:medaan_almaarifa/features/quiz/categories/data/repositories/categories_repository_impl.dart';
-import 'package:medaan_almaarifa/features/quiz/categories/domain/repositories/categories_repository.dart';
-import 'package:medaan_almaarifa/features/quiz/categories/presentation/cubit/categories_cubit.dart';
+import 'package:supabase_flutter/supabase_flutter.dart';
 
 final GetIt sl = GetIt.instance;
 

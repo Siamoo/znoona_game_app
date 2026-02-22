@@ -7,6 +7,7 @@ import 'package:medaan_almaarifa/core/helpers/znoona.colors.dart';
 import 'package:medaan_almaarifa/core/helpers/znoona_texts.dart';
 import 'package:medaan_almaarifa/core/language/lang_keys.dart';
 import 'package:medaan_almaarifa/core/style/images/app_images.dart';
+import 'package:medaan_almaarifa/main.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class ErrorScreen extends StatelessWidget {
@@ -137,30 +138,27 @@ class ErrorScreen extends StatelessWidget {
               SizedBox(height: 32.h),
 
               // Try Again Button (optional)
-              if (onRetry != null)
-                SizedBox(
-                  width: double.infinity,
-                  height: 50.h,
-                  child: ElevatedButton(
-                    onPressed: onRetry,
-                    style: ElevatedButton.styleFrom(
-                      backgroundColor: Colors.green,
-                      foregroundColor: Colors.white,
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(12.r),
-                      ),
+              SizedBox(
+                width: double.infinity,
+                height: 50.h,
+                child: ElevatedButton(
+                  onPressed: onRetry ?? main,
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: Colors.green,
+                    foregroundColor: Colors.white,
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(12.r),
                     ),
-                    child: Text(
-                      ZnoonaTexts.tr(context, LangKeys.tryAgain),
-                      style: GoogleFonts.beiruti(
-                        fontSize: 16.h,
-                        fontWeight: FontWeight.bold,
-                      ),
+                  ),
+                  child: Text(
+                    ZnoonaTexts.tr(context, LangKeys.tryAgain),
+                    style: GoogleFonts.beiruti(
+                      fontSize: 16.h,
+                      fontWeight: FontWeight.bold,
                     ),
                   ),
                 ),
-
-              if (onRetry != null) SizedBox(height: 12.h),
+              ),
 
               // Contact Support Button
               SizedBox(

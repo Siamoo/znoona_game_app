@@ -3,19 +3,32 @@ import 'package:logger/logger.dart';
 
 class ErrorHandler {
   static final Logger _logger = Logger();
-  
+
+  // Log error without showing to user
+  static void logError(
+    dynamic error,
+    StackTrace stackTrace, {
+    String? message,
+  }) {
+    _logger.e(
+      message ?? 'Error occurred',
+      error: error,
+      stackTrace: stackTrace,
+    );
+  }
+
   // Show error to user
   static void showError(
     BuildContext context, {
+    required String message,
     dynamic error,
     StackTrace? stackTrace,
-    required String message,
     VoidCallback? onRetry,
     Duration duration = const Duration(seconds: 3),
   }) {
     // Log error
     if (error != null || stackTrace != null) {
-      _logger.e(message, error: error, stackTrace: stackTrace);
+      logError(error, stackTrace ?? StackTrace.current, message: message);
     } else {
       _logger.e(message);
     }
@@ -78,7 +91,11 @@ class ErrorHandler {
   }) {
     // Log error
     if (error != null || stackTrace != null) {
-      _logger.e('$title: $message', error: error, stackTrace: stackTrace);
+      logError(
+        error,
+        stackTrace ?? StackTrace.current,
+        message: '$title: $message',
+      );
     }
 
     return showDialog(
@@ -117,6 +134,8 @@ class ErrorHandler {
       return 'No internet connection. Please check your network.';
     } else if (error.toString().contains('TimeoutException')) {
       return 'Connection timeout. Please try again.';
+    } else if (error.toString().contains('Connection refused')) {
+      return 'Server is not responding. Please try again later.';
     } else {
       return 'Network error occurred. Please try again.';
     }
@@ -135,8 +154,30 @@ class ErrorHandler {
         return 'Resource not found.';
       case 500:
         return 'Server error. Please try again later.';
+      case 503:
+        return 'Service unavailable. Please try again later.';
       default:
         return 'An error occurred. Please try again.';
+    }
+  }
+
+  // Handle Supabase errors
+  static String getSupabaseErrorMessage(dynamic error) {
+    final errorString = error.toString().toLowerCase();
+
+    if (errorString.contains('network')) {
+      return 'Network error connecting to server.';
+    } else if (errorString.contains('timeout')) {
+      return 'Connection timeout. Please try again.';
+    } else if (errorString.contains('auth') ||
+        errorString.contains('unauthorized')) {
+      return 'Authentication failed. Please login again.';
+    } else if (errorString.contains('permission')) {
+      return 'Permission denied.';
+    } else if (errorString.contains('not found')) {
+      return 'Resource not found.';
+    } else {
+      return 'Server error occurred.';
     }
   }
 }
@@ -158,5 +199,20 @@ extension ErrorHandlerExtension on BuildContext {
 
   void showWarning(String message) {
     ErrorHandler.showWarning(this, message);
+  }
+
+  Future<void> showErrorDialog({
+    required String title,
+    required String message,
+    dynamic error,
+    VoidCallback? onRetry,
+  }) {
+    return ErrorHandler.showErrorDialog(
+      this,
+      title: title,
+      message: message,
+      error: error,
+      onRetry: onRetry,
+    );
   }
 }

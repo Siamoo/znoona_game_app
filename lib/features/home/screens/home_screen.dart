@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:medaan_almaarifa/core/di/injcetion_container.dart';
+import 'package:medaan_almaarifa/core/di/injection_container.dart';
 import 'package:medaan_almaarifa/core/helpers/audio_service.dart';
 import 'package:medaan_almaarifa/features/home/refactors/home_body.dart';
 import 'package:medaan_almaarifa/features/user/auth/presentation/cubit/auth_cubit.dart';

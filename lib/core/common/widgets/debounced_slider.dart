@@ -3,23 +3,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter/foundation.dart';
 
 /// A slider that debounces rapid changes to prevent excessive updates
-class DebouncedSlider extends StatefulWidget {
-  final double value;
-  final ValueChanged<double> onChanged;
-  final ValueChanged<double>? onChangedEnd;
-  final double min;
-  final double max;
-  final int? divisions;
-  final Color? activeColor;
-  final Color? inactiveColor;
-  final Duration debounceDuration;
-  final SemanticFormatterCallback? semanticFormatterCallback;
-  final bool useThrottle; // false for debounce, true for throttle
+class DebouncedSlider extends StatefulWidget { // false for debounce, true for throttle
   
   const DebouncedSlider({
-    super.key,
-    required this.value,
-    required this.onChanged,
+    required this.value, required this.onChanged, super.key,
     this.onChangedEnd,
     this.min = 0.0,
     this.max = 1.0,
@@ -30,6 +17,17 @@ class DebouncedSlider extends StatefulWidget {
     this.semanticFormatterCallback,
     this.useThrottle = false, // Default to debounce
   });
+  final double value;
+  final ValueChanged<double> onChanged;
+  final ValueChanged<double>? onChangedEnd;
+  final double min;
+  final double max;
+  final int? divisions;
+  final Color? activeColor;
+  final Color? inactiveColor;
+  final Duration debounceDuration;
+  final SemanticFormatterCallback? semanticFormatterCallback;
+  final bool useThrottle;
 
   @override
   State<DebouncedSlider> createState() => _DebouncedSliderState();

@@ -1,6 +1,6 @@
 import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:medaan_almaarifa/core/di/injcetion_container.dart';
+import 'package:medaan_almaarifa/core/di/injection_container.dart';
 import 'package:medaan_almaarifa/features/quiz/single/presentation/cubit/questions_cubit.dart';
 import 'package:medaan_almaarifa/features/quiz/single/presentation/refactors/quiz_body.dart';
 

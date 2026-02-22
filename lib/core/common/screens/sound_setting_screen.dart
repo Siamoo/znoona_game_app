@@ -4,7 +4,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:medaan_almaarifa/core/app/app_cubit/app_cubit.dart';
 import 'package:medaan_almaarifa/core/common/widgets/debounced_slider.dart';
 import 'package:medaan_almaarifa/core/common/widgets/text_app.dart';
-import 'package:medaan_almaarifa/core/di/injcetion_container.dart';
+import 'package:medaan_almaarifa/core/di/injection_container.dart';
 import 'package:medaan_almaarifa/core/helpers/audio_service.dart';
 import 'package:medaan_almaarifa/core/helpers/znoona.colors.dart';
 import 'package:medaan_almaarifa/core/helpers/znoona_texts.dart';

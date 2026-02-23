@@ -10,6 +10,7 @@ import 'package:medaan_almaarifa/core/app/bloc_observer.dart';
 import 'package:medaan_almaarifa/core/app/env.variables.dart';
 import 'package:medaan_almaarifa/core/common/screens/error_screen.dart';
 import 'package:medaan_almaarifa/core/common/screens/no_network_screen.dart';
+import 'package:medaan_almaarifa/core/common/screens/simple_error_screen.dart';
 import 'package:medaan_almaarifa/core/di/injection_container.dart';
 import 'package:medaan_almaarifa/core/errors/error_handler.dart';
 import 'package:medaan_almaarifa/core/helpers/audio_service.dart';
@@ -19,30 +20,30 @@ import 'package:supabase_flutter/supabase_flutter.dart';
 
 // Global error handler
 final Logger _logger = Logger();
+bool _isInitialized = false; // Track if we've completed initialization
 
 void main() async {
+  // Prevent multiple initialization attempts
+  if (_isInitialized) return;
+  
   // Ensure Flutter bindings are initialized
   WidgetsFlutterBinding.ensureInitialized();
 
   // Initialize error handling for production
   _initializeErrorHandling();
 
-  // Check network connectivity first
-  final hasNetwork = await _checkInitialConnectivity();
-
-  if (!hasNetwork) {
-    _showNoNetworkScreen();
-    return;
-  }
-
   try {
-    // Load environment variables
-    await EnvVariables.instance.init(
-      envType: EnvVariables.instance.debugMode
-          ? EnvTypeEnum.dev
-          : EnvTypeEnum.prod,
-    );
+    // Check network connectivity first with timeout
+    final hasNetwork = await _checkInitialConnectivityWithTimeout();
+    
+    if (!hasNetwork) {
+      _showAppropriateNoNetworkScreen();
+      return;
+    }
 
+    // Load environment variables with error handling
+    await _initializeEnvVariables();
+    
     // Initialize Supabase with retry mechanism
     await _initializeSupabaseWithRetry();
 
@@ -64,10 +65,13 @@ void main() async {
       DeviceOrientation.portraitDown,
     ]);
 
+    // Mark as initialized
+    _isInitialized = true;
+    
     // Run the app
     runApp(const ZnoonaGameApp());
   } catch (e, stackTrace) {
-    // Handle initialization errors gracefully using ErrorScreen
+    // Handle initialization errors gracefully
     _handleInitializationError(e, stackTrace);
   }
 }
@@ -78,14 +82,12 @@ void _initializeErrorHandling() {
     FlutterError.presentError(details);
 
     if (!EnvVariables.instance.debugMode) {
-      // Log to crash reporting service
       ErrorHandler.logError(
         details.exception,
         details.stack ?? StackTrace.current,
         message: 'Flutter Error',
       );
     } else {
-      // In debug, print with more details
       _logger.e(
         'Flutter Error',
         error: details.exception,
@@ -103,46 +105,76 @@ void _initializeErrorHandling() {
     }
     return true;
   };
-
-  // Handle uncaught exceptions
-  runZonedGuarded(
-    () {
-      // Your app runs here
-    },
-    (error, stack) {
-      if (!EnvVariables.instance.debugMode) {
-        ErrorHandler.logError(error, stack, message: 'Uncaught Error');
-      } else {
-        _logger.e('Uncaught Error', error: error, stackTrace: stack);
-      }
-    },
-  );
 }
 
-Future<bool> _checkInitialConnectivity() async {
+Future<bool> _checkInitialConnectivityWithTimeout() async {
   try {
-    final results = await Connectivity().checkConnectivity();
-    return results.any(
-      (r) =>
-          r == ConnectivityResult.mobile ||
-          r == ConnectivityResult.wifi ||
-          r == ConnectivityResult.ethernet,
-    );
+    return await Connectivity()
+        .checkConnectivity()
+        .timeout(
+          const Duration(seconds: 5),
+          onTimeout: () {
+            _logger.w('Connectivity check timed out');
+            return []; // Return empty list on timeout
+          },
+        )
+        .then((results) => results.any(
+              (r) =>
+                  r == ConnectivityResult.mobile ||
+                  r == ConnectivityResult.wifi ||
+                  r == ConnectivityResult.ethernet,
+            ));
   } catch (e) {
     _logger.e('Failed to check connectivity', error: e);
-    return false; // Assume no connection on error
+    return false;
   }
 }
 
-void _showNoNetworkScreen() {
-  runApp(
-    const MaterialApp(
-      debugShowCheckedModeBanner: false,
-      home: NoNetworkScreen(
-        onRetry: main,
+Future<void> _initializeEnvVariables() async {
+  try {
+    await EnvVariables.instance.init(
+      envType: EnvVariables.instance.debugMode
+          ? EnvTypeEnum.dev
+          : EnvTypeEnum.prod,
+    );
+    _logger.i('✅ Environment variables initialized');
+  } catch (e) {
+    _logger.e('Failed to initialize environment variables', error: e);
+    rethrow;
+  }
+}
+
+void _showAppropriateNoNetworkScreen() {
+  try {
+    // Try to show NoNetworkScreen
+    runApp(
+      MaterialApp(
+        debugShowCheckedModeBanner: false,
+        home: NoNetworkScreen(
+          onRetry: () {
+            _isInitialized = false;
+            main();
+          },
+        ),
       ),
-    ),
-  );
+    );
+  } catch (e) {
+    _logger.e('Failed to show NoNetworkScreen, using SimpleErrorScreen', error: e);
+    // Use SimpleErrorScreen as fallback
+    runApp(
+      MaterialApp(
+        debugShowCheckedModeBanner: false,
+        home: SimpleErrorScreen(
+          isNetworkError: true,
+          errorMessage: 'No internet connection. Please check your network and try again.',
+          onRetry: () {
+            _isInitialized = false;
+            main();
+          },
+        ),
+      ),
+    );
+  }
 }
 
 Future<void> _initializeSupabaseWithRetry({int maxRetries = 3}) async {
@@ -151,9 +183,17 @@ Future<void> _initializeSupabaseWithRetry({int maxRetries = 3}) async {
 
   while (attempts < maxRetries) {
     try {
+      // Ensure we have valid URLs
+      final supabaseUrl = EnvVariables.instance.supabaseUrl;
+      final supabaseAnonKey = EnvVariables.instance.supabaseAnonKey;
+      
+      if (supabaseUrl.isEmpty || supabaseAnonKey.isEmpty) {
+        throw Exception('Supabase URL or Anon Key is empty');
+      }
+
       await Supabase.initialize(
-        url: EnvVariables.instance.supabaseUrl,
-        anonKey: EnvVariables.instance.supabaseAnonKey,
+        url: supabaseUrl,
+        anonKey: supabaseAnonKey,
         authOptions: const FlutterAuthClientOptions(
           autoRefreshToken: true,
         ),
@@ -177,18 +217,22 @@ Future<void> _initializeSupabaseWithRetry({int maxRetries = 3}) async {
       }
 
       await Future<dynamic>.delayed(delay);
-      delay *= 2; // Exponential backoff
+      delay *= 2;
     }
   }
 }
 
 Future<void> _initializeAudioService() async {
   try {
-    final audioService = sl<AudioService>();
-    await audioService.initialize();
-
-    if (EnvVariables.instance.debugMode) {
-      _logger.i('✅ AudioService initialized');
+    // Check if service locator has AudioService before accessing
+    if (sl.isRegistered<AudioService>()) {
+      final audioService = sl<AudioService>();
+      await audioService.initialize();
+      if (EnvVariables.instance.debugMode) {
+        _logger.i('✅ AudioService initialized');
+      }
+    } else {
+      _logger.w('⚠️ AudioService not registered in service locator');
     }
   } catch (e, stackTrace) {
     ErrorHandler.logError(
@@ -207,26 +251,60 @@ void _handleInitializationError(Object e, StackTrace stackTrace) {
   String errorMessage = 'Unknown error occurred';
   bool isNetworkError = false;
 
-  if (e.toString().toLowerCase().contains('network') ||
-      e.toString().toLowerCase().contains('connection')) {
+  final errorString = e.toString().toLowerCase();
+  
+  if (errorString.contains('network') ||
+      errorString.contains('connection') ||
+      errorString.contains('socket')) {
     isNetworkError = true;
     errorMessage = ErrorHandler.getNetworkErrorMessage(e);
   } else if (e is TimeoutException) {
     errorMessage = 'Connection timeout. Please try again.';
-  } else if (e.toString().contains('supabase')) {
+  } else if (errorString.contains('supabase')) {
     errorMessage = 'Failed to connect to server. Please try again.';
+  } else if (errorString.contains('lateinitializationerror')) {
+    errorMessage = 'App initialization error. Please restart the app.';
+    _logger.e('Late initialization error detected', error: e, stackTrace: stackTrace);
+  } else if (errorString.contains('null')) {
+    errorMessage = 'Required configuration is missing. Please check your setup.';
   } else {
-    errorMessage = 'Failed to initialize app: ${e.toString()}';
+    // Clean up error message
+    String cleanError = e.toString()
+        .replaceAll('Exception:', '')
+        .replaceAll('Error:', '')
+        .trim();
+    errorMessage = 'Failed to initialize app: $cleanError';
   }
 
-  // Show error screen using the ErrorScreen widget
-  runApp(
-    MaterialApp(
-      debugShowCheckedModeBanner: false,
-      home: ErrorScreen(
-        errorMessage: errorMessage,
-        onRetry: main,
+  // Try to use ErrorScreen first
+  try {
+    runApp(
+      MaterialApp(
+        debugShowCheckedModeBanner: false,
+        home: ErrorScreen(
+          errorMessage: errorMessage,
+          onRetry: () {
+            _isInitialized = false;
+            main();
+          },
+        ),
       ),
-    ),
-  );
+    );
+  } catch (errorScreenError) {
+    _logger.e('Failed to show ErrorScreen, using SimpleErrorScreen', error: errorScreenError);
+    // Use SimpleErrorScreen as ultimate fallback
+    runApp(
+      MaterialApp(
+        debugShowCheckedModeBanner: false,
+        home: SimpleErrorScreen(
+          isNetworkError: isNetworkError,
+          errorMessage: errorMessage,
+          onRetry: () {
+            _isInitialized = false;
+            main();
+          },
+        ),
+      ),
+    );
+  }
 }

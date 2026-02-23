@@ -1,15 +1,13 @@
-class PrefKeys {
-  // Theme
-  static const themeMode = 'themeMode';
+abstract class PrefKeys {
+  // Existing keys
+  static const String themeMode = 'themeMode';
+  static const String language = 'language';
+  static const String soundEnabled = 'soundEnabled';
+  static const String backgroundMusicEnabled = 'backgroundMusicEnabled';
+  static const String soundVolume = 'soundVolume';
+  static const String musicVolume = 'musicVolume';
   
-  // Language
-  static const language = 'language';
-  
-  // Audio
-  static const soundEnabled = 'soundEnabled';
-
-  static const backgroundMusicEnabled = 'backgroundMusicEnabled';
-  static const soundVolume = 'soundVolume';
-  static const musicVolume = 'musicVolume';
-
+  // NEW: Animation keys
+  static const String animationCurve = 'animationCurve';
+  static const String animationDuration = 'animationDuration';
 }

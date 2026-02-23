@@ -5,30 +5,24 @@ class AppState with _$AppState {
   const factory AppState({
     // Theme
     required bool isDarkMode,
-
+    
     // Language
     required Locale locale,
-
+    
     // Audio Settings
     required bool isSoundEnabled,
     required bool isBackgroundMusicEnabled,
     required double soundVolume,
     required double musicVolume,
-
-    // NEW: Animation Settings
-    required Curve animationCurve,
-    required Duration animationDuration,
   }) = _AppState;
 
   // Factory for initial state
   factory AppState.initial() => const AppState(
-    isDarkMode: false,
+    isDarkMode: true,
     locale: Locale('en'),
     isSoundEnabled: true,
     isBackgroundMusicEnabled: true,
     soundVolume: 1.0,
     musicVolume: 0.5,
-    animationCurve: Curves.easeInOut,
-    animationDuration: Duration(milliseconds: 500),
   );
 }

@@ -69,16 +69,13 @@ class _ZnoonaGameAppState extends State<ZnoonaGameApp> {
                   debugShowCheckedModeBanner: false,
                   title: 'Znoona Game App',
                   theme: state.isDarkMode ? darkTheme() : lightTheme(),
-                  themeAnimationCurve:
-                      state.animationCurve, 
-                  themeAnimationDuration:
-                      state.animationDuration, 
                   locale: state.locale,
                   supportedLocales: AppLocalizationsSetup.supportedLocales,
                   localeResolutionCallback:
                       AppLocalizationsSetup.localeResolutionCallback,
                   localizationsDelegates:
                       AppLocalizationsSetup.localizationsDelegates,
+
                   builder: (context, child) {
                     final mediaQuery = MediaQuery.of(context);
                     // Option 1: Fully disable system font scaling
@@ -95,6 +92,7 @@ class _ZnoonaGameAppState extends State<ZnoonaGameApp> {
                       ),
                     );
                   },
+
                   home: !value
                       ? const NoNetworkScreen()
                       : session != null

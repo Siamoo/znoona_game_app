@@ -11,6 +11,8 @@ import 'package:medaan_almaarifa/features/home/widgets/custom_setting_button.dar
 import 'package:medaan_almaarifa/features/user/auth/presentation/refactors/profile_edit_body.dart';
 import 'package:medaan_almaarifa/features/user/auth/presentation/screens/login_screen.dart';
 
+// NEW: Add Sound Settings Screen
+
 class SettingsButtons extends StatelessWidget {
   const SettingsButtons({
     super.key,
@@ -39,6 +41,7 @@ class SettingsButtons extends StatelessWidget {
           imageUrl: AppImages.mode,
         ),
         SizedBox(height: 20.h),
+        // NEW: Sound Settings Button
         CustomSettingButton(
           title: LangKeys.soundSettings,
           onTap: () {
@@ -47,13 +50,13 @@ class SettingsButtons extends StatelessWidget {
               const SoundSettingsScreen(),
             );
           },
-          imageUrl: AppImages.volume,
+          imageUrl: AppImages.volume, // You'll need to add this image
         ),
         SizedBox(height: 20.h),
         CustomSettingButton(
           title: LangKeys.editProfile,
           onTap: () {
-            ZnoonaNavigate.pushTo(
+            ZnoonaNavigate.pushReplacementTo(
               context,
               const ProfileEditBody(),
             );
@@ -65,7 +68,6 @@ class SettingsButtons extends StatelessWidget {
           title: LangKeys.logOut,
           onTap: () async {
             await Supabase.instance.client.auth.signOut();
-
             await ZnoonaNavigate.pushReplacementTo(
               context,
               const LoginScreen(),

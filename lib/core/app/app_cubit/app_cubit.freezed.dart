@@ -23,10 +23,7 @@ mixin _$AppState {
   bool get isSoundEnabled => throw _privateConstructorUsedError;
   bool get isBackgroundMusicEnabled => throw _privateConstructorUsedError;
   double get soundVolume => throw _privateConstructorUsedError;
-  double get musicVolume =>
-      throw _privateConstructorUsedError; // NEW: Animation Settings
-  Curve get animationCurve => throw _privateConstructorUsedError;
-  Duration get animationDuration => throw _privateConstructorUsedError;
+  double get musicVolume => throw _privateConstructorUsedError;
 
   /// Create a copy of AppState
   /// with the given fields replaced by the non-null parameter values.
@@ -47,8 +44,6 @@ abstract class $AppStateCopyWith<$Res> {
     bool isBackgroundMusicEnabled,
     double soundVolume,
     double musicVolume,
-    Curve animationCurve,
-    Duration animationDuration,
   });
 }
 
@@ -73,8 +68,6 @@ class _$AppStateCopyWithImpl<$Res, $Val extends AppState>
     Object? isBackgroundMusicEnabled = null,
     Object? soundVolume = null,
     Object? musicVolume = null,
-    Object? animationCurve = null,
-    Object? animationDuration = null,
   }) {
     return _then(
       _value.copyWith(
@@ -102,14 +95,6 @@ class _$AppStateCopyWithImpl<$Res, $Val extends AppState>
                 ? _value.musicVolume
                 : musicVolume // ignore: cast_nullable_to_non_nullable
                       as double,
-            animationCurve: null == animationCurve
-                ? _value.animationCurve
-                : animationCurve // ignore: cast_nullable_to_non_nullable
-                      as Curve,
-            animationDuration: null == animationDuration
-                ? _value.animationDuration
-                : animationDuration // ignore: cast_nullable_to_non_nullable
-                      as Duration,
           )
           as $Val,
     );
@@ -132,8 +117,6 @@ abstract class _$$AppStateImplCopyWith<$Res>
     bool isBackgroundMusicEnabled,
     double soundVolume,
     double musicVolume,
-    Curve animationCurve,
-    Duration animationDuration,
   });
 }
 
@@ -157,8 +140,6 @@ class __$$AppStateImplCopyWithImpl<$Res>
     Object? isBackgroundMusicEnabled = null,
     Object? soundVolume = null,
     Object? musicVolume = null,
-    Object? animationCurve = null,
-    Object? animationDuration = null,
   }) {
     return _then(
       _$AppStateImpl(
@@ -186,14 +167,6 @@ class __$$AppStateImplCopyWithImpl<$Res>
             ? _value.musicVolume
             : musicVolume // ignore: cast_nullable_to_non_nullable
                   as double,
-        animationCurve: null == animationCurve
-            ? _value.animationCurve
-            : animationCurve // ignore: cast_nullable_to_non_nullable
-                  as Curve,
-        animationDuration: null == animationDuration
-            ? _value.animationDuration
-            : animationDuration // ignore: cast_nullable_to_non_nullable
-                  as Duration,
       ),
     );
   }
@@ -209,8 +182,6 @@ class _$AppStateImpl implements _AppState {
     required this.isBackgroundMusicEnabled,
     required this.soundVolume,
     required this.musicVolume,
-    required this.animationCurve,
-    required this.animationDuration,
   });
 
   // Theme
@@ -228,15 +199,10 @@ class _$AppStateImpl implements _AppState {
   final double soundVolume;
   @override
   final double musicVolume;
-  // NEW: Animation Settings
-  @override
-  final Curve animationCurve;
-  @override
-  final Duration animationDuration;
 
   @override
   String toString() {
-    return 'AppState(isDarkMode: $isDarkMode, locale: $locale, isSoundEnabled: $isSoundEnabled, isBackgroundMusicEnabled: $isBackgroundMusicEnabled, soundVolume: $soundVolume, musicVolume: $musicVolume, animationCurve: $animationCurve, animationDuration: $animationDuration)';
+    return 'AppState(isDarkMode: $isDarkMode, locale: $locale, isSoundEnabled: $isSoundEnabled, isBackgroundMusicEnabled: $isBackgroundMusicEnabled, soundVolume: $soundVolume, musicVolume: $musicVolume)';
   }
 
   @override
@@ -257,11 +223,7 @@ class _$AppStateImpl implements _AppState {
             (identical(other.soundVolume, soundVolume) ||
                 other.soundVolume == soundVolume) &&
             (identical(other.musicVolume, musicVolume) ||
-                other.musicVolume == musicVolume) &&
-            (identical(other.animationCurve, animationCurve) ||
-                other.animationCurve == animationCurve) &&
-            (identical(other.animationDuration, animationDuration) ||
-                other.animationDuration == animationDuration));
+                other.musicVolume == musicVolume));
   }
 
   @override
@@ -273,8 +235,6 @@ class _$AppStateImpl implements _AppState {
     isBackgroundMusicEnabled,
     soundVolume,
     musicVolume,
-    animationCurve,
-    animationDuration,
   );
 
   /// Create a copy of AppState
@@ -294,8 +254,6 @@ abstract class _AppState implements AppState {
     required final bool isBackgroundMusicEnabled,
     required final double soundVolume,
     required final double musicVolume,
-    required final Curve animationCurve,
-    required final Duration animationDuration,
   }) = _$AppStateImpl;
 
   // Theme
@@ -310,11 +268,7 @@ abstract class _AppState implements AppState {
   @override
   double get soundVolume;
   @override
-  double get musicVolume; // NEW: Animation Settings
-  @override
-  Curve get animationCurve;
-  @override
-  Duration get animationDuration;
+  double get musicVolume;
 
   /// Create a copy of AppState
   /// with the given fields replaced by the non-null parameter values.

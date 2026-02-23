@@ -18,6 +18,57 @@ class NoNetworkScreen extends StatefulWidget {
 
 class _NoNetworkScreenState extends State<NoNetworkScreen> {
   bool _isRetrying = false;
+  bool _themeAvailable = true;
+  bool _screenUtilInitialized = false;
+
+  @override
+  void initState() {
+    super.initState();
+    _initializeScreenUtil();
+  }
+
+  void _initializeScreenUtil() {
+    try {
+      // Try to initialize ScreenUtil
+      // We can check if it's initialized by trying to access a property
+      // If it throws, it's not initialized
+      try {
+        // Attempt to access a property to check if initialized
+        final _ = ScreenUtil().screenWidth;
+        _screenUtilInitialized = true;
+      } catch (e) {
+        // Not initialized, so initialize it
+        final mediaQuery = MediaQuery.of(context);
+        ScreenUtil.init(
+          context,
+          designSize: Size(mediaQuery.size.width, mediaQuery.size.height),
+          minTextAdapt: true,
+          splitScreenMode: true,
+        );
+        _screenUtilInitialized = true;
+      }
+    } catch (e) {
+      _screenUtilInitialized = false;
+      debugPrint('Failed to initialize ScreenUtil: $e');
+    }
+  }
+
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    // Check if theme extensions are available
+    try {
+      ZnoonaColors.main(context);
+      _themeAvailable = true;
+    } catch (e) {
+      _themeAvailable = false;
+    }
+    
+    // Re-initialize ScreenUtil if needed
+    if (!_screenUtilInitialized) {
+      _initializeScreenUtil();
+    }
+  }
 
   Future<void> _handleRetry() async {
     if (_isRetrying) return;
@@ -27,7 +78,6 @@ class _NoNetworkScreenState extends State<NoNetworkScreen> {
     });
 
     try {
-      // Check connectivity
       final results = await Connectivity().checkConnectivity();
       final hasConnection = results.any((r) =>
           r == ConnectivityResult.mobile ||
@@ -37,12 +87,8 @@ class _NoNetworkScreenState extends State<NoNetworkScreen> {
       if (hasConnection) {
         if (widget.onRetry != null) {
           widget.onRetry!();
-        } else {
-          // If no onRetry provided, try to restart the app
-          // You might want to implement app restart logic here
         }
       } else {
-        // Show error message
         if (mounted) {
           ScaffoldMessenger.of(context).showSnackBar(
             const SnackBar(
@@ -72,7 +118,10 @@ class _NoNetworkScreenState extends State<NoNetworkScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final theme = Theme.of(context);
+    // If ScreenUtil isn't initialized or theme isn't available, use fallback
+    if (!_screenUtilInitialized || !_themeAvailable) {
+      return _buildFallbackScreen();
+    }
 
     return Scaffold(
       backgroundColor: ZnoonaColors.main(context),
@@ -82,7 +131,6 @@ class _NoNetworkScreenState extends State<NoNetworkScreen> {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              // Image Section with nice animation effect
               TweenAnimationBuilder(
                 tween: Tween<double>(begin: 0.8, end: 1.0),
                 duration: const Duration(milliseconds: 800),
@@ -93,7 +141,7 @@ class _NoNetworkScreenState extends State<NoNetworkScreen> {
                     child: Container(
                       padding: EdgeInsets.all(20.w),
                       decoration: BoxDecoration(
-                        color: theme.cardColor.withOpacity(0.1),
+                        color: Theme.of(context).cardColor.withOpacity(0.1),
                         shape: BoxShape.circle,
                       ),
                       child: Image.asset(
@@ -116,7 +164,6 @@ class _NoNetworkScreenState extends State<NoNetworkScreen> {
 
               SizedBox(height: 40.h),
 
-              // Title
               Text(
                 ZnoonaTexts.tr(context, LangKeys.noConnection),
                 style: GoogleFonts.beiruti(
@@ -129,7 +176,6 @@ class _NoNetworkScreenState extends State<NoNetworkScreen> {
 
               SizedBox(height: 16.h),
 
-              // Description
               Text(
                 ZnoonaTexts.tr(context, LangKeys.noConnectionMessage),
                 style: GoogleFonts.beiruti(
@@ -142,10 +188,8 @@ class _NoNetworkScreenState extends State<NoNetworkScreen> {
 
               SizedBox(height: 48.h),
 
-              // Retry Button
               _buildRetryButton(context),
 
-              // Check settings suggestion
               SizedBox(height: 24.h),
 
               Row(
@@ -167,6 +211,102 @@ class _NoNetworkScreenState extends State<NoNetworkScreen> {
                 ],
               ),
             ],
+          ),
+        ),
+      ),
+    );
+  }
+
+  Widget _buildFallbackScreen() {
+    // Get screen size for manual sizing
+    final size = MediaQuery.of(context).size;
+    
+    return Scaffold(
+      backgroundColor: const Color(0xFF242C3B),
+      body: SafeArea(
+        child: Padding(
+          padding: const EdgeInsets.all(24.0),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              const Icon(
+                Icons.wifi_off,
+                size: 100,
+                color: Color(0xFF37B6E9),
+              ),
+              const SizedBox(height: 40),
+              Text(
+                'No Internet Connection',
+                style: GoogleFonts.beiruti(
+                  fontSize: size.width * 0.07, // 7% of screen width
+                  fontWeight: FontWeight.bold,
+                  color: Colors.white,
+                ),
+                textAlign: TextAlign.center,
+              ),
+              const SizedBox(height: 16),
+              Text(
+                'Please check your internet connection and try again.',
+                style: GoogleFonts.beiruti(
+                  fontSize: size.width * 0.04, // 4% of screen width
+                  color: Colors.white70,
+                ),
+                textAlign: TextAlign.center,
+              ),
+              const SizedBox(height: 48),
+              _buildFallbackRetryButton(size),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+
+  Widget _buildFallbackRetryButton(Size size) {
+    return Container(
+      width: double.infinity,
+      height: size.height * 0.07, // 7% of screen height
+      decoration: BoxDecoration(
+        gradient: const LinearGradient(
+          colors: [Color(0xFF242C3B), Color(0xFF176B87)],
+        ),
+        borderRadius: BorderRadius.circular(16),
+      ),
+      child: Material(
+        color: Colors.transparent,
+        child: InkWell(
+          onTap: _isRetrying ? null : _handleRetry,
+          borderRadius: BorderRadius.circular(16),
+          child: Center(
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                if (_isRetrying)
+                  const SizedBox(
+                    width: 24,
+                    height: 24,
+                    child: CircularProgressIndicator(
+                      color: Colors.white,
+                      strokeWidth: 2,
+                    ),
+                  )
+                else
+                  const Icon(
+                    Icons.refresh,
+                    color: Colors.white,
+                    size: 24,
+                  ),
+                const SizedBox(width: 8),
+                Text(
+                  _isRetrying ? 'Checking...' : 'Try Again',
+                  style: GoogleFonts.beiruti(
+                    fontSize: size.width * 0.045, // 4.5% of screen width
+                    fontWeight: FontWeight.bold,
+                    color: Colors.white,
+                  ),
+                ),
+              ],
+            ),
           ),
         ),
       ),

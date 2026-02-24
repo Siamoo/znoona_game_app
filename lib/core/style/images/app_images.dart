@@ -26,7 +26,6 @@ class AppImages {
   static const science = 'assets/images/user/science.png';
   static const bike = 'assets/images/design/bike.png';
   static const greenMWake = 'assets/images/design/g_m_wake.png';
-  static const greenMWake2 = 'assets/images/design/g_m_walk_2.png';
   static const redWRightSide = 'assets/images/design/r_w_right_side.png';
   static const yelloWHand = 'assets/images/design/y_w_hand.png';
   static const yelloWThink = 'assets/images/design/y_w_think.png';
@@ -42,7 +41,6 @@ class AppImages {
   static const airplane = 'assets/images/design/airplane.png';
   static const bird = 'assets/images/design/bird.png';
   static const blackMNo = 'assets/images/design/black_m_no.png';
-  static const balon = 'assets/images/design/balon.png';
   static const sky = 'assets/images/design/sky.png';
   static const dog1 = 'assets/images/design/dog1.png';
   static const dog2 = 'assets/images/design/dog2.png';
@@ -52,7 +50,6 @@ class AppImages {
   static const redWStady = 'assets/images/design/red_w_stady.png';
   static const blueMSkates = 'assets/images/design/blue_m_skates.png';
   static const manFell1 = 'assets/images/design/m_fell1.png';
-  static const manFell4 = 'assets/images/design/m_fell4.png';
   static const gold = 'assets/images/user/Gold.png';
   static const silver = 'assets/images/user/Silver.png';
   static const bronze = 'assets/images/user/Bronze.png';

@@ -13,7 +13,7 @@ import 'package:medaan_almaarifa/core/common/screens/no_network_screen.dart';
 import 'package:medaan_almaarifa/core/common/screens/simple_error_screen.dart';
 import 'package:medaan_almaarifa/core/di/injection_container.dart';
 import 'package:medaan_almaarifa/core/errors/error_handler.dart';
-import 'package:medaan_almaarifa/core/helpers/audio_service.dart';
+import 'package:medaan_almaarifa/core/service/audio/audio_service.dart';
 import 'package:medaan_almaarifa/core/service/shared_pref/shared_pref.dart';
 import 'package:medaan_almaarifa/znoona_game_app.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';

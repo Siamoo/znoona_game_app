@@ -2,7 +2,7 @@ import 'package:get_it/get_it.dart';
 import 'package:logger/logger.dart';
 // App Core
 import 'package:medaan_almaarifa/core/app/app_cubit/app_cubit.dart';
-import 'package:medaan_almaarifa/core/helpers/audio_service.dart';
+import 'package:medaan_almaarifa/core/service/audio/audio_service.dart';
 import 'package:medaan_almaarifa/core/service/shared_pref/shared_pref.dart';
 // ---------------- CATEGORIES ----------------
 import 'package:medaan_almaarifa/features/quiz/categories/data/datasources/categories_remote_data_source.dart';

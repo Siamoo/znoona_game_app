@@ -31,7 +31,7 @@ class RoomCreationBody extends StatefulWidget {
 }
 
 class _RoomCreationBodyState extends State<RoomCreationBody> {
-  int _selectedTimerDuration = 13;
+  int _selectedTimerDuration = 15; // Changed from 13 to 15 as default
 
   @override
   Widget build(BuildContext context) {

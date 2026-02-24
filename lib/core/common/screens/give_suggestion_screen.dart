@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:medaan_almaarifa/core/app/env.variables.dart';
+import 'package:medaan_almaarifa/core/common/animations/animate_do.dart';
 import 'package:medaan_almaarifa/core/common/widgets/custom_linear_button.dart';
 import 'package:medaan_almaarifa/core/common/widgets/text_app.dart';
 import 'package:medaan_almaarifa/core/helpers/znoona.colors.dart';
@@ -63,7 +64,7 @@ class GiveSuggestionScreen extends StatelessWidget {
             children: [
               Column(
                 children: [
-                  FadeInDown(
+                  CustomFadeInDown(
                     duration: const Duration(milliseconds: 900),
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -93,8 +94,8 @@ class GiveSuggestionScreen extends StatelessWidget {
                   SizedBox(height: 20.h),
 
                   // Header Image
-                  FadeInDown(
-                    // duration: const Duration(milliseconds: 800),
+                  CustomFadeInDown(
+                    duration: const Duration(milliseconds: 800),
                     child: Center(
                       child: Image.asset(
                         AppImages.puzzle,
@@ -114,7 +115,7 @@ class GiveSuggestionScreen extends StatelessWidget {
                   SizedBox(height: 16.h),
 
                   // Title
-                  FadeInDown(
+                  CustomFadeInDown(
                     duration: const Duration(milliseconds: 700),
                     child: TextApp(
                       text: ZnoonaTexts.tr(context, LangKeys.howCanWeHelp),
@@ -129,7 +130,7 @@ class GiveSuggestionScreen extends StatelessWidget {
                   SizedBox(height: 8.h),
 
                   // Subtitle
-                  FadeInDown(
+                  CustomFadeInDown(
                     duration: const Duration(milliseconds: 600),
                     child: TextApp(
                       text: ZnoonaTexts.tr(context, LangKeys.newAppSuggestions),
@@ -145,7 +146,7 @@ class GiveSuggestionScreen extends StatelessWidget {
                   SizedBox(height: 30.h),
 
                   // WhatsApp Button
-                  FadeInDown(
+                  CustomFadeInDown(
                     duration: const Duration(milliseconds: 500),
                     child: CustomLinearButton(
                       borderRadiusNum: 20,

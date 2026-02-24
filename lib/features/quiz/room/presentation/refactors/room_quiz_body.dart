@@ -10,7 +10,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:medaan_almaarifa/core/app/app_cubit/app_cubit.dart';
 import 'package:medaan_almaarifa/core/common/screens/sound_setting_screen.dart';
 import 'package:medaan_almaarifa/core/common/widgets/custom_app_bar.dart';
-import 'package:medaan_almaarifa/core/helpers/audio_service.dart';
+import 'package:medaan_almaarifa/core/service/audio/audio_service.dart';
 import 'package:medaan_almaarifa/core/helpers/znoona.colors.dart';
 import 'package:medaan_almaarifa/core/helpers/znoona_navigate.dart';
 import 'package:medaan_almaarifa/core/helpers/znoona_texts.dart';

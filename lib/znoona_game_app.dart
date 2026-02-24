@@ -7,7 +7,7 @@ import 'package:medaan_almaarifa/core/common/screens/error_screen.dart';
 import 'package:medaan_almaarifa/core/common/screens/no_network_screen.dart';
 import 'package:medaan_almaarifa/core/di/injection_container.dart';
 import 'package:medaan_almaarifa/core/errors/error_handler.dart';
-import 'package:medaan_almaarifa/core/helpers/audio_service.dart';
+import 'package:medaan_almaarifa/core/service/audio/audio_service.dart';
 import 'package:medaan_almaarifa/core/language/app_localizations_setup.dart';
 import 'package:medaan_almaarifa/core/style/theme/app_theme.dart';
 import 'package:medaan_almaarifa/features/home/screens/home_screen.dart';

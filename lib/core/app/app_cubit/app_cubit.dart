@@ -3,7 +3,7 @@ import 'dart:ui';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:logger/logger.dart';
-import 'package:medaan_almaarifa/core/helpers/audio_service.dart';
+import 'package:medaan_almaarifa/core/service/audio/audio_service.dart';
 import 'package:medaan_almaarifa/core/service/shared_pref/pref_keys.dart';
 import 'package:medaan_almaarifa/core/service/shared_pref/shared_pref.dart';
 

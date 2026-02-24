@@ -5,10 +5,12 @@ import 'package:medaan_almaarifa/core/helpers/znoona.colors.dart';
 class SelectedTimerDisplay extends StatelessWidget {
   const SelectedTimerDisplay({
     required this.selectedTimerDuration,
+    required this.formattedDuration,
     super.key,
   });
 
   final int selectedTimerDuration;
+  final String formattedDuration;
 
   @override
   Widget build(BuildContext context) {
@@ -28,7 +30,7 @@ class SelectedTimerDisplay extends StatelessWidget {
           ),
           SizedBox(width: 8.w),
           Text(
-            '$selectedTimerDuration ',
+            formattedDuration,
             style: TextStyle(
               color: Colors.white,
               fontSize: 14.h,

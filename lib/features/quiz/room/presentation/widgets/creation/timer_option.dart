@@ -5,11 +5,14 @@ import 'package:medaan_almaarifa/core/helpers/znoona.colors.dart';
 class TimerOption extends StatelessWidget {
   const TimerOption({
     required this.duration,
+    required this.formattedDuration,
     required this.isSelected,
     required this.onSelected,
     super.key,
   });
+  
   final int duration;
+  final String formattedDuration;
   final bool isSelected;
   final dynamic Function(int) onSelected;
 
@@ -18,7 +21,7 @@ class TimerOption extends StatelessWidget {
     return GestureDetector(
       onTap: () => onSelected(duration),
       child: Container(
-        padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 12.h),
+        padding: EdgeInsets.symmetric(horizontal: 8.w, vertical: 8.h),
         decoration: BoxDecoration(
           color: isSelected
               ? ZnoonaColors.bluePinkDark(context)
@@ -29,12 +32,15 @@ class TimerOption extends StatelessWidget {
             width: isSelected ? 0 : 1,
           ),
         ),
-        child: Text(
-          '$duration ',
-          style: TextStyle(
-            color: isSelected ? Colors.white : ZnoonaColors.text(context),
-            fontSize: 14.h,
-            fontWeight: isSelected ? FontWeight.bold : FontWeight.normal,
+        child: Center(
+          child: Text(
+            formattedDuration,
+            style: TextStyle(
+              color: isSelected ? Colors.white : ZnoonaColors.text(context),
+              fontSize: 12.h,
+              fontWeight: isSelected ? FontWeight.bold : FontWeight.normal,
+            ),
+            textAlign: TextAlign.center,
           ),
         ),
       ),

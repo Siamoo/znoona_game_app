@@ -5,15 +5,17 @@ class ResultsScreen extends StatelessWidget {
   const ResultsScreen({
     required this.totalQuestions,
     required this.correctAnswers,
-    super.key,
+    required this.scorePercentage, super.key,
   });
   final int totalQuestions;
   final int correctAnswers;
+  final int scorePercentage;
   @override
   Widget build(BuildContext context) {
     return ResultBody(
       totalQuestions: totalQuestions,
       correctAnswers: correctAnswers,
+      scorePercentage: scorePercentage,
     );
   }
 }

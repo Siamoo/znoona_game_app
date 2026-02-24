@@ -15,10 +15,12 @@ class ResultBody extends StatelessWidget {
   const ResultBody({
     required this.totalQuestions,
     required this.correctAnswers,
+    required this.scorePercentage,
     super.key,
   });
   final int totalQuestions;
   final int correctAnswers;
+  final int scorePercentage;
 
   @override
   Widget build(BuildContext context) {
@@ -29,13 +31,14 @@ class ResultBody extends StatelessWidget {
             vertical: 10.h,
             horizontal: 10.w,
           ),
+          
           child: Column(
             children: [
               CustomAppBar(title: ZnoonaTexts.tr(context, LangKeys.result)),
               SizedBox(height: 20.h),
-              if (correctAnswers >= 14)
+              if (scorePercentage >= 70)
                 const WonCupBody()
-              else if (correctAnswers >= 7 && correctAnswers < 14)
+              else if (scorePercentage >= 30 && scorePercentage < 70)
                 const GoodResultBody()
               else
                 const BadResultBody(),

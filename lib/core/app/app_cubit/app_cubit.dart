@@ -191,7 +191,7 @@ class AppCubit extends Cubit<AppState> {
   }
 
   Future<void> _processBatch() async {
-    final operations = List.from(_pendingOperations);
+    final operations = List<dynamic>.from(_pendingOperations);
     _pendingOperations.clear();
     _batchTimer = null;
     

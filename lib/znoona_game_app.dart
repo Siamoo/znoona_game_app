@@ -25,8 +25,14 @@ class ZnoonaGameApp extends StatefulWidget {
 }
 
 class _ZnoonaGameAppState extends State<ZnoonaGameApp> {
-  bool _hasCriticalError = false;
   String? _criticalErrorMessage;
+  bool _hasCriticalError = false;
+
+  @override
+  void dispose() {
+    ConnectivityController.instance.dispose();
+    super.dispose();
+  }
 
   @override
   void initState() {
@@ -58,6 +64,21 @@ class _ZnoonaGameAppState extends State<ZnoonaGameApp> {
         _criticalErrorMessage = error.toString();
       });
     }
+  }
+
+  Widget _buildMediaQuery(BuildContext context, Widget child) {
+    final mediaQuery = MediaQuery.of(context);
+    return MediaQuery(
+      data: mediaQuery.copyWith(
+        textScaler: TextScaler.noScaling,
+      ),
+      child: GestureDetector(
+        onTap: () => FocusManager.instance.primaryFocus?.unfocus(),
+        child: Scaffold(
+          body: child,
+        ),
+      ),
+    );
   }
 
   @override
@@ -145,36 +166,15 @@ class _ZnoonaGameAppState extends State<ZnoonaGameApp> {
       },
     );
   }
-
-  Widget _buildMediaQuery(BuildContext context, Widget child) {
-    final mediaQuery = MediaQuery.of(context);
-    return MediaQuery(
-      data: mediaQuery.copyWith(
-        textScaler: TextScaler.noScaling,
-      ),
-      child: GestureDetector(
-        onTap: () => FocusManager.instance.primaryFocus?.unfocus(),
-        child: Scaffold(
-          body: child,
-        ),
-      ),
-    );
-  }
-
-  @override
-  void dispose() {
-    ConnectivityController.instance.dispose();
-    super.dispose();
-  }
 }
 
 /// Error boundary widget to catch widget tree errors
 class _ErrorBoundary extends StatefulWidget {
-
   const _ErrorBoundary({
     required this.child,
     required this.onError,
   });
+
   final Widget child;
   final Function(Object, StackTrace) onError;
 
@@ -184,11 +184,6 @@ class _ErrorBoundary extends StatefulWidget {
 
 class _ErrorBoundaryState extends State<_ErrorBoundary> {
   @override
-  Widget build(BuildContext context) {
-    return widget.child;
-  }
-
-  @override
   void initState() {
     super.initState();
     // Set up error handling for this widget tree
@@ -196,5 +191,10 @@ class _ErrorBoundaryState extends State<_ErrorBoundary> {
       FlutterError.presentError(details);
       widget.onError(details.exception, details.stack ?? StackTrace.current);
     };
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return widget.child;
   }
 }

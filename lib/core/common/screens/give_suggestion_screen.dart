@@ -2,6 +2,7 @@ import 'package:animate_do/animate_do.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:medaan_almaarifa/core/app/env.variables.dart';
 import 'package:medaan_almaarifa/core/common/widgets/custom_linear_button.dart';
 import 'package:medaan_almaarifa/core/common/widgets/text_app.dart';
 import 'package:medaan_almaarifa/core/helpers/znoona.colors.dart';
@@ -13,13 +14,13 @@ import 'package:url_launcher/url_launcher.dart';
 class GiveSuggestionScreen extends StatelessWidget {
   const GiveSuggestionScreen({super.key});
 
-  final String whatsappNumber = '201206611795';
-
   Future<void> _openWhatsApp(BuildContext context) async {
     final message = Uri.encodeComponent(
       'Hello, I Have a suggestion for Medaan AlMaarifa app',
     );
-    final url = Uri.parse('https://wa.me/$whatsappNumber?text=$message');
+    final url = Uri.parse(
+      'https://wa.me/${EnvVariables.instance.phoneNumber}?text=$message',
+    );
 
     try {
       if (await canLaunchUrl(url)) {
@@ -63,6 +64,7 @@ class GiveSuggestionScreen extends StatelessWidget {
               Column(
                 children: [
                   FadeInDown(
+                    duration: const Duration(milliseconds: 900),
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
@@ -92,7 +94,7 @@ class GiveSuggestionScreen extends StatelessWidget {
 
                   // Header Image
                   FadeInDown(
-                    delay: const Duration(milliseconds: 200),
+                    // duration: const Duration(milliseconds: 800),
                     child: Center(
                       child: Image.asset(
                         AppImages.puzzle,
@@ -113,7 +115,7 @@ class GiveSuggestionScreen extends StatelessWidget {
 
                   // Title
                   FadeInDown(
-                    delay: const Duration(milliseconds: 300),
+                    duration: const Duration(milliseconds: 700),
                     child: TextApp(
                       text: ZnoonaTexts.tr(context, LangKeys.howCanWeHelp),
                       textStyle: GoogleFonts.beiruti(
@@ -128,7 +130,7 @@ class GiveSuggestionScreen extends StatelessWidget {
 
                   // Subtitle
                   FadeInDown(
-                    delay: const Duration(milliseconds: 400),
+                    duration: const Duration(milliseconds: 600),
                     child: TextApp(
                       text: ZnoonaTexts.tr(context, LangKeys.newAppSuggestions),
                       textStyle: GoogleFonts.beiruti(
@@ -144,7 +146,7 @@ class GiveSuggestionScreen extends StatelessWidget {
 
                   // WhatsApp Button
                   FadeInDown(
-                    delay: const Duration(milliseconds: 500),
+                    duration: const Duration(milliseconds: 500),
                     child: CustomLinearButton(
                       borderRadiusNum: 20,
                       colors: [

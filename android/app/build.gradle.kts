@@ -8,7 +8,7 @@ plugins {
 }
 
 android {
-    namespace = "com.yourcompany.znoona_game_app" // Change this
+    namespace = "com.medaan_almaarifa.app" // Change this
     compileSdk = 36
     
     ndkVersion = flutter.ndkVersion
@@ -23,7 +23,7 @@ android {
     }
 
     defaultConfig {
-        applicationId = "com.yourcompany.znoona_game_app" // Change this
+        applicationId = "com.medaan_almaarifa.app" // Change this
         minSdk = flutter.minSdkVersion
         targetSdk = 35
         versionCode = 1
@@ -147,4 +147,5 @@ dependencies {
     implementation("androidx.multidex:multidex:2.0.1")
     implementation("androidx.core:core-ktx:1.12.0")
     implementation("org.jetbrains.kotlin:kotlin-stdlib:2.1.0")
+    implementation("com.google.android.play:core:1.10.3")
 }

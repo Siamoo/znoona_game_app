@@ -85,18 +85,18 @@ bool get isBackgroundMusicEnabled => _currentState?.isBackgroundMusicEnabled ?? 
     // Sound player listeners
     _soundEventSubscription = _soundPlayer?.playbackEventStream.listen(
       _handleSoundEvents,
-      onError: (e) => _logger.e('Sound player error', error: e),
+      onError: (Object e) => _logger.e('Sound player error', error: e),
     );
     
     _soundStateSubscription = _soundPlayer?.playerStateStream.listen(
       (state) => _logger.d('Sound state: ${state.playing}'),
-      onError: (e) => _logger.e('Sound state error', error: e),
+      onError: (Object e) => _logger.e('Sound state error', error: e),
     );
 
     // Music player listeners
     _musicEventSubscription = _musicPlayer?.playbackEventStream.listen(
       _handleMusicEvents,
-      onError: (e) => _logger.e('Music player error', error: e),
+      onError: (Object e) => _logger.e('Music player error', error: e),
     );
     
     _musicStateSubscription = _musicPlayer?.playerStateStream.listen(
@@ -110,7 +110,7 @@ bool get isBackgroundMusicEnabled => _currentState?.isBackgroundMusicEnabled ?? 
           }
         }
       },
-      onError: (e) => _logger.e('Music state error', error: e),
+      onError: (Object e) => _logger.e('Music state error', error: e),
     );
   }
 
@@ -332,7 +332,7 @@ bool get isBackgroundMusicEnabled => _currentState?.isBackgroundMusicEnabled ?? 
     _cleanup().then((_) {
       _isInitialized = false;
       _logger.i('✅ AudioService disposed');
-    }).catchError((e) {
+    }).catchError((Object e) {
       _logger.e('❌ Error during AudioService disposal', error: e);
     });
   }

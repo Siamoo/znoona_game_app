@@ -112,7 +112,7 @@ class RoomRemoteDataSource {
     if (user == null) throw Exception('User not logged in');
 
     try {
-      await supabase.rpc('leave_all_rooms', params: {'p_user_id': user.id});
+      await supabase.rpc<dynamic>('leave_all_rooms', params: {'p_user_id': user.id});
     } catch (e) {
       // marking the user disconnected
       await supabase

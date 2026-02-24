@@ -1,4 +1,4 @@
-package com.yourcompany.znoona_game_app
+package com.medaan_almaarifa.app
 
 import io.flutter.embedding.android.FlutterActivity
 

@@ -205,7 +205,7 @@ bool get isBackgroundMusicEnabled => _currentState?.isBackgroundMusicEnabled ?? 
   Future<void> playTimerWarningSound() => _playAsset('assets/audio/timer_warning.mp3');
   Future<void> playTimerCriticalSound() => _playAsset('assets/audio/timer_critical.mp3');
   Future<void> playWinSound() => _playAsset('assets/audio/win.mp3');
-  Future<void> playGoodResultSound() => _playAsset('assets/audio/win.mp3');
+  Future<void> playGoodResultSound() => _playAsset('assets/audio/good.mp3');
   Future<void> playBadResultSound() => _playAsset('assets/audio/bad.mp3');
 
   Future<void> startBackgroundMusic() async {

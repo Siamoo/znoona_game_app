@@ -19,7 +19,7 @@ class GiveSuggestionScreen extends StatelessWidget {
     final message = Uri.encodeComponent(
       'Hello, I Have a suggestion for Medaan AlMaarifa app',
     );
-    final url = Uri.parse("https://wa.me/$whatsappNumber?text=$message");
+    final url = Uri.parse('https://wa.me/$whatsappNumber?text=$message');
 
     try {
       if (await canLaunchUrl(url)) {

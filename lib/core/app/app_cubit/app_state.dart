@@ -22,7 +22,7 @@ class AppState with _$AppState {
     locale: Locale('ar'),
     isSoundEnabled: true,
     isBackgroundMusicEnabled: true,
-    soundVolume: 1.0,
+    soundVolume: 1,
     musicVolume: 0.5,
   );
 }

@@ -1,8 +1,8 @@
 import 'dart:async';
+
 import 'package:dartz/dartz.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
-import 'package:supabase_flutter/supabase_flutter.dart';
 import 'package:medaan_almaarifa/features/quiz/room/data/models/player_result.dart';
 import 'package:medaan_almaarifa/features/quiz/room/domain/entities/room.dart';
 import 'package:medaan_almaarifa/features/quiz/room/domain/entities/room_player.dart';
@@ -23,9 +23,10 @@ import 'package:medaan_almaarifa/features/quiz/room/domain/usecases/submit_answe
 import 'package:medaan_almaarifa/features/quiz/room/domain/usecases/watch_player_answers_usecase.dart';
 import 'package:medaan_almaarifa/features/quiz/room/domain/usecases/watch_room_usecase.dart';
 import 'package:medaan_almaarifa/features/quiz/single/domain/entities/question.dart';
+import 'package:supabase_flutter/supabase_flutter.dart';
 
-part 'room_state.dart';
 part 'room_cubit.freezed.dart';
+part 'room_state.dart';
 
 class RoomCubit extends Cubit<RoomState> {
   RoomCubit({
@@ -485,7 +486,7 @@ class RoomCubit extends Cubit<RoomState> {
         either.fold(
           (failure) => print('Real-time stream error: $failure'),
           (Map<String, String> answers) {
-            final Map<String, String?> updatedAnswers = {};
+            final updatedAnswers = <String, String?>{};
             answers.forEach((key, value) {
               updatedAnswers[key] = value;
             });
@@ -519,7 +520,7 @@ class RoomCubit extends Cubit<RoomState> {
   }) async {
     final user = _getCurrentUserId();
     if (user == 'unknown') {
-      emit(RoomState.error('User not logged in'));
+      emit(const RoomState.error('User not logged in'));
       return;
     }
 
@@ -746,8 +747,8 @@ class RoomCubit extends Cubit<RoomState> {
     String currentUserId,
   ) {
     final results = <PlayerResult>[];
-    int currentRank = 1;
-    int index = 0;
+    var currentRank = 1;
+    var index = 0;
 
     while (index < sortedPlayers.length) {
       final currentPlayer = sortedPlayers[index];
@@ -770,7 +771,7 @@ class RoomCubit extends Cubit<RoomState> {
       final currentScore = currentPlayer.score;
       final tiedPlayers = <RoomPlayer>[];
 
-      int j = index;
+      var j = index;
       while (j < sortedPlayers.length &&
           sortedPlayers[j].finishedQuiz &&
           sortedPlayers[j].score == currentScore) {

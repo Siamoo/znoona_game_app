@@ -149,7 +149,7 @@ class ErrorHandler {
       case 401:
         return 'Unauthorized. Please login again.';
       case 403:
-        return 'Access denied. You don\'t have permission.';
+        return "Access denied. You don't have permission.";
       case 404:
         return 'Resource not found.';
       case 500:

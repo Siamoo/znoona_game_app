@@ -67,7 +67,7 @@ class SimpleErrorScreen extends StatelessWidget {
                     context,
                     label: 'Close',
                     color: Colors.grey,
-                    onTap: () => SystemNavigator.pop(),
+                    onTap: SystemNavigator.pop,
                     size: size,
                   ),
                 ],

@@ -113,7 +113,7 @@ class AuthCubit extends Cubit<AuthState> {
     );
 
     result.fold(
-      (error) => emit(AuthState.error(error.toString())), 
+      (error) => emit(AuthState.error(error)), 
       (updatedProfile) => emit(AuthState.authenticated(
         profile: updatedProfile,
         authMethod: authMethod,

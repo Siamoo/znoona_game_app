@@ -90,7 +90,7 @@ class ContactUsScreen extends StatelessWidget {
   }
 
   Future<void> _openFacebook(BuildContext context) async {
-    final Uri facebookUri = Uri.parse(EnvVariables.instance.facebookLink);
+    final facebookUri = Uri.parse(EnvVariables.instance.facebookLink);
 
     try {
       if (await canLaunchUrl(facebookUri)) {

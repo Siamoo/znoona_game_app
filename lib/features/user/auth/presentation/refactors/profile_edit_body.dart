@@ -1,10 +1,10 @@
 import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:supabase_flutter/supabase_flutter.dart';
 import 'package:medaan_almaarifa/core/common/widgets/custom_app_bar.dart';
 import 'package:medaan_almaarifa/core/common/widgets/custom_linear_button.dart';
 import 'package:medaan_almaarifa/core/common/widgets/text_app.dart';
@@ -13,6 +13,7 @@ import 'package:medaan_almaarifa/core/helpers/znoona_texts.dart';
 import 'package:medaan_almaarifa/core/language/lang_keys.dart';
 import 'package:medaan_almaarifa/features/user/auth/domain/entities/profile.dart';
 import 'package:medaan_almaarifa/features/user/auth/presentation/cubit/auth_cubit.dart';
+import 'package:supabase_flutter/supabase_flutter.dart';
 
 class ProfileEditBody extends StatefulWidget {
   const ProfileEditBody({super.key});
@@ -113,7 +114,7 @@ class _ProfileEditBodyState extends State<ProfileEditBody> {
 
     if (result != null) {
       try {
-        final XFile? pickedFile = await _picker.pickImage(
+        final pickedFile = await _picker.pickImage(
           source: result,
           maxWidth: 800,
           maxHeight: 800,
@@ -129,8 +130,8 @@ class _ProfileEditBodyState extends State<ProfileEditBody> {
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
             content: Text(
-              'Failed to pick image: ${e.toString()}',
-              style: TextStyle(color: Colors.white),
+              'Failed to pick image: $e',
+              style: const TextStyle(color: Colors.white),
             ),
             backgroundColor: Colors.red,
           ),
@@ -490,7 +491,7 @@ class _ProfileEditBodyState extends State<ProfileEditBody> {
                           ),
 
                           // Flexible spacer to push button to bottom
-                          Expanded(
+                          const Expanded(
                             child: SizedBox.shrink(),
                           ),
 
@@ -638,8 +639,8 @@ class _ProfileEditBodyState extends State<ProfileEditBody> {
           ScaffoldMessenger.of(context).showSnackBar(
             SnackBar(
               content: Text(
-                'Failed to upload image: ${e.toString()}',
-                style: TextStyle(color: Colors.white),
+                'Failed to upload image: $e',
+                style: const TextStyle(color: Colors.white),
               ),
               backgroundColor: Colors.orange,
             ),
@@ -661,10 +662,10 @@ class _ProfileEditBodyState extends State<ProfileEditBody> {
         SnackBar(
           content: Text(
             ZnoonaTexts.tr(context, LangKeys.profileUpdated),
-            style: TextStyle(color: Colors.white),
+            style: const TextStyle(color: Colors.white),
           ),
           backgroundColor: Colors.green,
-          duration: Duration(seconds: 2),
+          duration: const Duration(seconds: 2),
         ),
       );
 

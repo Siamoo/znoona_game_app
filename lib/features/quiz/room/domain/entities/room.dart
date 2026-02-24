@@ -11,14 +11,14 @@ class Room with _$Room {
     required String id,
     required String code,
     required String hostId,
-    required String status,     // waiting | playing | finished
+    required String status, // waiting | playing | finished
+    required int timerDuration, 
     String? categoryId,
     Map<String, dynamic>? state,
     String? title,
     DateTime? createdAt,
     List<RoomPlayer>? players,
     List<RoomQuestion>? questions,
-    required int timerDuration,
   }) = _Room;
 
   factory Room.fromJson(Map<String, dynamic> json) => _$RoomFromJson(json);

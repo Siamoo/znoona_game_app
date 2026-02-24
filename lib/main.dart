@@ -178,8 +178,8 @@ void _showAppropriateNoNetworkScreen() {
 }
 
 Future<void> _initializeSupabaseWithRetry({int maxRetries = 3}) async {
-  int attempts = 0;
-  Duration delay = const Duration(seconds: 1);
+  var attempts = 0;
+  var delay = const Duration(seconds: 1);
 
   while (attempts < maxRetries) {
     try {
@@ -194,9 +194,6 @@ Future<void> _initializeSupabaseWithRetry({int maxRetries = 3}) async {
       await Supabase.initialize(
         url: supabaseUrl,
         anonKey: supabaseAnonKey,
-        authOptions: const FlutterAuthClientOptions(
-          autoRefreshToken: true,
-        ),
         realtimeClientOptions: const RealtimeClientOptions(
           eventsPerSecond: 10,
         ),
@@ -248,8 +245,8 @@ void _handleInitializationError(Object e, StackTrace stackTrace) {
   ErrorHandler.logError(e, stackTrace, message: 'App initialization failed');
 
   // Determine error type for better messaging
-  String errorMessage = 'Unknown error occurred';
-  bool isNetworkError = false;
+  var errorMessage = 'Unknown error occurred';
+  var isNetworkError = false;
 
   final errorString = e.toString().toLowerCase();
   
@@ -269,7 +266,7 @@ void _handleInitializationError(Object e, StackTrace stackTrace) {
     errorMessage = 'Required configuration is missing. Please check your setup.';
   } else {
     // Clean up error message
-    String cleanError = e.toString()
+    final cleanError = e.toString()
         .replaceAll('Exception:', '')
         .replaceAll('Error:', '')
         .trim();

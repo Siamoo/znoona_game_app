@@ -130,7 +130,7 @@ class RoomRemoteDataSource {
         .from('rooms')
         .stream(primaryKey: ['id'])
         .map(
-          (rows) => rows.map((e) => RoomModel.fromJson(e)).toList(),
+          (rows) => rows.map(RoomModel.fromJson).toList(),
         );
   }
 
@@ -140,7 +140,7 @@ class RoomRemoteDataSource {
         .stream(primaryKey: ['id'])
         .eq('room_id', roomId)
         .map(
-          (rows) => rows.map((e) => RoomPlayerModel.fromJson(e)).toList(),
+          (rows) => rows.map(RoomPlayerModel.fromJson).toList(),
         );
   }
 
@@ -180,8 +180,8 @@ class RoomRemoteDataSource {
         .inFilter('id', questionIds);
 
     // Debug output
-    for (var item in data) {
-      final json = item as Map<String, dynamic>;
+    for (final item in data) {
+      final json = item;
     }
 
     return (data as List)
@@ -225,7 +225,7 @@ class RoomRemoteDataSource {
         .eq('room_id', roomId)
         .not('selected_answer', 'is', null);
 
-    final Map<String, String> answers = {};
+    final answers = <String, String>{};
     for (final item in data) {
       answers[item['user_id'] as String] = item['selected_answer'] as String;
     }
@@ -269,7 +269,7 @@ class RoomRemoteDataSource {
         .stream(primaryKey: ['id'])
         .eq('room_id', roomId)
         .map((List<Map<String, dynamic>> rows) {
-          final Map<String, String> answers = {};
+          final answers = <String, String>{};
 
           for (final row in rows) {
             final userId = row['user_id']?.toString();
@@ -376,7 +376,7 @@ class RoomRemoteDataSource {
           //   // );
           // }
 
-          final players = rows.map((e) => RoomPlayerModel.fromJson(e)).toList();
+          final players = rows.map(RoomPlayerModel.fromJson).toList();
 
           // Log finished players for debugging
           // final finishedCount = players.where((p) => p.finishedQuiz).length;

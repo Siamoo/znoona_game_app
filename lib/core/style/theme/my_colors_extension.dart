@@ -3,17 +3,6 @@ import 'package:medaan_almaarifa/core/style/colors/colors_dark.dart';
 import 'package:medaan_almaarifa/core/style/colors/colors_light.dart';
 
 class MyColors extends ThemeExtension<MyColors> {
-  final Color? mainColor;
-  final Color? bluePinkDark;
-  final Color? bluePinkLight;
-  final Color? textColor;
-  final Color? textFormBorder;
-  final Color? navBarbg;
-  final Color? navBarSelectedTab;
-  final Color? containerShadow1;
-  final Color? containerShadow2;
-  final Color? containerLinear1;
-  final Color? containerLinear2;
 
   const MyColors({
     required this.mainColor,
@@ -56,6 +45,17 @@ class MyColors extends ThemeExtension<MyColors> {
         containerShadow2 = ColorsLight.redLight,
         containerLinear1 = ColorsLight.white1,
         containerLinear2 = ColorsLight.white2;
+  final Color? mainColor;
+  final Color? bluePinkDark;
+  final Color? bluePinkLight;
+  final Color? textColor;
+  final Color? textFormBorder;
+  final Color? navBarbg;
+  final Color? navBarSelectedTab;
+  final Color? containerShadow1;
+  final Color? containerShadow2;
+  final Color? containerLinear1;
+  final Color? containerLinear2;
 
   @override
   MyColors copyWith({

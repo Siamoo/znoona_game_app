@@ -94,7 +94,7 @@ class _RoomJoiningBodyState extends State<RoomJoiningBody> {
                         ),
                         const SizedBox(height: 24),
                         const CustomFadeInDown(
-                          duration: const Duration(milliseconds: 700),
+                          duration: Duration(milliseconds: 700),
                           child: EnterCodeOrScan(),
                         ),
                       ],
@@ -159,7 +159,7 @@ class _RoomJoiningBodyState extends State<RoomJoiningBody> {
                           ),
                           SizedBox(height: 10.h),
                           const CustomFadeInDown(
-                            duration: const Duration(milliseconds: 400),
+                            duration: Duration(milliseconds: 400),
                             child: ScanQrButton(),
                           ),
                         ],

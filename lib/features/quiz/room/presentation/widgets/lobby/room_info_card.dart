@@ -180,7 +180,7 @@ class RoomInfoCard extends StatelessWidget {
                   Container(
                     width: 8.w,
                     height: 8.h,
-                    decoration: BoxDecoration(
+                    decoration: const BoxDecoration(
                       color: Colors.white,
                       shape: BoxShape.circle,
                     ),
@@ -436,13 +436,9 @@ class RoomInfoCard extends StatelessWidget {
             data: data,
             version: QrVersions.min,
             backgroundColor: const Color.fromARGB(1, 191, 191, 191),
-            eyeStyle: QrEyeStyle(
+            eyeStyle: const QrEyeStyle(
               eyeShape: QrEyeShape.square,
               color: Colors.teal,
-            ),
-            dataModuleStyle: QrDataModuleStyle(
-              dataModuleShape: QrDataModuleShape.square,
-              color: Colors.black,
             ),
           ),
 

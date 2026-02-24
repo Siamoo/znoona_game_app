@@ -255,12 +255,9 @@ class _SoundEffectsCard extends StatelessWidget {
                 sl<AudioService>().playCorrectSound();
               }
             },
-            min: 0.0,
-            max: 1.0,
             divisions: 10,
             activeColor: ZnoonaColors.bluePinkLight(context),
             inactiveColor: ZnoonaColors.containerLinear1(context),
-            debounceDuration: const Duration(milliseconds: 100),
             // Removed semanticFormatterCallback completely
           ),
         ),
@@ -452,12 +449,9 @@ class _BackgroundMusicCard extends StatelessWidget {
             onChangedEnd: (value) {
               // Optional: You could play a soft sound here if desired
             },
-            min: 0.0,
-            max: 1.0,
             divisions: 10,
             activeColor: ZnoonaColors.bluePinkLight(context),
             inactiveColor: ZnoonaColors.containerLinear1(context),
-            debounceDuration: const Duration(milliseconds: 100),
             // Removed semanticFormatterCallback completely
           ),
         ),

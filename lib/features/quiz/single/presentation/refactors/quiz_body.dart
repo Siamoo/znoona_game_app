@@ -4,20 +4,20 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:get_it/get_it.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:medaan_almaarifa/core/app/app_cubit/app_cubit.dart';
+import 'package:medaan_almaarifa/core/common/screens/sound_setting_screen.dart';
 import 'package:medaan_almaarifa/core/common/widgets/custom_app_bar.dart';
+import 'package:medaan_almaarifa/core/helpers/audio_service.dart';
 import 'package:medaan_almaarifa/core/helpers/znoona.colors.dart';
 import 'package:medaan_almaarifa/core/helpers/znoona_navigate.dart';
 import 'package:medaan_almaarifa/core/helpers/znoona_texts.dart';
 import 'package:medaan_almaarifa/core/language/lang_keys.dart';
-import 'package:medaan_almaarifa/core/helpers/audio_service.dart';
 import 'package:medaan_almaarifa/features/quiz/single/domain/entities/question.dart';
 import 'package:medaan_almaarifa/features/quiz/single/presentation/cubit/questions_cubit.dart';
 import 'package:medaan_almaarifa/features/quiz/single/presentation/screen/results_screen.dart';
 import 'package:medaan_almaarifa/features/quiz/single/presentation/widgets/option_button.dart';
-import 'package:medaan_almaarifa/core/common/screens/sound_setting_screen.dart';
 import 'package:photo_view/photo_view.dart';
 
 class QuizBody extends StatefulWidget {
@@ -168,7 +168,7 @@ class _QuizBodyState extends State<QuizBody> {
     } else {
       // Play result sound based on score
       final appState = context.read<AppCubit>().state;
-      final double scorePercentage = correctCount / questions.length * 100;
+      final scorePercentage = correctCount / questions.length * 100;
 
       if (appState.isSoundEnabled) {
         if (scorePercentage >= 70) {
@@ -318,7 +318,7 @@ class _QuizBodyState extends State<QuizBody> {
     if (url == null || url.isEmpty) return null;
 
     if (url.contains('drive.google.com')) {
-      final regex = RegExp(r'/d/([a-zA-Z0-9_-]+)');
+      final regex = RegExp('/d/([a-zA-Z0-9_-]+)');
       final match = regex.firstMatch(url);
 
       if (match != null) {
@@ -448,7 +448,7 @@ class _QuizBodyState extends State<QuizBody> {
                                       child: Center(
                                         child: CircularProgressIndicator(
                                           color: ZnoonaColors.main(context),
-                                          strokeWidth: 2.0,
+                                          strokeWidth: 2,
                                         ),
                                       ),
                                     ),

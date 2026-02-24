@@ -206,7 +206,7 @@ class AuthRemoteDataSourceImpl implements AuthRemoteDataSource {
         .limit(limit);
 
     final results = await query;
-    return results.map((json) => ProfileModel.fromJson(json)).toList();
+    return results.map(ProfileModel.fromJson).toList();
   }
 
   String _generateUsername(String email, String fullName) {

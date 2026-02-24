@@ -1,6 +1,6 @@
 import 'dart:async';
+
 import 'package:flutter/material.dart';
-import 'package:flutter/foundation.dart';
 
 /// A slider that debounces rapid changes to prevent excessive updates
 class DebouncedSlider extends StatefulWidget { // false for debounce, true for throttle
@@ -179,8 +179,6 @@ extension DebouncedSliderExtension on DebouncedSlider {
       value: value,
       onChanged: onChanged,
       onChangedEnd: onChangedEnd,
-      min: 0.0,
-      max: 1.0,
       divisions: 10,
       activeColor: activeColor,
       inactiveColor: inactiveColor,

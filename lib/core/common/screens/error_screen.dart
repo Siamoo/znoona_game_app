@@ -27,7 +27,7 @@ class ErrorScreen extends StatelessWidget {
       body:
           'Please describe the issue you encountered:\n\n'
           'Error Details: ${errorMessage ?? 'Unknown error'}\n'
-          'Time: ${DateTime.now().toString()}\n\n'
+          'Time: ${DateTime.now()}\n\n'
           'Description of what happened:\n'
           '[Please describe the issue here]\n\n'
           'Steps to reproduce:\n'
@@ -36,7 +36,7 @@ class ErrorScreen extends StatelessWidget {
           '3.\n',
     );
 
-    final Uri emailUri = Uri.parse(mailtoLink.toString());
+    final emailUri = Uri.parse(mailtoLink.toString());
 
     try {
       if (await canLaunchUrl(emailUri)) {

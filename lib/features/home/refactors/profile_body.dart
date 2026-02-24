@@ -359,7 +359,7 @@ class ProfileBody extends StatelessWidget {
               ),
               StatCard(
                 title: ZnoonaTexts.tr(context, LangKeys.averageScore),
-                value: '${profile.averageScore.toStringAsFixed(0)}',
+                value: profile.averageScore.toStringAsFixed(0),
                 icon: Icons.score,
                 color: Colors.teal,
               ),

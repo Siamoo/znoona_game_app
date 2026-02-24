@@ -1,24 +1,24 @@
-import 'package:shared_preferences/shared_preferences.dart';
 import 'package:logger/logger.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 /// Injectable SharedPreferences service with proper error handling
 class SharedPref {
-  final SharedPreferences _prefs;
-  final Logger _logger;
   
   // Private constructor for factory method
   SharedPref._(this._prefs, this._logger);
+  
+  /// For testing - allow injection of mock SharedPreferences
+  factory SharedPref.fromPrefs(SharedPreferences prefs, {Logger? logger}) {
+    return SharedPref._(prefs, logger ?? Logger());
+  }
+  final SharedPreferences _prefs;
+  final Logger _logger;
   
   /// Factory method to create instance with dependencies
   static Future<SharedPref> create() async {
     final prefs = await SharedPreferences.getInstance();
     final logger = Logger();
     return SharedPref._(prefs, logger);
-  }
-  
-  /// For testing - allow injection of mock SharedPreferences
-  factory SharedPref.fromPrefs(SharedPreferences prefs, {Logger? logger}) {
-    return SharedPref._(prefs, logger ?? Logger());
   }
 
   /// Set string value with error handling

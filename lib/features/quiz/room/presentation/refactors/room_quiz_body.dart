@@ -1,31 +1,32 @@
 import 'dart:async';
+
 import 'package:animate_do/animate_do.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:get_it/get_it.dart';
-import 'package:medaan_almaarifa/core/common/screens/sound_setting_screen.dart';
-import 'package:medaan_almaarifa/core/style/images/app_images.dart';
-import 'package:photo_view/photo_view.dart';
-import 'package:supabase_flutter/supabase_flutter.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:medaan_almaarifa/core/app/app_cubit/app_cubit.dart';
+import 'package:medaan_almaarifa/core/common/screens/sound_setting_screen.dart';
 import 'package:medaan_almaarifa/core/common/widgets/custom_app_bar.dart';
+import 'package:medaan_almaarifa/core/helpers/audio_service.dart';
 import 'package:medaan_almaarifa/core/helpers/znoona.colors.dart';
 import 'package:medaan_almaarifa/core/helpers/znoona_navigate.dart';
 import 'package:medaan_almaarifa/core/helpers/znoona_texts.dart';
 import 'package:medaan_almaarifa/core/language/lang_keys.dart';
-import 'package:medaan_almaarifa/core/helpers/audio_service.dart';
+import 'package:medaan_almaarifa/core/style/images/app_images.dart';
 import 'package:medaan_almaarifa/features/quiz/room/domain/entities/room.dart';
 import 'package:medaan_almaarifa/features/quiz/room/domain/entities/room_player.dart';
 import 'package:medaan_almaarifa/features/quiz/room/presentation/cubit/room_cubit.dart';
 import 'package:medaan_almaarifa/features/quiz/room/presentation/screen/room_results_screen.dart';
 import 'package:medaan_almaarifa/features/quiz/room/presentation/widgets/Quiz/empty_quiz_body.dart';
+import 'package:medaan_almaarifa/features/quiz/room/presentation/widgets/Quiz/players_status.dart';
 import 'package:medaan_almaarifa/features/quiz/room/presentation/widgets/Quiz/room_game_header.dart';
 import 'package:medaan_almaarifa/features/quiz/single/domain/entities/question.dart';
 import 'package:medaan_almaarifa/features/quiz/single/presentation/widgets/option_button.dart';
-import 'package:cached_network_image/cached_network_image.dart';
-import 'package:medaan_almaarifa/features/quiz/room/presentation/widgets/Quiz/players_status.dart';
+import 'package:photo_view/photo_view.dart';
+import 'package:supabase_flutter/supabase_flutter.dart';
 
 class RoomQuizBody extends StatefulWidget {
   const RoomQuizBody({
@@ -123,7 +124,7 @@ class _RoomQuizBodyState extends State<RoomQuizBody> {
     if (url == null || url.isEmpty) return null;
 
     if (url.contains('drive.google.com')) {
-      final regex = RegExp(r'/d/([a-zA-Z0-9_-]+)');
+      final regex = RegExp('/d/([a-zA-Z0-9_-]+)');
       final match = regex.firstMatch(url);
 
       if (match != null) {
@@ -399,7 +400,7 @@ class _RoomQuizBodyState extends State<RoomQuizBody> {
     final appState = context.read<AppCubit>().state;
     if (!appState.isSoundEnabled) return;
 
-    final double scorePercentage = correctAnswers / totalQuestions * 100;
+    final scorePercentage = correctAnswers / totalQuestions * 100;
 
     if (scorePercentage >= 70) {
       await _playWinSound();
@@ -552,7 +553,7 @@ class _RoomQuizBodyState extends State<RoomQuizBody> {
                                   child: Center(
                                     child: CircularProgressIndicator(
                                       color: ZnoonaColors.main(context),
-                                      strokeWidth: 2.0,
+                                      strokeWidth: 2,
                                     ),
                                   ),
                                 ),

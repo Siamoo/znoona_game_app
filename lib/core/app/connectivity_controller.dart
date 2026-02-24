@@ -1,6 +1,5 @@
 import 'dart:async';
 import 'package:connectivity_plus/connectivity_plus.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:logger/logger.dart';
 
@@ -129,8 +128,8 @@ class ConnectivityController {
 
   /// Retry connection check with exponential backoff
   Future<bool> retryConnection() async {
-    int attempts = 0;
-    Duration delay = _initialRetryDelay;
+    var attempts = 0;
+    var delay = _initialRetryDelay;
     
     while (attempts < _maxRetries) {
       attempts++;

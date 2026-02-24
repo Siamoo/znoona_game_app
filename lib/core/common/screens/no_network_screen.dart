@@ -1,11 +1,11 @@
+import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:medaan_almaarifa/core/helpers/znoona.colors.dart';
 import 'package:medaan_almaarifa/core/helpers/znoona_texts.dart';
 import 'package:medaan_almaarifa/core/language/lang_keys.dart';
 import 'package:medaan_almaarifa/core/style/images/app_images.dart';
-import 'package:google_fonts/google_fonts.dart';
-import 'package:connectivity_plus/connectivity_plus.dart';
 
 class NoNetworkScreen extends StatefulWidget {
   const NoNetworkScreen({super.key, this.onRetry});
@@ -132,7 +132,7 @@ class _NoNetworkScreenState extends State<NoNetworkScreen> {
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               TweenAnimationBuilder(
-                tween: Tween<double>(begin: 0.8, end: 1.0),
+                tween: Tween<double>(begin: 0.8, end: 1),
                 duration: const Duration(milliseconds: 800),
                 curve: Curves.elasticOut,
                 builder: (context, double scale, child) {
@@ -225,7 +225,7 @@ class _NoNetworkScreenState extends State<NoNetworkScreen> {
       backgroundColor: const Color(0xFF242C3B),
       body: SafeArea(
         child: Padding(
-          padding: const EdgeInsets.all(24.0),
+          padding: const EdgeInsets.all(24),
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [

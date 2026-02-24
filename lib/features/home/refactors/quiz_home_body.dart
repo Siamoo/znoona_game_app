@@ -50,7 +50,6 @@ class QuizHomeBody extends StatelessWidget {
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
                               CustomFadeInRight(
-                                duration: const Duration(milliseconds: 1000),
                                 child: GameButton(
                                   image: AppImages.solo,
                                   langkey: LangKeys.solo,
@@ -63,7 +62,6 @@ class QuizHomeBody extends StatelessWidget {
                                 ),
                               ),
                               CustomFadeInLeft(
-                                duration: const Duration(milliseconds: 1000),
                                 child: GameButton(
                                   image: AppImages.multi,
                                   langkey: LangKeys.room,

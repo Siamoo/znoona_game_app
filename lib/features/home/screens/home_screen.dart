@@ -39,14 +39,11 @@ class _HomeScreenState extends State<HomeScreen> with WidgetsBindingObserver {
     switch (state) {
       case AppLifecycleState.paused:
         _audioService.pauseBackgroundMusic();
-        break;
       case AppLifecycleState.resumed:
         _audioService.resumeBackgroundMusic();
-        break;
       case AppLifecycleState.inactive:
       case AppLifecycleState.detached:
         _audioService.stopBackgroundMusic();
-        break;
       case AppLifecycleState.hidden:
         break;
     }

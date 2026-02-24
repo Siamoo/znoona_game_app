@@ -11,6 +11,17 @@ part 'app_state.dart';
 part 'app_cubit.freezed.dart';
 
 class AppCubit extends Cubit<AppState> {
+
+  AppCubit({
+    required SharedPref sharedPref,
+    required AudioService audioService,
+    Logger? logger,
+  })  : _sharedPref = sharedPref,
+        _audioService = audioService,
+        _logger = logger ?? Logger(),
+        super(AppState.initial()) {
+    _initialize();
+  }
   final SharedPref _sharedPref;
   final AudioService _audioService;
   final Logger _logger;
@@ -33,17 +44,6 @@ class AppCubit extends Cubit<AppState> {
   bool _isLoading = false;
   bool _isInitialized = false;
 
-  AppCubit({
-    required SharedPref sharedPref,
-    required AudioService audioService,
-    Logger? logger,
-  })  : _sharedPref = sharedPref,
-        _audioService = audioService,
-        _logger = logger ?? Logger(),
-        super(AppState.initial()) {
-    _initialize();
-  }
-
   Future<void> _initialize() async {
     if (_isInitialized) return;
     await _loadSettings();
@@ -57,15 +57,15 @@ class AppCubit extends Cubit<AppState> {
     try {
       // Load all preferences in parallel with timeout
       final results = await Future.wait([
-        _loadWithTimeout(() => _loadThemeMode()),
-        _loadWithTimeout(() => _loadLanguage()),
-        _loadWithTimeout(() => _loadSoundEnabled()),
-        _loadWithTimeout(() => _loadBackgroundMusicEnabled()),
-        _loadWithTimeout(() => _loadSoundVolume()),
-        _loadWithTimeout(() => _loadMusicVolume()),
-      ], eagerError: false).timeout(
+        _loadWithTimeout(_loadThemeMode),
+        _loadWithTimeout(_loadLanguage),
+        _loadWithTimeout(_loadSoundEnabled),
+        _loadWithTimeout(_loadBackgroundMusicEnabled),
+        _loadWithTimeout(_loadSoundVolume),
+        _loadWithTimeout(_loadMusicVolume),
+      ]).timeout(
         const Duration(seconds: 3),
-        onTimeout: () => _getDefaultValues(),
+        onTimeout: _getDefaultValues,
       );
 
       final themeMode = results[0] as bool;
@@ -130,32 +130,32 @@ class AppCubit extends Cubit<AppState> {
   }
 
   Future<bool> _loadThemeMode() async {
-    final value = await _sharedPref.getBoolean(PrefKeys.themeMode);
+    final value = _sharedPref.getBoolean(PrefKeys.themeMode);
     return value ?? true;
   }
 
   Future<String> _loadLanguage() async {
-    final value = await _sharedPref.getString(PrefKeys.language);
+    final value = _sharedPref.getString(PrefKeys.language);
     return value ?? 'ar';
   }
 
   Future<bool> _loadSoundEnabled() async {
-    final value = await _sharedPref.getBoolean(PrefKeys.soundEnabled);
+    final value = _sharedPref.getBoolean(PrefKeys.soundEnabled);
     return value ?? true;
   }
 
   Future<bool> _loadBackgroundMusicEnabled() async {
-    final value = await _sharedPref.getBoolean(PrefKeys.backgroundMusicEnabled);
+    final value = _sharedPref.getBoolean(PrefKeys.backgroundMusicEnabled);
     return value ?? true;
   }
 
   Future<double> _loadSoundVolume() async {
-    final value = await _sharedPref.getDouble(PrefKeys.soundVolume);
+    final value = _sharedPref.getDouble(PrefKeys.soundVolume);
     return value?.clamp(0.0, 1.0) ?? 1.0;
   }
 
   Future<double> _loadMusicVolume() async {
-    final value = await _sharedPref.getDouble(PrefKeys.musicVolume);
+    final value = _sharedPref.getDouble(PrefKeys.musicVolume);
     return value?.clamp(0.0, 1.0) ?? 0.5;
   }
 

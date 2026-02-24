@@ -6,9 +6,9 @@ import 'package:logger/logger.dart';
 import 'package:medaan_almaarifa/core/app/app_cubit/app_cubit.dart';
 
 class AudioService with WidgetsBindingObserver {
-  static final AudioService _instance = AudioService._internal();
   factory AudioService() => _instance;
   AudioService._internal();
+  static final AudioService _instance = AudioService._internal();
 
   AudioPlayer? _soundPlayer;
   AudioPlayer? _musicPlayer;
@@ -141,18 +141,14 @@ bool get isBackgroundMusicEnabled => _currentState?.isBackgroundMusicEnabled ?? 
       case AppLifecycleState.paused:
         _isAppPaused = true;
         pauseBackgroundMusic();
-        break;
       case AppLifecycleState.resumed:
         _isAppPaused = false;
         resumeBackgroundMusic();
-        break;
       case AppLifecycleState.detached:
         dispose();
-        break;
       case AppLifecycleState.inactive:
         // App is inactive (e.g., phone call)
         pauseBackgroundMusic();
-        break;
       default:
         break;
     }
@@ -223,7 +219,7 @@ bool get isBackgroundMusicEnabled => _currentState?.isBackgroundMusicEnabled ?? 
       return;
     }
 
-    if (_musicPlayer?.playing == true) return;
+    if (_musicPlayer?.playing ?? false) return;
 
     try {
       if (!_backgroundMusicReady) {

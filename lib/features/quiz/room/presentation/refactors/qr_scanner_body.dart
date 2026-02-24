@@ -1,16 +1,17 @@
 // features/quiz/room/presentation/screen/qr_scanner_screen.dart
 import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:medaan_almaarifa/core/helpers/znoona.colors.dart';
-import 'package:mobile_scanner/mobile_scanner.dart';
-import 'package:permission_handler/permission_handler.dart';
 import 'package:medaan_almaarifa/core/helpers/znoona_navigate.dart';
 import 'package:medaan_almaarifa/core/helpers/znoona_texts.dart';
 import 'package:medaan_almaarifa/core/language/lang_keys.dart';
 import 'package:medaan_almaarifa/core/style/images/app_images.dart';
 import 'package:medaan_almaarifa/features/quiz/room/presentation/cubit/room_cubit.dart';
+import 'package:mobile_scanner/mobile_scanner.dart';
+import 'package:permission_handler/permission_handler.dart';
 
 class QRScannerBody extends StatefulWidget {
   const QRScannerBody({super.key});
@@ -25,7 +26,7 @@ class _QRScannerBodyState extends State<QRScannerBody> {
   bool _hasPermission = false;
   bool _isCheckingPermission = false;
   bool _isFlashOn = false;
-  double _scanLinePosition = 0.0;
+  double _scanLinePosition = 0;
   Timer? _scanLineTimer;
 
   @override
@@ -306,9 +307,7 @@ class _QRScannerBodyState extends State<QRScannerBody> {
         ),
 
         // Main Content
-        _isCheckingPermission
-            ? _buildLoadingView()
-            : !_hasPermission
+        if (_isCheckingPermission) _buildLoadingView() else !_hasPermission
             ? _buildPermissionDeniedView()
             : _buildScannerView(),
 
@@ -371,7 +370,7 @@ class _QRScannerBodyState extends State<QRScannerBody> {
           MobileScanner(
             controller: cameraController,
             onDetect: (capture) {
-              final List<Barcode> barcodes = capture.barcodes;
+              final barcodes = capture.barcodes;
               for (final barcode in barcodes) {
                 if (barcode.rawValue != null) {
                   _onQRCodeDetect(barcode.rawValue!);
@@ -395,8 +394,7 @@ class _QRScannerBodyState extends State<QRScannerBody> {
     return Container(
       decoration: BoxDecoration(
         gradient: RadialGradient(
-          center: Alignment.center,
-          radius: 1.0,
+          radius: 1,
           colors: [
             Colors.transparent,
             Colors.black.withOpacity(0.7),
@@ -495,7 +493,7 @@ class _QRScannerBodyState extends State<QRScannerBody> {
       bottom: bottom,
       left: left,
       right: right,
-      child: Container(
+      child: SizedBox(
         width: 25.w,
         height: 25.h,
         child: CustomPaint(
@@ -724,11 +722,6 @@ class _QRScannerBodyState extends State<QRScannerBody> {
 }
 
 class _CornerPainter extends CustomPainter {
-  final Color color;
-  final bool isTopLeft;
-  final bool isTopRight;
-  final bool isBottomLeft;
-  final bool isBottomRight;
 
   _CornerPainter({
     required this.color,
@@ -737,6 +730,11 @@ class _CornerPainter extends CustomPainter {
     this.isBottomLeft = false,
     this.isBottomRight = false,
   });
+  final Color color;
+  final bool isTopLeft;
+  final bool isTopRight;
+  final bool isBottomLeft;
+  final bool isBottomRight;
 
   @override
   void paint(Canvas canvas, Size size) {

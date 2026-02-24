@@ -55,8 +55,8 @@ class RoomGameHeader extends StatelessWidget {
     final topPlayer = _getTopPlayer(connectedPlayers);
     final currentPlayer = _getCurrentPlayer(connectedPlayers);
 
-    final int myScore = currentPlayer?.score ?? correctCount;
-    final int topPlayerScore = topPlayer?.score ?? 0;
+    final myScore = currentPlayer?.score ?? correctCount;
+    final topPlayerScore = topPlayer?.score ?? 0;
 
     return Container(
       width: double.infinity,

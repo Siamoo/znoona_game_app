@@ -1,4 +1,3 @@
-import 'package:animate_do/animate_do.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -22,7 +21,7 @@ class CategoryItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final bool isLesson = category.type == 'lesson';
+    final isLesson = category.type == 'lesson';
 
     return CustomLinearButton(
       borderRadiusNum: 20,
@@ -36,7 +35,6 @@ class CategoryItem extends StatelessWidget {
       child: Padding(
         padding: EdgeInsets.only(left: 20.w, right: 10.w),
         child: Row(
-          crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             // Left side - Text content
             Expanded(
@@ -64,7 +62,7 @@ class CategoryItem extends StatelessWidget {
                       children: [
                         Expanded(
                           child: TextApp(
-                            text: '${category.discription}',
+                            text: category.discription,
                             textStyle: TextStyle(
                               fontSize: 17.h,
                               fontWeight: FontWeight.w500,

@@ -1,13 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:medaan_almaarifa/core/di/injection_container.dart';
-import 'package:medaan_almaarifa/core/errors/error_handler.dart';
-import 'package:supabase_flutter/supabase_flutter.dart';
 import 'package:medaan_almaarifa/core/app/app_cubit/app_cubit.dart';
 import 'package:medaan_almaarifa/core/app/connectivity_controller.dart';
 import 'package:medaan_almaarifa/core/common/screens/error_screen.dart';
 import 'package:medaan_almaarifa/core/common/screens/no_network_screen.dart';
+import 'package:medaan_almaarifa/core/di/injection_container.dart';
+import 'package:medaan_almaarifa/core/errors/error_handler.dart';
 import 'package:medaan_almaarifa/core/helpers/audio_service.dart';
 import 'package:medaan_almaarifa/core/language/app_localizations_setup.dart';
 import 'package:medaan_almaarifa/core/style/theme/app_theme.dart';
@@ -16,6 +15,7 @@ import 'package:medaan_almaarifa/features/quiz/categories/presentation/cubit/cat
 import 'package:medaan_almaarifa/features/quiz/room/presentation/cubit/room_cubit.dart';
 import 'package:medaan_almaarifa/features/user/auth/presentation/cubit/auth_cubit.dart';
 import 'package:medaan_almaarifa/features/user/auth/presentation/screens/login_screen.dart';
+import 'package:supabase_flutter/supabase_flutter.dart';
 
 class ZnoonaGameApp extends StatefulWidget {
   const ZnoonaGameApp({super.key});
@@ -170,13 +170,13 @@ class _ZnoonaGameAppState extends State<ZnoonaGameApp> {
 
 /// Error boundary widget to catch widget tree errors
 class _ErrorBoundary extends StatefulWidget {
-  final Widget child;
-  final Function(Object, StackTrace) onError;
 
   const _ErrorBoundary({
     required this.child,
     required this.onError,
   });
+  final Widget child;
+  final Function(Object, StackTrace) onError;
 
   @override
   State<_ErrorBoundary> createState() => _ErrorBoundaryState();
